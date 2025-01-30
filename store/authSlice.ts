@@ -1,0 +1,30 @@
+import { postGuardRequest } from "./../services/requestservice";
+import { toast } from "react-toastify";
+
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  user: {},
+  loading: false,
+};
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+});
+
+export const registerUserDispatch = (value: object) => async () => {
+  postGuardRequest({ controller: "auth", action: "register" }, value)
+    .then((res) => {
+      toast.success(res.data.message);
+    })
+    .catch((err) => {
+      toast.error(err.response.data);
+    });
+};
+
+// Reducer'ları dışa aktarma
+export const {} = authSlice.actions;
+
+export default authSlice.reducer;
