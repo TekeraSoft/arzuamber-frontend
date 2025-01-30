@@ -21,7 +21,7 @@ export default function Home() {
         <ProductSlider />
       </GradientColorContainer>
 
-      <Heading text={t("hello")} center font="bold" textSize="3xl" />
+      <Heading text={t("hello")} center font="bold" textSize="4xl" />
       <Brand />
     </>
   );

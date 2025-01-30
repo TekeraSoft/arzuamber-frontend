@@ -15,7 +15,6 @@ export const store = configureStore({
     categories: categoryReducer,
     general: generalReducer,
     auth: authReducer,
-
     footer: footerReducer,
   },
 });
