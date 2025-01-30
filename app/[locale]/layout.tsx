@@ -3,7 +3,7 @@ import StoreProvider from "@/store/StoreProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { Locale, routing } from "@/i18n/routing";
 import { Geist, Geist_Mono } from "next/font/google";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
@@ -23,15 +23,18 @@ export const metadata = {
   description: "ARZUAMBER",
 };
 
+// `locale` parametresinin tipi belirlenmeli
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locale }; // Burada `Locale` türünü kullanıyoruz
 }) {
+  const { locale } = await params;
+
   // Geçerli bir dil olup olmadığını kontrol et
-  if (!routing.locales.includes(locale as [])) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 
@@ -39,9 +42,9 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning={false}>
+    <html lang={locale} suppressHydrationWarning={true}>
       <body
-        className={`  ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>

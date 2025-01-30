@@ -186,3 +186,12 @@ export default SideBar;
             />
             <CheckBox id="isActive" label="Active" register={register} />
           </div>
+
+
+
+
+
+
+//!! admin panel description guncelle 
+import ReactQuill from "react-quill"; 
+ile

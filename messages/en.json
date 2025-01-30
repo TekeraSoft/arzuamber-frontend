@@ -1,6 +1,10 @@
 {
   "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+    "title": "Featured Products",
+    "welcome": {
+      "title": "Welcome Home page",
+      "description": "This is home page"
+    },
+    "about": "New product"
   }
 }

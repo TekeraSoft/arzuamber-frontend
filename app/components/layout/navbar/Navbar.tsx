@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaHeart, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Logo from "./Logo";
 import TopBar from "./TopBar";
 

@@ -1,6 +1,10 @@
 {
   "HomePage": {
-    "title": "Merhaba",
-    "about": "Ana Sayfaya Git"
+    "title": "Yeni Ürünler ",
+    "welcome": {
+      "title": "Anasayfaya Hoşgeldiniz ",
+      "description": "Burası anasayfa"
+    },
+    "about": "yeni ürün"
   }
 }
