@@ -59,29 +59,21 @@ function AllProduct() {
                 ))}
               </div>
 
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel={
-                  <span className="flex items-center justify-center w-8 h-8 text-mywhite bg-primary rounded-md hover:bg-primaryLight">
-                    <FaChevronRight />
-                  </span>
-                }
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel={
-                  <span className="flex items-center justify-center w-8 h-8 text-mywhite bg-primary rounded-md hover:bg-primaryLight">
-                    <FaChevronLeft />
-                  </span>
-                }
-                renderOnZeroPageCount={null}
-                containerClassName="flex items-center justify-center space-x-2 mt-4"
-                pageClassName="mx-1"
-                pageLinkClassName="px-3 py-1 border rounded-md text-mywhite bg-primary hover:bg-secondaryLight"
-                activeClassName="font-bold rounded-md border-2 border-third bg-third text-mywhite"
-                disabledClassName="text-myblack cursor-not-allowed"
-                breakClassName="text-secondary"
-              />
+              <div className="flex justify-center mt-5 mb-2">
+                <ReactPaginate
+                  previousLabel={<FaChevronLeft className="text-gray-600" />}
+                  nextLabel={<FaChevronRight className="text-gray-600" />}
+                  pageCount={pageCount}
+                  onPageChange={handlePageClick}
+                  containerClassName="flex items-center space-x-3"
+                  pageClassName="px-4 py-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-black cursor-pointer"
+                  activeClassName="bg-secondary text-white"
+                  breakClassName="px-4 py-2 text-gray-500"
+                  pageLinkClassName="cursor-pointer"
+                  breakLinkClassName="cursor-pointer"
+                  disabledClassName="cursor-not-allowed text-gray-400"
+                />{" "}
+              </div>
             </div>
           </div>
         </div>

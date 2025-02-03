@@ -13,13 +13,14 @@ import Rating from "@mui/material/Rating";
 import Carousel from "react-multi-carousel";
 import TextClip from "../utils/TextClip";
 import { IoShareSocialSharp } from "react-icons/io5";
-import { Alert, Snackbar } from "@mui/material";
+import { Snackbar, SnackbarContent } from "@mui/material";
 import { FaHeart } from "react-icons/fa";
 import PageContainer from "../Containers/PageContainer";
 import { addToFav, FavItem, removeFromFav } from "@/store/favoritesSlice";
 import { toast } from "react-toastify";
 import { CardProductProps, Product, Review } from "@/types/Props";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl";
+import ColorPicker from "../general/ColorPicker";
 
 const responsive = {
   superLargeDesktop: {
@@ -48,7 +49,12 @@ const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch();
   const carts = useSelector((state: RootState) => state.cart.carts);
   const favs = useSelector((state: RootState) => state.favorites.favs);
-  const t = useTranslations();
+  // const t = useTranslations();
+
+  const [displayButton, setDisplayButton] = useState<boolean>(false);
+  const [displayFav, setDisplayFav] = useState<boolean>(false);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   const [cardProduct, setcardProduct] = useState<CardProductProps>({
     id: product.id,
@@ -58,6 +64,8 @@ const DetailClient = ({ product }: productProps) => {
     quantity: 1,
     image: product.images[0],
     inStock: product.inStock,
+    size: selectedSize ?? "",
+    color: selectedColor ?? "",
   });
 
   const increaseFunc = () => {
@@ -75,6 +83,12 @@ const DetailClient = ({ product }: productProps) => {
       return toast.error("Please Select Size.");
       // return toast.error(t("productDetail.sizeError"));
     }
+
+    if (!selectedColor) {
+      return toast.error("Please Select Color.");
+      // return toast.error(t("productDetail.sizeError"));
+    }
+
     const cartData = {
       id: product?.id,
       name: product?.name,
@@ -83,16 +97,17 @@ const DetailClient = ({ product }: productProps) => {
       quantity: cardProduct?.quantity,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
-      size: selectedSize,
+      size: cardProduct.size,
+      color: cardProduct.color,
     };
-    toast.success("Product Added.");
+    console.log(cartData);
     // toast.success(t("productDetail.productAddedCartSuccess"));
     dispatch(addToCart(cartData));
   };
 
   const removeToBasket = (id: string) => {
     dispatch(removeFromCart(id));
-    toast.warning(t("productDetail.productRemovedCart"));
+    // toast.warning(t("productDetail.productRemovedCart"));
   };
 
   const removeToFav = (id: string) => {
@@ -103,7 +118,7 @@ const DetailClient = ({ product }: productProps) => {
   const AddToFav = () => {
     if (!selectedSize) {
       return toast.error("Please Select Size.");
-      // return toast.error(t("productDetail.sizeError"));
+      // return toast.error(t("productDetail.colorError"));
     }
 
     const favData = {
@@ -114,16 +129,13 @@ const DetailClient = ({ product }: productProps) => {
       quantity: cardProduct?.quantity,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
-      size: selectedSize,
+      size: cardProduct.size,
+      color: cardProduct.color,
     };
-    toast.success("Product Added Favorites.");
+
     // toast.success(t("productDetail.productAddedFavSuccess"));
     dispatch(addToFav(favData));
   };
-
-  const [displayButton, setDisplayButton] = useState<boolean>(false);
-  const [displayFav, setDisplayFav] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   // Cart ve Fav kontrolü için ortak useEffect
   useEffect(() => {
@@ -193,10 +205,15 @@ const DetailClient = ({ product }: productProps) => {
     setSelectedSize(size);
   };
 
+  // color select func
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(color);
+  };
+
   return (
     <PageContainer>
       <div className="detail-page-main-div  ">
-        <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-xl mb-10 w-full h-full border-y md:border-none">
+        <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
           {/* Image Section with Carousel */}
           <div className=" w-full md:w-1/2 h-[500px] relative">
             <Carousel
@@ -219,7 +236,6 @@ const DetailClient = ({ product }: productProps) => {
                 </div>
               ))}
             </Carousel>
-            <div className="w-full h-full"></div>
           </div>
 
           {/* Product Details Section */}
@@ -333,17 +349,23 @@ const DetailClient = ({ product }: productProps) => {
               </div>
             </div>
 
+            <ColorPicker
+              colors={product.colors}
+              onColorSelect={handleColorSelect}
+              selectedColor={selectedColor}
+            />
+
             {/* Counter and Add to Cart Button */}
             <div className="w-full flex justify-between  md:justify-center  items-center gap-4 flex-wrap ">
-              <div className="w-full flex flex-row  justify-center items-center gap-10 lg:gap-8 ">
-                <div className="md:w-1/4">
+              <div className="w-full flex flex-row  justify-center items-center gap-10 lg:gap-10 ">
+                <div className=" w-1/4">
                   <Counter
                     increaseFunc={increaseFunc}
                     descreaseFunc={descreaseFunc}
                     cardProduct={cardProduct}
                   />
                 </div>
-                <div className="w-full">
+                <div className="w-3/4">
                   {displayButton ? (
                     <Button
                       disabled={!displayButton}
@@ -411,20 +433,20 @@ const DetailClient = ({ product }: productProps) => {
                   animation
                 />
 
-                {/* Snackbar bildirim */}
                 <Snackbar
                   open={open}
-                  autoHideDuration={2000}
+                  autoHideDuration={1500}
                   onClose={handleClose}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 >
-                  <Alert
-                    onClose={handleClose}
-                    severity="success"
-                    className="w-full"
-                  >
-                    {/* {t("  SnackBar.coypLinkSuccess")} */}
-                    Share link copied!
-                  </Alert>
+                  <SnackbarContent
+                    message=" Share Link Copied ✓ "
+                    // message={t("  SnackBar.coypLinkSuccess")}
+                    sx={{
+                      backgroundColor: "#8174A0",
+                      color: "white",
+                    }}
+                  />
                 </Snackbar>
               </div>
             </div>

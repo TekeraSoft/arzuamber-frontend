@@ -28,7 +28,7 @@ function Button({
   color = "primary",
 }: ButtonProps) {
   const sizeClasses = {
-    icon: "w-[40px] h-[40px]",
+    icon: "w-[35px] h-[35px]",
     small: "w-[250px]",
     medium: "w-[800px]",
     large: "w-full",

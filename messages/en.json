@@ -21,7 +21,8 @@
   },
 
   "HomePage": {
-    "title": "Featured Products"
+    "sliderTitle": "Featured Products",
+    "categoryTitle": "All Categories"
   },
 
   "brand": {
@@ -47,7 +48,7 @@
     "email": "Email",
     "password": "Password",
     "registerButton": "Register",
-    "loginLink": "Already have an account? Login"
+    "registerLink": "Already have an account? Login"
   },
 
   "allProduct": {
@@ -60,19 +61,28 @@
     "productInCart": "Product In Cart",
     "productAddCart": "Add To Cart",
     "sizeError": "Please Select Size.",
+    "colorError": "Plase Select Color",
     "productAddedCartSuccess": "Product Added Cart.",
     "productRemovedCart": "Product Removed Cart.",
+    "productsClearedCart": "Cleared All Cart.",
+    "productAlreadyCart": "The product is already on the card.",
     "productAddedFavSuccess": "Product Added Favorites.",
     "productRemovedFav": "Product Removed Favorites.",
+    "productsClearedFav": "Cleared all favorites.",
+    "productAlreadyFav": "The product is already on the favorites.",
+    "product": "Cleared all favorites.",
     "productCategory": "Category",
     "priceSymbol": "$",
     "readMore": "Read more",
     "readLess": "Read less"
   },
 
-  "SnackBar": {
-    "coypLinkSuccess": "Share link copied!",
-    "coypLinkUnsuccess": "Share link copied!"
+  "blogPage": {
+    "title": "Latest from the Blog",
+    "text": "Stay updated with the latest articles, tips, and insights on our blog. Discover exciting new content regularly.",
+    "blogsPageButton": "Read more",
+    "category": "Category",
+    "Tags": "Tags"
   },
 
   "ContactPage": {
@@ -108,6 +118,7 @@
       "country": "Turkey"
     }
   },
+
   "footer": {
     "aboutUs": "About Us",
     "customerService": "Customer Service",
@@ -117,7 +128,16 @@
     "socialMedia": "Social Media"
   },
 
+  "SnackBar": {
+    "coypLinkSuccess": "Share link copied!",
+    "coypLinkUnsuccess": "Share link copied!"
+  },
+
   "warningText": {
+    "blogPage": {
+      "title": "No Blogs Available",
+      "text": "There are no blogs available at the moment. Please check back later."
+    },
     "ProductNotFoundTitle": "Product Not Found",
     "ProductNotFoundText": "The product you're looking for could not be found.",
     "BlogNotFoundTitle": "Blog Not Found",

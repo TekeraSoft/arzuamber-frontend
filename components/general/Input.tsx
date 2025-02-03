@@ -37,6 +37,7 @@ function Input({
           {label}
         </label>
       )}
+
       <input
         id={id}
         placeholder={placeholder}
@@ -53,9 +54,6 @@ function Input({
           errors[id] ? "border-red-500" : "border-gray-300"
         }`}
       />
-      {errors[id] && typeof errors[id]?.message === "string" && (
-        <span className="text-red-500 text-xs mt-1">{errors[id]?.message}</span>
-      )}
     </div>
   );
 }

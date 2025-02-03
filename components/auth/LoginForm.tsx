@@ -3,15 +3,14 @@
 import Button from "@/components/general/Button";
 import Heading from "@/components/general/Heading";
 import Input from "@/components/general/Input";
-import { closeLoginModal } from "@/store/modalsSlice";
+import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import Link from "next/link";
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-// import { useTranslations } from "next-intl";
 import { IoIosCloseCircleOutline, IoLogoGoogleplus } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+// import { useTranslations } from "next-intl";
 
 function LoginForm() {
   // const t = useTranslations();
@@ -44,6 +43,11 @@ function LoginForm() {
 
   //! id = loginEmail and loginPassword  ??
 
+  const handleChangeModal = () => {
+    dispatch(closeLoginModal());
+    dispatch(openRegisterModal());
+  };
+
   return (
     <div
       onClick={(e) => {
@@ -57,7 +61,7 @@ function LoginForm() {
       } inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}
     >
       <div
-        className={`w-full md:w-1/3 h-auto bg-white rounded-2xl p-8 shadow-lg space-y-6 relative transform transition-all duration-300`}
+        className={`w-full md:w-1/4 h-auto bg-white rounded-2xl p-10 shadow-lg space-y-3 relative transform transition-all duration-300`}
       >
         <Heading
           center
@@ -68,14 +72,14 @@ function LoginForm() {
           color="black"
         />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 w-full">
           <Button
             size={"icon"}
             icon={IoIosCloseCircleOutline}
             color="primary"
             onClick={handleClose}
-            iconSize={25}
             className="absolute top-4 right-4 w-12 "
+            animation
           />
 
           <Input
@@ -87,6 +91,7 @@ function LoginForm() {
             errors={errors}
             register={register}
           />
+
           <Input
             id="loginPassword"
             placeholder="Password"
@@ -97,35 +102,32 @@ function LoginForm() {
             register={register}
           />
 
-          <div className="flex flex-col space-y-3">
-            <Button
-              text="Login"
-              // text={t("loginForm.loginButton")}
-              type="submit"
-              color="primary"
-              animation
-              size="small"
-              className="w-full bg-primary hover:bg-primaryDark text-mywhite py-3 rounded-lg transition duration-200"
-            />
-            <Button
-              size="small"
-              outline
-              icon={IoLogoGoogleplus}
-              iconSize={23}
-              className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-3 transition duration-200"
-            />
-          </div>
+          <Button
+            text="Login"
+            // text={t("loginForm.loginButton")}
+            type="submit"
+            color="primary"
+            animation
+            size="small"
+            className="w-full bg-primary hover:bg-primaryDark text-mywhite py-3 rounded-lg transition duration-200 "
+          />
+          <Button
+            size="small"
+            outline
+            icon={IoLogoGoogleplus}
+            iconSize={23}
+            className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-3 transition duration-200"
+          />
         </form>
 
-        <div className="text-center mt-4">
-          <Link
-            href={`/register`}
-            className="text-md text-primary font-semibold hover:underline"
-          >
-            {/* {t("loginForm.noAccount")} */}
-            Don’t have an account? Sign up
-          </Link>
-        </div>
+        {/* login , register modal  */}
+        <p
+          className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold"
+          onClick={handleChangeModal}
+        >
+          Don’t have an account? Sign up
+          {/* {t("loginForm.noAccount")} */}
+        </p>
       </div>
     </div>
   );

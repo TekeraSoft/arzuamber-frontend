@@ -12,7 +12,7 @@ function Category() {
   );
 
   return (
-    <div className="category-container p-4 md:p-8">
+    <div className="category-container p-4 md:p-8 space-y-3">
       {loading ? (
         <Loading />
       ) : (
@@ -35,7 +35,7 @@ function Category() {
               </div>
 
               {/* Kategori Adı */}
-              <span className="absolute mt-5 font-semibold text-xl md:text-2xl lg:text-3xl bg-black bg-opacity-50 px-4 py-2 rounded-lg shadow-lg capitalize">
+              <span className="absolute mt-5 font-semibold text-sm md:text-2xl  bg-black bg-opacity-50  w-[150px] md:w-3/4  h-8 md:h-12 flex items-center justify-center rounded-lg shadow-lg capitalize">
                 {category.name}
               </span>
             </div>

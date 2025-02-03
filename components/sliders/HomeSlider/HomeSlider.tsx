@@ -47,7 +47,7 @@ function HomeSlider() {
           keyBoardControl={true}
           customTransition="all .7s"
           transitionDuration={1000}
-          containerClass="carousel-container "
+          containerClass="carousel-container  "
           itemClass="flex justify-center items-center bg-center bg-cover "
         >
           {images?.map((image: CarouselType) => (

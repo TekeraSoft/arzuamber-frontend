@@ -21,7 +21,8 @@
   },
 
   "HomePage": {
-    "title": "Öne Çıkan Ürünler"
+    "sliderTitle": "Öne Çıkan Ürünler",
+    "categoryTitle": "Tüm Kategoriler"
   },
 
   "brand": {
@@ -47,7 +48,7 @@
     "email": "E-posta",
     "password": "Şifre",
     "registerButton": "Kayıt Ol",
-    "loginLink": "Zaten bir hesabınız var mı? Giriş yap"
+    "registerLink": "Zaten bir hesabınız var mı? Giriş yap"
   },
 
   "allProduct": {
@@ -60,19 +61,27 @@
     "productInCart": "Sepetteki Ürün",
     "productAddCart": "Sepete Ekle",
     "sizeError": "Lütfen Beden Seçin.",
+    "colorError": "Lütfen Renk Seçin",
     "productAddedCartSuccess": "Ürün Sepete Eklendi.",
     "productRemovedCart": "Ürün Sepetten Kaldırıldı.",
+    "productsClearedCart": "Bütün Sepet Temizlendi.",
+    "productAlreadyCart": "Ürün sepette mevcut.",
     "productAddedFavSuccess": "Ürün Favorilere Eklendi.",
     "productRemovedFav": "Ürün Favorilerden Kaldırıldı.",
+    "productsClearedFav": "Bütün Favoriler Kaldırıldı.",
+    "productAlreadyFav": "Ürün favorilerde mevcut.",
     "productCategory": "Kategori",
     "priceSymbol": "₺",
     "readMore": "Daha fazla",
     "readLess": "Daha az"
   },
 
-  "SnackBar": {
-    "coypLinkSuccess": "Paylaşım bağlantısı kopyalandı!",
-    "coypLinkUnsuccess": "Paylaşım bağlantısı kopyalanamadı!"
+  "blogPage": {
+    "title": "Blogdan En Son Paylaşımlar",
+    "text": "Blogumuzda en son makaleler, ipuçları ve içgörüleri takip edin. Düzenli olarak heyecan verici yeni içerikler keşfedin.",
+    "blogsPageButton": "Daha fazla",
+    "category": "Kategori",
+    "Tags": "Etiket"
   },
 
   "ContactPage": {
@@ -117,7 +126,16 @@
     "socialMedia": "Sosyal Medya"
   },
 
+  "SnackBar": {
+    "coypLinkSuccess": "Paylaşım bağlantısı kopyalandı!",
+    "coypLinkUnsuccess": "Paylaşım bağlantısı kopyalanamadı!"
+  },
+
   "warningText": {
+    "blogPage": {
+      "title": "Hiç Blog Bulunamadı",
+      "text": "Şu anda görüntülenecek blog bulunmamaktadır. Lütfen daha sonra tekrar kontrol edin."
+    },
     "ProductNotFoundTitle": "Ürün Bulunamadı",
     "ProductNotFoundText": "Aradığınız ürün bulunamadı.",
     "BlogNotFoundTitle": "Blog Bulunamadı",

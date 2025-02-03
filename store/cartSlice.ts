@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 
 // Ürün Tipi
 export interface CartItem {
@@ -70,16 +69,17 @@ export const cartSlice = createSlice({
       }
     },
 
-    // Sepetten ürün silme işlemi
+    //Sepetten ürün silme işlemi
     removeFromCart: (state, action: PayloadAction<string>) => {
       const tempCart = state.carts.filter((item) => item.id != action.payload);
       state.carts = tempCart;
-      toast.success("Product Deleted From Cart !");
+
       storeInLocalStorage(state.carts);
     },
     clearCart: (state) => {
       state.carts = [];
       storeInLocalStorage(state.carts);
+      // toast.warning(t("productDetail.productsClearedCart"));
     },
   },
 });

@@ -10,7 +10,7 @@ interface ImageProps {
 
 function HomeSliderItem({ image }: ImageProps) {
   return (
-    <div className="relative w-screen h-96 md:h-[700px] ">
+    <div className="relative w-screen h-96 md:h-[650px] ">
       <Image
         src={image.url}
         alt={image.description ? image.description : "Slider Description"}

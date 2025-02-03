@@ -34,6 +34,7 @@ export interface Product {
   reviews: Review[];
   isNewSeason: boolean;
   sizes: string[];
+  colors: string[];
 }
 
 export type CardProductProps = {
@@ -44,6 +45,8 @@ export type CardProductProps = {
   quantity: number;
   image: string;
   inStock: boolean;
+  size: string;
+  color: string;
 };
 export interface Category {
   id: string;
@@ -63,6 +66,6 @@ export interface BlogProps {
   title: string;
   description: string;
   image: string;
-  author: string;
   date: string;
+  tags: string[];
 }

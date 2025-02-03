@@ -4,13 +4,12 @@ import Button from "@/components/general/Button";
 import Heading from "@/components/general/Heading";
 import Input from "@/components/general/Input";
 import { registerUserDispatch } from "@/store/authSlice";
-import { Link } from "@/i18n/routing";
 import { AppDispatch, RootState } from "@/store/store";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { IoLogoGoogleplus } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { closeRegisterModal } from "@/store/modalsSlice";
+import { closeRegisterModal, openLoginModal } from "@/store/modalsSlice";
 // import { useTranslations } from "next-intl";
 
 function RegisterForm() {
@@ -34,6 +33,11 @@ function RegisterForm() {
     dispatch(registerUserDispatch(data));
   };
 
+  const handleChangeModal = () => {
+    dispatch(closeRegisterModal());
+    dispatch(openLoginModal());
+  };
+
   return (
     <div
       onClick={(e) => {
@@ -47,7 +51,7 @@ function RegisterForm() {
       } inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50`}
     >
       <div
-        className={`w-1/2 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl p-6 shadow-xl space-y-4 relative`}
+        className={`w-1/4 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl p-6 shadow-xl space-y-4 relative`}
       >
         {/* Close Button - Positioned to top-right */}
         <Button
@@ -57,7 +61,9 @@ function RegisterForm() {
           onClick={handleClose}
           iconSize={25}
           className="absolute top-4 right-4 w-12 "
+          animation
         />
+
         <Heading
           center
           text="Create an Account"
@@ -112,11 +118,10 @@ function RegisterForm() {
             <Button
               text="Register"
               // placeholder={t("registerForm.registerButton")}
-
               type="submit"
               animation
-              size="small"
-              className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg"
+              size="large"
+              color="primary"
             />
             <Button
               size="small"
@@ -128,15 +133,14 @@ function RegisterForm() {
           </div>
         </form>
 
-        <div className="text-center">
-          <Link
-            href={`/login`}
-            className="text-md text-primary font-semibold hover:underline"
-          >
-            {/* {t("registerForm.loginLink")} */}
-            Already have an account? Login
-          </Link>
-        </div>
+        {/* login , register modal  */}
+        <p
+          className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold"
+          onClick={handleChangeModal}
+        >
+          Already have an account? Login
+          {/* {t("registerForm.loginLink")} */}
+        </p>
       </div>
     </div>
   );
