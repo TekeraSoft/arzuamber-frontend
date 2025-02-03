@@ -4,8 +4,10 @@ import favReducer from "./favoritesSlice";
 import productReducer from "./productSlice";
 import generalReducer from "./generalSlice";
 import categoryReducer from "./categorySlice";
+import blogsReducer from "./blogSlice";
 import footerReducer from "./footerSlice";
 import authReducer from "./authSlice";
+import modalsReducer from "./modalsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,8 +15,10 @@ export const store = configureStore({
     favorites: favReducer,
     products: productReducer,
     categories: categoryReducer,
+    blogs: blogsReducer,
     general: generalReducer,
     auth: authReducer,
+    modals: modalsReducer,
     footer: footerReducer,
   },
 });

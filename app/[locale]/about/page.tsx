@@ -1,4 +1,4 @@
-import PageContainer from "@/app/components/Containers/PageContainer";
+import PageContainer from "@/components/Containers/PageContainer";
 
 function AboutPage() {
   return (

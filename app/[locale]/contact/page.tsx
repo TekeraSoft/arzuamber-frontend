@@ -1,11 +1,149 @@
-import PageContainer from "@/app/components/Containers/PageContainer";
-import React from "react";
+"use client";
+import Head from "next/head";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import PageContainer from "@/components/Containers/PageContainer";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { useTranslations } from "next-intl";
+import Input from "@/components/general/Input";
+import RichTextBox from "@/components/general/RichTextBox";
+import Button from "@/components/general/Button";
 
 function ContactPage() {
+  const t = useTranslations();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>();
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <PageContainer>
-      <div>ContactPage</div>
-    </PageContainer>
+    <>
+      <Head>
+        <title>{t("ContactPage.title")}</title>
+        <meta name="description" content={t("ContactPage.metaDescription")} />
+      </Head>
+
+      <PageContainer>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <section className="py-10 bg-gray-100 sm:py-16 lg:py-24">
+            <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+              <div className="max-w-2xl mx-auto text-center">
+                <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
+                  {t("ContactPage.header")}
+                </h2>
+                <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-500">
+                  {t("ContactPage.subheader")}
+                </p>
+              </div>
+
+              <div className="max-w-5xl mx-auto mt-12 sm:mt-16">
+                <div className="grid grid-cols-1 gap-6 px-8 text-center md:px-0 md:grid-cols-3">
+                  <div className="overflow-hidden bg-white rounded-xl flex flex-col justify-center items-center">
+                    <div className="p-6">
+                      <FaPhoneAlt className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400 " />
+                      <p className="mt-6 text-lg font-medium text-gray-900">
+                        +90-534-260-8385
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden bg-white rounded-xl flex flex-col justify-center items-center">
+                    <div className="p-6">
+                      <FaEnvelope className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400" />
+                      <p className="mt-6 text-lg font-medium text-gray-900">
+                        arzuambermoda@gmail.com
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden bg-white rounded-xl ">
+                    <div className="p-6 flex flex-col justify-center items-center">
+                      <FaMapMarkerAlt className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400 " />
+                      <p className="mt-6  font-medium text-md leading-relaxed text-gray-900">
+                        <span>{t("ContactPage.address.street")}, </span>
+                        <span>{t("ContactPage.address.building")}, </span>
+                        <span>
+                          {t("ContactPage.address.number")},
+                          {t("ContactPage.address.floor")},
+                        </span>
+                        <span>
+                          {t("ContactPage.address.city")},
+                          {t("ContactPage.address.district")},
+                          {t("ContactPage.address.country")}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 overflow-hidden bg-white rounded-xl">
+                  <div className="px-6 py-12 sm:p-12">
+                    <h3 className="text-3xl font-semibold text-center text-gray-900">
+                      {t("ContactPage.messageTitle")}
+                    </h3>
+
+                    <div className="mt-14 w-full">
+                      <div className=" w-full grid grid-cols-1 sm:grid-cols-1 gap-2">
+                        <div className="grid items-center grid-cols-1 md:grid-cols-2 gap-2">
+                          <Input
+                            type="text"
+                            label={t("ContactPage.form.nameLabel")}
+                            placeholder={t("ContactPage.form.namePlaceholder")}
+                            id="firstName"
+                            register={register}
+                            errors={errors}
+                            required={true}
+                          />
+
+                          <Input
+                            type="text"
+                            label={t("ContactPage.form.lastNameLabel")}
+                            placeholder={t(
+                              "ContactPage.form.lastNamePlaceholder"
+                            )}
+                            id="lastName"
+                            register={register}
+                            errors={errors}
+                            required={true}
+                          />
+                        </div>
+                        <Input
+                          type="email"
+                          label={t("ContactPage.form.emailLabel")}
+                          placeholder={t("ContactPage.form.emailPlaceholder")}
+                          id="email"
+                          register={register}
+                          errors={errors}
+                          required={true}
+                        />
+
+                        <RichTextBox
+                          label={t("ContactPage.form.messageLabel")}
+                          placeholder={t("ContactPage.form.messagePlaceholder")}
+                          id="message"
+                          register={register}
+                          errors={errors}
+                          required={true}
+                        />
+
+                        <Button
+                          size="large"
+                          text={t("ContactPage.form.submitButton")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </PageContainer>
+    </>
   );
 }
 

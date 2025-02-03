@@ -19,7 +19,7 @@ export interface CartState {
 // LocalStorage'dan sepete verileri çekme (İstemci tarafında çalıştırılacak)
 const fetchFromLocalStorage = (): FavItem[] => {
   if (typeof window !== "undefined") {
-    const favorites = localStorage.getItem("cart");
+    const favorites = localStorage.getItem("favorites");
     if (favorites) {
       return JSON.parse(favorites);
     }

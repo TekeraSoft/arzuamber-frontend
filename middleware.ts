@@ -21,17 +21,17 @@ export default async function middleware(req) {
   // Admin route koruma
   const isAdminRoute = req.nextUrl.pathname.startsWith(`/${locale}/admin`);
 
-  if (
-    isAdminRoute &&
-    (!token ||
-      decodedToken.role[0] !== "SUPER_ADMIN" ||
-      decodedToken?.exp < new Date().getTime() / 1000)
-  ) {
-    req.cookies.delete("session-token");
-    req.cookies.delete("__Secure-next-auth.session-token");
-    const baseUrl = new URL("/", req.url);
-    return NextResponse.redirect(baseUrl);
-  }
+  // if (
+  //   isAdminRoute &&
+  //   (!token ||
+  //     decodedToken.role[0] !== "SUPER_ADMIN" ||
+  //     decodedToken?.exp < new Date().getTime() / 1000)
+  // ) {
+  //   req.cookies.delete("session-token");
+  //   req.cookies.delete("__Secure-next-auth.session-token");
+  //   const baseUrl = new URL("/", req.url);
+  //   return NextResponse.redirect(baseUrl);
+  // }
 
   return res;
 }

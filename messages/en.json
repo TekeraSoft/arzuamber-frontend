@@ -1,10 +1,128 @@
 {
+  "navLinks": {
+    "home": "Home",
+    "products": "Products",
+    "blogs": "Blogs",
+    "about": "About",
+    "contact": "Contact"
+  },
+
+  "menuItems": {
+    "profile": "Profile",
+    "signup": "Sign Up",
+    "login": "Log In",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+
+  "topBar": {
+    "discountMessage": "Up to 50% Off on New Season Products!!!",
+    "checkItOut": "Check it out!"
+  },
+
   "HomePage": {
-    "title": "Featured Products",
-    "welcome": {
-      "title": "Welcome Home page",
-      "description": "This is home page"
+    "title": "Featured Products"
+  },
+
+  "brand": {
+    "title": "New Season Collection",
+    "description": "Discover the latest products that are perfect for every occasion!",
+    "buttonText": "View Products"
+  },
+
+  "loginForm": {
+    "welcomeBack": "Welcome Back!",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Login",
+    "loginSuccess": "Login Successfully!",
+    "loginError": "Login Error!",
+    "noAccount": "Don't have an account? Sign up"
+  },
+
+  "registerForm": {
+    "createAccount": "Create an Account",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "registerButton": "Register",
+    "loginLink": "Already have an account? Login"
+  },
+
+  "allProduct": {
+    "allProducts": "All Products"
+  },
+
+  "productDetail": {
+    "productİnStock": "Stock In",
+    "productOutStock": "Out Of Stock",
+    "productInCart": "Product In Cart",
+    "productAddCart": "Add To Cart",
+    "sizeError": "Please Select Size.",
+    "productAddedCartSuccess": "Product Added Cart.",
+    "productRemovedCart": "Product Removed Cart.",
+    "productAddedFavSuccess": "Product Added Favorites.",
+    "productRemovedFav": "Product Removed Favorites.",
+    "productCategory": "Category",
+    "priceSymbol": "$",
+    "readMore": "Read more",
+    "readLess": "Read less"
+  },
+
+  "SnackBar": {
+    "coypLinkSuccess": "Share link copied!",
+    "coypLinkUnsuccess": "Share link copied!"
+  },
+
+  "ContactPage": {
+    "title": "Contact Us",
+    "metaDescription": "Contact us for more information",
+    "header": "Contact us",
+    "subheader": "Contact us for more information.",
+    "messageTitle": "Send us a message",
+    "form": {
+      "nameLabel": "Your name",
+      "namePlaceholder": "Enter your full name",
+      "nameError": "Name is required",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "emailError": "Email is required",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter your Last Name",
+      "lastNameError": "Last Name is required",
+      "companyLabel": "Company Name",
+      "companyPlaceholder": "Company Name",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Your Messages...",
+      "submitButton": "Submit"
     },
-    "about": "New product"
+    "sendButton": "Send",
+    "address": {
+      "street": "Kışla Neighborhood",
+      "building": "Street 40, Kayalar Apartment",
+      "number": "No: 8",
+      "floor": "Block A, Floor: 4, Apartment: 7",
+      "city": "Antalya",
+      "district": "Muratpasa",
+      "country": "Turkey"
+    }
+  },
+  "footer": {
+    "aboutUs": "About Us",
+    "customerService": "Customer Service",
+    "newsletter": "Newsletter",
+    "subscribeText": "Subscribe to stay updated with the latest news.",
+    "copyright": "© 2025 Arzu Amber. All Rights Reserved.",
+    "socialMedia": "Social Media"
+  },
+
+  "warningText": {
+    "ProductNotFoundTitle": "Product Not Found",
+    "ProductNotFoundText": "The product you're looking for could not be found.",
+    "BlogNotFoundTitle": "Blog Not Found",
+    "BlogNotFoundText": "The blog you're looking for could not be found.",
+    "requiredText": "This field is required !",
+    "ButtonText": "Go To Home Page "
   }
 }

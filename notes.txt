@@ -195,3 +195,39 @@ export default SideBar;
 //!! admin panel description guncelle 
 import ReactQuill from "react-quill"; 
 ile
+
+
+
+
+
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+
+  // locale lang changes
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const supportedLocales = ["tr", "en"];
+
+  const changeLanguage = (lang: string) => {
+    router.push(pathname, { locale: lang }); // Yeni dili ayarla
+    setIsLangDropdownOpen(false); // Dropdown'ı kapat
+  };
+
+  const t = useTranslations();
+  const menuItems = [
+    { name: t("menuItems.profile"), url: "/profile" },
+    { name: t("menuItems.signup"), url: "/register" },
+    { name: t("menuItems.login"), url: "/login" },
+    { name: t("menuItems.admin"), url: "/admin" },
+    { name: t("menuItems.logout"), url: "/logout" },
+  ];
+
+  const navLinks = [
+    { name: t("navLinks.home"), url: "/" },
+    { name: t("navLinks.products"), url: "/products" },
+    { name: t("navLinks.blogs"), url: "/blogs" },
+    { name: t("navLinks.about"), url: "/about" },
+    { name: t("navLinks.contact"), url: "/contact" },
+  ];

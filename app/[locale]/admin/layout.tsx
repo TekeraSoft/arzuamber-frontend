@@ -1,7 +1,7 @@
 // AdminLayout.tsx
 "use client";
 
-import SideBar from "@/app/components/admin/AdminSideBar";
+import SideBar from "@/components/admin/AdminSideBar";
 
 interface AdminLayoutProps {
   children: React.ReactNode;

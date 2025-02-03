@@ -1,4 +1,4 @@
-import LayoutProvider from "../components/layout/layout";
+import LayoutProvider from "../../components/layout/layout";
 import StoreProvider from "@/store/StoreProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -42,7 +42,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
+    <html lang={locale} suppressHydrationWarning={false}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

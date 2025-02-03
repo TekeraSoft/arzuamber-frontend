@@ -56,3 +56,13 @@ export interface Subcategory {
   id: string;
   name: string;
 }
+
+export interface BlogProps {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  image: string;
+  author: string;
+  date: string;
+}

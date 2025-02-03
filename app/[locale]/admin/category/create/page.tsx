@@ -1,4 +1,4 @@
-import CategoryCreateForm from "@/app/components/admin/Category/CategoryCreateForm";
+import CategoryCreateForm from "@/components/admin/Category/CategoryCreateForm";
 import React from "react";
 
 function AdminCreateCategory() {

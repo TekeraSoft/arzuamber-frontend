@@ -1,10 +1,128 @@
 {
+  "navLinks": {
+    "home": "Ana Sayfa",
+    "products": "Ürünler",
+    "blogs": "Bloglar",
+    "about": "Hakkımızda",
+    "contact": "İletişim"
+  },
+
+  "menuItems": {
+    "profile": "Profil",
+    "signup": "Kayıt Ol",
+    "login": "Giriş Yap",
+    "admin": "Yönetici",
+    "logout": "Çıkış Yap"
+  },
+
+  "topBar": {
+    "discountMessage": "Yeni Sezon Ürünlerinde %50'ye Varan İndirim!!!",
+    "checkItOut": "Hemen İncele!"
+  },
+
   "HomePage": {
-    "title": "Yeni Ürünler ",
-    "welcome": {
-      "title": "Anasayfaya Hoşgeldiniz ",
-      "description": "Burası anasayfa"
+    "title": "Öne Çıkan Ürünler"
+  },
+
+  "brand": {
+    "title": "Yeni Sezon Koleksiyonu",
+    "description": "Her duruma uygun en yeni ürünleri keşfedin!",
+    "buttonText": "Ürünleri Görüntüle"
+  },
+
+  "loginForm": {
+    "welcomeBack": "Tekrar Hoş Geldiniz!",
+    "email": "E-posta",
+    "password": "Şifre",
+    "loginButton": "Giriş Yap",
+    "loginSuccess": "Başarıyla Giriş Yapıldı!",
+    "loginError": "Giriş Hatası!",
+    "noAccount": "Hesabınız yok mu? Kayıt olun"
+  },
+
+  "registerForm": {
+    "createAccount": "Hesap Oluştur",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "registerButton": "Kayıt Ol",
+    "loginLink": "Zaten bir hesabınız var mı? Giriş yap"
+  },
+
+  "allProduct": {
+    "allProducts": "Tüm Ürünler"
+  },
+
+  "productDetail": {
+    "productİnStock": "Stokta Var",
+    "productOutStock": "Stokta Yok",
+    "productInCart": "Sepetteki Ürün",
+    "productAddCart": "Sepete Ekle",
+    "sizeError": "Lütfen Beden Seçin.",
+    "productAddedCartSuccess": "Ürün Sepete Eklendi.",
+    "productRemovedCart": "Ürün Sepetten Kaldırıldı.",
+    "productAddedFavSuccess": "Ürün Favorilere Eklendi.",
+    "productRemovedFav": "Ürün Favorilerden Kaldırıldı.",
+    "productCategory": "Kategori",
+    "priceSymbol": "₺",
+    "readMore": "Daha fazla",
+    "readLess": "Daha az"
+  },
+
+  "SnackBar": {
+    "coypLinkSuccess": "Paylaşım bağlantısı kopyalandı!",
+    "coypLinkUnsuccess": "Paylaşım bağlantısı kopyalanamadı!"
+  },
+
+  "ContactPage": {
+    "title": "Bize Ulaşın",
+    "metaDescription": "Daha fazla bilgi için bize ulaşın",
+    "header": "Bize Ulaşın",
+    "subheader": "Daha fazla bilgi için bize ulaşın.",
+    "messageTitle": "Bize Ulaşın",
+    "form": {
+      "nameLabel": "Adınız",
+      "namePlaceholder": "Tam adınızı girin",
+      "nameError": "Ad alanı zorunludur",
+      "emailLabel": "E-posta adresi",
+      "emailPlaceholder": "E-postanızı girin",
+      "emailError": "E-posta zorunludur",
+      "lastNameLabel": "Soy Adınız",
+      "lastNamePlaceholder": "Soy adınızı girin",
+      "lastNameError": "Soy adınız zorunludur",
+      "companyLabel": "Şirket Adı",
+      "companyPlaceholder": "Şirket Adı",
+      "messageLabel": "Mesaj",
+      "messagePlaceholder": "Mesajınızı yazın...",
+      "submitButton": "Gönder"
     },
-    "about": "yeni ürün"
+    "sendButton": "Gönder",
+    "address": {
+      "street": "Kışla Neighborhood",
+      "building": "Street 40, Kayalar Apartment",
+      "number": "No: 8",
+      "floor": "Block A, Floor: 4, Apartment: 7",
+      "city": "Antalya",
+      "district": "Muratpasa",
+      "country": "Turkey"
+    }
+  },
+  "footer": {
+    "aboutUs": "Hakkımızda",
+    "customerService": "Müşteri Hizmetleri",
+    "newsletter": "Bülten",
+    "subscribeText": "Güncel haberlerden haberdar olmak için abone olun.",
+    "copyright": "© 2025 Arzu Amber. Tüm Hakları Saklıdır.",
+    "socialMedia": "Sosyal Medya"
+  },
+
+  "warningText": {
+    "ProductNotFoundTitle": "Ürün Bulunamadı",
+    "ProductNotFoundText": "Aradığınız ürün bulunamadı.",
+    "BlogNotFoundTitle": "Blog Bulunamadı",
+    "BlogNotFoundText": "Aradığınız blog bulunamadı.",
+    "requiredText": "Bu alan zorunlu !",
+    "ButtonText": "Ana sayfaya git"
   }
 }
