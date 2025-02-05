@@ -12,6 +12,7 @@ import TextClip from "../utils/TextClip";
 
 import { Product, Review } from "@/types/Props";
 import { Link } from "@/i18n/routing";
+import Button from "../general/Button";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -45,13 +46,18 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           className="object-contain  p-3  transition-all duration-500"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+
         <div className="absolute left-8 md:left-14 lg:left-14  xl:left-16  top-5   flex flex-col gap-2 opacity-100 group-hover:opacity-100 transition-opacity md:opacity-0">
           <button className="w-8 h-8 grid items-center justify-center bg-primary text-mywhite rounded-lg hover:bg-primaryLight hover:scale-110 transition-all shadow-md">
             <IoCart className="w-4 h-4" />
           </button>
+
+          <Button icon={IoCart} size="cartIcon" color="primary" />
+
           <button className="w-8 h-8 grid items-center justify-center bg-secondary text-mywhite rounded-lg hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md">
             <FaHeart className="w-4 h-4 " />
           </button>
+
           <Link
             href={`/product/${product.id}`}
             className="w-8 h-8 grid items-center justify-center bg-third text-mywhite rounded-lg hover:bg-thirdLight hover:scale-110 transition-all shadow-md"
@@ -59,6 +65,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
             <IoMdEye className="w-4 h-4" />
           </Link>
         </div>
+
         <div className=" absolute right-8  md:right-14  lg:right-7 xl:right-16 lg:top-5 top-5 md:top-5 w-9 h-6 flex justify-center items-center bg-ratingcolor text-mywhite rounded text-sm shadow-md ">
           %{Math.round(product.discountPercent)}
         </div>

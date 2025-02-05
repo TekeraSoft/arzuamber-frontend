@@ -6,9 +6,10 @@ import { IoEarth } from "react-icons/io5";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
 import TopBar from "./TopBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import Button from "@/components/general/Button";
+import { RootState } from "@/store/store";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -18,6 +19,8 @@ function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const carts = useSelector((state: RootState) => state.cart.carts);
+  const favs = useSelector((state: RootState) => state.favorites.favs);
 
   const menuItems = [
     { name: "Profile", url: "/profile" },
@@ -101,7 +104,7 @@ function Navbar() {
               <Link href="/cart" className="flex items-center">
                 <BsCart2 size={30} className="cursor-pointer text-secondary" />
                 <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  15
+                  {carts.length}
                 </span>
               </Link>
             </li>
@@ -109,7 +112,7 @@ function Navbar() {
               <Link href="/favorites" className="flex items-center">
                 <FaHeart size={28} className="cursor-pointer text-secondary" />
                 <span className="absolute -top-2 -right-3 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  8
+                  {favs.length}
                 </span>
               </Link>
             </li>
@@ -133,7 +136,7 @@ function Navbar() {
                     <Link
                       key={i}
                       href={item.url}
-                      className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center truncate"
+                      className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center text-sm"
                       title={item.name}
                     >
                       {item.name}
@@ -141,18 +144,18 @@ function Navbar() {
                   ))}
 
                   <Button
-                    text="Sigh Up"
+                    text="Sign Up"
                     color="default"
                     // text={t('menuItems.signup')}
                     onClick={() => dispatch(openRegisterModal())}
-                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center truncate "
+                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center text-sm "
                   />
                   <Button
                     text="Login"
                     color="default"
                     // text={t('menuItems.login')}
                     onClick={() => dispatch(openLoginModal())}
-                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center truncate "
+                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center  text-sm  "
                   />
                   <Button
                     text="Log out"
@@ -161,7 +164,7 @@ function Navbar() {
                     onClick={() => {
                       console.log("logout");
                     }}
-                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center truncate "
+                    className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center text-sm "
                   />
                 </div>
               )}
@@ -194,7 +197,7 @@ function Navbar() {
 
         {/* Mobile Menu */}
         {openMenu && (
-          <ul className="lg:hidden justify-center items-center flex flex-col border-t-2 text-myblack border-black p-4 space-y-4 border-b-2 ">
+          <ul className="lg:hidden justify-center items-center flex flex-col border-t-2 text-myblack border-black p-4 space-y-4 border-b-2">
             {navLinks.map((link) => (
               <li key={link.url}>
                 <Link
@@ -207,8 +210,18 @@ function Navbar() {
             ))}
             <div className="flex items-center gap-4 mt-4">
               <BiSearch size={30} className="cursor-pointer hover:opacity-60" />
-              <BsCart2 size={30} className="cursor-pointer hover:opacity-60" />
-              <FaHeart size={28} className="cursor-pointer hover:opacity-60" />
+              <Link href="/cart">
+                <BsCart2
+                  size={30}
+                  className="cursor-pointer hover:opacity-60"
+                />
+              </Link>
+              <Link href="/favorites">
+                <FaHeart
+                  size={28}
+                  className="cursor-pointer hover:opacity-60"
+                />
+              </Link>
             </div>
             <li className="flex items-center justify-center">
               <div className="relative">
@@ -219,7 +232,7 @@ function Navbar() {
                   <FaUser size={20} />
                 </div>
                 {openDropdown && (
-                  <div className="absolute top-9 left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-secondary text-mywhite border-myblack shadow-xl rounded-md p-2 flex flex-col items-center space-y-2 border z-50 ">
+                  <div className="absolute top-9 left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-secondary text-mywhite border-myblack shadow-xl rounded-md p-2 flex flex-col items-center space-y-2 border z-50">
                     {menuItems.map((item, i) => (
                       <Link
                         key={i}
@@ -231,26 +244,21 @@ function Navbar() {
                     ))}
                     {/* Sign Up and Log In actions */}
                     <Button
-                      text="Sigh Up"
+                      text="Sign Up"
                       color="default"
-                      // text={t('menuItems.signup')}
                       onClick={() => dispatch(openRegisterModal())}
                       className="w-full text-center hover:bg-third rounded-md text-sm px-2 py-1"
                     />
                     <Button
                       text="Login"
                       color="default"
-                      // text={t('menuItems.login')}
                       onClick={() => dispatch(openLoginModal())}
                       className="w-full text-center hover:bg-third rounded-md text-sm px-2 py-1"
                     />
                     <Button
                       text="Log out"
                       color="default"
-                      // text={t('menuItems.logout')}
-                      onClick={() => {
-                        console.log("logout");
-                      }}
+                      onClick={() => console.log("logout")}
                       className="w-full text-center hover:bg-third rounded-lg text-sm px-2 py-1"
                     />
                   </div>

@@ -27,15 +27,15 @@ const ColorPicker = ({
   };
 
   return (
-    <div className="flex space-x-4 items-center justify-center w-full">
+    <div className="flex  gap-2 md:space-x-4 flex-wrap  items-center justify-center w-full">
       {colors.map((color, index) => {
         const normalizedColor = color.toLowerCase();
-        const bgClass = colorMapping[normalizedColor] || "bg-gray-300"; // Varsayılan renk: gri
+        const bgClass = colorMapping[normalizedColor] || "bg-gray-300";
 
         return (
           <div
             key={index}
-            className={`w-10 h-10 p-1 rounded-full cursor-pointer flex items-center justify-center border-2 ${
+            className={`md:w-10 md:h-10 h-8 w-8 p-1 rounded-full cursor-pointer flex items-center justify-center border-2 ${
               selectedColor === color ? "border-myblack" : "border-gray-300"
             }`}
             onClick={() => handleColorSelect(color)}

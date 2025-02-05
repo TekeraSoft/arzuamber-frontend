@@ -1,4 +1,6 @@
 // import { IconType } from "react-icons";
+
+//! Review User
 export interface User {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export interface User {
   role: string;
 }
 
+//! Review Props
 export interface Review {
   id: string;
   userId: string;
@@ -21,6 +24,7 @@ export interface Review {
   user: User;
 }
 
+//! Product Props
 export interface Product {
   id: string;
   name: string;
@@ -37,6 +41,8 @@ export interface Product {
   colors: string[];
 }
 
+//! Cart adding Props
+
 export type CardProductProps = {
   id: string;
   name: string;
@@ -47,7 +53,10 @@ export type CardProductProps = {
   inStock: boolean;
   size: string;
   color: string;
+  discountPercent: number;
 };
+
+//! Category Props
 export interface Category {
   id: string;
   name: string;
@@ -60,6 +69,7 @@ export interface Subcategory {
   name: string;
 }
 
+//! BlogProps
 export interface BlogProps {
   id: string;
   category: string;
@@ -68,4 +78,19 @@ export interface BlogProps {
   image: string;
   date: string;
   tags: string[];
+}
+
+//! Cart Page Props
+
+export interface CartSummaryProps {
+  total: number;
+  tax: number;
+  savings: number;
+}
+
+//! Fav Page Props
+export interface FavSummaryProps {
+  total: number;
+  tax: number;
+  savings: number;
 }

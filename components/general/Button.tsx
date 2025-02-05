@@ -4,7 +4,7 @@ import { IconType } from "react-icons";
 interface ButtonProps {
   text?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  size?: "icon" | "small" | "medium" | "large";
+  size?: "icon" | "small" | "medium" | "large" | "cart" | "cartIcon";
   color?: "primary" | "secondary" | "third" | "fourth" | "default";
   outline?: boolean;
   icon?: IconType | undefined;
@@ -28,10 +28,13 @@ function Button({
   color = "primary",
 }: ButtonProps) {
   const sizeClasses = {
-    icon: "w-[35px] h-[35px]",
+    icon: "w-[40px] h-[40px]",
+    cart: "w-[70px]",
     small: "w-[250px]",
     medium: "w-[800px]",
     large: "w-full",
+    cartIcon:
+      "w-8 h-8 grid items-center justify-center bg-secondary text-mywhite rounded-lg p-0 hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md ",
   };
 
   const colorClasses = {
@@ -43,12 +46,12 @@ function Button({
   };
 
   const buttonClasses = outline
-    ? `border-2 border-myblack bg-mywhite  text-${color}`
+    ? `border border-myblack bg-mywhite  text-${color}`
     : colorClasses[color];
 
   return (
     <button
-      className={`rounded-lg p-3 flex justify-center items-center gap-2 text-center text-base  
+      className={`rounded-lg p-3 flex justify-center items-center gap-2 text-center   
         ${className}
         ${buttonClasses} 
         ${sizeClasses[size]} 

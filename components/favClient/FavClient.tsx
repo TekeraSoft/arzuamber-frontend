@@ -10,15 +10,15 @@ import { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import TextClip from "../utils/TextClip";
 import Heading from "../general/Heading";
-import EmptyCart from "./EmptyCart";
 import { Link } from "@/i18n/routing";
-import CartSummary from "./CartSummary";
+import EmptyFav from "./EmptyFav";
+import FavSummary from "./FavSummary";
 // import { useTranslations } from "next-intl";
 
 function CartClient() {
   const dispatch = useDispatch();
   // const t = useTranslations();
-  const carts = useSelector((state: RootState) => state.cart.carts);
+  const favs = useSelector((state: RootState) => state.favorites.favs);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -33,11 +33,11 @@ function CartClient() {
     dispatch(removeFromCart(id));
   };
 
-  if (!carts || carts.length === 0) {
-    return <EmptyCart />;
+  if (!favs || favs.length === 0) {
+    return <EmptyFav />;
   }
 
-  const total = carts.reduce((total, item) => {
+  const total = favs.reduce((total, item) => {
     // Ürün fiyatını indirim oranına göre güncelle
     const discountedPrice =
       item.price - (item.price * item.discountPercent) / 100;
@@ -47,7 +47,7 @@ function CartClient() {
 
   // Sabit değerler
   const tax = 150.0;
-  const savings = carts.reduce((totalSavings, item) => {
+  const savings = favs.reduce((totalSavings, item) => {
     // Her ürün için sağlanan tasarrufu hesapla
 
     const savingsPerItem =
@@ -59,7 +59,7 @@ function CartClient() {
     <PageContainer>
       <Heading
         text="Sepetiniz"
-        // text={t("CartPage.heading")}
+        // text={t("FavPage.title")}
         center
         textSize="4xl"
         hr
@@ -74,50 +74,50 @@ function CartClient() {
               <tr className="text-center">
                 <th className="p-3 text-xs sm:text-base">
                   Ürün
-                  {/* {t("CartPage.product")} */}
+                  {/* {t("FavPage.product")} */}
                 </th>
                 <th className="p-3 text-xs sm:text-base hidden md:block">
                   Adı
-                  {/* {t("CartPage.name")} */}
+                  {/* {t("FavPage.name")} */}
                 </th>
 
                 <th className="p-3 text-xs sm:text-base">
                   Miktar
-                  {/* {t("CartPage.quantity")} */}
+                  {/* {t("FavPage.quantity")} */}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
                   Fiyat
-                  {/* {t("CartPage.price")} */}
+                  {/* {t("FavPage.price")} */}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
                   Beden
-                  {/* {t("CartPage.price")} */}
+                  {/* {t("FavPage.size")} */}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
                   Renk
-                  {/* {t("CartPage.price")} */}
+                  {/* {t("FavPage.color")} */}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
                   İşlemler
-                  {/* {t("CartPage.actions")} */}
+                  {/* {t("FavPage.actions")} */}
                 </th>
               </tr>
             </thead>
 
             <tbody>
-              {carts.map((cart) => {
+              {favs.map((fav) => {
                 // Ürün fiyatını indirimli hale getir
                 const discountedPrice =
-                  cart.price - (cart.price * cart.discountPercent) / 100;
+                  fav.price - (fav.price * fav.discountPercent) / 100;
                 return (
                   <tr
-                    key={cart.id}
+                    key={fav.id}
                     className="border-b border-gray-200 text-center "
                   >
                     <td className="p-3 flex flex-col items-center w-16">
                       <Image
-                        src={cart.image}
-                        alt={cart.name}
+                        src={fav.image}
+                        alt={fav.name}
                         width={80}
                         height={80}
                         priority
@@ -125,30 +125,30 @@ function CartClient() {
                       />
                     </td>
                     <td className="text-gray-900 font-medium hidden md:table-cell">
-                      {TextClip(cart.name)}
+                      {TextClip(fav.name)}
                     </td>
 
-                    <td className="text-gray-900">{cart.quantity}</td>
+                    <td className="text-gray-900">{fav.quantity}</td>
                     <td className="text-gray-900 font-semibold">
-                      {/* {t("CartPage.cartPriceSymbol)}: */}
+                      {/* {t("FavPage.favPriceSymbol")} */}
                       {/* İndirimli fiyatı göster */}${discountedPrice}
                     </td>
-                    <td className="text-gray-900">{cart.size}</td>
-                    <td className="text-gray-900">{cart.color}</td>
+                    <td className="text-gray-900">{fav.size}</td>
+                    <td className="text-gray-900">{fav.color}</td>
                     <td className=" p-2">
                       <Button
                         type="button"
-                        onClick={() => removeItemFromCart(cart.id)}
+                        onClick={() => removeItemFromCart(fav.id)}
                         text="Sil"
-                        // text={/* {t("CartPage.remove)}: */}
+                        // text={t("FavPage.remove")}
                         color="third"
                         className="w-full h-7 md:w-14 md:h-10 text-sm"
                       />
-                      <Link href={`product/${cart.id}`}>
+                      <Link href={`product/${fav.id}`}>
                         <Button
                           type="button"
                           text="Detay"
-                          // text={/* {t("CartPage.details)}: */}
+                          // text={t("CartPage.details")}
                           color="third"
                           className="w-full h-7 md:w-14 md:h-10 text-sm mt-2"
                         />
@@ -162,7 +162,7 @@ function CartClient() {
         </div>
 
         {/* Sepet Özeti */}
-        <CartSummary total={total + tax} tax={tax} savings={savings} />
+        <FavSummary total={total + tax} tax={tax} savings={savings} />
       </div>
     </PageContainer>
   );

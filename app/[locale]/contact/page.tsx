@@ -129,11 +129,12 @@ function ContactPage() {
                           errors={errors}
                           required={true}
                         />
-
-                        <Button
-                          size="large"
-                          text={t("ContactPage.form.submitButton")}
-                        />
+                        <div className="flex items-center justify-center">
+                          <Button
+                            size="small"
+                            text={t("ContactPage.form.submitButton")}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

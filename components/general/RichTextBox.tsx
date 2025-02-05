@@ -24,9 +24,9 @@ function RichTextBox({
   register,
 }: RichTextBoxProps) {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1 ">
           {label}
         </label>
       )}

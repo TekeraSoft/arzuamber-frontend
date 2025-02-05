@@ -85,6 +85,76 @@
     "Tags": "Tags"
   },
 
+  "CartPage": {
+    "heading": "Your Cart",
+    "product": "Product",
+    "name": "Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "actions": "Actions",
+    "summary": "Cart Summary",
+    "cartPriceSymbol": "$",
+    "total": "Total",
+    "continueShopping": "Continue Shopping",
+    "remove": "Remove",
+    "details": "Details",
+    "size": "Size",
+    "color": "Color",
+    "emptyCart": {
+      "title": "No Products in Cart",
+      "message": "Start shopping now!"
+    },
+    "cartSummary": {
+      "title": "Cart Summary",
+      "total": "Total:",
+      "shipping": "Shipping:",
+      "freeShipping": "Free",
+      "tax": "Tax:",
+      "savings": "Total Savings:",
+      "discountCodePlaceholder": "Discount Code",
+      "submitDiscountCode": "Submit Code",
+      "continueShopping": "Continue Shopping",
+      "proceedToPayment": "Proceed to Payment",
+      "symbol": "$"
+    }
+  },
+
+  "FavPage": {
+    "heading": "Your Favorites",
+    "product": "Product",
+    "name": "Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "actions": "Actions",
+    "summary": "Favorites Summary",
+    "total": "Total",
+    "favPriceSymbol": "$",
+    "continueShopping": "Continue Shopping",
+    "remove": "Remove",
+    "details": "Details",
+    "size": "Size",
+    "color": "Color",
+    "emptyfavTitle": "No Products in Favorites",
+    "emptyfavMessage": "Start shopping now!",
+    "favSummary": {
+      "title": "Favorites Summary",
+      "total": "Total:",
+      "shipping": "Shipping:",
+      "freeShipping": "Free",
+      "tax": "Tax:",
+      "savings": "Total Savings:",
+      "continueShopping": "Continue Shopping",
+      "symbol": "$"
+    }
+  },
+
+  "AboutPage": {
+    "aboutPageTitle": "About Us",
+    "aboutPageDescription": "We are here to bring you the latest trends, quality products, and stylish combinations. Our mission is to make every woman feel special. Refresh your wardrobe with modern, stylish, and unique designs.",
+    "visionTitle": "Our Vision",
+    "visionDescription": "We offer not just clothing, but a lifestyle. Each piece is designed to reflect your style. We aim not to follow fashion, but to lead it."
+  },
+
   "ContactPage": {
     "title": "Contact Us",
     "metaDescription": "Contact us for more information",
@@ -122,10 +192,15 @@
   "footer": {
     "aboutUs": "About Us",
     "customerService": "Customer Service",
+    "aboutDescription": "We are a brand offering modern and stylish designs in women’s fashion. We are always by your side with products that appeal to fashion enthusiasts.",
     "newsletter": "Newsletter",
     "subscribeText": "Subscribe to stay updated with the latest news.",
     "copyright": "© 2025 Arzu Amber. All Rights Reserved.",
-    "socialMedia": "Social Media"
+    "returnPolicy": "Return Policy ",
+    "faq": "Frequently Asked Questions",
+    "supportRequest": "Support Request",
+    "subscribeButton": "Subscribe",
+    "emailPlaceholder": "Your email address"
   },
 
   "SnackBar": {

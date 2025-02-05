@@ -97,7 +97,7 @@ const Footer = () => {
           {/* Copyright */}
           <p className="text-sm text-center mb-4 md:mb-0">
             © 2025 Arzu Amber. All Rights Reserved.
-            {/* {t("footer.allRightsReserved")} */}
+            {/* {t("footer.copyright")} */}
           </p>
 
           {/* Social Media */}

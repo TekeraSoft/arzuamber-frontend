@@ -52,16 +52,16 @@ export default function BlogsPage() {
   return (
     <>
       <PageContainer>
-        <section className="all-blogs-main-div p-5 my-2 bg-gray-100 rounded-lg">
+        <section className="all-blogs-main-div border-t my-3  rounded-lg">
           <div className="px-2 mx-auto sm:px-4 lg:px-0 max-w-7xl">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
+              <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl mt-5">
                 Latest from Blog
                 {/* {t("blogPage.title")} */}
               </h2>
               <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis.
+                Blogumuzda en son makaleler, ipuçları ve içgörüleri takip edin.
+                Düzenli olarak heyecan verici yeni içerikler keşfedin.
                 {/* {t("blogPage.text")} */}
               </p>
             </div>

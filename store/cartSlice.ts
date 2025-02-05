@@ -9,6 +9,9 @@ export interface CartItem {
   quantity: number;
   image: string;
   inStock: boolean;
+  discountPercent: number;
+  size: string;
+  color: string;
 }
 
 // Sepet Tipi

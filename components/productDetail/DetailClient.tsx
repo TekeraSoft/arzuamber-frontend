@@ -53,19 +53,20 @@ const DetailClient = ({ product }: productProps) => {
 
   const [displayButton, setDisplayButton] = useState<boolean>(false);
   const [displayFav, setDisplayFav] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
+  const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]);
 
   const [cardProduct, setcardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
     description: product.description,
     price: product.price,
+    discountPercent: product.discountPercent,
     quantity: 1,
     image: product.images[0],
     inStock: product.inStock,
-    size: selectedSize ?? "",
-    color: selectedColor ?? "",
+    size: selectedSize,
+    color: selectedColor,
   });
 
   const increaseFunc = () => {
@@ -94,6 +95,7 @@ const DetailClient = ({ product }: productProps) => {
       name: product?.name,
       image: product.images[0],
       price: product?.price,
+      discountPercent: product.discountPercent,
       quantity: cardProduct?.quantity,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
@@ -127,6 +129,7 @@ const DetailClient = ({ product }: productProps) => {
       image: product.images[0],
       price: product?.price,
       quantity: cardProduct?.quantity,
+      discountPercent: product.discountPercent,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
       size: cardProduct.size,
@@ -212,62 +215,62 @@ const DetailClient = ({ product }: productProps) => {
 
   return (
     <PageContainer>
-      <div className="detail-page-main-div  ">
-        <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
-          {/* Image Section with Carousel */}
-          <div className=" w-full md:w-1/2 h-[500px] relative">
-            <Carousel
-              responsive={responsive}
-              infinite
-              autoPlay
-              autoPlaySpeed={3000}
-              transitionDuration={500}
-            >
-              {product.images.map((img, index) => (
-                <div key={index} className=" w-full h-[500px] relative ">
-                  <Image
-                    className="object-contain absolute"
-                    src={img}
-                    alt={product.name}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </div>
+      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
+        {/* Image Section with Carousel */}
+        <div className=" w-full md:w-1/2 h-[500px] relative">
+          <Carousel
+            responsive={responsive}
+            infinite
+            autoPlay
+            autoPlaySpeed={3000}
+            transitionDuration={500}
+          >
+            {product.images.map((img, index) => (
+              <div key={index} className=" w-full h-[500px] relative ">
+                <Image
+                  className="object-contain absolute"
+                  src={img}
+                  alt={product.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
 
-          {/* Product Details Section */}
-          <div className="w-full md:w-1/2 flex flex-col gap-6 items-center md:items-start text-center md:text-left">
-            <div className="flex flex-col lg:flex-row justify-between items-center w-full gap-2">
+        {/* Product Details Section */}
+        <div className="w-full md:w-1/2 flex flex-col gap-6 items-center md:items-start text-center md:text-left">
+          <div className="flex flex-col lg:flex-row justify-between items-center w-full gap-2">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 w-full ">
               {/* Product Name*/}
               <h1 className=" capitalize  text-4xl lg:text-3xl font-serif font-extrabold text-secondaryDark text-center">
                 {TextClip(product.name)}
               </h1>
 
               {/* Rating */}
-              <div className="flex items-center gap-2 text-lg">
-                <Rating
-                  name="read-only"
-                  value={ratingResult}
-                  precision={0.5}
-                  readOnly
-                  size="large"
-                />
-              </div>
+              <Rating
+                name="read-only"
+                value={ratingResult}
+                precision={0.5}
+                readOnly
+                size="large"
+              />
             </div>
-            <hr className="w-full border-black" />
+          </div>
+          <hr className="w-full bg-secondary" />
 
-            {/* price and category */}
-            <div className="flex flex-col md:flex-row flex-wrap justify-between items-center w-full gap-3">
-              <div className="text-2xl font-semibold text-primary border  rounded-lg px-2 border-myblack">
+          {/* price and category */}
+          <div className="flex  flex-col justify-center items-start w-full gap-2">
+            <div className=" w-full flex gap-3 ">
+              <div className="w-2/4  font-semibold text-primary border  rounded-lg px-3 py-1 border-myblack">
                 {discountPercent > 0 ? (
                   <div className="flex justify-center items-center gap-2">
-                    <span className=" text-myblack text-4xl">
+                    <span className=" text-myblack text-md  md:text-2xl">
                       {discountedPrice}₺
                     </span>
-                    <span className="line-through text-red-500 text-md">
+                    <span className="line-through text-red-500 text-xs md:text-sm">
                       {product.price.toFixed(2)}
                       {/* {t("productDetail.priceSymbol")} */}₺
                     </span>
@@ -280,43 +283,9 @@ const DetailClient = ({ product }: productProps) => {
                 )}
               </div>
 
-              <div className="flex items-center justify-start gap-2 text-md font-medium p-3 rounded-lg text-white bg-gradient-to-r from-secondary to-secondary ">
-                <span className="font-bold text-lg tracking-wide">
-                  Category:
-                  {/* {t("productDetail.productCategory")}: */}
-                </span>
-                <span className="bg-white text-primary px-3 py-1 rounded-md shadow-sm font-semibold">
-                  {product.category}
-                </span>
-                <span className="text-gray-200">/</span>
-                <span className="bg-white text-primary px-3 py-1 rounded-md shadow-sm font-semibold">
-                  {product.subcategories}
-                </span>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="flex flex-col">
-              <p
-                className={`font-sans text-gray-700 text-md leading-relaxed ${
-                  lineClamp ? "line-clamp-4" : ""
-                }`}
-              >
-                {product.description}
-              </p>
-              <span
-                onClick={handleClamp}
-                className="w-full mt-1 text-primary text-md font-bold cursor-pointer  hover:underline text-end no-underline"
-              >
-                {/* {lineClamp ? t("productDetail.readMore") : t("productDetail.readLess")} */}
-                {lineClamp ? "Daha fazla" : "Daha az"}
-              </span>
-            </div>
-
-            {/* Stock Status */}
-            <div className="w-full flex justify-between items-center 0 ">
+              {/* Stock Status */}
               <div
-                className={` w-1/4 flex items-center justify-center md:text-lg font-semibold  p-2 rounded-lg  text-mywhite text-sm ${
+                className={`w-2/4 flex items-center justify-center  text-sm md:text-lg font-semibold px-2 py-2 rounded-lg  text-mywhite ${
                   product.inStock ? "bg-primary " : "bg-thirdLight"
                 }`}
               >
@@ -332,135 +301,177 @@ const DetailClient = ({ product }: productProps) => {
                   </p>
                 )}
               </div>
-
-              <div className="flex items-center justify-end md:justify-center w-3/4 gap-2">
-                {product.sizes.map((size, i) => (
-                  <Button
-                    key={i}
-                    onClick={() => handleSizeSelect(size)}
-                    outline={size !== selectedSize}
-                    color={size === selectedSize ? "primary" : "secondary"}
-                    animation
-                    size="icon"
-                    text={`${size}`}
-                    disabled={displayFav}
-                  />
-                ))}
-              </div>
             </div>
 
-            <ColorPicker
-              colors={product.colors}
-              onColorSelect={handleColorSelect}
-              selectedColor={selectedColor}
-            />
+            <div
+              className="w-full md:w-1/2 flex items-center justify-center gap-2 text-md font-medium p-1
+               md:p-2  rounded-lg text-white bg-primary "
+            >
+              <span className=" text-xs md:text-base tracking-wide">
+                Category:
+                {/* {t("productDetail.productCategory")}: */}
+              </span>
+              <span className="bg-white text-primary px-1 md:px-2 md:py-1 rounded-md shadow-sm  text-sm  md:text-sm ">
+                {product.category}
+              </span>
+              <span className="text-gray-200 ">/</span>
+              <span className="bg-white text-primary px-1  md:px-2 md:py-1 rounded-md shadow-sm text-sm md:text-sm">
+                {product.subcategories}
+              </span>
+            </div>
+          </div>
 
-            {/* Counter and Add to Cart Button */}
-            <div className="w-full flex justify-between  md:justify-center  items-center gap-4 flex-wrap ">
-              <div className="w-full flex flex-row  justify-center items-center gap-10 lg:gap-10 ">
-                <div className=" w-1/4">
-                  <Counter
-                    increaseFunc={increaseFunc}
-                    descreaseFunc={descreaseFunc}
-                    cardProduct={cardProduct}
-                  />
-                </div>
-                <div className="w-3/4">
-                  {displayButton ? (
-                    <Button
-                      disabled={!displayButton}
-                      onClick={() => removeToBasket(product.id)}
-                      text={"Product In Cart"}
-                      // title={t("productDetail.productInCart")}
-                      outline={!product.inStock}
-                      color="secondary"
-                      size="large"
-                    />
-                  ) : (
-                    <>
-                      <Button
-                        disabled={!product.inStock}
-                        onClick={addToBasket}
-                        text={
-                          product.inStock
-                            ? "Add To Cart"
-                            : // {t("productDetail.productAddCart")}
-                              "Product Out of Stock "
-                          // {t("productDetail.productOutStock")}
-                        }
-                        outline={!product.inStock}
-                        color="primary"
-                        size="large"
-                      />
-                    </>
-                  )}
-                </div>
+          {/* Description */}
+          <div className="flex flex-col">
+            <p
+              className={`font-sans text-gray-700 text-xs md:text-sm leading-relaxed ${
+                lineClamp ? "line-clamp-4" : ""
+              }`}
+            >
+              {product.description}
+            </p>
+            <span
+              onClick={handleClamp}
+              className="w-full mt-1 text-primary text-sm md:text-md font-bold cursor-pointer  hover:underline text-end no-underline"
+            >
+              {/* {lineClamp ? t("productDetail.readMore") : t("productDetail.readLess")} */}
+              {lineClamp ? "Daha fazla" : "Daha az"}
+            </span>
+          </div>
+
+          <hr className="w-full bg-secondary" />
+
+          <div className="flex items-center justify-center flex-wrap gap-3">
+            <div className="w-full md:w-3/4 flex justify-center items-center">
+              <ColorPicker
+                colors={product.colors}
+                onColorSelect={handleColorSelect}
+                selectedColor={selectedColor}
+              />
+            </div>
+            <div className=" w-full md:w-1/4  flex justify-center items-center gap-3">
+              {product.sizes.map((size, i) => (
+                <Button
+                  key={i}
+                  onClick={() => handleSizeSelect(size)}
+                  outline={size !== selectedSize}
+                  color={size === selectedSize ? "primary" : "secondary"}
+                  animation
+                  size="icon"
+                  text={`${size}`}
+                  disabled={displayFav}
+                />
+              ))}
+            </div>
+          </div>
+
+          <hr className="w-full bg-secondary" />
+
+          {/* Counter and Add to Cart Button */}
+          <div className="w-full flex justify-between  md:justify-center  items-center gap-4 flex-wrap ">
+            <div className="w-full flex flex-col md:flex-row  justify-center items-center gap-10 lg:gap-10 ">
+              <div className=" w-1/4">
+                <Counter
+                  increaseFunc={increaseFunc}
+                  descreaseFunc={descreaseFunc}
+                  cardProduct={cardProduct}
+                />
               </div>
-
-              <div className="w-full flex justify-end items-center gap-4">
-                {displayFav ? (
-                  <>
-                    <Button
-                      disabled={!displayFav}
-                      onClick={() => removeToFav(product.id)}
-                      outline={displayFav}
-                      color="primary"
-                      icon={FaHeart}
-                      size="icon"
-                      animation={!displayFav}
-                    />
-                  </>
+              <div className="w-3/4">
+                {displayButton ? (
+                  <Button
+                    disabled={!displayButton}
+                    onClick={() => removeToBasket(product.id)}
+                    text={"Product In Cart"}
+                    // title={t("productDetail.productInCart")}
+                    outline={!product.inStock}
+                    color="secondary"
+                    size="large"
+                  />
                 ) : (
                   <>
                     <Button
-                      disabled={displayFav}
-                      onClick={AddToFav}
-                      outline={displayFav}
+                      disabled={!product.inStock}
+                      onClick={addToBasket}
+                      text={
+                        product.inStock
+                          ? "Add To Cart"
+                          : // {t("productDetail.productAddCart")}
+                            "Product Out of Stock "
+                        // {t("productDetail.productOutStock")}
+                      }
+                      outline={!product.inStock}
                       color="primary"
-                      icon={FaHeart}
-                      size="icon"
-                      animation={!displayFav}
+                      size="large"
                     />
                   </>
                 )}
-
-                <Button
-                  onClick={copyPath}
-                  color="primary"
-                  size="icon"
-                  icon={IoShareSocialSharp}
-                  iconSize={25}
-                  animation
-                />
-
-                <Snackbar
-                  open={open}
-                  autoHideDuration={1500}
-                  onClose={handleClose}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                >
-                  <SnackbarContent
-                    message=" Share Link Copied ✓ "
-                    // message={t("  SnackBar.coypLinkSuccess")}
-                    sx={{
-                      backgroundColor: "#8174A0",
-                      color: "white",
-                    }}
-                  />
-                </Snackbar>
               </div>
+            </div>
+
+            <div className="w-full flex justify-center md:justify-end items-center gap-4">
+              {displayFav ? (
+                <>
+                  <Button
+                    disabled={!displayFav}
+                    onClick={() => removeToFav(product.id)}
+                    outline={displayFav}
+                    color="primary"
+                    icon={FaHeart}
+                    size="icon"
+                    animation={!displayFav}
+                  />
+                </>
+              ) : (
+                <>
+                  <Button
+                    disabled={displayFav}
+                    onClick={AddToFav}
+                    outline={displayFav}
+                    color="primary"
+                    icon={FaHeart}
+                    size="icon"
+                    animation={!displayFav}
+                  />
+                </>
+              )}
+
+              <Button
+                onClick={copyPath}
+                color="primary"
+                size="icon"
+                icon={IoShareSocialSharp}
+                iconSize={25}
+                animation
+              />
+
+              <Snackbar
+                open={open}
+                autoHideDuration={1500}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              >
+                <SnackbarContent
+                  message=" Share Link Copied ✓ "
+                  // message={t("  SnackBar.coypLinkSuccess")}
+                  sx={{
+                    backgroundColor: "#8174A0",
+                    color: "white",
+                  }}
+                />
+              </Snackbar>
             </div>
           </div>
         </div>
+      </div>
 
-        <Heading text="Reviews" center textSize="3xl" hr />
+      <Heading text="Reviews" center textSize="3xl" hr />
 
-        {/* Reviews Section */}
-        <div className=" space-y-4 mb-5">
-          {product?.reviews?.map((prd: Review) => (
-            <Comment key={prd.id} prd={prd} />
-          ))}
-        </div>
+      {/* Reviews Section */}
+      <div className=" flex flex-col justify-center items-center mb-5">
+        {product?.reviews?.map((prd: Review) => (
+          <Comment key={prd.id} prd={prd} />
+        ))}
       </div>
     </PageContainer>
   );

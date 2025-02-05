@@ -84,6 +84,76 @@
     "Tags": "Etiket"
   },
 
+  "CartPage": {
+    "heading": "Sepetiniz",
+    "product": "Ürün",
+    "name": "Adı",
+    "quantity": "Miktar",
+    "price": "Fiyat",
+    "actions": "İşlemler",
+    "summary": "Sepet Özeti",
+    "total": "Toplam",
+    "cartPriceSymbol": "₺",
+    "continueShopping": "Alışverişe Devam Et",
+    "remove": "Sil",
+    "details": "Detay",
+    "size": "Beden",
+    "color": "Renk",
+    "emptyCart": {
+      "title": "Sepette Hiç Ürün Yok",
+      "message": "Hadi alışveriş yapmaya başla!"
+    },
+    "cartSummary": {
+      "title": "Sepet özeti",
+      "total": "Toplam:",
+      "shipping": "Kargo:",
+      "freeShipping": "Ücretsiz",
+      "tax": "Vergi:",
+      "savings": "Toplam Kazanç:",
+      "discountCodePlaceholder": "İndirim Kodu",
+      "submitDiscountCode": "Kodu Gönder",
+      "continueShopping": "Alışverişe Devam Et",
+      "proceedToPayment": "Ödeme Yap",
+      "symbol": "₺"
+    }
+  },
+
+  "FavPage": {
+    "heading": "Favorileriniz",
+    "product": "Ürün",
+    "name": "Adı",
+    "quantity": "Miktar",
+    "price": "Fiyat",
+    "actions": "İşlemler",
+    "summary": "Favori Özeti",
+    "total": "Toplam",
+    "favPriceSymbol": "₺",
+    "continueShopping": "Alışverişe Devam Et",
+    "remove": "Sil",
+    "details": "Detay",
+    "size": "Beden",
+    "color": "Renk",
+    "emptyfavTitle": "Favorilerde Hiç Ürün Yok",
+    "emptyfavMessage": "Hadi alışveriş yapmaya başla!",
+    "favSummary": {
+      "title": "Favori özeti",
+      "total": "Toplam:",
+      "shipping": "Kargo:",
+      "freeShipping": "Ücretsiz",
+      "tax": "Vergi:",
+      "savings": "Toplam Kazanç:",
+      "continueShopping": "Alışverişe Devam Et",
+      "symbol": "₺"
+    }
+  },
+
+  "AboutPage": {
+    "aboutPageTitle": "Hakkımızda",
+    "aboutPageDescription": "Moda dünyasında sizlere en yeni trendleri, kaliteli ürünleri ve şık kombinleri sunmak için buradayız. Misyonumuz, her kadının kendini özel hissetmesini sağlamak. Modern, şık ve özgün tasarımlar ile gardırobunuzu yenileyin.",
+    "visionTitle": "Vizyonumuz",
+    "visionDescription": "Sadece kıyafet değil, aynı zamanda bir yaşam tarzı sunuyoruz. Her bir parça, sizin tarzınızı yansıtacak şekilde tasarlanmıştır. Modayı takip etmek değil, ona yön vermek istiyoruz."
+  },
+
   "ContactPage": {
     "title": "Bize Ulaşın",
     "metaDescription": "Daha fazla bilgi için bize ulaşın",
@@ -120,10 +190,15 @@
   "footer": {
     "aboutUs": "Hakkımızda",
     "customerService": "Müşteri Hizmetleri",
+    "aboutDescription": "Kadın modasında modern ve şık tasarımlar sunan bir markayız. Moda tutkunlarına hitap eden ürünlerle her zaman yanınızdayız.",
     "newsletter": "Bülten",
     "subscribeText": "Güncel haberlerden haberdar olmak için abone olun.",
     "copyright": "© 2025 Arzu Amber. Tüm Hakları Saklıdır.",
-    "socialMedia": "Sosyal Medya"
+    "returnPolicy": "İade Politikası",
+    "faq": "Sıkça Sorulan Sorular",
+    "supportRequest": "Destek Talebi",
+    "subscribeButton": "Abone ol",
+    "emailPlaceholder": "E-posta adresiniz"
   },
 
   "SnackBar": {

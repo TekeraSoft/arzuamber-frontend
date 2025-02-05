@@ -32,9 +32,9 @@ function BlogClient({ blog }: { blog: BlogProps }) {
           <Image
             src={blog.image}
             alt={blog.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-t-lg"
+            priority
+            fill
+            className="rounded-t-lg object-cover"
           />
         </div>
 
