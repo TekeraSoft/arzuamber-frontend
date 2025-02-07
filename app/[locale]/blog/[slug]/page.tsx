@@ -1,6 +1,6 @@
 "use client";
 
-import BlogClient from "@/components/blog/BlogClient";
+import BlogClient from "@/components/blogDetail/BlogClient";
 import Loading from "@/components/utils/Loading";
 import WarningText from "@/components/utils/WarningText";
 import { RootState } from "@/store/store";

@@ -148,6 +148,19 @@
     }
   },
 
+  "userProfile": {
+    "title": "User Profile",
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "E-mail",
+    "phone": "Phone",
+    "addressPlaceholder": "Enter your address...",
+    "phonePlaceholder": "Enter your phone number...",
+    "updateButton": "Update",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone"
+  },
+
   "AboutPage": {
     "aboutPageTitle": "About Us",
     "aboutPageDescription": "We are here to bring you the latest trends, quality products, and stylish combinations. Our mission is to make every woman feel special. Refresh your wardrobe with modern, stylish, and unique designs.",

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaHeart, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
-import { BiSearch } from "react-icons/bi";
 import { IoEarth } from "react-icons/io5";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
@@ -97,9 +96,6 @@ function Navbar() {
 
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-5">
-            <li>
-              <BiSearch size={30} className="cursor-pointer text-secondary" />
-            </li>
             <li className="relative">
               <Link href="/cart" className="flex items-center">
                 <BsCart2 size={30} className="cursor-pointer text-secondary" />
@@ -209,7 +205,6 @@ function Navbar() {
               </li>
             ))}
             <div className="flex items-center gap-4 mt-4">
-              <BiSearch size={30} className="cursor-pointer hover:opacity-60" />
               <Link href="/cart">
                 <BsCart2
                   size={30}

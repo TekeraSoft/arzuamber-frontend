@@ -2,7 +2,7 @@ import React from "react";
 
 function GradientColorContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className=" bg-gradient-to-t from-white to-secondary">{children}</div>
+    <div className=" bg-gradient-to-t from-white to-third">{children}</div>
   );
 }
 

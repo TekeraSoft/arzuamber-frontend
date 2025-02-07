@@ -1,4 +1,4 @@
-import AllProduct from "@/components/product/AllProduct";
+import AllProduct from "@/components/products/AllProduct";
 
 function Products() {
   return <AllProduct />;

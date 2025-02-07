@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import PageContainer from "../Containers/PageContainer";
 import Button from "../general/Button";
-import { removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
@@ -13,6 +12,7 @@ import Heading from "../general/Heading";
 import { Link } from "@/i18n/routing";
 import EmptyFav from "./EmptyFav";
 import FavSummary from "./FavSummary";
+import { removeFromFav } from "@/store/favoritesSlice";
 // import { useTranslations } from "next-intl";
 
 function CartClient() {
@@ -29,8 +29,8 @@ function CartClient() {
     return <Loading />;
   }
 
-  const removeItemFromCart = (id: string) => {
-    dispatch(removeFromCart(id));
+  const removefromFav = (id: string) => {
+    dispatch(removeFromFav(id));
   };
 
   if (!favs || favs.length === 0) {
@@ -138,7 +138,7 @@ function CartClient() {
                     <td className=" p-2">
                       <Button
                         type="button"
-                        onClick={() => removeItemFromCart(fav.id)}
+                        onClick={() => removefromFav(fav.id)}
                         text="Sil"
                         // text={t("FavPage.remove")}
                         color="third"

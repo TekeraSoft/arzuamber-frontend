@@ -2,9 +2,11 @@ import { postGuardRequest } from "./../services/requestservice";
 import { toast } from "react-toastify";
 
 import { createSlice } from "@reduxjs/toolkit";
+import { user } from "@/constans/User";
 
 const initialState = {
-  user: {},
+  // user: {},
+  user: user,
   loading: false,
 };
 

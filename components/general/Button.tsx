@@ -34,7 +34,7 @@ function Button({
     medium: "w-[800px]",
     large: "w-full",
     cartIcon:
-      "w-8 h-8 grid items-center justify-center bg-secondary text-mywhite rounded-lg p-0 hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md ",
+      "w-8 h-8 flex justify-center items-center r text-mywhite rounded-lg hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md",
   };
 
   const colorClasses = {
@@ -46,18 +46,19 @@ function Button({
   };
 
   const buttonClasses = outline
-    ? `border border-myblack bg-mywhite  text-${color}`
+    ? `border border-myblack bg-mywhite text-${color}`
     : colorClasses[color];
 
   return (
     <button
-      className={`rounded-lg p-3 flex justify-center items-center gap-2 text-center   
+      className={`rounded-lg flex justify-center items-center gap-2 text-center   
         ${className}
         ${buttonClasses} 
         ${sizeClasses[size]} 
+        ${size === "cartIcon" ? "p-0" : "p-3"}
         ${
           animation
-            ? "hover:brightness-110 hover:scale-105 transition-all duration-300"
+            ? "hover:brightness-110 hover:scale-105 transition-all duration-300 transform-origin-center"
             : ""
         }
       `}

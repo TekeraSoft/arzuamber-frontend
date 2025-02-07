@@ -1,7 +1,7 @@
 {
   "navLinks": {
     "home": "Ana Sayfa",
-    "products": "Ürünler",
+    "products": "Tüm Ürünler",
     "blogs": "Bloglar",
     "about": "Hakkımızda",
     "contact": "İletişim"
@@ -145,6 +145,19 @@
       "continueShopping": "Alışverişe Devam Et",
       "symbol": "₺"
     }
+  },
+
+  "userProfile": {
+    "title": "Kullanıcı Profili",
+    "name": "İsim",
+    "lastName": "Soy isim",
+    "email": "Mail",
+    "phone": "Telefon",
+    "addressPlaceholder": "Adresinizi girin...",
+    "phonePlaceholder": "Telefon numaranızı girin...",
+    "updateButton": "Güncelle",
+    "addressLabel": "Adres",
+    "phoneLabel": "Telefon"
   },
 
   "AboutPage": {

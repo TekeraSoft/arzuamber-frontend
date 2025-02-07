@@ -38,7 +38,7 @@ export interface Product {
   reviews: Review[];
   isNewSeason: boolean;
   sizes: string[];
-  colors: string[];
+  colors: object[];
 }
 
 //! Cart adding Props
@@ -53,6 +53,21 @@ export type CardProductProps = {
   inStock: boolean;
   size: string;
   color: string;
+  discountPercent: number;
+};
+
+//! Product Select Modal  Props
+
+export type ProductSelectModalProps = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  image: string;
+  inStock: boolean;
+  sizes: string[];
+  colors: string[];
   discountPercent: number;
 };
 

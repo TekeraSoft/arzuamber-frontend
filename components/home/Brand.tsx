@@ -15,7 +15,7 @@ function Brand() {
   };
 
   return (
-    <div className="w-full h-[650px] relative mt-3 md:mt-5">
+    <div className="w-full h-[700px] relative mt-3 md:mt-5 ">
       <Image
         className="object-cover bg-center "
         src="/images/Brand/single-campaign.png"

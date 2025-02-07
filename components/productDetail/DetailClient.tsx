@@ -217,7 +217,7 @@ const DetailClient = ({ product }: productProps) => {
     <PageContainer>
       <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
-        <div className=" w-full md:w-1/2 h-[500px] relative">
+        <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
           <Carousel
             responsive={responsive}
             infinite
@@ -226,9 +226,12 @@ const DetailClient = ({ product }: productProps) => {
             transitionDuration={500}
           >
             {product.images.map((img, index) => (
-              <div key={index} className=" w-full h-[500px] relative ">
+              <div
+                key={index}
+                className=" w-full h-[300px]  md:h-[700px]  relative "
+              >
                 <Image
-                  className="object-contain absolute"
+                  className="object-contain absolute "
                   src={img}
                   alt={product.name}
                   fill
@@ -341,15 +344,15 @@ const DetailClient = ({ product }: productProps) => {
 
           <hr className="w-full bg-secondary" />
 
-          <div className="flex items-center justify-center flex-wrap gap-3">
-            <div className="w-full md:w-3/4 flex justify-center items-center">
+          <div className="flex items-center justify-center   gap-3">
+            <div className="w-full  flex justify-center items-start">
               <ColorPicker
                 colors={product.colors}
                 onColorSelect={handleColorSelect}
                 selectedColor={selectedColor}
               />
             </div>
-            <div className=" w-full md:w-1/4  flex justify-center items-center gap-3">
+            <div className=" w-full flex justify-center items-center gap-3">
               {product.sizes.map((size, i) => (
                 <Button
                   key={i}

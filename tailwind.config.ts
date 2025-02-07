@@ -30,6 +30,16 @@ export default {
         mywhite: "#FFFFFF",
         myblack: "#000000",
       },
+      container: {
+        center: true, // Ortada hizalamak için
+        padding: "2rem", // Her iki tarafta padding ekler
+        screens: {
+          sm: "100%", // Küçük ekranlarda %100 genişlik
+          md: "960px", // Orta ekranlarda genişlik sınırı
+          lg: "1140px", // Büyük ekranlarda genişlik sınırı
+          xl: "1280px", // Çok büyük ekranlarda genişlik sınırı
+        },
+      },
     },
   },
   plugins: [],

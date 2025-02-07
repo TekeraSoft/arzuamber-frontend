@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { RootState } from "@/store/store";
 import Button from "../../general/Button";
+import Image from "next/image";
 // import { useTranslations } from "next-intl";
 
 const Footer = () => {
@@ -93,12 +94,21 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-10 border-t border-gray-600 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-10 border-t border-gray-600 pt-6 flex flex-col md:flex-row justify-between items-center ">
           {/* Copyright */}
           <p className="text-sm text-center mb-4 md:mb-0">
             © 2025 Arzu Amber. All Rights Reserved.
             {/* {t("footer.copyright")} */}
           </p>
+
+          <div className="relative w-[300px] h-[30px] mb-4 md:mb-0">
+            <Image
+              src="/images/utils/iyzicoImages.png"
+              alt="Iyzico Image"
+              fill
+              className="object-contain"
+            />
+          </div>
 
           {/* Social Media */}
           <div className="flex gap-5">
