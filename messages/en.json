@@ -1,6 +1,247 @@
+
 {
+  "navLinks": {
+    "home": "Home",
+    "products": "Products",
+    "blogs": "Blogs",
+    "about": "About",
+    "contact": "Contact"
+  },
+
+  "menuItems": {
+    "profile": "Profile",
+    "signup": "Sign Up",
+    "login": "Log In",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+
+  "topBar": {
+    "discountMessage": "Up to 50% Off on New Season Products!!!",
+    "checkItOut": "Check it out!"
+  },
+
   "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+    "sliderFeaturedTitle": "New Season Products",
+    "sliderPopulateTitle": "Populate Products",
+    "sliderAllProduct": "All Products"
+  },
+
+  "brand": {
+    "title": "New Season Collection",
+    "description": "Discover the latest products that are perfect for every occasion!",
+    "buttonText": "View Products"
+  },
+
+  "loginForm": {
+    "welcomeBack": "Welcome Back!",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Login",
+    "loginSuccess": "Login Successfully!",
+    "loginError": "Login Error!",
+    "noAccount": "Don't have an account? Sign up"
+  },
+
+  "registerForm": {
+    "createAccount": "Create an Account",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "registerButton": "Register",
+    "registerLink": "Already have an account? Login",
+    "registerSuccess": "Login Successfully!",
+    "registerError": "Login Error!"
+  },
+
+  "allProduct": {
+    "allProducts": "All Products"
+  },
+
+  "productDetail": {
+    "productİnStock": "Stock In",
+    "productOutStock": "Out Of Stock",
+    "productInCart": "Product In Cart",
+    "productAddCart": "Add To Cart",
+    "sizeError": "Please Select Size.",
+    "colorError": "Plase Select Color",
+    "productAddedCartSuccess": "Product Added Cart.",
+    "productRemovedCart": "Product Removed Cart.",
+    "productsClearedCart": "Cleared All Cart.",
+    "productAlreadyCart": "The product is already on the card.",
+    "productAddedFavSuccess": "Product Added Favorites.",
+    "productRemovedFav": "Product Removed Favorites.",
+    "productsClearedFav": "Cleared all favorites.",
+    "productAlreadyFav": "The product is already on the favorites.",
+    "product": "Cleared all favorites.",
+    "productCategory": "Category",
+    "priceSymbol": "$",
+    "readMore": "Read more",
+    "readLess": "Read less"
+  },
+
+  "blogPage": {
+    "title": "Latest from the Blog",
+    "text": "Stay updated with the latest articles, tips, and insights on our blog. Discover exciting new content regularly.",
+    "blogsPageButton": "Read more",
+    "category": "Category",
+    "Tags": "Tags",
+    "readMore": "Read More"
+  },
+
+  "CartPage": {
+    "heading": "Your Cart",
+    "product": "Product",
+    "name": "Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "actions": "Actions",
+    "summary": "Cart Summary",
+    "cartPriceSymbol": "$",
+    "total": "Total",
+    "continueShopping": "Continue Shopping",
+    "remove": "Remove",
+    "details": "Details",
+    "size": "Size",
+    "color": "Color",
+    "emptyCart": {
+      "title": "No Products in Cart",
+      "message": "Start shopping now!"
+    },
+    "cartSummary": {
+      "title": "Cart Summary",
+      "total": "Total:",
+      "shipping": "Shipping:",
+      "freeShipping": "Free",
+      "tax": "Tax:",
+      "savings": "Total Savings:",
+      "discountCodePlaceholder": "Discount Code",
+      "submitDiscountCode": "Submit Code",
+      "continueShopping": "Continue Shopping",
+      "proceedToPayment": "Proceed to Payment",
+      "symbol": "$"
+    }
+  },
+
+  "FavPage": {
+    "title": "Your Favorites",
+    "product": "Product",
+    "name": "Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "actions": "Actions",
+    "summary": "Favorites Summary",
+    "total": "Total",
+    "favPriceSymbol": "$",
+    "continueShopping": "Continue Shopping",
+    "size": "Size",
+    "color": "Color",
+    "emptyfavTitle": "No Products in Favorites",
+    "emptyfavMessage": "Start shopping now!",
+    "favSummary": {
+      "title": "Favorites Summary",
+      "total": "Total:",
+      "shipping": "Shipping:",
+      "freeShipping": "Free",
+      "tax": "Tax:",
+      "savings": "Total Savings:",
+      "continueShopping": "Continue Shopping",
+      "symbol": "$"
+    }
+  },
+
+  "userProfile": {
+    "title": "User Profile",
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "E-mail",
+    "phone": "Phone",
+    "addressPlaceholder": "Enter your address...",
+    "phonePlaceholder": "Enter your phone number...",
+    "updateButton": "Update",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone"
+  },
+
+  "AboutPage": {
+    "aboutPageTitle": "About Us",
+    "aboutPageDescription": "We are here to bring you the latest trends, quality products, and stylish combinations. Our mission is to make every woman feel special. Refresh your wardrobe with modern, stylish, and unique designs.",
+    "visionTitle": "Our Vision",
+    "visionDescription": "We offer not just clothing, but a lifestyle. Each piece is designed to reflect your style. We aim not to follow fashion, but to lead it."
+  },
+
+  "ContactPage": {
+    "title": "Contact Us",
+    "metaDescription": "Contact us for more information",
+    "header": "Contact us",
+    "subheader": "Contact us for more information.",
+    "messageTitle": "Send us a message",
+    "form": {
+      "nameLabel": "Your name",
+      "namePlaceholder": "Enter your full name",
+      "nameError": "Name is required",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "emailError": "Email is required",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter your Last Name",
+      "lastNameError": "Last Name is required",
+      "companyLabel": "Company Name",
+      "companyPlaceholder": "Company Name",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Your Messages...",
+      "submitButton": "Submit"
+    },
+    "sendButton": "Send",
+    "address": {
+      "street": "Kışla Neighborhood",
+      "building": "Street 40, Kayalar Apartment",
+      "number": "No: 8",
+      "floor": "Block A, Floor: 4, Apartment: 7",
+      "city": "Antalya",
+      "district": "Muratpasa",
+      "country": "Turkey"
+    }
+  },
+
+  "Filter": {
+    "title": "Filter",
+    "sizes": "Size",
+    "colors": "Color",
+    "categories": "Categories",
+    "lengths": "Length"
+  },
+
+  "footer": {
+    "aboutUs": "About Us",
+    "customerService": "Customer Service",
+    "aboutDescription": "We are a brand offering modern and stylish designs in women’s fashion. We are always by your side with products that appeal to fashion enthusiasts.",
+    "newsletter": "Newsletter",
+    "subscribeText": "Subscribe to stay updated with the latest news.",
+    "copyright": "© 2025 Arzu Amber. All Rights Reserved.",
+    "returnPolicy": "Return Policy ",
+    "faq": "Frequently Asked Questions",
+    "supportRequest": "Support Request",
+    "subscribeButton": "Subscribe",
+    "emailPlaceholder": "Your email address"
+  },
+
+  "SnackBar": {
+    "coypLinkSuccess": "Share link copied!",
+    "coypLinkUnsuccess": "Share link copied!"
+  },
+
+  "warningText": {
+    "blogPage": {
+      "title": "No Blogs Available",
+      "text": "There are no blogs available at the moment. Please check back later."
+    },
+    "ProductNotFoundTitle": "Product Not Found",
+    "ProductNotFoundText": "The product you're looking for could not be found.",
+    "BlogNotFoundTitle": "Blog Not Found",
+    "BlogNotFoundText": "The blog you're looking for could not be found.",
+    "requiredText": "This field is required !",
+    "ButtonText": "Go To Home Page "
   }
 }

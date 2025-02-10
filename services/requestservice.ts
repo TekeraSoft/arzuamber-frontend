@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { RequestOptions } from "@/types/index";
+import { RequestOptions } from "@/types";
 
 axios.defaults.withCredentials = true;
 

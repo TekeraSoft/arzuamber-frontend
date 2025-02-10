@@ -1,23 +1,21 @@
-// AdminLayout.tsx
-"use client";
+import Layout from "@/components/admin/Layout";
+import {NextIntlClientProvider} from "next-intl";
+import {getMessages} from "next-intl/server";
+import StoreProvider from "@/store/StoreProvider";
 
-import SideBar from "@/app/components/admin/AdminSideBar";
+export default async function AdminLayout({children,}: {
+    children: React.ReactNode;
+}) {
 
-interface AdminLayoutProps {
-  children: React.ReactNode;
+    const messages = await getMessages()
+
+    return (
+        <NextIntlClientProvider messages={messages}>
+            <StoreProvider>
+        <Layout>
+            {children}
+        </Layout>
+            </StoreProvider>
+        </NextIntlClientProvider>
+    );
 }
-
-function AdminLayout({ children }: AdminLayoutProps) {
-  return (
-    <div className="flex h-full ">
-      <SideBar />
-      <div className="w-full h-full flex bg-secondary overflow-hidden">
-        <main className="w-full h-[95%] my-5  overflow-auto lg:border-l">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
-}
-
-export default AdminLayout;

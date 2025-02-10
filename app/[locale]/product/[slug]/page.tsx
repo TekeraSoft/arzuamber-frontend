@@ -1,19 +1,20 @@
 "use client";
 
-import DetailClient from "@/app/components/productDetail/DetailClient";
-import Loading from "@/app/components/utils/Loading";
-import WarningText from "@/app/components/utils/WarningText";
-
+import DetailClient from "@/components/productDetail/DetailClient";
+import Loading from "@/components/utils/Loading";
+import WarningText from "@/components/utils/WarningText";
 import { RootState } from "@/store/store";
 import { Product } from "@/types/Props";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [slug, setSlug] = useState<string | null>(null);
   const { products, loading } = useSelector(
-    (state: RootState) => state.products
+      (state: RootState) => state.products
   );
+  const t = useTranslations("");
 
   useEffect(() => {
     const fetchSlug = async () => {
@@ -27,18 +28,18 @@ function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const product = products.find((product: Product) => product.id === slug);
 
   return (
-    <div>
-      {loading || !slug ? (
-        <Loading />
-      ) : product ? (
-        <DetailClient product={product} />
-      ) : (
-        <WarningText
-          title="Product Not Found"
-          text="The product you're looking for could not be found."
-        />
-      )}
-    </div>
+      <div>
+        {loading || !slug ? (
+            <Loading />
+        ) : product ? (
+            <DetailClient product={product} />
+        ) : (
+            <WarningText
+                title={t("warningText.ProductNotFoundTitle")}
+                text={t("warningText.ProductNotFoundText")}
+            />
+        )}
+      </div>
   );
 }
 export default ShopDetailPage;

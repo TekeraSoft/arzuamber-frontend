@@ -1,5 +1,6 @@
+"use client"
 import React, { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing"
 
 import Heading from "../general/Heading";
 import { FaRegListAlt, FaPlus, FaMinus, FaTimes, FaBars } from "react-icons/fa";
@@ -65,7 +66,7 @@ const SideBar = () => {
   };
 
   return (
-    <>
+    <div>
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
@@ -78,9 +79,11 @@ const SideBar = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed lg:relative top-0 left-0 w-72 bg-secondary text-mywhite h-full p-4 z-50 transition-transform duration-300 ease-in-out lg:translate-x-0  md:border-r lg:border-none  lg:w-72`}
+        } fixed lg:relative top-0 left-0 bg-secondary md:w-52 text-mywhite min-h-screen p-4 z-50 transition-transform 
+        duration-300 ease-in-out lg:translate-x-0  md:border-r lg:border-none  lg:w-72`}
       >
         <Heading text="Admin Panel" textSize="xl" color="white" hr />
+
         <ul className="space-y-4 mt-3">
           {adminPanel.map((menu) => (
             <li key={menu.name}>
@@ -118,7 +121,7 @@ const SideBar = () => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

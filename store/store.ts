@@ -6,6 +6,8 @@ import generalReducer from "./generalSlice";
 import categoryReducer from "./categorySlice";
 import footerReducer from "./footerSlice";
 import authReducer from "./authSlice";
+import adminSlice from "@/store/adminSlice";
+import modalsSlice from "@/store/modalsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,8 +17,9 @@ export const store = configureStore({
     categories: categoryReducer,
     general: generalReducer,
     auth: authReducer,
-
+    admin: adminSlice,
     footer: footerReducer,
+    modals: modalsSlice
   },
 });
 

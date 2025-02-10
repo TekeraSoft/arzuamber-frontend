@@ -3,7 +3,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import Loading from "@/app/components/utils/Loading";
+import Loading from "@/components/utils/Loading";
 import ProductCartItem from "./ProductCartItem";
 import Heading from "../general/Heading";
 import ReactPaginate from "react-paginate";

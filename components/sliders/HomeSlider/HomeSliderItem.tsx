@@ -15,7 +15,7 @@ function HomeSliderItem({ image }: ImageProps) {
         src={image.url}
         alt={image.description ? image.description : "Slider Description"}
         fill
-        className="object-cover bg-center bg-cover"
+        className='object-contain'
       />
     </div>
   );

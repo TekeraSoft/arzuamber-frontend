@@ -11,13 +11,18 @@ const initialState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    getUser: (state, action) => {
+      state.user = action.payload;
+    }
+  },
 });
 
-export const registerUserDispatch = (value: object) => async () => {
+export const registerUserDispatch = (value: object,resetForm:()=> void) => async () => {
   postGuardRequest({ controller: "auth", action: "register" }, value)
     .then((res) => {
       toast.success(res.data.message);
+      resetForm()
     })
     .catch((err) => {
       toast.error(err.response.data);
