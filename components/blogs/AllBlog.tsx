@@ -4,13 +4,13 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Loading from "../utils/Loading";
 import NotFoundPage from "../utils/WarningText";
 import BlogCartItem from "./BlogItem";
 
 function AllBlog() {
-  //   const t = useTranslations();
+  const t = useTranslations();
   const { blogs, loading } = useSelector((state: RootState) => state.blogs);
   const [currentPage, setCurrentPage] = React.useState(0);
   const blogsPerPage = 6; // Adjust the number of blogs per page
@@ -26,10 +26,8 @@ function AllBlog() {
   if (!blogs || blogs.length === 0) {
     return (
       <NotFoundPage
-        title="No Blogs Title"
-        text="blogPage.NoBlogsText"
-        // title={t("blogPage.NoBlogsTitle")}
-        // text={t("blogPage.NoBlogsText")}
+        title={t("blogPage.NoBlogsTitle")}
+        text={t("blogPage.NoBlogsText")}
       />
     );
   }
@@ -49,13 +47,10 @@ function AllBlog() {
         <div className="px-2 mx-auto sm:px-4 lg:px-0 max-w-7xl">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl mt-5">
-              Latest from Blog
-              {/* {t("blogPage.title")} */}
+              {t("blogPage.title")}
             </h2>
             <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">
-              Blogumuzda en son makaleler, ipuçları ve içgörüleri takip edin.
-              Düzenli olarak heyecan verici yeni içerikler keşfedin.
-              {/* {t("blogPage.text")} */}
+              {t("blogPage.text")}
             </p>
           </div>
 

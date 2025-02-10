@@ -48,12 +48,17 @@ function Input({
         type={type}
         {...register(id, {
           required: required && `${placeholder} is required`,
-          //  {t("warningText.requiredText")}
         })}
         className={`w-full h-12 my-3 p-3 border outline-none rounded-md text-xs ${
           errors[id] ? "border-red-500" : "border-gray-300"
         }`}
       />
+
+      {errors[id] && (
+        <span className="text-red-500 text-xs my-2">
+          {errors[id]?.message as string}
+        </span>
+      )}
     </div>
   );
 }

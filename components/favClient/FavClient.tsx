@@ -9,15 +9,16 @@ import { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import TextClip from "../utils/TextClip";
 import Heading from "../general/Heading";
-import { Link } from "@/i18n/routing";
+
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useTranslations } from "next-intl";
 import EmptyFav from "./EmptyFav";
 import FavSummary from "./FavSummary";
 import { removeFromFav } from "@/store/favoritesSlice";
-// import { useTranslations } from "next-intl";
 
-function CartClient() {
+function FavClient() {
   const dispatch = useDispatch();
-  // const t = useTranslations();
+  const t = useTranslations();
   const favs = useSelector((state: RootState) => state.favorites.favs);
   const [isClient, setIsClient] = useState(false);
 
@@ -29,7 +30,7 @@ function CartClient() {
     return <Loading />;
   }
 
-  const removefromFav = (id: string) => {
+  const removeItemFromFav = (id: string) => {
     dispatch(removeFromFav(id));
   };
 
@@ -57,49 +58,34 @@ function CartClient() {
 
   return (
     <PageContainer>
-      <Heading
-        text="Sepetiniz"
-        // text={t("FavPage.title")}
-        center
-        textSize="4xl"
-        hr
-        font="bold"
-      />
+      <Heading text={t("FavPage.title")} center textSize="4xl" hr font="bold" />
 
       <div className="flex  justify-center items-start md:flex-row flex-wrap gap-8 mb-5 p-5 md:p-0  ">
         {/* Ürün Tablosu */}
-        <div className="flex-1 bg-mywhite p-4 rounded-lg md:shadow-lg  h-full md:border md:border-gray-200">
+        <div className="flex-1 bg-mywhite  rounded-lg   h-full ">
           <table className="w-full border border-gray-200 rounded-lg text-sm md:text-base ">
             <thead className="bg-gray-100">
               <tr className="text-center">
                 <th className="p-3 text-xs sm:text-base">
-                  Ürün
-                  {/* {t("FavPage.product")} */}
+                  {t("FavPage.product")}
                 </th>
                 <th className="p-3 text-xs sm:text-base hidden md:block">
-                  Adı
-                  {/* {t("FavPage.name")} */}
-                </th>
-
-                <th className="p-3 text-xs sm:text-base">
-                  Miktar
-                  {/* {t("FavPage.quantity")} */}
+                  {t("FavPage.name")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Fiyat
-                  {/* {t("FavPage.price")} */}
+                  {t("FavPage.quantity")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Beden
-                  {/* {t("FavPage.size")} */}
+                  {t("FavPage.price")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Renk
-                  {/* {t("FavPage.color")} */}
+                  {t("FavPage.size")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  İşlemler
-                  {/* {t("FavPage.actions")} */}
+                  {t("FavPage.color")}
+                </th>
+                <th className="p-3 text-xs sm:text-base">
+                  {t("FavPage.actions")}
                 </th>
               </tr>
             </thead>
@@ -130,29 +116,20 @@ function CartClient() {
 
                     <td className="text-gray-900">{fav.quantity}</td>
                     <td className="text-gray-900 font-semibold">
-                      {/* {t("FavPage.favPriceSymbol")} */}
-                      {/* İndirimli fiyatı göster */}${discountedPrice}
+                      {discountedPrice}
+                      {t("FavPage.favPriceSymbol")}
                     </td>
                     <td className="text-gray-900">{fav.size}</td>
                     <td className="text-gray-900">{fav.color}</td>
-                    <td className=" p-2">
+                    <td className="p-2 w-8 ">
                       <Button
                         type="button"
-                        onClick={() => removefromFav(fav.id)}
-                        text="Sil"
-                        // text={t("FavPage.remove")}
+                        onClick={() => removeItemFromFav(fav.id)}
+                        icon={MdOutlineDeleteOutline}
+                        iconSize={20}
                         color="third"
-                        className="w-full h-7 md:w-14 md:h-10 text-sm"
+                        className="w-full h-8"
                       />
-                      <Link href={`product/${fav.id}`}>
-                        <Button
-                          type="button"
-                          text="Detay"
-                          // text={t("CartPage.details")}
-                          color="third"
-                          className="w-full h-7 md:w-14 md:h-10 text-sm mt-2"
-                        />
-                      </Link>
                     </td>
                   </tr>
                 );
@@ -168,4 +145,4 @@ function CartClient() {
   );
 }
 
-export default CartClient;
+export default FavClient;

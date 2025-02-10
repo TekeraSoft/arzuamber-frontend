@@ -8,18 +8,19 @@ import ProductCartItem from "./ProductCartItem";
 import Heading from "../general/Heading";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import Filter from "../general/Filter/Filter";
 // import Filter from "../general/Filter";
 
 function AllProduct() {
-  // const t = useTranslations();
+  const t = useTranslations();
 
   const { products, loading } = useSelector(
     (state: RootState) => state.products
   );
 
   // Sayfa başına ürün sayısı
-  const productsPerPage = 8;
+  const productsPerPage = 6;
 
   // Sayfaları takip etmek için state
   const [currentPage, setCurrentPage] = React.useState(0);
@@ -42,18 +43,13 @@ function AllProduct() {
         <Loading />
       ) : (
         <div className="all-product-main-div border-t ">
-          <Heading
-            text="All Products"
-            // text={t("allProduct.allProducts")}
-            center
-            hr
-            textSize="3xl"
-          />
-          <div className="flex w-full h-full mt-3 gap-2">
-            {/* <Filter /> */}
+          <Heading text={t("allProduct.allProducts")} center textSize="3xl" />
+
+          <div className="flex w-full h-full  gap-2 items-start justify-center">
+            <Filter />
 
             <div className="w-full mb-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 items-center ">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 space-y-5 md:space-y-0 items-center ">
                 {currentProducts.map((product, i) => (
                   <ProductCartItem product={product} key={i} />
                 ))}

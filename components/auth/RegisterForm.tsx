@@ -10,11 +10,12 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { IoLogoGoogleplus } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { closeRegisterModal, openLoginModal } from "@/store/modalsSlice";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import { toast } from "react-toastify";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
-  // const t = useTranslations();
+  const t = useTranslations();
 
   const isRegisterModalOpen = useSelector(
     (state: RootState) => state.modals.isRegisterModalOpen
@@ -25,12 +26,21 @@ function RegisterForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
-
-    dispatch(registerUserDispatch(data));
+    try {
+      dispatch(registerUserDispatch(data));
+      toast.success(t("loginForm.registerSuccess"));
+      reset();
+      dispatch(closeRegisterModal());
+      dispatch(openLoginModal());
+    } catch (error) {
+      console.error(error);
+      toast.error(t("loginForm.loginError"));
+    }
   };
 
   const handleChangeModal = () => {
@@ -41,7 +51,6 @@ function RegisterForm() {
   return (
     <div
       onClick={(e) => {
-        // Form dışına tıklanırsa kapanmasını sağlıyoruz
         if (e.target === e.currentTarget) {
           handleClose();
         }
@@ -53,7 +62,6 @@ function RegisterForm() {
       <div
         className={`w-1/4 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl p-6 shadow-xl space-y-4 relative`}
       >
-        {/* Close Button - Positioned to top-right */}
         <Button
           size={"icon"}
           icon={IoIosCloseCircleOutline}
@@ -66,8 +74,7 @@ function RegisterForm() {
 
         <Heading
           center
-          text="Create an Account"
-          // placeholder={t("registerForm.createAccount")}
+          text={t("registerForm.createAccount")}
           font="bold"
           textSize="2xl"
           color="black"
@@ -77,8 +84,7 @@ function RegisterForm() {
           <div className="flex gap-3 w-full justify-start items-center">
             <Input
               id="firstName"
-              placeholder="First Name"
-              // placeholder={t("registerForm.firstName")}
+              placeholder={t("registerForm.firstName")}
               type="text"
               required
               errors={errors}
@@ -86,8 +92,7 @@ function RegisterForm() {
             />
             <Input
               id="lastName"
-              placeholder="Last Name"
-              // placeholder={t("registerForm.lastName")}
+              placeholder={t("registerForm.lastName")}
               type="text"
               required
               errors={errors}
@@ -96,8 +101,7 @@ function RegisterForm() {
           </div>
           <Input
             id="email"
-            placeholder="Email"
-            // placeholder={t("registerForm.email")}
+            placeholder={t("registerForm.email")}
             type="email"
             required
             errors={errors}
@@ -105,9 +109,7 @@ function RegisterForm() {
           />
           <Input
             id="password"
-            placeholder="Password"
-            // placeholder={t("registerForm.password")}
-
+            placeholder={t("registerForm.password")}
             type="password"
             required
             errors={errors}
@@ -116,8 +118,7 @@ function RegisterForm() {
 
           <div className="flex flex-col space-y-3">
             <Button
-              text="Register"
-              // placeholder={t("registerForm.registerButton")}
+              text={t("registerForm.registerButton")}
               type="submit"
               animation
               size="large"
@@ -138,8 +139,7 @@ function RegisterForm() {
           className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold"
           onClick={handleChangeModal}
         >
-          Already have an account? Login
-          {/* {t("registerForm.loginLink")} */}
+          {t("registerForm.registerLink")}
         </p>
       </div>
     </div>

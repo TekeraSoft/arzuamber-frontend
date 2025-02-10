@@ -19,12 +19,11 @@
     "discountMessage": "Yeni Sezon Ürünlerinde %50'ye Varan İndirim!!!",
     "checkItOut": "Hemen İncele!"
   },
-
   "HomePage": {
-    "sliderTitle": "Öne Çıkan Ürünler",
-    "categoryTitle": "Tüm Kategoriler"
+    "sliderFeaturedTitle": "Yeni Sezon Ürünler",
+    "sliderPopulateTitle": "Öne Çıkan Ürünler",
+    "sliderAllProduct": "Tüm Ürünler"
   },
-
   "brand": {
     "title": "Yeni Sezon Koleksiyonu",
     "description": "Her duruma uygun en yeni ürünleri keşfedin!",
@@ -81,7 +80,8 @@
     "text": "Blogumuzda en son makaleler, ipuçları ve içgörüleri takip edin. Düzenli olarak heyecan verici yeni içerikler keşfedin.",
     "blogsPageButton": "Daha fazla",
     "category": "Kategori",
-    "Tags": "Etiket"
+    "Tags": "Etiket",
+    "readMore": "Devamını Oku"
   },
 
   "CartPage": {
@@ -95,8 +95,6 @@
     "total": "Toplam",
     "cartPriceSymbol": "₺",
     "continueShopping": "Alışverişe Devam Et",
-    "remove": "Sil",
-    "details": "Detay",
     "size": "Beden",
     "color": "Renk",
     "emptyCart": {
@@ -119,7 +117,7 @@
   },
 
   "FavPage": {
-    "heading": "Favorileriniz",
+    "title": "Favorileriniz",
     "product": "Ürün",
     "name": "Adı",
     "quantity": "Miktar",
@@ -200,6 +198,15 @@
       "country": "Turkey"
     }
   },
+
+  "Filter": {
+    "title": "Filtre",
+    "sizes": "Beden",
+    "colors": "Renk",
+    "categories": "Kategoriler",
+    "lengths": "Uzunluk"
+  },
+
   "footer": {
     "aboutUs": "Hakkımızda",
     "customerService": "Müşteri Hizmetleri",

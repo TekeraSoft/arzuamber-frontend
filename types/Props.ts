@@ -32,13 +32,15 @@ export interface Product {
   price: number;
   category: string;
   subcategories: string;
+  length: string;
   inStock: boolean;
   discountPercent: number;
   images: string[];
   reviews: Review[];
   isNewSeason: boolean;
+  isPopulate: boolean;
   sizes: string[];
-  colors: object[];
+  colors: { name: string; imageUrl: string }[];
 }
 
 //! Cart adding Props

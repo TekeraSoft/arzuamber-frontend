@@ -11,23 +11,23 @@ interface ImageProps {
 function HomeSliderItem({ image }: ImageProps) {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Ekran boyutunu takip etmek için useEffect kullanıyoruz
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // 768px'den küçükse mobil, aksi takdirde masaüstü
+      setIsMobile(window.innerWidth <= 768);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Sayfa yüklenince hemen çalıştır
-    return () => window.removeEventListener("resize", handleResize); // Temizlik
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div className="relative w-full h-[350px] bg-third md:h-[600px] ">
+    <div className="relative w-full h-[370px] bg-third md:h-[600px] ">
       <Image
-        src={isMobile ? image.urlMobile : image.urlDesktop} // Mobil ve masaüstü için dinamik URL
+        src={isMobile ? image.urlDesktop : image.urlMobile}
         alt={image.description ? image.description : "Slider Description"}
         fill
+        priority
         className="object-cover md:object-cover bg-center bg-cover"
       />
     </div>

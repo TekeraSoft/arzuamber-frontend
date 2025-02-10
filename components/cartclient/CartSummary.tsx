@@ -4,14 +4,14 @@ import Button from "../general/Button";
 import Input from "../general/Input";
 import Heading from "../general/Heading";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaRegCreditCard } from "react-icons/fa";
 import { CartSummaryProps } from "@/types/Props";
 
 const CartSummary = ({ total, tax, savings }: CartSummaryProps) => {
-  //   const t = useTranslations();
+  const t = useTranslations();
 
   const {
     register,
@@ -24,57 +24,54 @@ const CartSummary = ({ total, tax, savings }: CartSummaryProps) => {
   };
 
   return (
-    <div className="w-full sm:w-2/6 h-full p-4 bg-gray-50 border border-gray-200 shadow-lg rounded-lg">
+    <div className="w-full sm:w-2/6 h-full p-4 bg-gray-50 border border-gray-200 shadow-md rounded-lg">
       <Heading
-        text="Sepet özeti"
-        // text={t("CartPage.cartSummary.title")}
+        text={t("CartPage.cartSummary.title")}
         font="bold"
-        textSize="3xl"
+        textSize="2xl"
         hr
       />
 
       {/* Toplam */}
       <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
         <span className="text-sm font-medium">
-          {/* {t("CartPage.cartSummary.total")} */}
-          Toplam:
+          {t("CartPage.cartSummary.total")}
         </span>
         <span className="text-lg font-semibold text-primary">
-          {/* {t("CartPage.cartSummary.symbol")} */}${total.toFixed(2)}
+          {t("CartPage.cartSummary.symbol")}
+          {total.toFixed(2)}
         </span>
       </div>
 
       {/* Kargo */}
       <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
         <span className="text-sm font-medium">
-          {/* {t("CartPage.cartSummary.shipping")} */}
-          Kargo:
+          {t("CartPage.cartSummary.shipping")}
         </span>
         <span className="text-sm font-semibold text-primary">
-          {/* {t("CartPage.cartSummary.freeShipping")} */}
-          Ücretsiz
+          {t("CartPage.cartSummary.freeShipping")}
         </span>
       </div>
 
       {/* Vergi */}
       <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
         <span className="text-sm font-medium">
-          {/* {t("CartPage.cartSummary.tax")} */}
-          Vergi:
+          {t("CartPage.cartSummary.tax")}
         </span>
         <span className="text-sm font-semibold text-primary">
-          {/* {t("CartPage.cartSummary.symbol")} */}${tax.toFixed(2)}
+          {t("CartPage.cartSummary.symbol")}
+          {tax.toFixed(2)}
         </span>
       </div>
 
       {/* Toplam Tasarruf */}
       <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
         <span className="text-sm font-medium">
-          {/* {t("CartPage.cartSummary.savings")} */}
-          Toplam Kazanç:
+          {t("CartPage.cartSummary.savings")}
         </span>
         <span className="text-sm font-semibold text-primary">
-          {/* {t("CartPage.cartSummary.symbol")} */}${savings.toFixed(2)}
+          {t("CartPage.cartSummary.symbol")}
+          {savings.toFixed(2)}
         </span>
       </div>
 
@@ -82,51 +79,47 @@ const CartSummary = ({ total, tax, savings }: CartSummaryProps) => {
       <div className="flex flex-col items-center justify-center gap-2 w-full">
         <hr className="w-full bg-secondary" />
         <form
-          className=" flex justify-between items-center gap-3 h-full w-full"
+          className=" flex flex-col md:flex-row justify-between items-center gap-3 h-full w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Input
             id="discountCode"
-            placeholder="İndirim Kodu"
-            // placeholder={t("CartPage.cartSummary.discountCodePlaceholder")}
+            placeholder={t("CartPage.cartSummary.discountCodePlaceholder")}
             type="text"
             register={register}
             errors={errors}
           />
           <Button
             animation
-            text="Kod Gir"
-            // text={t("CartPage.cartSummary.submitDiscountCode")}
+            text={t("CartPage.cartSummary.submitDiscountCode")}
             type="submit"
             color="primary"
             size="small"
             icon={BiSolidDiscount}
-            className="text-xs md:text-sm lg:text-base"
+            className="text-xs md:text-sm "
           />
         </form>
 
-        <div className="flex w-full justify-center items-center gap-3">
+        <div className="flex flex-col md:flex-ro  w-full justify-center items-center gap-3">
           <Button
-            text="Alışverişe Devam Et"
-            // text={t("CartPage.cartSummary.continueShopping")}
+            text={t("CartPage.cartSummary.continueShopping")}
             color="primary"
             size="large"
             onClick={() => {}}
             icon={FaArrowRightLong}
             iconSize={15}
             animation
-            className="text-xs md:text-xs lg:text-base"
+            className="text-xs md:text-sm "
           />
           <Button
             animation
-            text="Ödeme Yap"
-            // text={t("CartPage.cartSummary.proceedToPayment")}
+            text={t("CartPage.cartSummary.proceedToPayment")}
             color="primary"
             size="large"
             onClick={() => {}}
             icon={FaRegCreditCard}
             iconSize={15}
-            className="text-xs md:text-sm lg:text-base"
+            className="text-xs md:text-sm"
           />
         </div>
       </div>

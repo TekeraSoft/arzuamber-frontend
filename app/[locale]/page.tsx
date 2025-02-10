@@ -7,10 +7,10 @@ import Brand from "@/components/home/Brand";
 // import Category from "@/components/home/Category";
 import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
-  // const t = useTranslations();
+  const t = useTranslations();
 
   return (
     <>
@@ -18,23 +18,42 @@ export default function Home() {
       <GradientColorContainer>
         <HomeContainer>
           <Heading
-            text="Popular Products"
-            // text={t("HomePage.categoryTitle")}
-            textSize="3xl"
+            text={t("HomePage.sliderFeaturedTitle")}
+            textSize="4xl"
             center={true}
-            color="white"
           />
-          <ProductSlider />
+          <ProductSlider isPopulate />
         </HomeContainer>
-        <Brand />
+
+        <Brand
+          title={t("brand.title")}
+          description={t("brand.description")}
+          buttonText={t("brand.buttonText")}
+          imageUrl="/images/Brand/brand1.png"
+          link="/products"
+        />
+
         {/* <Category /> */}
         <HomeContainer>
           <Heading
-            // text={t("HomePage.sliderTitle")}
-            text="Featured Products"
+            text={t("HomePage.sliderPopulateTitle")}
             center
-            textSize="3xl"
-            color="white"
+            textSize="4xl"
+          />
+          <ProductSlider showNewSeason />
+
+          <Brand
+            title={t("brand.title")}
+            description={t("brand.description")}
+            buttonText={t("brand.buttonText")}
+            imageUrl="/images/Brand/brand2.jpg"
+            link="/products"
+          />
+
+          <Heading
+            text={t("HomePage.sliderAllProduct")}
+            center
+            textSize="4xl"
           />
           <ProductSlider />
         </HomeContainer>

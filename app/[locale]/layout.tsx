@@ -37,8 +37,11 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
-      <body className={`${jost.className} antialiased`}>
+    <html lang={locale}>
+      <body
+        className={`${jost.className} antialiased`}
+        suppressHydrationWarning={true}
+      >
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <LayoutProvider>{children}</LayoutProvider>

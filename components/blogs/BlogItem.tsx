@@ -4,8 +4,11 @@ import Image from "next/image";
 import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import { Link } from "@/i18n/routing";
 import { BlogProps } from "@/types/Props";
+import { useTranslations } from "next-intl";
 
 const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
+  const t = useTranslations();
+
   return (
     <div className="bg-white rounded-lg p-5 flex flex-col justify-center items-center">
       <Link href={`/blog/${blog.id}`}>
@@ -47,7 +50,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
             href={`/blog/${blog.id}`}
             className="flex items-center text-primary font-semibold transition duration-300 text-xs hover:underline underline-offset-1"
           >
-            <span className="mr-2">Read More</span>
+            <span className="mr-2">{t("blogPage.readMore")}</span>
             <FaArrowRight />
           </Link>
         </p>

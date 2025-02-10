@@ -37,7 +37,7 @@ function RichTextBox({
         required={required}
         value={value}
         {...register(id, {
-          required: required && `${placeholder} is required`, //  {t("warningText.requiredText")}
+          required: required && `${placeholder} is required`,
         })}
         className={`min-h-20 h-full my-3 p-3 border outline-none rounded-md text-xs resize-none  ${
           errors[id] ? "border-red-500" : "border-gray-300"

@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-
 import Image from "next/image";
-
 import TextClip from "../utils/TextClip";
-
 import { Product } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 import Button from "../general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -18,11 +16,12 @@ interface ProductsSliderItemProps {
 function ProductCartItem({ product }: ProductsSliderItemProps) {
   // Rating
   const [isHovered, setIsHovered] = useState(false);
+  const t = useTranslations("");
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-2  bg-white transition duration-300  relative
-     h-[650px] md:h-[600px] p-3 border-y md:border-none "
+      className="group flex flex-col justify-between space-y-1  bg-white transition duration-300  relative
+     h-[650px] md:h-[600px]  md:border-none "
     >
       {/* Görsel Alanı */}
       <div
@@ -32,7 +31,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
       >
         <Image
           className={`absolute object-cover rounded  md:rounded-none transition-opacity duration-700  ${
-            isHovered ? "opacity-0" : "opacity-100 z-20"
+            isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
           src={product?.images[0]}
           alt={product.name}
@@ -50,7 +49,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
-        <div className=" absolute right-3 top-5 md:top-2 lg:top-3  w-12 h-6 flex justify-center items-center bg-red-500 text-mywhite rounded text-sm shadow-md z-30 ">
+        <div className=" absolute right-3 top-5 md:top-2 lg:top-3  w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30 ">
           %{Math.round(product.discountPercent)}
         </div>
       </div>
@@ -69,10 +68,10 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
                 product.price -
                 (product.price * product.discountPercent) / 100
               ).toFixed(2)}
-              ₺ {/* {t("productDetail.priceSymbol")} */}
+              {t("productDetail.priceSymbol")}
             </p>
             <p className="text-red-700 text-sm line-through">
-              {product.price} ₺ {/* {t("productDetail.priceSymbol")} */}
+              {product.price} {t("productDetail.priceSymbol")}
             </p>
           </div>
           <Link

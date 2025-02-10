@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import Button from "@/components/general/Button";
 import { RootState } from "@/store/store";
+import { useTranslations } from "next-intl";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -21,19 +22,6 @@ function Navbar() {
   const carts = useSelector((state: RootState) => state.cart.carts);
   const favs = useSelector((state: RootState) => state.favorites.favs);
 
-  const menuItems = [
-    { name: "Profile", url: "/profile" },
-    { name: "Admin", url: "/admin" },
-  ];
-
-  const navLinks = [
-    { name: "Home", url: "/" },
-    { name: "Products", url: "/products" },
-    { name: "Blogs", url: "/blogs" },
-    { name: "About", url: "/about" },
-    { name: "Contact", url: "/contact" },
-  ];
-
   // locale lang changes
   const supportedLocales = ["tr", "en"];
 
@@ -42,19 +30,20 @@ function Navbar() {
     setIsLangDropdownOpen(false);
   };
 
-  // const t = useTranslations();
-  // const menuItems = [
-  //   { name: t("menuItems.profile"), url: "/profile" },
-  //   { name: t("menuItems.admin"), url: "/admin" },
-  // ];
+  const t = useTranslations();
 
-  // const navLinks = [
-  //   { name: t("navLinks.home"), url: "/" },
-  //   { name: t("navLinks.products"), url: "/products" },
-  //   { name: t("navLinks.blogs"), url: "/blogs" },
-  //   { name: t("navLinks.about"), url: "/about" },
-  //   { name: t("navLinks.contact"), url: "/contact" },
-  // ];
+  const menuItems = [
+    { name: t("menuItems.profile"), url: "/profile" },
+    { name: t("menuItems.admin"), url: "/admin" },
+  ];
+
+  const navLinks = [
+    { name: t("navLinks.home"), url: "/" },
+    { name: t("navLinks.products"), url: "/products" },
+    { name: t("navLinks.blogs"), url: "/blogs" },
+    { name: t("navLinks.about"), url: "/about" },
+    { name: t("navLinks.contact"), url: "/contact" },
+  ];
 
   return (
     <header className="text-mywhite z-50 fixed w-full">
@@ -140,23 +129,20 @@ function Navbar() {
                   ))}
 
                   <Button
-                    text="Sign Up"
                     color="default"
-                    // text={t('menuItems.signup')}
+                    text={t("menuItems.signup")}
                     onClick={() => dispatch(openRegisterModal())}
                     className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center text-sm "
                   />
                   <Button
-                    text="Login"
                     color="default"
-                    // text={t('menuItems.login')}
+                    text={t("menuItems.login")}
                     onClick={() => dispatch(openLoginModal())}
                     className="hover:bg-gray-200 rounded px-4 py-2 w-full text-center  text-sm  "
                   />
                   <Button
-                    text="Log out"
                     color="default"
-                    // text={t('menuItems.logout')}
+                    text={t("menuItems.logout")}
                     onClick={() => {
                       console.log("logout");
                     }}
@@ -245,13 +231,13 @@ function Navbar() {
                       className="w-full text-center hover:bg-third rounded-md text-sm px-2 py-1"
                     />
                     <Button
-                      text="Login"
+                      text={t("menuItems.login")}
                       color="default"
                       onClick={() => dispatch(openLoginModal())}
                       className="w-full text-center hover:bg-third rounded-md text-sm px-2 py-1"
                     />
                     <Button
-                      text="Log out"
+                      text={t("menuItems.logout")}
                       color="default"
                       onClick={() => console.log("logout")}
                       className="w-full text-center hover:bg-third rounded-lg text-sm px-2 py-1"

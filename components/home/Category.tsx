@@ -19,7 +19,7 @@ function Category() {
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 mx-auto container">
           {categories.map((category) => (
             <div
-              key={category.id} // Eğer kategori verisinde id varsa, bu daha güvenilir bir key kullanımıdır
+              key={category.id}
               className="relative flex flex-col items-center justify-start cursor-pointer text-white bg-gradient-to-r from-secondary to-primary hover:scale-105 shadow-lg overflow-hidden transform transition-all duration-300 rounded-lg h-[200px] md:h-full"
             >
               {/* Kategori Resmi */}

@@ -7,10 +7,10 @@ import PageContainer from "../Containers/PageContainer";
 import Image from "next/image";
 import { Snackbar, SnackbarContent } from "@mui/material";
 import Button from "../general/Button";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 function BlogClient({ blog }: { blog: BlogProps }) {
-  // const t = useTranslations();
+  const t = useTranslations();
 
   //Copy
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -79,8 +79,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
           {blog.category && (
             <div className="mb-3 flex items-center justify-start gap-1">
               <span className="text-sm text-primary font-semibold">
-                Category:
-                {/* {t("blogPage.category")}: */}
+                {t("blogPage.category")}:
               </span>
               <span className="text-secondary text-base bg-gray-200 py-1 px-2 rounded-md">
                 {blog.category}
@@ -92,8 +91,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
           {blog.tags && blog.tags.length > 0 && (
             <div className="mb-4 flex  justify-start items-center gap-1 w-full">
               <p className="text-md text-primary font-semibold ">
-                {/* {t("blogPage.Tags")}: */}
-                Tags:
+                {t("blogPage.Tags")}:
               </p>
               <ul className="flex flex-wrap gap-2 w-full">
                 {blog.tags.map((tag, index) => (

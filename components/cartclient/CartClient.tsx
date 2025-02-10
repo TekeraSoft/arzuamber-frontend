@@ -11,13 +11,13 @@ import Loading from "../utils/Loading";
 import TextClip from "../utils/TextClip";
 import Heading from "../general/Heading";
 import EmptyCart from "./EmptyCart";
-import { Link } from "@/i18n/routing";
 import CartSummary from "./CartSummary";
-// import { useTranslations } from "next-intl";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useTranslations } from "next-intl";
 
 function CartClient() {
   const dispatch = useDispatch();
-  // const t = useTranslations();
+  const t = useTranslations();
   const carts = useSelector((state: RootState) => state.cart.carts);
   const [isClient, setIsClient] = useState(false);
 
@@ -58,8 +58,7 @@ function CartClient() {
   return (
     <PageContainer>
       <Heading
-        text="Sepetiniz"
-        // text={t("CartPage.heading")}
+        text={t("CartPage.heading")}
         center
         textSize="4xl"
         hr
@@ -68,38 +67,30 @@ function CartClient() {
 
       <div className="flex  justify-center items-start md:flex-row flex-wrap gap-8 mb-5 p-5 md:p-0  ">
         {/* Ürün Tablosu */}
-        <div className="flex-1 bg-mywhite p-4 rounded-lg md:shadow-lg  h-full md:border md:border-gray-200">
+        <div className="flex-1 bg-mywhite  rounded-lg   h-full ">
           <table className="w-full border border-gray-200 rounded-lg text-sm md:text-base ">
             <thead className="bg-gray-100">
               <tr className="text-center">
                 <th className="p-3 text-xs sm:text-base">
-                  Ürün
-                  {/* {t("CartPage.product")} */}
+                  {t("CartPage.product")}
                 </th>
                 <th className="p-3 text-xs sm:text-base hidden md:block">
-                  Adı
-                  {/* {t("CartPage.name")} */}
-                </th>
-
-                <th className="p-3 text-xs sm:text-base">
-                  Miktar
-                  {/* {t("CartPage.quantity")} */}
+                  {t("CartPage.name")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Fiyat
-                  {/* {t("CartPage.price")} */}
+                  {t("CartPage.quantity")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Beden
-                  {/* {t("CartPage.price")} */}
+                  {t("CartPage.price")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  Renk
-                  {/* {t("CartPage.price")} */}
+                  {t("CartPage.size")}
                 </th>
                 <th className="p-3 text-xs sm:text-base">
-                  İşlemler
-                  {/* {t("CartPage.actions")} */}
+                  {t("CartPage.color")}
+                </th>
+                <th className="p-3 text-xs sm:text-base">
+                  {t("CartPage.actions")}
                 </th>
               </tr>
             </thead>
@@ -130,29 +121,20 @@ function CartClient() {
 
                     <td className="text-gray-900">{cart.quantity}</td>
                     <td className="text-gray-900 font-semibold">
-                      {/* {t("CartPage.cartPriceSymbol)}: */}
-                      {/* İndirimli fiyatı göster */}${discountedPrice}
+                      {discountedPrice}
+                      {t("CartPage.cartPriceSymbol")}
                     </td>
                     <td className="text-gray-900">{cart.size}</td>
                     <td className="text-gray-900">{cart.color}</td>
-                    <td className=" p-2">
+                    <td className="p-2 w-8 ">
                       <Button
                         type="button"
                         onClick={() => removeItemFromCart(cart.id)}
-                        text="Sil"
-                        // text={/* {t("CartPage.remove)}: */}
+                        icon={MdOutlineDeleteOutline}
+                        iconSize={20}
                         color="third"
-                        className="w-full h-7 md:w-14 md:h-10 text-sm"
+                        className="w-full h-8"
                       />
-                      <Link href={`product/${cart.id}`}>
-                        <Button
-                          type="button"
-                          text="Detay"
-                          // text={/* {t("CartPage.details)}: */}
-                          color="third"
-                          className="w-full h-7 md:w-14 md:h-10 text-sm mt-2"
-                        />
-                      </Link>
                     </td>
                   </tr>
                 );

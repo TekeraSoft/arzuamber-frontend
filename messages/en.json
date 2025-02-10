@@ -21,8 +21,9 @@
   },
 
   "HomePage": {
-    "sliderTitle": "Featured Products",
-    "categoryTitle": "All Categories"
+    "sliderFeaturedTitle": "New Season Products",
+    "sliderPopulateTitle": "Populate Products",
+    "sliderAllProduct": "All Products"
   },
 
   "brand": {
@@ -48,7 +49,9 @@
     "email": "Email",
     "password": "Password",
     "registerButton": "Register",
-    "registerLink": "Already have an account? Login"
+    "registerLink": "Already have an account? Login",
+    "registerSuccess": "Login Successfully!",
+    "registerError": "Login Error!"
   },
 
   "allProduct": {
@@ -82,7 +85,8 @@
     "text": "Stay updated with the latest articles, tips, and insights on our blog. Discover exciting new content regularly.",
     "blogsPageButton": "Read more",
     "category": "Category",
-    "Tags": "Tags"
+    "Tags": "Tags",
+    "readMore": "Read More"
   },
 
   "CartPage": {
@@ -120,7 +124,7 @@
   },
 
   "FavPage": {
-    "heading": "Your Favorites",
+    "title": "Your Favorites",
     "product": "Product",
     "name": "Name",
     "quantity": "Quantity",
@@ -130,8 +134,6 @@
     "total": "Total",
     "favPriceSymbol": "$",
     "continueShopping": "Continue Shopping",
-    "remove": "Remove",
-    "details": "Details",
     "size": "Size",
     "color": "Color",
     "emptyfavTitle": "No Products in Favorites",
@@ -200,6 +202,14 @@
       "district": "Muratpasa",
       "country": "Turkey"
     }
+  },
+
+  "Filter": {
+    "title": "Filter",
+    "sizes": "Size",
+    "colors": "Color",
+    "categories": "Categories",
+    "lengths": "Length"
   },
 
   "footer": {

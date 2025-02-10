@@ -10,10 +10,10 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { IoIosCloseCircleOutline, IoLogoGoogleplus } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 function LoginForm() {
-  // const t = useTranslations();
+  const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
 
   const isLoginModalopen = useSelector(
@@ -24,6 +24,7 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm<FieldValues>();
 
@@ -31,13 +32,10 @@ function LoginForm() {
     try {
       const formData = { ...data };
       console.log("Form Data", formData);
-
-      toast.success("Login Successfully!");
-      // toast.success(t("loginForm.loginSuccess"));
+      toast.success(t("loginForm.loginSuccess"));
     } catch (error) {
       console.error(error);
-      toast.error("Login Error!");
-      // toast.error(t("loginForm.loginError"));
+      toast.error(t("loginForm.loginError"));
     }
   };
 
@@ -51,7 +49,6 @@ function LoginForm() {
   return (
     <div
       onClick={(e) => {
-        // Form dışına tıklanırsa kapanmasını sağlıyoruz
         if (e.target === e.currentTarget) {
           handleClose();
         }
@@ -65,8 +62,7 @@ function LoginForm() {
       >
         <Heading
           center
-          text="Welcome Back!"
-          // text={t("loginForm.welcomeBack")}
+          text={t("loginForm.welcomeBack")}
           font="bold"
           textSize="2xl"
           color="black"
@@ -84,8 +80,7 @@ function LoginForm() {
 
           <Input
             id="loginEmail"
-            placeholder="Email"
-            // placeholder={t("loginForm.email")}
+            placeholder={t("loginForm.email")}
             type="email"
             required
             errors={errors}
@@ -94,8 +89,7 @@ function LoginForm() {
 
           <Input
             id="loginPassword"
-            placeholder="Password"
-            // placeholder={t("loginForm.password")}
+            placeholder={t("loginForm.password")}
             type="password"
             required
             errors={errors}
@@ -103,8 +97,7 @@ function LoginForm() {
           />
 
           <Button
-            text="Login"
-            // text={t("loginForm.loginButton")}
+            text={t("loginForm.loginButton")}
             type="submit"
             color="primary"
             animation
@@ -125,8 +118,7 @@ function LoginForm() {
           className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold"
           onClick={handleChangeModal}
         >
-          Don’t have an account? Sign up
-          {/* {t("loginForm.noAccount")} */}
+          {t("loginForm.noAccount")}
         </p>
       </div>
     </div>

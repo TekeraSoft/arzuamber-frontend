@@ -32,7 +32,7 @@ function Button({
     cart: "w-[70px]",
     small: "w-[250px]",
     medium: "w-[800px]",
-    large: "w-full",
+    large: "w-full h-10",
     cartIcon:
       "w-8 h-8 flex justify-center items-center r text-mywhite rounded-lg hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md",
   };

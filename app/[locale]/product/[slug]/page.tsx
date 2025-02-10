@@ -7,14 +7,14 @@ import { RootState } from "@/store/store";
 import { Product } from "@/types/Props";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [slug, setSlug] = useState<string | null>(null);
   const { products, loading } = useSelector(
     (state: RootState) => state.products
   );
-  // const t = useTranslations("warningText");
+  const t = useTranslations("");
 
   useEffect(() => {
     const fetchSlug = async () => {
@@ -35,10 +35,8 @@ function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
         <DetailClient product={product} />
       ) : (
         <WarningText
-          title="Product Not Found"
-          text="The product you're looking for could not be found."
-          // title={t("warningText.ProductNotFoundTitle")}
-          // text={t("warningText.ProductNotFoundText")}
+          title={t("warningText.ProductNotFoundTitle")}
+          text={t("warningText.ProductNotFoundText")}
         />
       )}
     </div>

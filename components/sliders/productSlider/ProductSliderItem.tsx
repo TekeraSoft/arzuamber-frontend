@@ -12,8 +12,6 @@ import { Product, Review } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 import Button from "@/components/general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
-// import { CartItem } from "@/store/cartSlice";
-// import { FavItem } from "@/store/favoritesSlice";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -107,19 +105,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           </Link>
         </div>
       </div>
-      {/* <div className="flex items-center justify-center w-full">
-        {product.inStock ? (
-          <small className="flex items-center justify-center bg-secondary text-white text-md px-2 py-1 rounded-full w-full ">
-            <HiCheckCircle className="mr-1" />
-            In Stock
-          </small>
-        ) : (
-          <small className="flex items-center justify-center bg-third text-white text-md  px-2 py-1 rounded-full w-full ">
-            <HiXCircle className="mr-1" />
-            Out of Stock
-          </small>
-        )}
-      </div> */}
     </div>
   );
 }

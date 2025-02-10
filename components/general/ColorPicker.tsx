@@ -1,15 +1,10 @@
 import Image from "next/image";
 import React from "react";
 
-interface Color {
-  name: string;
-  imageUrl: string;
-}
-
 interface ColorPickerProps {
-  colors: Color[];
-  onColorSelect: (color: Color) => void;
-  selectedColor: Color | null;
+  colors: { name: string; imageUrl: string }[];
+  onColorSelect: (colorName: string) => void;
+  selectedColor: { name: string } | null;
 }
 
 const ColorPicker = ({
@@ -17,12 +12,12 @@ const ColorPicker = ({
   onColorSelect,
   selectedColor,
 }: ColorPickerProps) => {
-  const handleColorSelect = (color: Color) => {
-    onColorSelect(color); // Seçilen rengi üst bileşene gönder
+  const handleColorSelect = (color: { name: string; imageUrl: string }) => {
+    onColorSelect(color.name); // sadece renk ismini üst bileşene gönder
   };
 
   return (
-    <div className="flex gap-2 md:space-x-4 flex-wrap items-center justify-start w-full">
+    <div className="flex gap-2  items-start justify-center w-full flex-wrap">
       {colors.map((color, index) => (
         <div
           key={index}
@@ -32,9 +27,9 @@ const ColorPicker = ({
                 ? "border-myblack"
                 : "border-gray-300"
             }`}
-          onClick={() => handleColorSelect(color)} // Seçilen rengin tamamı gönderiliyor
+          onClick={() => handleColorSelect(color)}
         >
-          <div className="relative w-12 h-12">
+          <div className="relative w-10 h-12">
             <Image
               src={color.imageUrl}
               alt={`Color option ${color.name}`}

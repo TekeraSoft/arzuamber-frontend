@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import HomeSliderItem from "./HomeSliderItem";
 import { CarouselType } from "@/constans/HomeSlider";
+import { useState, useEffect } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Button from "@/components/general/Button";
 
 const responsive = {
   superLargeDesktop: {
@@ -26,11 +29,47 @@ const responsive = {
   },
 };
 
+// Özel buton grubu bileşeni
+const CustomButtonGroup = ({
+  next,
+  previous,
+}: {
+  next: () => void;
+  previous: () => void;
+}) => {
+  return (
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-5">
+      <Button
+        onClick={previous}
+        icon={FaChevronLeft}
+        size="cartIcon"
+        iconSize={14}
+      />
+      <Button
+        onClick={next}
+        icon={FaChevronRight}
+        iconSize={14}
+        size="cartIcon"
+      />
+    </div>
+  );
+};
+
 function HomeSlider() {
   const { images, loading } = useSelector((state: RootState) => state.general);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="homepage-slider-div ">
+    <div className="homepage-slider-div relative">
       {loading ? (
         <Loading />
       ) : (
@@ -38,7 +77,7 @@ function HomeSlider() {
           responsive={responsive}
           swipeable={true}
           draggable={true}
-          showDots={true}
+          showDots={!isMobile} // Mobilde noktalar kapalı
           arrows={false}
           ssr={true}
           infinite={true}
@@ -47,8 +86,14 @@ function HomeSlider() {
           keyBoardControl={true}
           customTransition="all .7s"
           transitionDuration={1000}
-          containerClass="carousel-container  "
-          itemClass="flex justify-center items-center bg-center bg-cover "
+          containerClass="carousel-container"
+          itemClass="flex justify-center items-center bg-center bg-cover"
+          renderButtonGroupOutside={isMobile} // Buton grubu dışarıda
+          customButtonGroup={
+            isMobile ? (
+              <CustomButtonGroup next={() => {}} previous={() => {}} />
+            ) : undefined
+          }
         >
           {images?.map((image: CarouselType) => (
             <HomeSliderItem image={image} key={image.id} />

@@ -19,7 +19,7 @@ import PageContainer from "../Containers/PageContainer";
 import { addToFav, FavItem, removeFromFav } from "@/store/favoritesSlice";
 import { toast } from "react-toastify";
 import { CardProductProps, Product, Review } from "@/types/Props";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import ColorPicker from "../general/ColorPicker";
 
 const responsive = {
@@ -49,12 +49,14 @@ const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch();
   const carts = useSelector((state: RootState) => state.cart.carts);
   const favs = useSelector((state: RootState) => state.favorites.favs);
-  // const t = useTranslations();
+  const t = useTranslations();
 
   const [displayButton, setDisplayButton] = useState<boolean>(false);
   const [displayFav, setDisplayFav] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
-  const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<{ name: string } | null>(
+    null
+  );
 
   const [cardProduct, setcardProduct] = useState<CardProductProps>({
     id: product.id,
@@ -66,8 +68,10 @@ const DetailClient = ({ product }: productProps) => {
     image: product.images[0],
     inStock: product.inStock,
     size: selectedSize,
-    color: selectedColor,
+    color: selectedColor ? selectedColor.name : "",
   });
+
+  console.log(selectedSize);
 
   const increaseFunc = () => {
     if (cardProduct.quantity === 10) return;
@@ -81,13 +85,11 @@ const DetailClient = ({ product }: productProps) => {
 
   const addToBasket = () => {
     if (!selectedSize) {
-      return toast.error("Please Select Size.");
-      // return toast.error(t("productDetail.sizeError"));
+      return toast.error(t("productDetail.sizeError"));
     }
 
     if (!selectedColor) {
-      return toast.error("Please Select Color.");
-      // return toast.error(t("productDetail.sizeError"));
+      return toast.error(t("productDetail.sizeError"));
     }
 
     const cartData = {
@@ -99,28 +101,29 @@ const DetailClient = ({ product }: productProps) => {
       quantity: cardProduct?.quantity,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
-      size: cardProduct.size,
-      color: cardProduct.color,
+      size: selectedSize,
+      color: selectedColor?.name,
     };
     console.log(cartData);
-    // toast.success(t("productDetail.productAddedCartSuccess"));
+    toast.success(t("productDetail.productAddedCartSuccess"));
     dispatch(addToCart(cartData));
   };
 
+  console.log(selectedColor?.name);
+
   const removeToBasket = (id: string) => {
     dispatch(removeFromCart(id));
-    // toast.warning(t("productDetail.productRemovedCart"));
+    toast.warning(t("productDetail.productRemovedCart"));
   };
 
   const removeToFav = (id: string) => {
     dispatch(removeFromFav(id));
-    // toast.warning(t("productDetail.productRemovedFav"));
+    toast.warning(t("productDetail.productRemovedFav"));
   };
 
   const AddToFav = () => {
     if (!selectedSize) {
-      return toast.error("Please Select Size.");
-      // return toast.error(t("productDetail.colorError"));
+      return toast.error(t("productDetail.colorError"));
     }
 
     const favData = {
@@ -132,11 +135,13 @@ const DetailClient = ({ product }: productProps) => {
       discountPercent: product.discountPercent,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
-      size: cardProduct.size,
-      color: cardProduct.color,
+      size: selectedSize,
+      color: cardProduct?.color,
     };
 
-    // toast.success(t("productDetail.productAddedFavSuccess"));
+    console.log(favData);
+
+    toast.success(t("productDetail.productAddedFavSuccess"));
     dispatch(addToFav(favData));
   };
 
@@ -210,7 +215,7 @@ const DetailClient = ({ product }: productProps) => {
 
   // color select func
   const handleColorSelect = (color: string) => {
-    setSelectedColor(color);
+    setSelectedColor({ name: color }); // Doğru şekilde nesne olarak atandı
   };
 
   return (
@@ -265,62 +270,63 @@ const DetailClient = ({ product }: productProps) => {
           <hr className="w-full bg-secondary" />
 
           {/* price and category */}
-          <div className="flex  flex-col justify-center items-start w-full gap-2">
-            <div className=" w-full flex gap-3 ">
-              <div className="w-2/4  font-semibold text-primary border  rounded-lg px-3 py-1 border-myblack">
+          <div className="flex flex-col justify-center items-start w-full gap-4 md:gap-2">
+            <div className="w-full flex flex-col md:flex-row gap-3">
+              {/* Price Section */}
+              <div className="w-full md:w-2/4 font-semibold text-primary border rounded-lg px-3 py-1 border-myblack">
                 {discountPercent > 0 ? (
                   <div className="flex justify-center items-center gap-2">
-                    <span className=" text-myblack text-md  md:text-2xl">
+                    <span className="text-myblack text-md md:text-2xl">
                       {discountedPrice}₺
                     </span>
                     <span className="line-through text-red-500 text-xs md:text-sm">
-                      {product.price.toFixed(2)}
-                      {/* {t("productDetail.priceSymbol")} */}₺
+                      {product.price.toFixed(2)}{" "}
+                      {t("productDetail.priceSymbol")}
                     </span>
                   </div>
                 ) : (
                   <span>
-                    {product.price.toFixed(2)}
-                    {/* {t("productDetail.priceSymbol")} */}₺
+                    {product.price.toFixed(2)} {t("productDetail.priceSymbol")}
                   </span>
                 )}
               </div>
 
               {/* Stock Status */}
               <div
-                className={`w-2/4 flex items-center justify-center  text-sm md:text-lg font-semibold px-2 py-2 rounded-lg  text-mywhite ${
-                  product.inStock ? "bg-primary " : "bg-thirdLight"
+                className={`w-full md:w-2/4 flex items-center justify-center text-sm md:text-lg font-semibold px-2 py-2 rounded-lg text-mywhite ${
+                  product.inStock ? "bg-primary" : "bg-thirdLight"
                 }`}
               >
                 {product.inStock ? (
-                  <p>
-                    Stock In
-                    {/* {t("productDetail.productİnStock")} */}
-                  </p>
+                  <p>{t("productDetail.productİnStock")}</p>
                 ) : (
-                  <p>
-                    Out Of Stock
-                    {/* {t("productDetail.productOutStock")} */}
-                  </p>
+                  <p>{t("productDetail.productOutStock")}</p>
                 )}
               </div>
             </div>
 
-            <div
-              className="w-full md:w-1/2 flex items-center justify-center gap-2 text-md font-medium p-1
-               md:p-2  rounded-lg text-white bg-primary "
-            >
-              <span className=" text-xs md:text-base tracking-wide">
-                Category:
-                {/* {t("productDetail.productCategory")}: */}
-              </span>
-              <span className="bg-white text-primary px-1 md:px-2 md:py-1 rounded-md shadow-sm  text-sm  md:text-sm ">
-                {product.category}
-              </span>
-              <span className="text-gray-200 ">/</span>
-              <span className="bg-white text-primary px-1  md:px-2 md:py-1 rounded-md shadow-sm text-sm md:text-sm">
-                {product.subcategories}
-              </span>
+            {/* Category and Subcategory */}
+            <div className="w-full flex flex-col md:flex-row justify-center items-center gap-3">
+              {/* Category Section */}
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-1 md:p-2 rounded-lg text-white bg-primary">
+                <span className="text-xs font-semibold md:text-base tracking-wide">
+                  {t("productDetail.productCategory")}:
+                </span>
+                <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs ">
+                  {product.category}
+                </span>
+                <span className="text-gray-200">/</span>
+                <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
+                  {product.subcategories}
+                </span>
+              </div>
+
+              {/* Length Section */}
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-2 md:p-2 rounded-lg text-white bg-primary">
+                <span className="bg-white text-primary w-1/2 text-center px-1 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
+                  {product.length}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -337,22 +343,24 @@ const DetailClient = ({ product }: productProps) => {
               onClick={handleClamp}
               className="w-full mt-1 text-primary text-sm md:text-md font-bold cursor-pointer  hover:underline text-end no-underline"
             >
-              {/* {lineClamp ? t("productDetail.readMore") : t("productDetail.readLess")} */}
-              {lineClamp ? "Daha fazla" : "Daha az"}
+              {lineClamp
+                ? t("productDetail.readMore")
+                : t("productDetail.readLess")}
             </span>
           </div>
 
           <hr className="w-full bg-secondary" />
 
-          <div className="flex items-center justify-center   gap-3">
-            <div className="w-full  flex justify-center items-start">
+          <div className="w-full flex items-center justify-center flex-col md:flex-row gap-5  md:gap-3">
+            <div className="w-full flex justify-center items-center ">
               <ColorPicker
                 colors={product.colors}
                 onColorSelect={handleColorSelect}
                 selectedColor={selectedColor}
               />
             </div>
-            <div className=" w-full flex justify-center items-center gap-3">
+
+            <div className=" w-full flex justify-start items-xgz flex-wrap gap-3">
               {product.sizes.map((size, i) => (
                 <Button
                   key={i}
@@ -385,8 +393,7 @@ const DetailClient = ({ product }: productProps) => {
                   <Button
                     disabled={!displayButton}
                     onClick={() => removeToBasket(product.id)}
-                    text={"Product In Cart"}
-                    // title={t("productDetail.productInCart")}
+                    text={t("productDetail.productInCart")}
                     outline={!product.inStock}
                     color="secondary"
                     size="large"
@@ -398,10 +405,8 @@ const DetailClient = ({ product }: productProps) => {
                       onClick={addToBasket}
                       text={
                         product.inStock
-                          ? "Add To Cart"
-                          : // {t("productDetail.productAddCart")}
-                            "Product Out of Stock "
-                        // {t("productDetail.productOutStock")}
+                          ? t("productDetail.productAddCart")
+                          : t("productDetail.productOutStock")
                       }
                       outline={!product.inStock}
                       color="primary"

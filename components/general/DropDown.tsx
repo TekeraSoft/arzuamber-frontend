@@ -87,10 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Register Dropdown */}
       <select
         {...register(id, {
-          required: required
-            ? "This field is required !"
-            : //  {t("warningText.requiredText")}
-              false,
+          required: required ? "This field is required !" : false,
         })}
         id={id} // Dropdown'ı benzersiz bir şekilde tanımlamak için ID kullanıyoruz
         className="hidden"
