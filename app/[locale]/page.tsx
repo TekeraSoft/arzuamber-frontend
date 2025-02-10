@@ -10,56 +10,56 @@ import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
-    const t = useTranslations();
+  const t = useTranslations();
 
-    return (
-        <>
-            <HomeSlider />
-            <GradientColorContainer>
-                <HomeContainer>
-                    <Heading
-                        text={t("HomePage.sliderFeaturedTitle")}
-                        textSize="4xl"
-                        center={true}
-                    />
-                    <ProductSlider isPopulate />
-                </HomeContainer>
+  return (
+    <>
+      <HomeSlider />
+      <GradientColorContainer>
+        <HomeContainer>
+          <Heading
+            text={t("HomePage.sliderFeaturedTitle")}
+            textSize="4xl"
+            center={true}
+          />
+          <ProductSlider isPopulate />
+        </HomeContainer>
 
-                <Brand
-                    title={t("brand.title")}
-                    description={t("brand.description")}
-                    buttonText={t("brand.buttonText")}
-                    desktopImageUrl="/images/Brand/brand3.png"
-                    mobileImageUrl="/images/Brand/brand3-mobile.png"
-                    link="/products"
-                />
+        <Brand
+          title={t("brand.title")}
+          description={t("brand.description")}
+          buttonText={t("brand.buttonText")}
+          desktopImageUrl="/images/Brand/brand3.png"
+          mobileImageUrl="/images/Brand/brand3-mobile.png"
+          link="/products"
+        />
 
-                {/* <Category /> */}
-                <HomeContainer>
-                    <Heading
-                        text={t("HomePage.sliderPopulateTitle")}
-                        center
-                        textSize="4xl"
-                    />
-                    <ProductSlider showNewSeason />
+        {/* <Category /> */}
+        <HomeContainer>
+          <Heading
+            text={t("HomePage.sliderPopulateTitle")}
+            center
+            textSize="4xl"
+          />
+          <ProductSlider showNewSeason />
 
-                    <Brand
-                        title={t("brand.title")}
-                        description={t("brand.description")}
-                        buttonText={t("brand.buttonText")}
-                        desktopImageUrl="/images/Brand/brand2.jpg"
-                        mobileImageUrl="/images/Brand/brand2.png"
-                        link="/products"
-                    />
+          <Brand
+            title={t("brand.title")}
+            description={t("brand.description")}
+            buttonText={t("brand.buttonText")}
+            desktopImageUrl="/images/Brand/brand2.jpg"
+            mobileImageUrl="/images/Brand/brand2.png"
+            link="/products"
+          />
 
-                    <Heading
-                        text={t("HomePage.sliderAllProduct")}
-                        center
-                        textSize="4xl"
-                    />
-                    <ProductSlider />
-                </HomeContainer>
-            </GradientColorContainer>
-        </>
-    );
+          <Heading
+            text={t("HomePage.sliderAllProduct")}
+            center
+            textSize="4xl"
+          />
+          <ProductSlider />
+        </HomeContainer>
+      </GradientColorContainer>
+    </>
+  );
 }

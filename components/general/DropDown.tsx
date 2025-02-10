@@ -17,7 +17,7 @@ interface DropdownProps {
   placeholder?: string;
   required?: boolean;
   errors: FieldErrors<FieldValues>;
-  register?: UseFormRegister<FieldValues>;
+  register: UseFormRegister<FieldValues>;
   label?: string;
 }
 
@@ -87,7 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Register Dropdown */}
       <select
         {...register(id, {
-          required: required ? "This field is required" : false,
+          required: required ? "This field is required !" : false,
         })}
         id={id} // Dropdown'ı benzersiz bir şekilde tanımlamak için ID kullanıyoruz
         className="hidden"

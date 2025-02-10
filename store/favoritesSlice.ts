@@ -9,6 +9,9 @@ export interface FavItem {
   quantity: number;
   image: string;
   inStock: boolean;
+  discountPercent: number;
+  size: string;
+  color: string;
 }
 
 // Sepet Tipi
@@ -19,7 +22,7 @@ export interface CartState {
 // LocalStorage'dan sepete verileri çekme (İstemci tarafında çalıştırılacak)
 const fetchFromLocalStorage = (): FavItem[] => {
   if (typeof window !== "undefined") {
-    const favorites = localStorage.getItem("cart");
+    const favorites = localStorage.getItem("favorites");
     if (favorites) {
       return JSON.parse(favorites);
     }
@@ -47,7 +50,7 @@ export const cartSlice = createSlice({
     addToFav: (state, action: PayloadAction<FavItem>) => {
       const isItemCart = state.favs.find((fav) => fav.id == action.payload.id);
       if (isItemCart) {
-        const tempCart = state.favs.map((item) => {
+        const tempFav = state.favs.map((item) => {
           if (item.id == action.payload.id) {
             const tempQuantity = item.quantity + action.payload.quantity;
             return {
@@ -59,7 +62,7 @@ export const cartSlice = createSlice({
           }
         });
 
-        state.favs = tempCart;
+        state.favs = tempFav;
         storeInLocalStorage(state.favs);
       } else {
         state.favs.push(action.payload);
@@ -69,13 +72,14 @@ export const cartSlice = createSlice({
 
     // Sepetten ürün silme işlemi
     removeFromFav: (state, action: PayloadAction<string>) => {
-      const tempCart = state.favs.filter((item) => item.id != action.payload);
-      state.favs = tempCart;
+      const tempFav = state.favs.filter((item) => item.id != action.payload);
+      state.favs = tempFav;
       storeInLocalStorage(state.favs);
     },
     clearFav: (state) => {
       state.favs = [];
       storeInLocalStorage(state.favs);
+      // toast.warning(t("productDetail.productsClearedFav"));
     },
   },
 });

@@ -9,45 +9,45 @@ import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 
 const jost = Jost({
-    subsets: ["latin"],
-    weight: ["400", "200", "300", "600", "700", "900"],
+  subsets: ["latin"],
+  weight: ["400", "200", "300", "600", "700", "900"],
 });
 
 export const metadata = {
-    title: "Arzu Amber",
-    description: "ARZUAMBER",
+  title: "Arzu Amber",
+  description: "ARZUAMBER",
 };
 
 // `locale` parametresinin tipi belirlenmeli
 export default async function RootLayout({
-                                             children,
-                                             params,
-                                         }: {
-    children: React.ReactNode;
-    params: { locale: Locale }; // Burada `Locale` türünü kullanıyoruz
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { locale: Locale }; // Burada `Locale` türünü kullanıyoruz
 }) {
-    const { locale } = await params;
+  const { locale } = await params;
 
-    // Geçerli bir dil olup olmadığını kontrol et
-    if (!routing.locales.includes(locale)) {
-        notFound();
-    }
+  // Geçerli bir dil olup olmadığını kontrol et
+  if (!routing.locales.includes(locale)) {
+    notFound();
+  }
 
-    // Dil mesajlarını getir
-    const messages = await getMessages();
+  // Dil mesajlarını getir
+  const messages = await getMessages();
 
-    return (
-        <html lang={locale}>
-        <body
-            className={`${jost.className} antialiased`}
-            suppressHydrationWarning={true}
-        >
+  return (
+    <html lang={locale}>
+      <body
+        className={`${jost.className} antialiased`}
+        suppressHydrationWarning={true}
+      >
         <NextIntlClientProvider messages={messages}>
-            <StoreProvider>
-                <LayoutProvider>{children}</LayoutProvider>
-            </StoreProvider>
+          <StoreProvider>
+            <LayoutProvider>{children}</LayoutProvider>
+          </StoreProvider>
         </NextIntlClientProvider>
-        </body>
-        </html>
-    );
+      </body>
+    </html>
+  );
 }

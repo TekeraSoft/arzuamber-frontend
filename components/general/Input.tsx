@@ -18,7 +18,6 @@ interface InputProps {
 }
 
 function Input({
-  id,
   placeholder,
   disabled,
   type,
@@ -26,17 +25,19 @@ function Input({
   errors,
   value,
   register,
+  id,
   min = 0,
   max,
   label,
 }: InputProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {label && (
         <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
           {label}
         </label>
       )}
+
       <input
         id={id}
         placeholder={placeholder}
@@ -52,8 +53,11 @@ function Input({
           errors[id] ? "border-red-500" : "border-gray-300"
         }`}
       />
-      {errors[id] && typeof errors[id]?.message === "string" && (
-        <span className="text-red-500 text-xs mt-1">{errors[id]?.message}</span>
+
+      {errors[id] && (
+        <span className="text-red-500 text-xs my-2">
+          {errors[id]?.message as string}
+        </span>
       )}
     </div>
   );

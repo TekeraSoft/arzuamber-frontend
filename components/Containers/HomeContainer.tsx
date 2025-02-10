@@ -1,7 +1,7 @@
 import React from "react";
 
 function HomeContainer({ children }: { children: React.ReactNode }) {
-    return <div className="container mx-auto w-full h-full">{children}</div>;
+  return <div className="container mx-auto w-full h-full">{children}</div>;
 }
 
 export default HomeContainer;

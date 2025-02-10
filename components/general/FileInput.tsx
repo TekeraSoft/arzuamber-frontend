@@ -68,6 +68,7 @@ const FileInput = ({
         disabled={disabled}
         multiple={multiple}
         {...register(id, { required: required && `${label} is required` })}
+        //  {t("warningText.requiredText")}
         onChange={handleFileChange}
         className={`w-full my-3 p-2 border outline-none rounded-md text-xs text-center bg-secondary text-mywhite ${
           errors[id] ? "border-red-500" : "border-gray-300"

@@ -8,18 +8,19 @@ import Comment from "./Comment";
 import Heading from "../general/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartItem, removeFromCart } from "@/store/cartSlice";
-import { RootState } from "../../../store/store";
-
+import { RootState } from "../../store/store";
 import Rating from "@mui/material/Rating";
 import Carousel from "react-multi-carousel";
 import TextClip from "../utils/TextClip";
 import { IoShareSocialSharp } from "react-icons/io5";
-import { Alert, Snackbar } from "@mui/material";
+import { Snackbar, SnackbarContent } from "@mui/material";
 import { FaHeart } from "react-icons/fa";
 import PageContainer from "../Containers/PageContainer";
 import { addToFav, FavItem, removeFromFav } from "@/store/favoritesSlice";
 import { toast } from "react-toastify";
 import { CardProductProps, Product, Review } from "@/types/Props";
+import { useTranslations } from "next-intl";
+import ColorPicker from "../general/ColorPicker";
 
 const responsive = {
   superLargeDesktop: {
@@ -48,16 +49,29 @@ const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch();
   const carts = useSelector((state: RootState) => state.cart.carts);
   const favs = useSelector((state: RootState) => state.favorites.favs);
+  const t = useTranslations();
+
+  const [displayButton, setDisplayButton] = useState<boolean>(false);
+  const [displayFav, setDisplayFav] = useState<boolean>(false);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<{ name: string } | null>(
+    null
+  );
 
   const [cardProduct, setcardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
     description: product.description,
     price: product.price,
+    discountPercent: product.discountPercent,
     quantity: 1,
     image: product.images[0],
     inStock: product.inStock,
+    size: selectedSize,
+    color: selectedColor ? selectedColor.name : "",
   });
+
+  console.log(selectedSize);
 
   const increaseFunc = () => {
     if (cardProduct.quantity === 10) return;
@@ -71,33 +85,45 @@ const DetailClient = ({ product }: productProps) => {
 
   const addToBasket = () => {
     if (!selectedSize) {
-      return toast.error("Please Select Size.");
+      return toast.error(t("productDetail.sizeError"));
     }
+
+    if (!selectedColor) {
+      return toast.error(t("productDetail.sizeError"));
+    }
+
     const cartData = {
       id: product?.id,
       name: product?.name,
       image: product.images[0],
       price: product?.price,
+      discountPercent: product.discountPercent,
       quantity: cardProduct?.quantity,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
       size: selectedSize,
+      color: selectedColor?.name,
     };
-    toast.success("Product Added.");
+    console.log(cartData);
+    toast.success(t("productDetail.productAddedCartSuccess"));
     dispatch(addToCart(cartData));
   };
 
+  console.log(selectedColor?.name);
+
   const removeToBasket = (id: string) => {
     dispatch(removeFromCart(id));
+    toast.warning(t("productDetail.productRemovedCart"));
   };
 
   const removeToFav = (id: string) => {
     dispatch(removeFromFav(id));
+    toast.warning(t("productDetail.productRemovedFav"));
   };
 
   const AddToFav = () => {
     if (!selectedSize) {
-      return toast.error("Please Select Size.");
+      return toast.error(t("productDetail.colorError"));
     }
 
     const favData = {
@@ -106,17 +132,18 @@ const DetailClient = ({ product }: productProps) => {
       image: product.images[0],
       price: product?.price,
       quantity: cardProduct?.quantity,
+      discountPercent: product.discountPercent,
       description: product?.description || "No description",
       inStock: product?.inStock || false,
       size: selectedSize,
+      color: cardProduct?.color,
     };
 
+    console.log(favData);
+
+    toast.success(t("productDetail.productAddedFavSuccess"));
     dispatch(addToFav(favData));
   };
-
-  const [displayButton, setDisplayButton] = useState<boolean>(false);
-  const [displayFav, setDisplayFav] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   // Cart ve Fav kontrolü için ortak useEffect
   useEffect(() => {
@@ -169,7 +196,10 @@ const DetailClient = ({ product }: productProps) => {
         setOpen(true);
       })
       .catch((err) => {
-        console.error("Link kopyalanırken hata oluştu", err);
+        if (err) {
+          return toast.error("The link could not be copied.");
+          // return toast.error(t("SnackBar.coypLinkUnsuccess"));
+        }
       });
   };
 
@@ -183,226 +213,273 @@ const DetailClient = ({ product }: productProps) => {
     setSelectedSize(size);
   };
 
+  // color select func
+  const handleColorSelect = (color: string) => {
+    setSelectedColor({ name: color }); // Doğru şekilde nesne olarak atandı
+  };
+
   return (
     <PageContainer>
-      <div className="detail-page-main-div  ">
-        <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-xl mb-10 w-full h-full border-y md:border-none">
-          {/* Image Section with Carousel */}
-          <div className=" w-full md:w-1/2 h-[500px] relative">
-            <Carousel
-              responsive={responsive}
-              infinite
-              autoPlay
-              autoPlaySpeed={3000}
-              transitionDuration={500}
-            >
-              {product.images.map((img, index) => (
-                <div key={index} className=" w-full h-[500px] relative ">
-                  <Image
-                    className="object-contain absolute"
-                    src={img}
-                    alt={product.name}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </div>
+      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
+        {/* Image Section with Carousel */}
+        <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
+          <Carousel
+            responsive={responsive}
+            infinite
+            autoPlay
+            autoPlaySpeed={3000}
+            transitionDuration={500}
+          >
+            {product.images.map((img, index) => (
+              <div
+                key={index}
+                className=" w-full h-[300px]  md:h-[700px]  relative "
+              >
+                <Image
+                  className="object-contain absolute "
+                  src={img}
+                  alt={product.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
 
-          {/* Product Details Section */}
-          <div className="w-full md:w-1/2 flex flex-col gap-6 items-center md:items-start text-center md:text-left">
-            <div className="flex flex-col lg:flex-row justify-between items-center w-full gap-2">
+        {/* Product Details Section */}
+        <div className="w-full md:w-1/2 flex flex-col gap-6 items-center md:items-start text-center md:text-left">
+          <div className="flex flex-col lg:flex-row justify-between items-center w-full gap-2">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 w-full ">
               {/* Product Name*/}
               <h1 className=" capitalize  text-4xl lg:text-3xl font-serif font-extrabold text-secondaryDark text-center">
                 {TextClip(product.name)}
               </h1>
 
               {/* Rating */}
-              <div className="flex items-center gap-2 text-lg">
-                <Rating
-                  name="read-only"
-                  value={ratingResult}
-                  precision={0.5}
-                  readOnly
-                  size="large"
-                />
-              </div>
+              <Rating
+                name="read-only"
+                value={ratingResult}
+                precision={0.5}
+                readOnly
+                size="large"
+              />
             </div>
-            <hr className="w-full border-black" />
+          </div>
+          <hr className="w-full bg-secondary" />
 
-            {/* price and category */}
-            <div className="flex flex-col md:flex-row flex-wrap justify-between items-center w-full gap-3">
-              <div className="text-2xl font-semibold text-primary border  rounded-lg px-2 border-myblack">
+          {/* price and category */}
+          <div className="flex flex-col justify-center items-start w-full gap-4 md:gap-2">
+            <div className="w-full flex flex-col md:flex-row gap-3">
+              {/* Price Section */}
+              <div className="w-full md:w-2/4 font-semibold text-primary border rounded-lg px-3 py-1 border-myblack">
                 {discountPercent > 0 ? (
                   <div className="flex justify-center items-center gap-2">
-                    <span className=" text-myblack text-4xl">
+                    <span className="text-myblack text-md md:text-2xl">
                       {discountedPrice}₺
                     </span>
-                    <span className="line-through text-red-500 text-md">
-                      {product.price.toFixed(2)}₺
+                    <span className="line-through text-red-500 text-xs md:text-sm">
+                      {product.price.toFixed(2)}{" "}
+                      {t("productDetail.priceSymbol")}
                     </span>
                   </div>
                 ) : (
-                  <span>{product.price.toFixed(2)}₺</span>
+                  <span>
+                    {product.price.toFixed(2)} {t("productDetail.priceSymbol")}
+                  </span>
                 )}
               </div>
 
+              {/* Stock Status */}
               <div
-                className={`flex items-center justify-center gap-1 text-md font-thin  p-2 rounded-lg  text-mywhite bg-primary capitalize "
-              `}
-              >
-                <span className="font-semibold">Kategori: </span>
-                {product.category}
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="flex flex-col">
-              <p
-                className={`font-sans text-gray-700 text-md leading-relaxed ${
-                  lineClamp ? "line-clamp-4" : ""
+                className={`w-full md:w-2/4 flex items-center justify-center text-sm md:text-lg font-semibold px-2 py-2 rounded-lg text-mywhite ${
+                  product.inStock ? "bg-primary" : "bg-thirdLight"
                 }`}
               >
-                {product.description}
-              </p>
-              <span
-                onClick={handleClamp}
-                className="w-full mt-1 text-primary text-md font-bold cursor-pointer  hover:underline text-end no-underline"
-              >
-                {lineClamp ? "Daha fazla" : "Daha az"}
-              </span>
-            </div>
-
-            {/* Stock Status */}
-            <div className="w-full flex justify-between items-center 0 ">
-              <div
-                className={` w-1/4 flex items-center justify-center md:text-lg font-semibold  p-2 rounded-lg  text-mywhite text-sm ${
-                  product.inStock ? "bg-primary " : "bg-thirdLight"
-                }`}
-              >
-                {product.inStock ? <p>Stock In</p> : <p>Out Of Stock</p>}
-              </div>
-
-              <div className="flex items-center justify-end md:justify-center w-3/4 gap-2">
-                {product.sizes.map((size, i) => (
-                  <Button
-                    key={i}
-                    onClick={() => handleSizeSelect(size)}
-                    outline={size !== selectedSize}
-                    color={size === selectedSize ? "primary" : "secondary"}
-                    animation
-                    size="icon"
-                    text={`${size}`}
-                    disabled={displayFav}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Counter and Add to Cart Button */}
-            <div className="w-full flex justify-between  md:justify-center  items-center gap-4 flex-wrap ">
-              <div className="w-full flex flex-row  justify-center items-center gap-10 lg:gap-8 ">
-                <div className="md:w-1/4">
-                  <Counter
-                    increaseFunc={increaseFunc}
-                    descreaseFunc={descreaseFunc}
-                    cardProduct={cardProduct}
-                  />
-                </div>
-                <div className="w-full">
-                  {displayButton ? (
-                    <Button
-                      disabled={!displayButton}
-                      onClick={() => removeToBasket(product.id)}
-                      text={"Product In Cart"}
-                      outline={!product.inStock}
-                      color="secondary"
-                      size="large"
-                    />
-                  ) : (
-                    <>
-                      <Button
-                        disabled={!product.inStock}
-                        onClick={addToBasket}
-                        text={
-                          product.inStock
-                            ? "Add To Cart"
-                            : "Product Out of Stock"
-                        }
-                        outline={!product.inStock}
-                        color="primary"
-                        size="large"
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="w-full flex justify-end items-center gap-4">
-                {displayFav ? (
-                  <>
-                    <Button
-                      disabled={!displayFav}
-                      onClick={() => removeToFav(product.id)}
-                      outline={displayFav}
-                      color="primary"
-                      icon={FaHeart}
-                      size="icon"
-                      animation={!displayFav}
-                    />
-                  </>
+                {product.inStock ? (
+                  <p>{t("productDetail.productİnStock")}</p>
                 ) : (
-                  <>
-                    <Button
-                      disabled={displayFav}
-                      onClick={AddToFav}
-                      outline={displayFav}
-                      color="primary"
-                      icon={FaHeart}
-                      size="icon"
-                      animation={!displayFav}
-                    />
-                  </>
+                  <p>{t("productDetail.productOutStock")}</p>
                 )}
+              </div>
+            </div>
 
-                <Button
-                  onClick={copyPath}
-                  color="primary"
-                  size="icon"
-                  icon={IoShareSocialSharp}
-                  iconSize={25}
-                  animation
-                />
+            {/* Category and Subcategory */}
+            <div className="w-full flex flex-col md:flex-row justify-center items-center gap-3">
+              {/* Category Section */}
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-1 md:p-2 rounded-lg text-white bg-primary">
+                <span className="text-xs font-semibold md:text-base tracking-wide">
+                  {t("productDetail.productCategory")}:
+                </span>
+                <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs ">
+                  {product.category}
+                </span>
+                <span className="text-gray-200">/</span>
+                <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
+                  {product.subcategories}
+                </span>
+              </div>
 
-                {/* Snackbar bildirim */}
-                <Snackbar
-                  open={open}
-                  autoHideDuration={2000}
-                  onClose={handleClose}
-                >
-                  <Alert
-                    onClose={handleClose}
-                    severity="success"
-                    className="w-full"
-                  >
-                    Share link copied!
-                  </Alert>
-                </Snackbar>
+              {/* Length Section */}
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-2 md:p-2 rounded-lg text-white bg-primary">
+                <span className="bg-white text-primary w-1/2 text-center px-1 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
+                  {product.length}
+                </span>
               </div>
             </div>
           </div>
-        </div>
 
-        <Heading text="Reviews" center textSize="3xl" hr />
+          {/* Description */}
+          <div className="flex flex-col">
+            <p
+              className={`font-sans text-gray-700 text-xs md:text-sm leading-relaxed ${
+                lineClamp ? "line-clamp-4" : ""
+              }`}
+            >
+              {product.description}
+            </p>
+            <span
+              onClick={handleClamp}
+              className="w-full mt-1 text-primary text-sm md:text-md font-bold cursor-pointer  hover:underline text-end no-underline"
+            >
+              {lineClamp
+                ? t("productDetail.readMore")
+                : t("productDetail.readLess")}
+            </span>
+          </div>
 
-        {/* Reviews Section */}
-        <div className=" space-y-4 mb-5">
-          {product?.reviews?.map((prd: Review) => (
-            <Comment key={prd.id} prd={prd} />
-          ))}
+          <hr className="w-full bg-secondary" />
+
+          <div className="w-full flex items-center justify-center flex-col md:flex-row gap-5  md:gap-3">
+            <div className="w-full flex justify-center items-center ">
+              <ColorPicker
+                colors={product.colors}
+                onColorSelect={handleColorSelect}
+                selectedColor={selectedColor}
+              />
+            </div>
+
+            <div className=" w-full flex justify-start items-xgz flex-wrap gap-3">
+              {product.sizes.map((size, i) => (
+                <Button
+                  key={i}
+                  onClick={() => handleSizeSelect(size)}
+                  outline={size !== selectedSize}
+                  color={size === selectedSize ? "primary" : "secondary"}
+                  animation
+                  size="icon"
+                  text={`${size}`}
+                  disabled={displayFav}
+                />
+              ))}
+            </div>
+          </div>
+
+          <hr className="w-full bg-secondary" />
+
+          {/* Counter and Add to Cart Button */}
+          <div className="w-full flex justify-between  md:justify-center  items-center gap-4 flex-wrap ">
+            <div className="w-full flex flex-col md:flex-row  justify-center items-center gap-10 lg:gap-10 ">
+              <div className=" w-1/4">
+                <Counter
+                  increaseFunc={increaseFunc}
+                  descreaseFunc={descreaseFunc}
+                  cardProduct={cardProduct}
+                />
+              </div>
+              <div className="w-3/4">
+                {displayButton ? (
+                  <Button
+                    disabled={!displayButton}
+                    onClick={() => removeToBasket(product.id)}
+                    text={t("productDetail.productInCart")}
+                    outline={!product.inStock}
+                    color="secondary"
+                    size="large"
+                  />
+                ) : (
+                  <>
+                    <Button
+                      disabled={!product.inStock}
+                      onClick={addToBasket}
+                      text={
+                        product.inStock
+                          ? t("productDetail.productAddCart")
+                          : t("productDetail.productOutStock")
+                      }
+                      outline={!product.inStock}
+                      color="primary"
+                      size="large"
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="w-full flex justify-center md:justify-end items-center gap-4">
+              {displayFav ? (
+                <>
+                  <Button
+                    disabled={!displayFav}
+                    onClick={() => removeToFav(product.id)}
+                    outline={displayFav}
+                    color="primary"
+                    icon={FaHeart}
+                    size="icon"
+                    animation={!displayFav}
+                  />
+                </>
+              ) : (
+                <>
+                  <Button
+                    disabled={displayFav}
+                    onClick={AddToFav}
+                    outline={displayFav}
+                    color="primary"
+                    icon={FaHeart}
+                    size="icon"
+                    animation={!displayFav}
+                  />
+                </>
+              )}
+
+              <Button
+                onClick={copyPath}
+                color="primary"
+                size="icon"
+                icon={IoShareSocialSharp}
+                iconSize={25}
+                animation
+              />
+
+              <Snackbar
+                open={open}
+                autoHideDuration={1500}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              >
+                <SnackbarContent
+                  message=" Share Link Copied ✓ "
+                  // message={t("  SnackBar.coypLinkSuccess")}
+                  sx={{
+                    backgroundColor: "#8174A0",
+                    color: "white",
+                  }}
+                />
+              </Snackbar>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <Heading text="Reviews" center textSize="3xl" hr />
+
+      {/* Reviews Section */}
+      <div className=" flex flex-col justify-center items-center mb-5">
+        {product?.reviews?.map((prd: Review) => (
+          <Comment key={prd.id} prd={prd} />
+        ))}
       </div>
     </PageContainer>
   );

@@ -31,27 +31,27 @@ const responsive = {
 
 // Özel buton grubu bileşeni
 const CustomButtonGroup = ({
-                             next,
-                             previous,
-                           }: {
+  next,
+  previous,
+}: {
   next: () => void;
   previous: () => void;
 }) => {
   return (
-      <div className="absolute bottom-4  flex justify-around w-full">
-        <Button
-            onClick={previous}
-            icon={FaChevronLeft}
-            size="cartIcon"
-            iconSize={14}
-        />
-        <Button
-            onClick={next}
-            icon={FaChevronRight}
-            iconSize={14}
-            size="cartIcon"
-        />
-      </div>
+    <div className="absolute bottom-4  flex justify-around w-full">
+      <Button
+        onClick={previous}
+        icon={FaChevronLeft}
+        size="cartIcon"
+        iconSize={14}
+      />
+      <Button
+        onClick={next}
+        icon={FaChevronRight}
+        iconSize={14}
+        size="cartIcon"
+      />
+    </div>
   );
 };
 
@@ -69,38 +69,38 @@ function HomeSlider() {
   }, []);
 
   return (
-      <div className="homepage-slider-div relative">
-        {loading ? (
-            <Loading />
-        ) : (
-            <Carousel
-                responsive={responsive}
-                swipeable={true}
-                draggable={true}
-                showDots={!isMobile}
-                arrows={false}
-                ssr={true}
-                infinite={true}
-                autoPlay={true}
-                autoPlaySpeed={5000}
-                keyBoardControl={true}
-                customTransition="all .7s"
-                transitionDuration={1000}
-                containerClass="carousel-container"
-                itemClass="flex justify-center items-center bg-center bg-cover"
-                renderButtonGroupOutside={isMobile} // Buton grubu dışarıda
-                customButtonGroup={
-                  isMobile ? (
-                      <CustomButtonGroup next={() => {}} previous={() => {}} />
-                  ) : undefined
-                }
-            >
-              {images?.map((image: CarouselType) => (
-                  <HomeSliderItem image={image} key={image.id} />
-              ))}
-            </Carousel>
-        )}
-      </div>
+    <div className="homepage-slider-div relative">
+      {loading ? (
+        <Loading />
+      ) : (
+        <Carousel
+          responsive={responsive}
+          swipeable={true}
+          draggable={true}
+          showDots={!isMobile}
+          arrows={false}
+          ssr={true}
+          infinite={true}
+          autoPlay={true}
+          autoPlaySpeed={5000}
+          keyBoardControl={true}
+          customTransition="all .7s"
+          transitionDuration={1000}
+          containerClass="carousel-container"
+          itemClass="flex justify-center items-center bg-center bg-cover"
+          renderButtonGroupOutside={isMobile} // Buton grubu dışarıda
+          customButtonGroup={
+            isMobile ? (
+              <CustomButtonGroup next={() => {}} previous={() => {}} />
+            ) : undefined
+          }
+        >
+          {images?.map((image: CarouselType) => (
+            <HomeSliderItem image={image} key={image.id} />
+          ))}
+        </Carousel>
+      )}
+    </div>
   );
 }
 

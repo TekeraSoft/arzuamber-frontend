@@ -4,23 +4,19 @@ import React from "react";
 
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
-import { usePathname } from "next/navigation";
 import Navbar from "./navbar/Navbar";
-import RegisterForm from "@/components/auth/RegisterForm";
-import LoginForm from "@/components/auth/LoginForm";
+import RegisterForm from "../auth/RegisterForm";
+import LoginForm from "../auth/LoginForm";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
 }
 
 function LayoutProvider({ children }: RoutesLayoutProps) {
-
   return (
-    <div
-      className={`flex flex-col`}
-    >
+    <div className={`flex flex-col `}>
       <Navbar />
-      <ToastContainer position={'bottom-right'} />
+      <ToastContainer />
       <main className="flex-grow mt-16 md:mt-28">
         <RegisterForm />
         <LoginForm />

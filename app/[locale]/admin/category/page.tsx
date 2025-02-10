@@ -1,4 +1,4 @@
-import CategoryList from "@/app/components/admin/Category/CategoryList";
+import CategoryList from "@/components/admin/Category/CategoryList";
 import React from "react";
 
 function AllCategoryAdminPage() {

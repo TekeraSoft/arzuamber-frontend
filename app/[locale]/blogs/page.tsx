@@ -1,12 +1,7 @@
-import PageContainer from "@/app/components/Containers/PageContainer";
-import React from "react";
+"use client";
 
-function BlogsPage() {
-  return (
-    <div>
-      <PageContainer> BlogsPage</PageContainer>
-    </div>
-  );
+import AllBlog from "@/components/blogs/AllBlog";
+
+export default function BlogsPage() {
+  return <AllBlog />;
 }
-
-export default BlogsPage;

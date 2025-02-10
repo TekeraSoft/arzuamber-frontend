@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [slug, setSlug] = useState<string | null>(null);
   const { products, loading } = useSelector(
-      (state: RootState) => state.products
+    (state: RootState) => state.products
   );
   const t = useTranslations("");
 
@@ -28,18 +28,18 @@ function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const product = products.find((product: Product) => product.id === slug);
 
   return (
-      <div>
-        {loading || !slug ? (
-            <Loading />
-        ) : product ? (
-            <DetailClient product={product} />
-        ) : (
-            <WarningText
-                title={t("warningText.ProductNotFoundTitle")}
-                text={t("warningText.ProductNotFoundText")}
-            />
-        )}
-      </div>
+    <div>
+      {loading || !slug ? (
+        <Loading />
+      ) : product ? (
+        <DetailClient product={product} />
+      ) : (
+        <WarningText
+          title={t("warningText.ProductNotFoundTitle")}
+          text={t("warningText.ProductNotFoundText")}
+        />
+      )}
+    </div>
   );
 }
 export default ShopDetailPage;
