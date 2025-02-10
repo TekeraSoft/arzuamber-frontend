@@ -29,7 +29,8 @@ export default function Home() {
           title={t("brand.title")}
           description={t("brand.description")}
           buttonText={t("brand.buttonText")}
-          imageUrl="/images/Brand/brand1.png"
+          desktopImageUrl="/images/Brand/brand3.png"
+          mobileImageUrl="/images/Brand/brand3-mobile.png"
           link="/products"
         />
 
@@ -46,7 +47,8 @@ export default function Home() {
             title={t("brand.title")}
             description={t("brand.description")}
             buttonText={t("brand.buttonText")}
-            imageUrl="/images/Brand/brand2.jpg"
+            desktopImageUrl="/images/Brand/brand2.jpg"
+            mobileImageUrl="/images/Brand/brand2.png"
             link="/products"
           />
 

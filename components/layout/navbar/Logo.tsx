@@ -4,10 +4,10 @@ import React from "react";
 
 function Logo() {
   return (
-    <div className="relative w-72 h-10 flex justify-center items-center ">
+    <div className="relative w-48  md:w-60 h-10 flex justify-center items-center ">
       <Link href="/">
         <Image
-          src="/images/logo/8.png" // Doğru yol
+          src="/images/logo/navbarlogo.png" // Doğru yol
           alt="logo image"
           fill
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 10vw"

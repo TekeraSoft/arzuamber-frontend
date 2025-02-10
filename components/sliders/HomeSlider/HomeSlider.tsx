@@ -38,7 +38,7 @@ const CustomButtonGroup = ({
   previous: () => void;
 }) => {
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-5">
+    <div className="absolute bottom-4  flex justify-around w-full">
       <Button
         onClick={previous}
         icon={FaChevronLeft}
@@ -77,7 +77,7 @@ function HomeSlider() {
           responsive={responsive}
           swipeable={true}
           draggable={true}
-          showDots={!isMobile} // Mobilde noktalar kapalı
+          showDots={!isMobile}
           arrows={false}
           ssr={true}
           infinite={true}
