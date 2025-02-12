@@ -109,11 +109,11 @@ function CartSidebar() {
                             />
                           </div>
 
-                          <div className="w-full sm:w-3/4 flex flex-row justify-between items-center sm:items-start gap-2 sm:gap-5">
+                          <div className="w-full sm:w-3/4 flex flex-row justify-around items-center sm:items-start gap-2 sm:gap-5">
+                            <h3 className="font-semibold text-xs text-gray-900">
+                              {TextClip(cart.name)}
+                            </h3>
                             <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                              <h3 className="font-semibold text-xs text-gray-900">
-                                {TextClip(cart.name)}
-                              </h3>
                               <p className="text-gray-500 text-xs">
                                 {cart.size}
                               </p>
@@ -121,7 +121,7 @@ function CartSidebar() {
                                 {cart.color}
                               </p>
                             </div>
-                            <div className="flex flex-col  items-start">
+                            <div className="flex flex-col  items-center jsutif-center">
                               <p className="font-semibold text-gray-900 text-xs">
                                 {discountedPrice}
                                 {t("CartPage.cartPriceSymbol")}

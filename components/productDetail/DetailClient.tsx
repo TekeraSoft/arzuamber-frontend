@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartItem, removeFromCart } from "@/store/cartSlice";
 import { RootState } from "../../store/store";
 import Rating from "@mui/material/Rating";
-import Carousel from "react-multi-carousel";
+import Carousel, { ArrowProps } from "react-multi-carousel";
 import TextClip from "../utils/TextClip";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { Snackbar, SnackbarContent } from "@mui/material";
@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import { CardProductProps, Product, Review } from "@/types/Props";
 import { useTranslations } from "next-intl";
 import ColorPicker from "../general/ColorPicker";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 
 const responsive = {
   superLargeDesktop: {
@@ -218,9 +219,31 @@ const DetailClient = ({ product }: productProps) => {
     setSelectedColor({ name: color }); // Doğru şekilde nesne olarak atandı
   };
 
+  function CustomLeftArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiLeftArrow className="text-white" size={24} />
+      </button>
+    );
+  }
+
+  function CustomRightArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiRightArrow className="text-white" size={24} />
+      </button>
+    );
+  }
+
   return (
     <PageContainer>
-      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8  md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
+      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8  md:rounded-lg  mb-10 w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
         <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
           <Carousel
@@ -229,6 +252,8 @@ const DetailClient = ({ product }: productProps) => {
             autoPlay
             autoPlaySpeed={3000}
             transitionDuration={500}
+            customLeftArrow={<CustomLeftArrow />}
+            customRightArrow={<CustomRightArrow />}
           >
             {product.images.map((img, index) => (
               <div
@@ -293,8 +318,10 @@ const DetailClient = ({ product }: productProps) => {
 
               {/* Stock Status */}
               <div
-                className={`w-full md:w-2/4 flex items-center justify-center text-sm md:text-lg font-semibold px-2 py-2 rounded-lg text-mywhite ${
-                  product.inStock ? "bg-primary" : "bg-thirdLight"
+                className={`w-full md:w-2/4 flex items-center justify-center text-sm md:text-lg  px-2 py-2 rounded-lg  ${
+                  product.inStock
+                    ? "bg-primary text-mywhite"
+                    : "bg-transparent text-myblack border border-secondary "
                 }`}
               >
                 {product.inStock ? (
@@ -308,22 +335,22 @@ const DetailClient = ({ product }: productProps) => {
             {/* Category and Subcategory */}
             <div className="w-full flex flex-col md:flex-row justify-center items-center gap-3">
               {/* Category Section */}
-              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-1 md:p-2 rounded-lg text-white bg-primary">
-                <span className="text-xs font-semibold md:text-base tracking-wide">
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-1 md:p-2 rounded-lg text-white bg-transparent border border-secondary">
+                <span className="text-xs text-black font-semibold md:text-base tracking-wide">
                   {t("productDetail.productCategory")}:
                 </span>
                 <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs ">
                   {product.category}
                 </span>
-                <span className="text-gray-200">/</span>
+                <span className="text-myblack">/</span>
                 <span className="bg-white text-primary px-2 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
                   {product.subcategories}
                 </span>
               </div>
 
               {/* Length Section */}
-              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-2 md:p-2 rounded-lg text-white bg-primary">
-                <span className="bg-white text-primary w-1/2 text-center px-1 md:px-2 md:py-1 rounded-md shadow-sm text-xs">
+              <div className="w-full flex items-center justify-center gap-2 text-md font-medium p-2 md:p-2 rounded-lg text-white border  border-secondary">
+                <span className="bg-transparent  text-myblack  w-1/2 text-center px-1 md:px-2  rounded-md shadow-sm text-sm md:text-lg ">
                   {product.length}
                 </span>
               </div>
@@ -360,7 +387,7 @@ const DetailClient = ({ product }: productProps) => {
               />
             </div>
 
-            <div className=" w-full flex justify-start items-xgz flex-wrap gap-3">
+            <div className=" w-full flex justify-center items-center flex-wrap gap-3">
               {product.sizes.map((size, i) => (
                 <Button
                   key={i}

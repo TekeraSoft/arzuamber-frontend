@@ -1,4 +1,3 @@
-import LayoutProvider from "../../components/layout/layout";
 import StoreProvider from "@/store/StoreProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -7,6 +6,7 @@ import { Locale, routing } from "@/i18n/routing";
 import { Jost } from "next/font/google";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
+import LayoutProvider from "@/components/layout/layout";
 
 const jost = Jost({
   subsets: ["latin"],
