@@ -102,12 +102,19 @@ export interface BlogProps {
 export interface CartSummaryProps {
   total: number;
   tax: number;
-  savings: number;
 }
 
 //! Fav Page Props
 export interface FavSummaryProps {
   total: number;
   tax: number;
-  savings: number;
+}
+
+export interface ProductSliderProps {
+  showNewSeason?: boolean;
+  isPopulate?: boolean;
+}
+
+export interface ArrowProps {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

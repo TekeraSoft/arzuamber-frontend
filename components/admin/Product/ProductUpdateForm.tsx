@@ -7,7 +7,6 @@ import Input from "../../general/Input";
 import { FieldValues, SubmitErrorHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { AiOutlineDelete } from "react-icons/ai";
-
 import RichTextBox from "../../general/RichTextBox";
 import Heading from "../../general/Heading";
 import CheckBox from "../../general/CheckBox";

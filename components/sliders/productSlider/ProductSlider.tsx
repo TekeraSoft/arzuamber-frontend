@@ -1,15 +1,11 @@
 import React from "react";
-import Carousel from "react-multi-carousel";
+import Carousel, { ArrowProps } from "react-multi-carousel";
 import Loading from "../../utils/Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
-import { Product } from "@/types/Props";
-
-interface ProductSliderProps {
-  showNewSeason?: boolean;
-  isPopulate?: boolean;
-}
+import { Product, ProductSliderProps } from "@/types/Props";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 
 function ProductSlider({
   showNewSeason = false,
@@ -51,8 +47,30 @@ function ProductSlider({
     return true; // Parametre yoksa tüm ürünleri göster
   });
 
+  function CustomLeftArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiLeftArrow className="text-white" size={24} />
+      </button>
+    );
+  }
+
+  function CustomRightArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiRightArrow className="text-white" size={24} />
+      </button>
+    );
+  }
+
   return (
-    <div className="homepage-slider-div py-5 border-b border-t border-secondary">
+    <div className="homepage-slider-div relative z-5 ">
       {loading ? (
         <Loading />
       ) : (
@@ -67,10 +85,12 @@ function ProductSlider({
           autoPlay={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
+          customLeftArrow={<CustomLeftArrow />}
+          customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center gap-4"
+          itemClass="flex justify-center items-center gap-4 "
         >
           {filteredProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

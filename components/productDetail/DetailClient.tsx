@@ -220,7 +220,7 @@ const DetailClient = ({ product }: productProps) => {
 
   return (
     <PageContainer>
-      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8 bg-gray-50 md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
+      <div className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8  md:rounded-lg md:shadow-md mb-10 w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
         <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
           <Carousel

@@ -7,6 +7,8 @@ import { ToastContainer } from "react-toastify";
 import Navbar from "./navbar/Navbar";
 import RegisterForm from "../auth/RegisterForm";
 import LoginForm from "../auth/LoginForm";
+import CartSidebar from "../cartclient/CartSideBar";
+import GradientColorContainer from "../Containers/BackGroundImageContainer";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -15,14 +17,17 @@ interface RoutesLayoutProps {
 function LayoutProvider({ children }: RoutesLayoutProps) {
   return (
     <div className={`flex flex-col `}>
-      <Navbar />
-      <ToastContainer />
-      <main className="flex-grow mt-16 md:mt-28">
-        <RegisterForm />
-        <LoginForm />
-        {children}
-      </main>
-      <Footer />
+      <GradientColorContainer>
+        <Navbar />
+        <ToastContainer />
+        <main className="flex-grow mt-16 md:mt-28">
+          <CartSidebar />
+          <RegisterForm />
+          <LoginForm />
+          {children}
+        </main>
+        <Footer />
+      </GradientColorContainer>
     </div>
   );
 }

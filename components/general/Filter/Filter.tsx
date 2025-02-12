@@ -51,7 +51,7 @@ function Filter() {
         onClick={toggleMenu}
       >
         <div
-          className="  bg-white p-6 w-3/4 h-full z-2"
+          className="   p-6 w-3/4 h-full z-2"
           onClick={(e) => e.stopPropagation()} // Menü dışına tıklanmasını engellemek için
         >
           <h3 className="text-center text-2xl font-bold text-primary mb-4">

@@ -10,9 +10,8 @@ import { BiSolidDiscount } from "react-icons/bi";
 import { FaRegCreditCard } from "react-icons/fa";
 import { CartSummaryProps } from "@/types/Props";
 
-const CartSummary = ({ total, tax, savings }: CartSummaryProps) => {
+const CartSummary = ({ total, tax }: CartSummaryProps) => {
   const t = useTranslations();
-
   const {
     register,
     handleSubmit,
@@ -24,103 +23,95 @@ const CartSummary = ({ total, tax, savings }: CartSummaryProps) => {
   };
 
   return (
-    <div className="w-full sm:w-2/6 h-full p-4 bg-gray-50 border border-gray-200 shadow-md rounded-lg">
-      <Heading
-        text={t("CartPage.cartSummary.title")}
-        font="bold"
-        textSize="2xl"
-        hr
-      />
+    <div className="w-full flex justify-center items-center">
+      <div className=" w-full  px-5 bg-gray-50 border border-gray-200 rounded-lg">
+        {/* Heading and Close button */}
+        <Heading
+          text={t("CartPage.cartSummary.title")}
+          font="bold"
+          textSize="2xl"
+          hr
+        />
+        <div className="w-full flex flex-col gap-2   ">
+          {/* Kargo */}
+          <div className="flex justify-between items-center  rounded-md">
+            <span className="text-sm font-bold">
+              {t("CartPage.cartSummary.shipping")}
+            </span>
+            <span className="text-sm font-semibold text-primary">
+              {t("CartPage.cartSummary.freeShipping")}
+            </span>
+          </div>
 
-      {/* Toplam */}
-      <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
-        <span className="text-sm font-medium">
-          {t("CartPage.cartSummary.total")}
-        </span>
-        <span className="text-lg font-semibold text-primary">
-          {t("CartPage.cartSummary.symbol")}
-          {total.toFixed(2)}
-        </span>
-      </div>
+          {/* Vergi */}
+          <div className="flex justify-between items-center  rounded-md">
+            <span className="text-sm font-bold">
+              {t("CartPage.cartSummary.tax")}
+            </span>
+            <span className="text-sm font-semibold text-primary">
+              {t("CartPage.cartSummary.symbol")}
+              {tax.toFixed(2)}
+            </span>
+          </div>
 
-      {/* Kargo */}
-      <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
-        <span className="text-sm font-medium">
-          {t("CartPage.cartSummary.shipping")}
-        </span>
-        <span className="text-sm font-semibold text-primary">
-          {t("CartPage.cartSummary.freeShipping")}
-        </span>
-      </div>
+          {/* Toplam */}
+          <div className="flex justify-between items-center  rounded-md">
+            <span className="text-sm font-bold">
+              {t("CartPage.cartSummary.total")}
+            </span>
+            <span className="text-sm font-semibold text-primary">
+              {t("CartPage.cartSummary.symbol")}
+              {total.toFixed(2)}
+            </span>
+          </div>
+        </div>
 
-      {/* Vergi */}
-      <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
-        <span className="text-sm font-medium">
-          {t("CartPage.cartSummary.tax")}
-        </span>
-        <span className="text-sm font-semibold text-primary">
-          {t("CartPage.cartSummary.symbol")}
-          {tax.toFixed(2)}
-        </span>
-      </div>
+        {/* Buttons and Input */}
+        <div className="flex flex-col items-center justify-center w-full border-t mt-2">
+          <form
+            className="flex flex-row justify-between items-center gap-3  w-full"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Input
+              id="discountCode"
+              placeholder={t("CartPage.cartSummary.discountCodePlaceholder")}
+              type="text"
+              register={register}
+              errors={errors}
+            />
+            <Button
+              animation
+              text={t("CartPage.cartSummary.submitDiscountCode")}
+              type="submit"
+              color="primary"
+              size="large"
+              icon={BiSolidDiscount}
+              className="text-xs "
+            />
+          </form>
 
-      {/* Toplam Tasarruf */}
-      <div className="flex justify-between items-center mb-4 p-3  rounded-md ">
-        <span className="text-sm font-medium">
-          {t("CartPage.cartSummary.savings")}
-        </span>
-        <span className="text-sm font-semibold text-primary">
-          {t("CartPage.cartSummary.symbol")}
-          {savings.toFixed(2)}
-        </span>
-      </div>
-
-      {/* Buttons ve Input */}
-      <div className="flex flex-col items-center justify-center gap-2 w-full">
-        <hr className="w-full bg-secondary" />
-        <form
-          className=" flex flex-col md:flex-row justify-between items-center gap-3 h-full w-full"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input
-            id="discountCode"
-            placeholder={t("CartPage.cartSummary.discountCodePlaceholder")}
-            type="text"
-            register={register}
-            errors={errors}
-          />
-          <Button
-            animation
-            text={t("CartPage.cartSummary.submitDiscountCode")}
-            type="submit"
-            color="primary"
-            size="small"
-            icon={BiSolidDiscount}
-            className="text-xs md:text-sm "
-          />
-        </form>
-
-        <div className="flex flex-col md:flex-ro  w-full justify-center items-center gap-3">
-          <Button
-            text={t("CartPage.cartSummary.continueShopping")}
-            color="primary"
-            size="large"
-            onClick={() => {}}
-            icon={FaArrowRightLong}
-            iconSize={15}
-            animation
-            className="text-xs md:text-sm "
-          />
-          <Button
-            animation
-            text={t("CartPage.cartSummary.proceedToPayment")}
-            color="primary"
-            size="large"
-            onClick={() => {}}
-            icon={FaRegCreditCard}
-            iconSize={15}
-            className="text-xs md:text-sm"
-          />
+          <div className="flex flex-row w-full justify-center items-center gap-2 mb-3 mt-2">
+            <Button
+              text={t("CartPage.cartSummary.continueShopping")}
+              color="primary"
+              size="large"
+              onClick={() => {}}
+              icon={FaArrowRightLong}
+              iconSize={15}
+              animation
+              className="text-xs "
+            />
+            <Button
+              animation
+              text={t("CartPage.cartSummary.proceedToPayment")}
+              color="primary"
+              size="large"
+              onClick={() => {}}
+              icon={FaRegCreditCard}
+              iconSize={15}
+              className="text-xs "
+            />
+          </div>
         </div>
       </div>
     </div>

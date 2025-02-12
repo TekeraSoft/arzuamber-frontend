@@ -20,7 +20,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-1  bg-white transition duration-300  relative
+      className="group flex flex-col justify-between space-y-1   transition duration-300  relative
      h-[650px] md:h-[600px]  md:border-none "
     >
       {/* Görsel Alanı */}
@@ -62,7 +62,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
         <hr className="bg-black" />
         <div className="flex  lex-row justify-between items-center">
-          <div className="flex  md:flex-col-reverse flex-row items-start justify-center  gap-2">
+          <div className="flex   flex-row items-start justify-center  gap-2">
             <p className="text-green-600 font-bold text-base">
               {(
                 product.price -

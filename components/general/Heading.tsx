@@ -18,10 +18,11 @@ const Heading = ({
   hr,
 }: HeadingProps) => {
   return (
-    <div className=" p-5 flex items-center justify-center flex-col">
+    <div className="  mt-5 flex items-center justify-center flex-col">
       <div
-        className={`mb-5 px-3 md:px-10 
+        className={` px-3 md:px-10 
           ${center ? "text-center" : "text-start"} 
+            ${hr ? "mb-5" : "mb-0"} 
           ${color === "black" ? "text-black" : "text-white"} 
           ${
             font === "extrabold"
