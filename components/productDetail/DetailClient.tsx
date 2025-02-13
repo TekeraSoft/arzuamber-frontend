@@ -4,8 +4,8 @@ import Image from "next/image";
 import Counter from "../general/Counter";
 import { useEffect, useState } from "react";
 import Button from "../general/Button";
-import Comment from "./Comment";
-import Heading from "../general/Heading";
+// import Comment from "./Comment";
+// import Heading from "../general/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartItem, removeFromCart } from "@/store/cartSlice";
 import { RootState } from "../../store/store";
@@ -499,15 +499,15 @@ const DetailClient = ({ product }: productProps) => {
           </div>
         </div>
       </div>
-
-      <Heading text="Reviews" center textSize="3xl" hr />
+      {/* 
+      <Heading text="Reviews" center textSize="3xl" hr /> */}
 
       {/* Reviews Section */}
-      <div className=" flex flex-col justify-center items-center mb-5">
+      {/* <div className=" flex flex-col justify-center items-center mb-5">
         {product?.reviews?.map((prd: Review) => (
           <Comment key={prd.id} prd={prd} />
         ))}
-      </div>
+      </div> */}
     </PageContainer>
   );
 };

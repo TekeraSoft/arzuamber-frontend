@@ -60,7 +60,6 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           {TextClip(product.name)}
         </h2>
 
-        <hr className="bg-black" />
         <div className="flex  lex-row justify-between items-center">
           <div className="flex   flex-row items-start justify-center  gap-2">
             <p className="text-green-600 font-bold text-base">

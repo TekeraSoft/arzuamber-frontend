@@ -9,6 +9,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaRegCreditCard } from "react-icons/fa";
 import { CartSummaryProps } from "@/types/Props";
+import { Link } from "@/i18n/routing";
 
 const CartSummary = ({ total, tax }: CartSummaryProps) => {
   const t = useTranslations();
@@ -101,16 +102,18 @@ const CartSummary = ({ total, tax }: CartSummaryProps) => {
               animation
               className="text-xs "
             />
-            <Button
-              animation
-              text={t("CartPage.cartSummary.proceedToPayment")}
-              color="primary"
-              size="large"
-              onClick={() => {}}
-              icon={FaRegCreditCard}
-              iconSize={15}
-              className="text-xs "
-            />
+
+            <Link href={`/payment`} className="w-full ">
+              <Button
+                animation
+                text={t("CartPage.cartSummary.proceedToPayment")}
+                color="primary"
+                size="large"
+                icon={FaRegCreditCard}
+                iconSize={15}
+                className="text-xs "
+              />
+            </Link>
           </div>
         </div>
       </div>

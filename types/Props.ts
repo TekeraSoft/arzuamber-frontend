@@ -110,6 +110,7 @@ export interface FavSummaryProps {
   tax: number;
 }
 
+//! Slider Product
 export interface ProductSliderProps {
   showNewSeason?: boolean;
   isPopulate?: boolean;

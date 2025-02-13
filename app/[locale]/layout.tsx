@@ -4,9 +4,10 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Locale, routing } from "@/i18n/routing";
 import { Jost } from "next/font/google";
+import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
-import LayoutProvider from "@/components/layout/layout";
+import "primereact/resources/primereact.min.css";
 
 const jost = Jost({
   subsets: ["latin"],
