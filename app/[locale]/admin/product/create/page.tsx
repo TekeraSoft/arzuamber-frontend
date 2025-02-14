@@ -1,14 +1,14 @@
 'use client'
 import '@/app/[locale]/globals.css'
 import {InputText} from "primereact/inputtext";
-import React from "react";
+import React, {useState} from "react";
 import {useParams} from "next/navigation";
 import {InputNumber} from "primereact/inputnumber";
 import {useFormik} from "formik";
 import {FiUpload} from "react-icons/fi";
 import {Dropdown} from "primereact/dropdown";
 import {Button} from "primereact/button";
-import {FaPlus} from "react-icons/fa";
+import {FaMinus, FaPlus} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 import {filterData} from "@/data/filterData";
 import {Checkbox} from "primereact/checkbox";
@@ -19,6 +19,7 @@ import {createProductDispatch} from "@/store/adminSlice";
 export default function ProductCreatePage() {
     const params = useParams();
     const dispatch = useDispatch<AppDispatch>();
+    const [sizeProduct, setSizeProduct] = useState({size:'', stock:0})
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -28,32 +29,27 @@ export default function ProductCreatePage() {
             populate: false,
             newSeason: false,
             length: '',
-            colorSize: [{color:'', size:'', stock:0, images: []}],
-            price: 0.0
+            colorSize: [{color:'', sizeStock:[{size:'', stock:0}], images: []}],
+            price: 0.0,
+            purchasePrice: 0.0,
         },
         onSubmit: (values,{resetForm}) => {
             const formData = new FormData();
-            formData.append('name', values.name);
-            formData.append('category', values.category);
-            formData.append('subCategory', values.subCategory);
-            formData.append('description', values.description);
-            formData.append('populate', values.populate);
-            formData.append('price', values.price);
-            formData.append('newSeason', values.newSeason);
-            formData.append('length', values.length);
 
-            values.colorSize.forEach((item,index)=> {
-                formData.append(`colorSize[${index}].color`, item.color);
-                formData.append(`colorSize[${index}].size`, item.size);
-                formData.append(`colorSize[${index}].stock`, item.stock);
-                item.images.forEach((image, imageIndex) => {
+            // ✅ JSON verisini FormData'ya ekle
+            formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));
+
+            // ✅ Görselleri ilgili `colorSize`'e göre ekle
+            values.colorSize.forEach((colorItem) => {
+                colorItem.images.forEach((image, index) => {
                     if (image instanceof File) {
-                        formData.append(`colorSize[${index}].images`, image); // Doğru File nesnesi ekleniyor
+                        const fileName = `${colorItem.color}_${index}_${image.name}`; // "blue_0_image.jpg"
+                        formData.append("images", new File([image], fileName, { type: image.type }));
                     }
                 });
-            })
+            });
 
-           dispatch(createProductDispatch(formData,resetForm))
+            dispatch(createProductDispatch(formData, resetForm));
         }
     })
 
@@ -73,7 +69,6 @@ export default function ProductCreatePage() {
         }
     };
 
-
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className='flex flex-col'>
@@ -81,14 +76,18 @@ export default function ProductCreatePage() {
                     <h1 className='text-3xl'>Create Product</h1>
                     <button
                         type={'button'}
-                        onClick={()=> formik.setFieldValue('colorSize', [...formik.values.colorSize,{color: '', size: '', stock:0, images: []}])}
+                        onClick={()=> formik.setFieldValue('colorSize', [
+                                ...formik.values.colorSize,
+                            { color: '', sizeStock: [{ size: '', stock: 0 }], images: [] }
+                        ])}
                         className={'rounded-full border w-fit h-fit p-2 text-blue-600 flex flex-row gap-x-2 items-center'}>
                         Add Color And Size
                         <FaPlus/></button>
                 </div>
                 <div className='grid grid-cols-2 gap-x-2 mt-12 relative'>
                     {formik.values.colorSize.map((item, index) => (
-                        <div key={index} className='rounded relative flex flex-col justify-center items-center gap-y-4 p-6 border'>
+                        <div key={index}
+                             className='rounded relative flex flex-col justify-center items-center gap-y-4 p-6 border'>
                             <button
                                 type={'button'}
                                 onClick={() => {
@@ -96,7 +95,7 @@ export default function ProductCreatePage() {
                                     formik.setFieldValue('colorSize', newColorSizeState);
                                 }}
                                 className={`${index === 0 ? 'hidden' : 'block'} absolute right-2 top-2 text-red-600`}>
-                                <MdCancel size={20} />
+                                <MdCancel size={20}/>
                             </button>
 
                             <div className='flex flex-row gap-x-4'>
@@ -108,30 +107,65 @@ export default function ProductCreatePage() {
                                             className="hidden"
                                             onChange={(e) => handleImageChange(e, index, imageIndex)}
                                         />
-                                        <label htmlFor={`file-upload-${index}-${imageIndex}`} className="w-24 h-48 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                                        <label htmlFor={`file-upload-${index}-${imageIndex}`}
+                                               className="w-24 h-48 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
                                             {item.images?.[imageIndex] instanceof File ? (
-                                                <img src={URL.createObjectURL(item.images[imageIndex])} alt="Preview" className="w-24 h-48 object-cover rounded-lg" />
+                                                <img src={URL.createObjectURL(item.images[imageIndex])} alt="Preview"
+                                                     className="w-24 h-48 object-cover rounded-lg"/>
                                             ) : (
-                                                <FiUpload className="text-2xl" />
+                                                <FiUpload className="text-2xl"/>
                                             )}
                                         </label>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className='grid grid-cols-3 gap-x-4 relative'>
-                                <div className='flex flex-col'>
+                            <div className='flex flex-col w-full gap-y-2 relative'>
+                                <div className='flex flex-col w-full'>
                                     <label>Color</label>
-                                    <Dropdown options={filterData.colors.values} value={formik.values.colorSize[index].color} onChange={(e) => formik.setFieldValue(`colorSize[${index}].color`, e.value)} />
+                                    <Dropdown options={filterData.colors.values}
+                                              value={formik.values.colorSize[index].color}
+                                              onChange={(e) => formik.setFieldValue(`colorSize[${index}].color`, e.value)}/>
                                 </div>
-                                <div className='flex flex-col'>
-                                    <label>Size</label>
-                                    <Dropdown value={formik.values.colorSize[index].size} options={filterData.sizes.values} onChange={(e) => formik.setFieldValue(`colorSize[${index}].size`, e.value)} />
-                                </div>
-                                <div className='flex flex-col'>
-                                    <label>Stock</label>
-                                    <InputNumber className='custom-input-number' onChange={(e) => formik.setFieldValue(`colorSize[${index}].stock`, e.value)} value={formik.values.colorSize[index].stock} />
-                                </div>
+                                    {
+                                        formik.values.colorSize[index].sizeStock.map((item, sizeStockIndex) => (
+                                            <div key={sizeStockIndex} className={'grid grid-cols-2 gap-x-2 mt-2'}>
+                                                <div  className='flex flex-col w-2/3'>
+                                                    <label>Size</label>
+                                                    <Dropdown value={formik.values.colorSize[index].sizeStock[sizeStockIndex].size}
+                                                              options={filterData.sizes.values}
+                                                              onChange={(e) => formik.setFieldValue(`colorSize[${index}].sizeStock[${sizeStockIndex}].size`,e.value)}/>
+                                                </div>
+
+                                                <div className='flex flex-col relative w-2/3'>
+                                                    <label>Stock</label>
+                                                    <InputNumber
+                                                                 onChange={(e) => formik.setFieldValue(`colorSize[${index}].sizeStock[${sizeStockIndex}].stock`, e.value)}
+                                                                 value={formik.values.colorSize[index].sizeStock[sizeStockIndex].stock}/>
+                                                     <div
+                                                            className={'flex flex-row gap-x-4 absolute -right-20 top-9'}>
+                                                            <button type={'button'} onClick={() => {
+                                                                formik.setFieldValue(`colorSize[${index}].sizeStock`, [...formik.values.colorSize[index].sizeStock, {
+                                                                    size: '',
+                                                                    stock: 0
+                                                                }])
+                                                            }}
+                                                                    className={'bg-blue-600 rounded-full p-1 text-white'}>
+                                                                <FaPlus/>
+                                                            </button>
+                                                            <button type={'button'}
+                                                                    onClick={() => {
+                                                                        const newState = formik.values.colorSize[index].sizeStock.filter((_, i) => i !== sizeStockIndex)
+                                                                        formik.setFieldValue(`colorSize[${index}].sizeStock`, newState)
+                                                                    }}
+                                                                className={'bg-red-600 rounded-full p-1 text-white'}>
+                                                                <FaMinus/></button>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
                             </div>
                         </div>
                     ))}
@@ -156,7 +190,7 @@ export default function ProductCreatePage() {
                     <span className="p-float-label">
                     <Dropdown options={filterData?.categories.values} id="category" className='w-full'
                               value={formik.values.category}
-                              onChange={(e)=> {
+                              onChange={(e) => {
                                   formik.setFieldValue(`category`, e.target.value);
                                   formik.setFieldValue('subCategory', e.target.value);
                               }}/>
@@ -185,11 +219,20 @@ export default function ProductCreatePage() {
                             <label htmlFor="ingredient1" className="ml-2">New Season</label>
                         </div>
                     </div>
+
+                    <span className="p-float-label">
+                    <InputNumber id="purchasePrice" name='purchasePrice' className='w-full'
+                                 onValueChange={formik.handleChange}
+                                 value={formik.values.purchasePrice}
+                                 mode='currency'
+                                 currency='TRY'/>
+                    <label htmlFor="price">Purchase Price</label>
+                   </span>
                 </div>
             </div>
             <div className='w-full'>
                 <textarea placeholder={'Description'} className={'w-full p-2 border-2 rounded'}
-                          rows={6} value={formik.values.description} onChange={formik.handleChange} id="description" />
+                          rows={6} value={formik.values.description} onChange={formik.handleChange} id="description"/>
             </div>
             <div className='flex w-100 justify-end'>
                 <Button type='submit' className='font-bold'>Send</Button>

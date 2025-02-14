@@ -8,6 +8,7 @@ import Brand from "@/components/home/Brand";
 import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
+import LayoutProvider from "@/components/layout/layout";
 
 export default function Home() {
   const t = useTranslations();

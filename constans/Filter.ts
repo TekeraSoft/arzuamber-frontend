@@ -21,7 +21,7 @@ export const filterData: Filter = {
   colors: {
     id: 2,
     name: "Renkler",
-    values: ["Kırmızı", "Beyaz", "Siyah", "Mavi", "Yeşil", "Sarı", "Pembe"],
+    values: ["red", "white", "black", "blue", "green", "yellow", "pink"],
   },
   categories: {
     id: 3,

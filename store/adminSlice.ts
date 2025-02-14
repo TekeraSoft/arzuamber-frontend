@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {Product, ProductProps} from "@/types";
-import {getGuardRequest, getRequest, postGuardRequest} from "@/services/requestservice";
+import {
+    deleteGuardRequest,
+    getGuardRequest,
+    getRequest,
+    postGuardRequest,
+    putGuardRequest
+} from "@/services/requestservice";
 import {toast} from "react-toastify";
 import {Dispatch} from "react";
+import {setTimeout} from "next/dist/compiled/@edge-runtime/primitives";
 
 const initialState: ProductProps = {
     products: [],
     product: null,
-    categories: []
+    categories: [],
+    loading: false,
 }
 
 export const adminSlice = createSlice({
@@ -22,6 +30,12 @@ export const adminSlice = createSlice({
         },
         getCategories: (state, action) => {
             state.categories = action.payload;
+        },
+        deleteProduct: (state, action) => {
+            state.products = state.products.filter((item) => item.id !== action.payload);
+        },
+        loading: (state, action) => {
+            state.loading = action.payload;
         }
     }
 })
@@ -36,8 +50,26 @@ export const createProductDispatch = (formData: FormData,resetForm:()=> void) =>
 }
 
 export const getAllProductDispatch = (page: number, size: number) => async(dispatch:Dispatch) => {
+    dispatch(loading(true))
     getGuardRequest({controller:'admin',action:'get-all-product', params:{page: page, size: size}}).then(res=>{
         dispatch(getProducts(res.data))
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+export const deleteProductDispatch = (id:string) => async(dispatch) => {
+    dispatch(loading(true))
+    deleteGuardRequest({controller:'admin',action:'delete-product',params:{id: id}}).then(res=>{
+        toast.success(res.data.message);
+        dispatch(deleteProduct(id))
+        dispatch(loading(false))
+    }).catch(err => {
+        toast.error(err.response.data.message);
+    })
+        .finally(()=> {
+        dispatch(loading(false))
     })
 }
 
@@ -53,9 +85,27 @@ export const getCategoriesDispatch = () => async (dispatch) => {
     })
 }
 
+export const updatePriceByPercentageDispatch = (updatedValue: Number) => async(dispatch) => {
+    putGuardRequest({controller:'admin',action:'update-price-by-percentage'},{percentage: updatedValue}).then(res=> {
+        dispatch(loading(true))
+        dispatch(getAllProductDispatch(0,10))
+        toast.success(res.data.message)
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data)
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
 //export const getProductsDispatch = (page:number,size:number) => async(dispatch) => {
 //    getGuardRequest({})
 //}
 
-export const { getProducts, getProduct ,getCategories} = adminSlice.actions;
+export const {
+    loading,
+    deleteProduct,
+    getProducts,
+    getProduct ,
+    getCategories} = adminSlice.actions;
 export default adminSlice.reducer;
