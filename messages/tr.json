@@ -204,7 +204,14 @@
     "sizes": "Beden",
     "colors": "Renk",
     "categories": "Kategoriler",
-    "lengths": "Uzunluk"
+    "lengths": "Uzunluk",
+    "red": "Kırmızı",
+    "white": "Beyaz",
+    "green": "Yeşil",
+    "pink": "Pembe",
+    "black": "Siyah",
+    "blue": "Mavi",
+    "yellow": "Sarı"
   },
 
   "footer": {

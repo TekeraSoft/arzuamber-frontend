@@ -45,6 +45,27 @@ export const getGuardParamsRequest = async (
   });
 };
 
+export const putGuardRequest = async (
+    requestParameter = RequestParameter,
+    body: object
+) => {
+  let url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${requestParameter.controller}${
+      requestParameter.action ? `/${requestParameter.action}` : ""
+  }`;
+  return await axios.put(url, body);
+};
+
+export const deleteGuardRequest = async (
+    requestParameter = RequestParameter,
+) => {
+  let url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${requestParameter.controller}${
+      requestParameter.action ? `/${requestParameter.action}` : ""
+  }`;
+  return await axios.delete(url, {
+    params: {...requestParameter.params}
+  });
+};
+
 export const postGuardRequest = async (
   requestParameter = RequestParameter,
   body: object

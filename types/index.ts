@@ -12,6 +12,7 @@ export interface ProductProps {
   product: Product;
   products: Product[];
   categories: Category[];
+  loading: boolean
 }
 
 export type Product = {
@@ -22,8 +23,9 @@ export type Product = {
   subCategory: string,
   description: string;
   price: number;
+  length: string,
   discountPrice: number;
-  colorSize: ColorSize
+  colorSize: ColorSize[]
 }
 
 export type ColorSize = {

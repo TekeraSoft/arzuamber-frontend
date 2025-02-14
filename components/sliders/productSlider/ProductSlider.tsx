@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Carousel from "react-multi-carousel";
 import Loading from "../../utils/Loading";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
 import { Product } from "@/types/Props";
+import {getNewSeasonProductsDispatch} from "@/store/productSlice";
 
 interface ProductSliderProps {
   showNewSeason?: boolean;
@@ -15,6 +16,8 @@ function ProductSlider({
   showNewSeason = false,
   isPopulate = false,
 }: ProductSliderProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -34,22 +37,15 @@ function ProductSlider({
     },
   };
 
-  const { products, loading } = useSelector(
+  const { newSeasonProducts, loading } = useSelector(
     (state: RootState) => state.products
   );
 
-  // Filtreleme işlemi
-  const filteredProducts = products.filter((product: Product) => {
-    if (showNewSeason) {
-      return product.isNewSeason === true;
-    }
+  useEffect(()=> {
+      dispatch(getNewSeasonProductsDispatch(0,15))
+  },[dispatch])
 
-    if (isPopulate) {
-      return product.isPopulate === true; // Popüle edilmiş ürünler
-    }
-
-    return true; // Parametre yoksa tüm ürünleri göster
-  });
+  console.log(newSeasonProducts)
 
   return (
     <div className="homepage-slider-div py-5 border-b border-t border-secondary">
@@ -72,8 +68,8 @@ function ProductSlider({
           containerClass="carousel-container"
           itemClass="flex justify-center items-center gap-4"
         >
-          {filteredProducts?.map((product: Product) => (
-            <ProductsSliderItem product={product} key={product.id} />
+          {newSeasonProducts?.map((product: Product, index) => (
+            <ProductsSliderItem product={product} key={index} />
           ))}
         </Carousel>
       )}

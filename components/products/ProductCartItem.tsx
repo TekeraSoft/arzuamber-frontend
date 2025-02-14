@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import TextClip from "../utils/TextClip";
-import { Product } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 import Button from "../general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import {Product} from "@/types";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -33,7 +33,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           className={`absolute object-cover rounded  md:rounded-none transition-opacity duration-700  ${
             isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
-          src={product?.images[0]}
+          src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[0]}`}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -43,30 +43,29 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           className={` object-cover rounded md:rounded-none transition-opacity duration-700  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
-          src={product?.images[1]}
+          src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
         <div className=" absolute right-3 top-5 md:top-2 lg:top-3  w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30 ">
-          %{Math.round(product.discountPercent)}
+          %{Math.round(product.discountPrice)}
         </div>
       </div>
 
       {/* Ürün Detayları */}
       <div className=" flex flex-col space-y-1  gap-2 w-full">
         <h2 className="font-medium text-xl  text-secondary  ">
-          {TextClip(product.name)}
+          {product.name}
         </h2>
 
-        <hr className="bg-black" />
         <div className="flex  lex-row justify-between items-center">
           <div className="flex  md:flex-col-reverse flex-row items-start justify-center  gap-2">
             <p className="text-green-600 font-bold text-base">
               {(
                 product.price -
-                (product.price * product.discountPercent) / 100
+                (product.price * product.discountPrice) / 100
               ).toFixed(2)}
               {t("productDetail.priceSymbol")}
             </p>

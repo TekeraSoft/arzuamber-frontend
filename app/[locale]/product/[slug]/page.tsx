@@ -3,33 +3,29 @@
 import DetailClient from "@/components/productDetail/DetailClient";
 import Loading from "@/components/utils/Loading";
 import WarningText from "@/components/utils/WarningText";
-import { RootState } from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import { Product } from "@/types/Props";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useTranslations } from "next-intl";
+import {getProductBySlugDispatch} from "@/store/productSlice";
+import {useParams} from "next/navigation";
 
-function ShopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const [slug, setSlug] = useState<string | null>(null);
-  const { products, loading } = useSelector(
+function ShopDetailPage() {
+  const params = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const { product, loading } = useSelector(
     (state: RootState) => state.products
   );
   const t = useTranslations("");
 
   useEffect(() => {
-    const fetchSlug = async () => {
-      const resolvedParams = await params;
-      setSlug(resolvedParams.slug);
-    };
-
-    fetchSlug();
+    dispatch(getProductBySlugDispatch(params.slug))
   }, [params]);
-
-  const product = products.find((product: Product) => product.id === slug);
 
   return (
     <div>
-      {loading || !slug ? (
+      {loading? (
         <Loading />
       ) : product ? (
         <DetailClient product={product} />

@@ -31,16 +31,17 @@ export interface Product {
   description: string;
   price: number;
   category: string;
-  subcategories: string;
+  subCategory: string;
   length: string;
-  inStock: boolean;
-  discountPercent: number;
-  images: string[];
-  reviews: Review[];
-  isNewSeason: boolean;
-  isPopulate: boolean;
-  sizes: string[];
-  colors: { name: string; imageUrl: string }[];
+  discountPrice: number;
+  colorSize: ColorSize
+}
+
+export type ColorSize = {
+  color: string;
+  size: string;
+  stock: number;
+  images: string[]
 }
 
 //! Cart adding Props
