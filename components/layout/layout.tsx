@@ -20,7 +20,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
       <GradientColorContainer>
         <Navbar />
         <ToastContainer />
-        <main className="flex-grow mt-16 md:mt-28">
+        <main className="flex-grow mt-10 md:mt-20">
           <CartSidebar />
           <RegisterForm />
           <LoginForm />

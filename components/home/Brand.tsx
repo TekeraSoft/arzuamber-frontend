@@ -11,6 +11,7 @@ interface BrandProps {
   mobileImageUrl: string;
   desktopImageUrl: string;
   link: string;
+  bgBlack?: boolean;
 }
 
 function Brand({
@@ -20,6 +21,7 @@ function Brand({
   mobileImageUrl,
   desktopImageUrl,
   link,
+  bgBlack,
 }: BrandProps) {
   const t = useTranslations();
   const [imageUrl, setImageUrl] = useState(desktopImageUrl);
@@ -41,8 +43,13 @@ function Brand({
         src={imageUrl} // Dinamik resim (mobil veya desktop)
         alt={title}
         fill
+        priority
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-35 text-white p-7 md:p-5 rounded-lg">
+      <div
+        className={`absolute inset-0 flex flex-col items-center justify-center  text-white p-7 md:p-5 rounded-lg ${
+          bgBlack ? "bg-black bg-opacity-35" : ""
+        }`}
+      >
         <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
         <p className="text-base md:text-lg text-center mb-4">{description}</p>
         <Link href={link || `/products`}>

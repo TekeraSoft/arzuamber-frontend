@@ -35,7 +35,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   return (
     <div className="flex justify-center items-center flex-col space-y-1  rounded-lg   transition duration-500 h-[500px] p-6 w-[300px] relative ">
       <div
-        className="w-[300px] md:w-[400px] h-[350px] relative"
+        className="w-[300px] md:w-[400px] h-[300px] relative"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

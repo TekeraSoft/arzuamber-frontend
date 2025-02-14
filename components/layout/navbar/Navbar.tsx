@@ -58,12 +58,12 @@ function Navbar() {
   };
 
   return (
-    <header className="text-mywhite z-50 fixed w-full">
+    <header className="text-mywhite z-50 fixed w-full ">
       {/* Top Bar */}
       <TopBar />
 
       {/* Navbar */}
-      <nav className="bg-transparent backdrop-blur-3xl bg-opacity-0 w-full border-">
+      <nav className="bg-transparent backdrop-blur-3xl bg-opacity-0 w-full  ">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Logo />

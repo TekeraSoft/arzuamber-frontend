@@ -22,7 +22,7 @@ function ProductSlider({
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 3,
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -90,7 +90,7 @@ function ProductSlider({
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center gap-4 "
+          itemClass="flex justify-center items-center gap-10 "
         >
           {filteredProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />
