@@ -1,16 +1,17 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Carousel, { ArrowProps } from "react-multi-carousel";
 import Loading from "../../utils/Loading";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
-import { Product, ProductSliderProps } from "@/types/Props";
+import { Product } from "@/types/Props";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import {getNewSeasonProductsDispatch} from "@/store/productSlice";
 
-function ProductSlider({
-  showNewSeason = false,
-  isPopulate = false,
-}: ProductSliderProps) {
+function ProductSlider() {
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -30,22 +31,15 @@ function ProductSlider({
     },
   };
 
-  const { products, loading } = useSelector(
+  const { newSeasonProducts, loading } = useSelector(
     (state: RootState) => state.products
   );
 
-  // Filtreleme işlemi
-  const filteredProducts = products.filter((product: Product) => {
-    if (showNewSeason) {
-      return product.isNewSeason === true;
-    }
+  useEffect(() => {
+    dispatch(getNewSeasonProductsDispatch(0,10))
+  }, [dispatch]);
 
-    if (isPopulate) {
-      return product.isPopulate === true; // Popüle edilmiş ürünler
-    }
 
-    return true; // Parametre yoksa tüm ürünleri göster
-  });
 
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
@@ -92,7 +86,7 @@ function ProductSlider({
           containerClass="carousel-container"
           itemClass="flex justify-center items-center gap-4 "
         >
-          {filteredProducts?.map((product: Product) => (
+          {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />
           ))}
         </Carousel>

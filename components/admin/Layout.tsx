@@ -4,9 +4,8 @@ import SideBar from "@/components/admin/AdminSideBar";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import {Menubar} from "primereact/menubar";
-import {BiLogOut, BiUser} from "react-icons/bi";
+import {BiLogOut} from "react-icons/bi";
 import {signOut} from "next-auth/react";
-import {Dropdown} from "primereact/dropdown";
 import {useLocale} from "next-intl";
 import {Link, usePathname} from "@/i18n/routing";
 import {FaUser} from "react-icons/fa";
@@ -14,7 +13,6 @@ import {FaUser} from "react-icons/fa";
 function Layout({ children }) {
     const locale = useLocale()
     const path = usePathname()
-    const languages = ["EN", "TR"];
     return (
         <div className={'flex flex-row'}>
                     <SideBar />

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import TextClip from "../utils/TextClip";
 import { Link } from "@/i18n/routing";
 import Button from "../general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -75,7 +74,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           </div>
           <Link
             className="flex items-center justify-center "
-            href={`/product/${product.id}`}
+            href={`/product/${product.slug}`}
           >
             <Button
               text="Detail"

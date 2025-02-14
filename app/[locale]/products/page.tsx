@@ -1,5 +1,4 @@
 'use client'
-import Loading from "@/components/utils/Loading";
 import Heading from "@/components/general/Heading";
 import Filter from "@/components/general/Filter/Filter";
 import ProductCartItem from "@/components/products/ProductCartItem";
@@ -20,17 +19,6 @@ function Products() {
   // Sayfa başına ürün sayısı
   const productsPerPage = 6;
 
-  // Sayfaları takip etmek için state
-  const [currentPage, setCurrentPage] = React.useState(0);
-
-  // Sayfa değiştiğinde çalışacak fonksiyon
-  const handlePageClick = (selectedPage: { selected: number }) => {
-    setCurrentPage(selectedPage.selected);
-  };
-
-  // Sayfa başına ürünleri almak
-  const offset = currentPage * productsPerPage;
-  const currentProducts = products.slice(offset, offset + productsPerPage);
 
   // Toplam sayfa sayısını hesaplamak
   const pageCount = Math.ceil(products.length / productsPerPage);
@@ -71,7 +59,6 @@ function Products() {
                         previousLabel={<FaChevronLeft className="text-gray-600"/>}
                         nextLabel={<FaChevronRight className="text-gray-600"/>}
                         pageCount={pageCount}
-                        onPageChange={handlePageClick}
                         containerClassName="flex items-center space-x-4"
                         pageClassName="px-4 py-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-black cursor-pointer"
                         activeClassName="bg-secondary text-white"

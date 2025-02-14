@@ -1,8 +1,7 @@
 'use client'
 import '@/app/[locale]/globals.css'
 import {InputText} from "primereact/inputtext";
-import React, {useState} from "react";
-import {useParams} from "next/navigation";
+import React from "react";
 import {InputNumber} from "primereact/inputnumber";
 import {useFormik} from "formik";
 import {FiUpload} from "react-icons/fi";
@@ -17,9 +16,7 @@ import {AppDispatch} from "@/store/store";
 import {createProductDispatch} from "@/store/adminSlice";
 
 export default function ProductCreatePage() {
-    const params = useParams();
     const dispatch = useDispatch<AppDispatch>();
-    const [sizeProduct, setSizeProduct] = useState({size:'', stock:0})
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -80,14 +77,14 @@ export default function ProductCreatePage() {
                                 ...formik.values.colorSize,
                             { color: '', sizeStock: [{ size: '', stock: 0 }], images: [] }
                         ])}
-                        className={'rounded-full border w-fit h-fit p-2 text-blue-600 flex flex-row gap-x-2 items-center'}>
+                        className={'rounded-full border bg-secondary w-fit h-fit p-2 px-4 text-mywhite flex flex-row gap-x-2 items-center'}>
                         Add Color And Size
                         <FaPlus/></button>
                 </div>
                 <div className='grid grid-cols-2 gap-x-2 mt-12 relative'>
                     {formik.values.colorSize.map((item, index) => (
                         <div key={index}
-                             className='rounded relative flex flex-col justify-center items-center gap-y-4 p-6 border'>
+                             className='rounded bg-white relative flex flex-col justify-center items-center gap-y-4 p-6 border'>
                             <button
                                 type={'button'}
                                 onClick={() => {

@@ -3,10 +3,7 @@
 import { useState } from "react";
 
 import Image from "next/image";
-import TextClip from "../../utils/TextClip";
-
-import { Rating } from "@mui/material";
-import { Product, Review } from "@/types/Props";
+import { Product } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 import Button from "@/components/general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";

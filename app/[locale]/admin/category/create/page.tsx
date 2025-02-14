@@ -1,22 +1,11 @@
 'use client'
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {OrderList} from "primereact/orderlist";
 import {InputText} from "primereact/inputtext";
 import { FaCirclePlus } from "react-icons/fa6";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store/store";
 import {Button} from "primereact/button";
-import {getCategoriesDispatch} from "@/store/adminSlice";
 
 function AdminCreateCategory() {
-    const dispatch = useDispatch<AppDispatch>();
-    const { categories } = useSelector((state: RootState) => state.admin);
-
-    const [newCategories, setNewCategories] = useState([]);
-
-    useEffect(()=> {
-        dispatch(getCategoriesDispatch())
-    },[])
 
   return (
       <div>

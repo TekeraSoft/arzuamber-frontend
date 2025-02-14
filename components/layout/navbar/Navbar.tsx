@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { IoEarth } from "react-icons/io5";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
@@ -28,7 +28,6 @@ function Navbar() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const carts = useSelector((state: RootState) => state.cart.carts);
-  const favs = useSelector((state: RootState) => state.favorites.favs);
 
   // locale lang changes
   const supportedLocales = ["tr", "en"];

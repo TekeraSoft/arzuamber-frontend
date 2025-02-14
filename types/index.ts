@@ -16,10 +16,13 @@ export interface ProductProps {
 }
 
 export type Product = {
+  id: string;
   name: string;
   slug: string;
   populate: boolean;
   category: string;
+  newSeason: boolean;
+  purchasePrice: number;
   subCategory: string,
   description: string;
   price: number;
@@ -30,7 +33,7 @@ export type Product = {
 
 export type ColorSize = {
   color: string;
-  size: string;
-  stock: number;
+  stockCode: string;
+  stockSize: {size:string; stock: number}[];
   images: string[]
 }

@@ -4,11 +4,9 @@ import GradientColorContainer from "@/components/Containers/BackGroundImageConta
 import HomeContainer from "@/components/Containers/HomeContainer";
 import Heading from "@/components/general/Heading";
 import Brand from "@/components/home/Brand";
-// import Category from "@/components/home/Category";
 import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
-import LayoutProvider from "@/components/layout/layout";
 
 export default function Home() {
   const t = useTranslations();

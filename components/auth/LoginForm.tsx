@@ -2,7 +2,6 @@
 
 import Button from "@/components/general/Button";
 import Heading from "@/components/general/Heading";
-import Input from "@/components/general/Input";
 import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import React from "react";
@@ -15,7 +14,6 @@ import { signIn } from "next-auth/react";
 import { MdCancel } from "react-icons/md";
 
 function LoginForm() {
-  // const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
 
   const { isLoginModalOpen } = useSelector((state: RootState) => state.modals);
@@ -25,7 +23,7 @@ function LoginForm() {
       email: "",
       password: "",
     },
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       signIn("credentials", {
         redirect: false,
         email: values.email,
