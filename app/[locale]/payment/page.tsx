@@ -17,7 +17,7 @@ import TextClip from "@/components/utils/TextClip";
 import Heading from "@/components/general/Heading";
 import { Dropdown } from "primereact/dropdown";
 import { Cities } from "@/constans/Citites";
-import { Checkbox } from "@mui/material";
+import { Checkbox } from "primereact/checkbox";
 
 const PaymentPage = () => {
   const t = useTranslations();
@@ -173,11 +173,8 @@ const PaymentPage = () => {
                 </div>
               </div>
             </div>
-            <div className=" flex flex-col justify-center w-full  gap-4">
-              <p className="text-xs font-medium text-gray-700">
-                Kart Son Kullanım Tarihi
-              </p>
-              <div className="flex gap-2 justify-between items-center">
+            <div className=" flex flex-col justify-between w-full  gap-4">
+              <div className="flex gap-2 justify-around items-center">
                 <div className="flex flex-col">
                   <label>Son Kullanma Ay</label>
                   <Dropdown
@@ -408,8 +405,10 @@ const PaymentPage = () => {
                   Faturamı Farklı Adrese Gönder
                 </label>
                 <Checkbox
+                  inputId="billingAddressCheckbox"
+                  className="w-5 h-5 bg- !border-gray-400 checked:!bg-secondary checked:!border-secondary"
                   onChange={(e) => {
-                    const isChecked = e.target.checked;
+                    const isChecked = e.checked;
 
                     if (!isChecked) {
                       formik.setFieldValue("billingAddress", {
@@ -419,16 +418,16 @@ const PaymentPage = () => {
                       formik.setFieldValue("billingAddress", {
                         contactName: formik.values.buyer.name,
                         address: "",
-                        city: formik.values.shoppingAddress.city,
-                        country: formik.values.shoppingAddress.country,
-                        zipCode: formik.values.shoppingAddress.zipCode,
+                        city: formik.values.shoppingAddress?.city,
+                        country: formik.values.shoppingAddress?.country,
+                        zipCode: formik.values.shoppingAddress?.zipCode,
                       });
                     }
 
                     setChecked(isChecked);
                   }}
                   checked={checked}
-                />
+                />{" "}
               </div>
               <div className={`${checked ? "relative" : " hidden"} `}>
                 <InputTextarea
@@ -447,7 +446,7 @@ const PaymentPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 {formik.errors.billingAddress?.address &&
-                  formik.touched.billingAddress.address && (
+                  formik.touched.billingAddress?.address && (
                     <div className="text-red-600 text-xs mt-1">
                       {formik.errors.billingAddress?.address}
                     </div>
