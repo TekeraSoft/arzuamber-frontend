@@ -26,7 +26,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
 
   return (
     <PageContainer>
-      <div className="bg-white shadow-lg rounded-lg h-full py-5 mb-5 ">
+      <div className=" shadow-lg rounded-lg h-full py-5 mb-5 ">
         {/* Blog Image */}
         <div className="w-full h-[300px] sm:h-[400px] md:h-[550px] relative">
           <Image

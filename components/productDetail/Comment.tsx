@@ -14,7 +14,7 @@ function Comment({ prd }: { prd: Review }) {
   };
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap items-start gap-4 p-4 md:p-6 bg-white border-b  mb-6 w-full">
+    <div className="flex flex-wrap md:flex-nowrap items-start gap-4 p-4 md:p-6  border-b  mb-6 w-full">
       {/* Kullanıcı Avatarı */}
       <div className="w-16 h-16 relative rounded-full border border-black p-2 flex-shrink-0">
         <Avatar

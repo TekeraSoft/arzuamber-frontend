@@ -10,7 +10,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
   const t = useTranslations();
 
   return (
-    <div className="bg-white rounded-lg p-5 flex flex-col justify-center items-center">
+    <div className=" shadow-md rounded-lg p-5 flex flex-col justify-center items-center">
       <Link href={`/blog/${blog.id}`}>
         <div className="relative w-full h-56 sm:h-72 lg:h-72">
           <Image
@@ -30,7 +30,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
       <p className="mt-4 text-lg font-semibold ">
         <Link
           href={`/blog/${blog.id}`}
-          className="text-primary hover:underline "
+          className="text-primary hover:underline line-clamp-1 "
         >
           {blog.title}
         </Link>

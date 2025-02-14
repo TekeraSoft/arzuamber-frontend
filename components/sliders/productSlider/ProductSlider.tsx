@@ -1,23 +1,16 @@
-import React, {useEffect} from "react";
-import Carousel from "react-multi-carousel";
+import React from "react";
+import Carousel, { ArrowProps } from "react-multi-carousel";
 import Loading from "../../utils/Loading";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
-import { Product } from "@/types/Props";
-import {getNewSeasonProductsDispatch} from "@/store/productSlice";
-
-interface ProductSliderProps {
-  showNewSeason?: boolean;
-  isPopulate?: boolean;
-}
+import { Product, ProductSliderProps } from "@/types/Props";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 
 function ProductSlider({
   showNewSeason = false,
   isPopulate = false,
 }: ProductSliderProps) {
-  const dispatch = useDispatch<AppDispatch>();
-
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -37,18 +30,47 @@ function ProductSlider({
     },
   };
 
-  const { newSeasonProducts, loading } = useSelector(
+  const { products, loading } = useSelector(
     (state: RootState) => state.products
   );
 
-  useEffect(()=> {
-      dispatch(getNewSeasonProductsDispatch(0,15))
-  },[dispatch])
+  // Filtreleme işlemi
+  const filteredProducts = products.filter((product: Product) => {
+    if (showNewSeason) {
+      return product.isNewSeason === true;
+    }
 
-  console.log(newSeasonProducts)
+    if (isPopulate) {
+      return product.isPopulate === true; // Popüle edilmiş ürünler
+    }
+
+    return true; // Parametre yoksa tüm ürünleri göster
+  });
+
+  function CustomLeftArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiLeftArrow className="text-white" size={24} />
+      </button>
+    );
+  }
+
+  function CustomRightArrow({ onClick }: ArrowProps) {
+    return (
+      <button
+        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        onClick={onClick}
+      >
+        <BiRightArrow className="text-white" size={24} />
+      </button>
+    );
+  }
 
   return (
-    <div className="homepage-slider-div py-5 border-b border-t border-secondary">
+    <div className="homepage-slider-div relative z-5 ">
       {loading ? (
         <Loading />
       ) : (
@@ -63,13 +85,15 @@ function ProductSlider({
           autoPlay={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
+          customLeftArrow={<CustomLeftArrow />}
+          customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center gap-4"
+          itemClass="flex justify-center items-center gap-4 "
         >
-          {newSeasonProducts?.map((product: Product, index) => (
-            <ProductsSliderItem product={product} key={index} />
+          {filteredProducts?.map((product: Product) => (
+            <ProductsSliderItem product={product} key={product.id} />
           ))}
         </Carousel>
       )}

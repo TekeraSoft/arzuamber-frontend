@@ -51,7 +51,7 @@ function Button({
 
   return (
     <button
-      className={`rounded-lg flex justify-center items-center gap-2 text-center   
+      className={`rounded-lg flex justify-center items-center gap-2 text-center    
         ${className}
         ${buttonClasses} 
         ${sizeClasses[size]} 

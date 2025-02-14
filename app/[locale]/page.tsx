@@ -1,6 +1,6 @@
 "use client";
 
-import GradientColorContainer from "@/components/Containers/GradientColorContainer";
+import GradientColorContainer from "@/components/Containers/BackGroundImageContainer";
 import HomeContainer from "@/components/Containers/HomeContainer";
 import Heading from "@/components/general/Heading";
 import Brand from "@/components/home/Brand";
@@ -20,7 +20,7 @@ export default function Home() {
         <HomeContainer>
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}
-            textSize="4xl"
+            textSize="3xl"
             center={true}
           />
           <ProductSlider isPopulate />
@@ -40,23 +40,23 @@ export default function Home() {
           <Heading
             text={t("HomePage.sliderPopulateTitle")}
             center
-            textSize="4xl"
+            textSize="3xl"
           />
           <ProductSlider showNewSeason />
-
-          <Brand
-            title={t("brand.title")}
-            description={t("brand.description")}
-            buttonText={t("brand.buttonText")}
-            desktopImageUrl="/images/Brand/brand2.jpg"
-            mobileImageUrl="/images/Brand/brand2.png"
-            link="/products"
-          />
-
+        </HomeContainer>
+        <Brand
+          title={t("brand.title")}
+          description={t("brand.description")}
+          buttonText={t("brand.buttonText")}
+          desktopImageUrl="/images/Brand/brand2.jpg"
+          mobileImageUrl="/images/Brand/brand2.jpg"
+          link="/products"
+        />
+        <HomeContainer>
           <Heading
             text={t("HomePage.sliderAllProduct")}
             center
-            textSize="4xl"
+            textSize="3xl"
           />
           <ProductSlider />
         </HomeContainer>

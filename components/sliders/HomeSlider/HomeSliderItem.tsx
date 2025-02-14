@@ -22,15 +22,15 @@ function HomeSliderItem({ image }: ImageProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-[370px] bg-third md:h-[600px] ">
-      <Image
-        src={isMobile ? image.urlDesktop : image.urlMobile}
-        alt={image.description ? image.description : "Slider Description"}
-        fill
-        priority
-        className="object-cover md:object-cover bg-center bg-cover"
-      />
-    </div>
+    <Image
+      src={isMobile ? image.urlDesktop : image.urlMobile}
+      alt={image.description ? image.description : "Slider Description"}
+      width={1920}
+      height={600}
+      priority
+      layout="responsive"
+      className="object-cover  bg-center bg-cover"
+    />
   );
 }
 

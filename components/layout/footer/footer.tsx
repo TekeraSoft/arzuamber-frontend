@@ -21,15 +21,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Top Section */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-7">
-          <div className="relative flex justify-center items-center w-[250px] h-52 mx-auto sm:w-[200px] md:w-[250px]">
-            <Image
-              src={`/images/logo/footerlogo.png`}
-              fill
-              alt="footer logo"
-              className="object-contain"
-            />
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7 items-center">
+          <Image
+            src={`/images/logo/footerlogo.png`}
+            width={300}
+            height={40}
+            alt="footer logo"
+            className="object-contain"
+          />
 
           {/* About Us */}
           <div>
@@ -74,7 +73,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder={t("footer.emailPlaceholder")}
-                className="flex-1 px-2 py-1 rounded-md bg-white text-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"
+                className="flex-1 px-3 py-1 rounded-md bg-white text-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"
               />
               <Button
                 text={t("footer.subscribeButton")}

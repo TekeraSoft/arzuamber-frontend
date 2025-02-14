@@ -3,7 +3,7 @@
 import ProductUpdateForm from "@/components/admin/Product/ProductUpdateForm";
 import Loading from "@/components/utils/Loading";
 import WarningText from "@/components/utils/WarningText";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { RootState } from "@/store/store";
 import { Product } from "@/types/Props";
 import React, { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ function AdminUpdateProductPage({
     (state: RootState) => state.products
   );
 
-  // const t = useTranslations();
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchSlug = async () => {
@@ -40,10 +40,8 @@ function AdminUpdateProductPage({
         <ProductUpdateForm product={product} />
       ) : (
         <WarningText
-          title="Product Not Found"
-          // title={t("warningText.ProductNotFoundTitle")}
-          text="The product you're looking for could not be found."
-          // text={t("warningText.ProductNotFoundText")}
+          title={t("warningText.ProductNotFoundTitle")}
+          text={t("warningText.ProductNotFoundText")}
         />
       )}
     </div>

@@ -12,7 +12,8 @@
     "signup": "Kayıt Ol",
     "login": "Giriş Yap",
     "admin": "Yönetici",
-    "logout": "Çıkış Yap"
+    "logout": "Çıkış Yap",
+    "myAccount": "Hesabım"
   },
 
   "topBar": {
@@ -72,7 +73,8 @@
     "productCategory": "Kategori",
     "priceSymbol": "₺",
     "readMore": "Daha fazla",
-    "readLess": "Daha az"
+    "readLess": "Daha az",
+    "detail": "Detay"
   },
 
   "blogPage": {
@@ -143,6 +145,41 @@
       "continueShopping": "Alışverişe Devam Et",
       "symbol": "₺"
     }
+  },
+
+  "profile": {
+    "menuTitle": "Profil Menüsü",
+    "profile": "Profil",
+    "orders": "Siparişler",
+    "update": "Güncelle"
+  },
+
+  "userInfo": {
+    "title": "User Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Adres"
+  },
+
+  "profileUpdate": {
+    "updateInfo": "Bilgilerinizi Güncelleyin",
+    "email": "E-posta Adresi",
+    "phone": "Telefon Numarası",
+    "updateEmail": "E-posta Güncelle",
+    "updatePhone": "Telefon Güncelle"
+  },
+  "ordersPage": {
+    "noOrders": "Henüz siparişiniz yok.",
+    "startShopping": "İlk siparişinizi vermek için şimdi alışveriş yapmaya başlayın!",
+    "order": "Sipariş",
+    "status": "Durum",
+    "orderDate": "Sipariş Tarihi",
+    "totalPrice": "Toplam Fiyat",
+    "color": "Renk",
+    "size": "Beden",
+    "quantity": "Miktar",
+    "price": "Fiyat"
   },
 
   "userProfile": {

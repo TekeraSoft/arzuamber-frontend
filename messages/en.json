@@ -1,4 +1,3 @@
-
 {
   "navLinks": {
     "home": "Home",
@@ -13,7 +12,8 @@
     "signup": "Sign Up",
     "login": "Log In",
     "admin": "Admin",
-    "logout": "Logout"
+    "logout": "Logout",
+    "myAccount": "My Account"
   },
 
   "topBar": {
@@ -76,9 +76,10 @@
     "productAlreadyFav": "The product is already on the favorites.",
     "product": "Cleared all favorites.",
     "productCategory": "Category",
-    "priceSymbol": "$",
+    "priceSymbol": "₺",
     "readMore": "Read more",
-    "readLess": "Read less"
+    "readLess": "Read less",
+    "detail": "Detail"
   },
 
   "blogPage": {
@@ -98,7 +99,7 @@
     "price": "Price",
     "actions": "Actions",
     "summary": "Cart Summary",
-    "cartPriceSymbol": "$",
+    "cartPriceSymbol": "₺",
     "total": "Total",
     "continueShopping": "Continue Shopping",
     "remove": "Remove",
@@ -120,8 +121,43 @@
       "submitDiscountCode": "Submit Code",
       "continueShopping": "Continue Shopping",
       "proceedToPayment": "Proceed to Payment",
-      "symbol": "$"
+      "symbol": "₺"
     }
+  },
+
+  "profile": {
+    "menuTitle": "Profile Menu",
+    "profile": "Profile",
+    "orders": "Orders",
+    "update": "Update"
+  },
+
+  "userInfo": {
+    "title": "Kullanıcı Bilgisi",
+    "name": "Ad",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "address": "Adress"
+  },
+
+  "profileUpdate": {
+    "updateInfo": "Update Your Info",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "updateEmail": "Update Email",
+    "updatePhone": "Update Phone"
+  },
+  "ordersPage": {
+    "noOrders": "You have no orders yet.",
+    "startShopping": "Start shopping now to place your first order!",
+    "order": "Order",
+    "status": "Status",
+    "orderDate": "Order Date",
+    "totalPrice": "Total Price",
+    "color": "Color",
+    "size": "Size",
+    "quantity": "Quantity",
+    "price": "Price"
   },
 
   "FavPage": {
@@ -133,7 +169,7 @@
     "actions": "Actions",
     "summary": "Favorites Summary",
     "total": "Total",
-    "favPriceSymbol": "$",
+    "favPriceSymbol": "₺",
     "continueShopping": "Continue Shopping",
     "size": "Size",
     "color": "Color",
@@ -147,7 +183,7 @@
       "tax": "Tax:",
       "savings": "Total Savings:",
       "continueShopping": "Continue Shopping",
-      "symbol": "$"
+      "symbol": "₺"
     }
   },
 

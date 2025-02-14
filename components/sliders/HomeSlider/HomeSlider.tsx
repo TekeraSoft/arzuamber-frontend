@@ -7,8 +7,8 @@ import { RootState } from "@/store/store";
 import HomeSliderItem from "./HomeSliderItem";
 import { CarouselType } from "@/constans/HomeSlider";
 import { useState, useEffect } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Button from "@/components/general/Button";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 
 const responsive = {
   superLargeDesktop: {
@@ -38,18 +38,20 @@ const CustomButtonGroup = ({
   previous: () => void;
 }) => {
   return (
-    <div className="absolute bottom-4  flex justify-around w-full">
+    <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-5">
       <Button
+        color="secondary"
         onClick={previous}
-        icon={FaChevronLeft}
-        size="cartIcon"
-        iconSize={14}
+        icon={BiLeftArrow}
+        size="icon"
+        type="button"
       />
       <Button
+        color="secondary"
         onClick={next}
-        icon={FaChevronRight}
-        iconSize={14}
-        size="cartIcon"
+        icon={BiRightArrow}
+        size="icon"
+        type="button"
       />
     </div>
   );
@@ -88,7 +90,7 @@ function HomeSlider() {
           transitionDuration={1000}
           containerClass="carousel-container"
           itemClass="flex justify-center items-center bg-center bg-cover"
-          renderButtonGroupOutside={isMobile} // Buton grubu dışarıda
+          renderButtonGroupOutside={isMobile}
           customButtonGroup={
             isMobile ? (
               <CustomButtonGroup next={() => {}} previous={() => {}} />
