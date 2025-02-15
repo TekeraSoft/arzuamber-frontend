@@ -16,7 +16,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   // IMAGE HOVER
   const [isHovered, setIsHovered] = useState(false);
 
-
   return (
     <div className="flex justify-center items-center flex-col space-y-1  rounded-lg   transition duration-500 h-[500px] p-6 w-[300px] relative ">
       <div
@@ -48,23 +47,21 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
       <div className="flex flex-col justify-start items-start gap-2 w-full">
         <div className="flex justify-between items-center w-full mt-1">
           <h2 className="text-start text-secondary font-bold text-md  rounded-lg w-full ">
-              {product.name}
+            {product.name}
           </h2>
-
         </div>
 
         <hr className="w-full" />
 
         <div className="flex  lex-row justify-between items-center w-full">
           <div className="flex flex-row items-start justify-center gap-2">
-
             <p className="text-red-700 text-sm line-through">
               {product.price}₺
             </p>
           </div>
           <Link
             className="flex items-center justify-center "
-            href={`/product/${product.slug}`}
+            href={`/product/${product?.slug}`}
           >
             <Button
               text="Detail"

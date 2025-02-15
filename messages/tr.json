@@ -38,7 +38,13 @@
     "loginButton": "Giriş Yap",
     "loginSuccess": "Başarıyla Giriş Yapıldı!",
     "loginError": "Giriş Hatası!",
-    "noAccount": "Hesabınız yok mu? Kayıt olun"
+    "noAccount": "Hesabınız yok mu? Kayıt olun",
+    "errors": {
+      "email": "Geçerli bir e-posta adresi giriniz",
+      "emailRequired": "E-posta zorunludur",
+      "passwordMin": "Şifre en az 6 karakter olmalıdır",
+      "passwordRequired": "Şifre zorunludur"
+    }
   },
 
   "registerForm": {
@@ -47,10 +53,24 @@
     "lastName": "Soyad",
     "email": "E-posta",
     "password": "Şifre",
+    "rePassword": "Şifre Kontrol",
     "registerButton": "Kayıt Ol",
-    "registerLink": "Zaten bir hesabınız var mı? Giriş yap"
+    "registerLink": "Zaten bir hesabınız var mı? Giriş yap",
+    "errors": {
+      "nameMin": "İsim en az 2 karakter olmalıdır",
+      "nameMax": "İsim en fazla 50 karakter olmalıdır",
+      "nameRequired": "İsim zorunludur",
+      "surnameMin": "Soyisim en az 2 karakter olmalıdır",
+      "surnameMax": "Soyisim en fazla 50 karakter olmalıdır",
+      "surnameRequired": "Soyisim zorunludur",
+      "email": "Geçerli bir e-posta adresi giriniz",
+      "emailRequired": "E-posta zorunludur",
+      "passwordMin": "Şifre en az 6 karakter olmalıdır",
+      "passwordRequired": "Şifre zorunludur",
+      "passwordMatch": "Şifreler eşleşmiyor",
+      "rePasswordRequired": "Şifre tekrar alanı zorunludur"
+    }
   },
-
   "allProduct": {
     "allProducts": "Tüm Ürünler"
   },
@@ -84,6 +104,85 @@
     "category": "Kategori",
     "Tags": "Etiket",
     "readMore": "Devamını Oku"
+  },
+
+  "paymentForm": {
+    "title": "Ödeme Sayfası",
+    "PaymentLabels": {
+      "PaymentPageTitle": "Kart Bilgileri",
+      "cardHolderNameLabel": "Kart Sahibi",
+      "cardHolderNameSurnameLabel": "Kart Sahibi Adı ve Soyadı ",
+      "cardNumberLabel": "Kart Numarası",
+      "CVC": "CVC",
+      "CardDate": {
+        "title": "Kart Son Kullanım Tarihi",
+        "expireMonthLabel": "Son Kullanım Ay",
+        "expireMonthPlaceHolder": "Ay Seçiniz",
+        "expireYearLabelPlaceHolder": "Yıl Seçiniz",
+        "expireYearLabel": "Son Kullanım Yıl"
+      },
+      "BuyerInfo": {
+        "title": "  Alıcı Bilgileri",
+        "name": "İsim",
+        "surname": "Soy isim",
+        "phone": "Telefon",
+        "email": "E-posta"
+      },
+      "Adress": {
+        "zipcode": "Posta Kodu",
+        "cities": "Sehir Seçin",
+        "OrderAdress": "Sipariş Adresi",
+        "otherAdressLabel": "Faturamı Farklı Bir Adrese Gönder",
+        "BillingAddress": "Fatura Adresi"
+      }
+    },
+
+    "paymentCard": {
+      "cardHolderName": "Kart sahibi adı gerekli",
+      "cardNumber": "Geçerli bir kart numarası girin",
+      "cardNumberRequired": "Kart numarası gerekli",
+      "expireMonth": {
+        "min": "Son kullanma ayı 1'den küçük olamaz",
+        "max": "Son kullanma ayı 12'yi geçemez",
+        "required": "Son kullanma ayı gerekli"
+      },
+      "expireYear": {
+        "min": "Geçerli bir yıl girin",
+        "required": "Son kullanma yılı gerekli"
+      },
+      "cvc": "Geçerli bir CVC girin",
+      "cvcRequired": "CVC gerekli"
+    },
+    "buyer": {
+      "name": "Ad gerekli",
+      "surname": "Soyad gerekli",
+      "gsmNumber": "Telefon numarası gerekli",
+      "email": {
+        "email": "Geçerli bir e-posta girin",
+        "required": "E-posta gerekli"
+      }
+    },
+    "shippingAddress": {
+      "address": "Adres alanı boş bırakılamaz",
+      "addressMin": "Adres en az 10 karakter olmalı",
+      "addressMax": "Adres en fazla 200 karakter olabilir",
+      "city": "Şehir gerekli",
+      "country": "Ülke gerekli",
+      "zipCodeMin": "Posta kodu en az 5 haneli olmalıdır",
+      "zipCodeMax": "Posta kodu en fazla 5 haneli olabilir",
+      "zipCodeRequired": "Posta Kodu gerekli"
+    },
+    "billingAddress": {
+      "contactName": "İletişim adı gerekli",
+      "address": "Fatura adresi boş bırakılamaz",
+      "addressMin": "Adres en az 10 karakter olmalı",
+      "addressMax": "Adres en fazla 200 karakter olabilir",
+      "city": "Şehir gerekli",
+      "country": "Ülke gerekli",
+      "zipCodeMin": "Posta kodu en az 5 haneli olmalıdır",
+      "zipCodeMax": "Posta kodu en fazla 5 haneli olabilir",
+      "zipCodeRequired": "Posta Kodu gerekli"
+    }
   },
 
   "CartPage": {

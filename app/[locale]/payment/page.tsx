@@ -7,7 +7,6 @@ import { Button } from "primereact/button";
 import { InputMask } from "primereact/inputmask";
 import { InputTextarea } from "primereact/inputtextarea";
 import { format } from "date-fns";
-import { paymentValidationSchema } from "@/error/paymentSchema";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
@@ -17,10 +16,15 @@ import TextClip from "@/components/utils/TextClip";
 import Heading from "@/components/general/Heading";
 import { Dropdown } from "primereact/dropdown";
 import { Cities } from "@/constans/Citites";
-import { Checkbox } from "@mui/material";
+import { usePaymentValidationSchema } from "@/error/paymentSchema";
+import { Checkbox } from "primereact/checkbox";
 
 const PaymentPage = () => {
   const t = useTranslations();
+
+  // checkbox
+  const [checked, setChecked] = useState(false);
+  const [contactName, setContactName] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -41,7 +45,8 @@ const PaymentPage = () => {
         lastLogin: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
         registrationDate: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
       },
-      shoppingAddress: {
+      shippingAddress: {
+        contactName: contactName,
         address: "",
         city: "",
         country: "Turkey",
@@ -49,7 +54,7 @@ const PaymentPage = () => {
       },
 
       billingAddress: {
-        contactName: "",
+        contactName: contactName,
         address: "",
         city: "",
         country: "Turkey",
@@ -57,7 +62,7 @@ const PaymentPage = () => {
       },
     },
 
-    validationSchema: paymentValidationSchema,
+    validationSchema: usePaymentValidationSchema(),
     onSubmit: (values) => {
       console.log("Ödeme Bilgileri:", values);
       formik.resetForm();
@@ -65,8 +70,20 @@ const PaymentPage = () => {
   });
 
   console.log(formik.values);
+  // ContactName create
+  const createContactName = () => {
+    const name = formik.values.buyer.name;
+    const surname = formik.values.buyer.surname;
+    const newName = name + " " + surname;
 
-  const [checked, setChecked] = useState(false);
+    setContactName(newName);
+
+    // contactName'i shippingAddress ve billingAddress'a da güncelle
+    formik.setFieldValue("shippingAddress.contactName", newName);
+    formik.setFieldValue("billingAddress.contactName", newName);
+  };
+
+  // Month and Year dropdown
   const months = Array.from({ length: 12 }, (_, i) => ({
     label: (i + 1).toString().padStart(2, "0"),
     value: (i + 1).toString().padStart(2, "0"),
@@ -99,24 +116,26 @@ const PaymentPage = () => {
     >
       <div className="w-full  md:w-1/2 border rounded-lg px-4 md:px-4   py-1  ">
         <h2 className="text-3xl font-semibold text-center mb-6 mt-3  text-gray-800">
-          Ödeme Sayfası
+          {t("paymentForm.title")}
         </h2>
 
         <div className="space-y-6">
           {/* Kart Bilgileri */}
-          <h3 className="text-xl font-semibold mb-3 text-gray-700">
-            Kart Bilgileri
+          <h3 className="text-xl font-semibold  text-gray-700">
+            {t("paymentForm.PaymentLabels.PaymentPageTitle")}
           </h3>
           <div className="flex flex-col gap-4">
             <label
               htmlFor="cardHolderName"
               className="text-sm font-medium text-gray-700"
             >
-              Kart Sahibi
+              {t("paymentForm.PaymentLabels.cardHolderNameLabel")}
             </label>
             <InputText
               id="cardHolderName"
-              placeholder="Kart Sahibi Adı Soyadı"
+              placeholder={t(
+                "paymentForm.PaymentLabels.cardHolderNameSurnameLabel"
+              )}
               className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary"
               {...formik.getFieldProps("paymentCard.cardHolderName")}
             />
@@ -134,12 +153,12 @@ const PaymentPage = () => {
                     htmlFor="cardNumber"
                     className="text-sm font-medium text-gray-700"
                   >
-                    Card Number
+                    {t("paymentForm.PaymentLabels.cardNumberLabel")}
                   </label>
                   <InputMask
                     id="cardNumber"
                     mask="9999999999999999"
-                    placeholder="Kart Numarası"
+                    placeholder={t("paymentForm.PaymentLabels.cardNumberLabel")}
                     className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary text-center md:text-start"
                     {...formik.getFieldProps("paymentCard.cardNumber")}
                   />
@@ -155,12 +174,12 @@ const PaymentPage = () => {
                     htmlFor="paymentCard.cvc"
                     className="text-sm font-medium text-gray-700"
                   >
-                    CVC
+                    {t("paymentForm.PaymentLabels.CVC")}
                   </label>
                   <InputMask
                     id="cvc"
                     mask="999"
-                    placeholder="CVC"
+                    placeholder={t("paymentForm.PaymentLabels.CVC")}
                     className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary text-center md:text-start"
                     {...formik.getFieldProps("paymentCard.cvc")}
                   />
@@ -174,20 +193,24 @@ const PaymentPage = () => {
               </div>
             </div>
             <div className=" flex flex-col justify-center w-full  gap-4">
-              <p className="text-xs font-medium text-gray-700">
-                Kart Son Kullanım Tarihi
+              <p className="text-lg font-medium text-gray-700">
+                {t("paymentForm.PaymentLabels.CardDate.title")}
               </p>
-              <div className="flex gap-2 justify-between items-center">
-                <div className="flex flex-col">
-                  <label>Son Kullanma Ay</label>
+              <div className="flex gap-2 justify-around items-center">
+                <div className="flex flex-col w-full">
+                  <label className="text-sm font-medium text-gray-700">
+                    {t("paymentForm.PaymentLabels.CardDate.expireMonthLabel")}
+                  </label>
                   <Dropdown
                     name="paymentCard.expireMonth"
                     options={months}
                     value={formik.values.paymentCard.expireMonth}
                     onChange={formik.handleChange}
-                    placeholder="Ay seçiniz"
-                    panelClassName="bg-white border-t"
-                    className="w-full p-dropdown border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary p-1"
+                    placeholder={t(
+                      "paymentForm.PaymentLabels.CardDate.expireMonthPlaceHolder"
+                    )}
+                    panelClassName="  bg-white border"
+                    className="w-full p-dropdown border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary p-2"
                   />
                   {formik.errors.paymentCard?.expireMonth &&
                     formik.touched.paymentCard?.expireMonth && (
@@ -197,16 +220,20 @@ const PaymentPage = () => {
                     )}
                 </div>
 
-                <div className=" flex flex-col ">
-                  <label>Son Kullanma Yıl</label>
+                <div className=" flex flex-col w-full ">
+                  <label className="text-sm font-medium text-gray-700">
+                    {t("paymentForm.PaymentLabels.CardDate.expireYearLabel")}
+                  </label>
                   <Dropdown
                     name="paymentCard.expireYear"
                     options={years}
                     value={formik.values.paymentCard.expireYear}
                     onChange={formik.handleChange}
-                    placeholder="Yıl seçiniz"
-                    panelClassName="bg-white border-t"
-                    className="w-full p-dropdown border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary p-1"
+                    placeholder={t(
+                      "paymentForm.PaymentLabels.CardDate.expireYearLabelPlaceHolder"
+                    )}
+                    panelClassName="bg-white border "
+                    className="w-full p-dropdown border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary p-2"
                   />
                   {formik.errors.paymentCard?.expireYear &&
                     formik.touched.paymentCard?.expireYear && (
@@ -221,7 +248,7 @@ const PaymentPage = () => {
 
           {/* Alıcı Bilgileri */}
           <h3 className="text-xl font-semibold mb-3 text-gray-700">
-            Alıcı Bilgileri
+            {t("paymentForm.PaymentLabels.BuyerInfo.title")}
           </h3>
           <div className="flex flex-col gap-6">
             <div className="flex flex-row gap-4 sm:gap-6">
@@ -230,13 +257,14 @@ const PaymentPage = () => {
                   htmlFor="name"
                   className="text-sm font-medium text-gray-700"
                 >
-                  İsim
+                  {t("paymentForm.PaymentLabels.BuyerInfo.name")}
                 </label>
                 <InputText
                   id="name"
-                  placeholder="Ad"
+                  placeholder={t("paymentForm.PaymentLabels.BuyerInfo.name")}
                   className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary"
                   {...formik.getFieldProps("buyer.name")}
+                  onBlur={createContactName}
                 />
                 {formik.errors.buyer?.name && formik.touched.buyer?.name && (
                   <div className="text-red-600 text-xs mt-1">
@@ -249,13 +277,14 @@ const PaymentPage = () => {
                   htmlFor="surname"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Soy isim
+                  {t("paymentForm.PaymentLabels.BuyerInfo.surname")}
                 </label>
                 <InputText
                   id="surname"
-                  placeholder="Soyad"
+                  placeholder={t("paymentForm.PaymentLabels.BuyerInfo.surname")}
                   className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary"
                   {...formik.getFieldProps("buyer.surname")}
+                  onBlur={createContactName}
                 />
                 {formik.errors.buyer?.surname &&
                   formik.touched.buyer?.surname && (
@@ -271,17 +300,17 @@ const PaymentPage = () => {
                   htmlFor="gsmNumber"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Telefon
+                  {t("paymentForm.PaymentLabels.BuyerInfo.phone")}
                 </label>
                 <InputMask
                   id="gsmNumber"
                   mask="9999999999"
-                  placeholder="Telefon"
+                  placeholder={t("paymentForm.PaymentLabels.BuyerInfo.phone")}
                   className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
                   value={formik.values.buyer?.gsmNumber}
                   onChange={(e) =>
                     formik.setFieldValue("buyer.gsmNumber", e.target.value)
-                  } // Value'nun Formik'e set edilmesi
+                  }
                 />
                 {formik.errors.buyer?.gsmNumber &&
                   formik.touched.buyer?.gsmNumber && (
@@ -295,11 +324,11 @@ const PaymentPage = () => {
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Email
+                  {t("paymentForm.PaymentLabels.BuyerInfo.email")}
                 </label>
                 <InputText
                   id="email"
-                  placeholder="E-Posta"
+                  placeholder={t("paymentForm.PaymentLabels.BuyerInfo.email")}
                   className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary"
                   {...formik.getFieldProps("buyer.email")}
                 />
@@ -318,25 +347,32 @@ const PaymentPage = () => {
                   htmlFor="zipCode"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Posta Kodu
+                  {t("paymentForm.PaymentLabels.Adress.zipcode")}
                 </label>
                 <InputText
                   id="zipCode"
-                  placeholder="Posta Kodu"
+                  placeholder={t("paymentForm.PaymentLabels.Adress.zipcode")}
                   type="number"
                   className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
-                  value={formik.values.shoppingAddress?.zipCode}
-                  onChange={(e) =>
+                  value={formik.values.shippingAddress?.zipCode}
+                  onChange={(e) => {
+                    const zipCodeValue = e.target.value;
+
                     formik.setFieldValue(
-                      "shoppingAddress.zipCode",
-                      e.target.value
-                    )
-                  }
+                      "shippingAddress.zipCode",
+                      zipCodeValue
+                    );
+
+                    formik.setFieldValue(
+                      "billingAddress.zipCode",
+                      zipCodeValue
+                    );
+                  }}
                 />
-                {formik.errors.shoppingAddress?.zipCode &&
-                  formik.touched.shoppingAddress?.zipCode && (
+                {formik.errors.shippingAddress?.zipCode &&
+                  formik.touched.shippingAddress?.zipCode && (
                     <div className="text-red-600 text-xs mt-1">
-                      {formik.errors.shoppingAddress?.zipCode}
+                      {formik.errors.shippingAddress?.zipCode}
                     </div>
                   )}
               </div>
@@ -347,93 +383,110 @@ const PaymentPage = () => {
                   htmlFor="city"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Şehir Seç
+                  {t("paymentForm.PaymentLabels.Adress.cities")}
                 </label>
                 <Dropdown
                   id="city"
                   name="city"
-                  value={formik.values.shoppingAddress?.city}
-                  onChange={(e) =>
-                    formik.setFieldValue("shoppingAddress.city", e.value)
-                  }
+                  value={formik.values.shippingAddress?.city}
+                  onChange={(e) => {
+                    const zipCodeValue = e.target.value;
+
+                    formik.setFieldValue("shippingAddress.city", zipCodeValue);
+
+                    formik.setFieldValue("billingAddress.city", zipCodeValue);
+                  }}
                   options={Cities}
-                  placeholder="Şehir Seçin"
+                  placeholder={t("paymentForm.PaymentLabels.Adress.cities")}
                   className="w-full p-dropdown border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary py-3 px-1"
                   panelClassName="bg-white border"
                 />
-                {formik.errors.shoppingAddress?.city &&
-                  formik.touched.shoppingAddress?.city && (
+
+                {formik.errors.shippingAddress?.city &&
+                  formik.touched.shippingAddress?.city && (
                     <div className="text-red-600 text-xs mt-1">
-                      {formik.errors.shoppingAddress?.city}
+                      {formik.errors.shippingAddress?.city}
                     </div>
                   )}
               </div>
             </div>
+
             <div className="flex flex-col">
               <div className="w-full">
                 <label
                   htmlFor="address"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Sipariş Adresi
+                  {t("paymentForm.PaymentLabels.Adress.OrderAdress")}
                 </label>
                 <InputTextarea
                   id="address"
-                  placeholder="Adres..."
+                  placeholder={t(
+                    "paymentForm.PaymentLabels.Adress.OrderAdress"
+                  )}
                   rows={5}
                   cols={30}
                   className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
-                  value={formik.values.shoppingAddress?.address}
-                  onChange={(e) =>
-                    formik.setFieldValue(
-                      "shoppingAddress.address",
-                      e.target.value
-                    )
-                  }
+                  value={formik.values.shippingAddress?.address}
+                  onChange={(e) => {
+                    const addressValue = e.target.value;
+
+                    if (checked) {
+                      formik.setFieldValue(
+                        "shippingAddress.address",
+                        addressValue
+                      );
+                    } else {
+                      formik.setFieldValue(
+                        "shippingAddress.address",
+                        addressValue
+                      );
+                      formik.setFieldValue(
+                        "billingAddress.address",
+                        addressValue
+                      );
+                    }
+                  }}
                   onBlur={formik.handleBlur}
                 />
 
-                {formik.errors.shoppingAddress?.address &&
-                  formik.touched.shoppingAddress?.address && (
+                {formik.errors.shippingAddress?.address &&
+                  formik.touched.shippingAddress?.address && (
                     <div className="text-red-600 text-xs mt-1">
-                      {formik.errors.shoppingAddress?.address}
+                      {formik.errors.shippingAddress?.address}
                     </div>
                   )}
               </div>
-              <div className="">
+              <div className=" flex justify-start items-center gap-4 mb-2">
                 <label
                   htmlFor="address"
-                  className="text-sm font-medium text-gray-700"
+                  className="text-base font-medium text-gray-700"
                 >
-                  Faturamı Farklı Adrese Gönder
+                  {t("paymentForm.PaymentLabels.Adress.otherAdressLabel")}
                 </label>
+
                 <Checkbox
+                  inputId="billingAddressCheckbox"
+                  className="w-8 h-8 rounded-lg bg-secondary flex justify-center items-center text-mywhite font-bold"
                   onChange={(e) => {
-                    const isChecked = e.target.checked;
-
-                    if (!isChecked) {
-                      formik.setFieldValue("billingAddress", {
-                        ...formik.values.shoppingAddress,
-                      });
-                    } else {
-                      formik.setFieldValue("billingAddress", {
-                        contactName: formik.values.buyer.name,
-                        address: "",
-                        city: formik.values.shoppingAddress.city,
-                        country: formik.values.shoppingAddress.country,
-                        zipCode: formik.values.shoppingAddress.zipCode,
-                      });
-                    }
-
-                    setChecked(isChecked);
+                    const isChecked = e.checked;
+                    setChecked(isChecked); // `checked` değerini güncelle
                   }}
                   checked={checked}
                 />
               </div>
               <div className={`${checked ? "relative" : " hidden"} `}>
+                <label
+                  htmlFor="address"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  {t("paymentForm.PaymentLabels.Adress.BillingAddress")}
+                </label>
                 <InputTextarea
                   id="billingAddress"
-                  placeholder="Fatura Adresi"
+                  placeholder={t(
+                    "paymentForm.PaymentLabels.Adress.BillingAddress"
+                  )}
                   rows={5}
                   cols={30}
                   className="w-full p-3 border rounded-md  focus:outline-none focus:ring-2 focus:ring-secondary"
@@ -447,7 +500,7 @@ const PaymentPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 {formik.errors.billingAddress?.address &&
-                  formik.touched.billingAddress.address && (
+                  formik.touched.billingAddress?.address && (
                     <div className="text-red-600 text-xs mt-1">
                       {formik.errors.billingAddress?.address}
                     </div>

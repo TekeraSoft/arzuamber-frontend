@@ -62,13 +62,13 @@ function Navbar() {
       <TopBar />
 
       {/* Navbar */}
-      <nav className="bg-transparent backdrop-blur-3xl bg-opacity-0 w-full border-">
+      <nav className="bg-transparent backdrop-blur-2xl bg-opacity-0 w-full ">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Logo />
 
           {/* Hamburger Menu (Mobile) */}
-          <div className="lg:hidden flex items-center justify-center gap-5">
+          <div className="lg:hidden flex items-center justify-center gap-5 ">
             <button
               className="flex justify-center items-center"
               onClick={openCart}
