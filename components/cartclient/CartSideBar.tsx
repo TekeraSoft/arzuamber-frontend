@@ -49,6 +49,7 @@ function CartSidebar() {
   }, [isCartModalOpen, dispatch]);
 
   if (!isClient) {
+
     return <Loading />;
   }
 
