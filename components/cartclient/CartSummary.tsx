@@ -11,7 +11,7 @@ import { FaRegCreditCard } from "react-icons/fa";
 import { CartSummaryProps } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 
-const CartSummary = ({ total, tax }: CartSummaryProps) => {
+const CartSummary = ({ total }: CartSummaryProps) => {
   const t = useTranslations();
   const {
     register,
@@ -41,17 +41,6 @@ const CartSummary = ({ total, tax }: CartSummaryProps) => {
             </span>
             <span className="text-sm font-semibold text-primary">
               {t("CartPage.cartSummary.freeShipping")}
-            </span>
-          </div>
-
-          {/* Vergi */}
-          <div className="flex justify-between items-center  rounded-md">
-            <span className="text-sm font-bold">
-              {t("CartPage.cartSummary.tax")}
-            </span>
-            <span className="text-sm font-semibold text-primary">
-              {t("CartPage.cartSummary.symbol")}
-              {tax.toFixed(2)}
             </span>
           </div>
 

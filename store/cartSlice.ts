@@ -1,87 +1,82 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 // Ürün Tipi
 export interface CartItem {
   id: string;
   name: string;
-  description: string;
   price: number;
   quantity: number;
   image: string;
-  inStock: boolean;
-  discountPercent: number;
   size: string;
   color: string;
 }
 
-// Sepet Tipi
-export interface CartState {
-  carts: CartItem[];
+const getInitialState = () => {
+  if (typeof window === "undefined") {
+    // Eğer sunucu tarafında çalışıyorsa, sadece varsayılan initial state dönüyoruz
+    return {
+      cartProducts: [],
+      total: 0,
+    };
+  }
+
+  const savedCart = localStorage.getItem("cart");
+  if (savedCart) {
+    const parsedCart = JSON.parse(savedCart);
+    return {
+      cartProducts: parsedCart.cartProducts || [],
+      total: parsedCart.total || 0,
+    };
+  }
+  return {
+    cartProducts: [],
+    total: 0,
+  };
+};
+
+interface CartState {
+  cartProducts: CartItem[];
+  total: number;
 }
-
-// LocalStorage'dan sepete verileri çekme (İstemci tarafında çalıştırılacak)
-const fetchFromLocalStorage = (): CartItem[] => {
-  if (typeof window !== "undefined") {
-    const cart = localStorage.getItem("cart");
-    if (cart) {
-      return JSON.parse(cart);
-    }
-  }
-  return [];
-};
-
-// Başlangıç durumu (initialState)
-const initialState: CartState = {
-  carts: fetchFromLocalStorage(),
-};
-
-// LocalStorage'a veri kaydetme
-const storeInLocalStorage = (data: CartItem[]) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("cart", JSON.stringify(data));
-  }
-};
+const initialState = getInitialState()
 
 export const cartSlice = createSlice({
   name: "carts",
   initialState,
   reducers: {
     // Sepete ürün ekleme işlemi
-    addToCart: (state, action: PayloadAction<CartItem>) => {
-      const isItemCart = state.carts.find(
-        (cart) => cart.id == action.payload.id
-      );
-      if (isItemCart) {
-        const tempCart = state.carts.map((item) => {
-          if (item.id == action.payload.id) {
-            const tempQuantity = item.quantity + action.payload.quantity;
-            return {
-              ...item,
-              quantity: tempQuantity,
-            };
-          } else {
-            return item;
-          }
-        });
-
-        state.carts = tempCart;
-        storeInLocalStorage(state.carts);
+    addToCart: (state, action) => {
+      const {size, color, name, id, image, price, quantity} = action.payload
+      const existingProduct = state.cartProducts.find((p) => p.id === id && p.color === color);
+      console.log(existingProduct);
+      if (existingProduct) {
+          state.total = price * quantity;
+          existingProduct.quantity = quantity;
       } else {
-        state.carts.push(action.payload);
-        storeInLocalStorage(state.carts);
+        state.cartProducts.push(action.payload);
+        state.total += price * action.payload.quantity;
       }
+      localStorage.setItem('cart',JSON.stringify({cartProducts:state.cartProducts,total:state.total}))
     },
 
     //Sepetten ürün silme işlemi
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      const tempCart = state.carts.filter((item) => item.id != action.payload);
-      state.carts = tempCart;
-
-      storeInLocalStorage(state.carts);
+    removeFromCart: (state, action) => {
+      state.cartProducts = state.cartProducts.filter(
+          (item) => !(item.id === action.payload.id && item.color === action.payload.color)
+      );
+      state.total = state.cartProducts.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+      );
+      localStorage.setItem(
+          "cart",
+          JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
+      );
     },
     clearCart: (state) => {
-      state.carts = [];
-      storeInLocalStorage(state.carts);
+      state.cartProducts = [];
+      state.total = 0;
+      localStorage.removeItem('cart');
       // toast.warning(t("productDetail.productsClearedCart"));
     },
   },

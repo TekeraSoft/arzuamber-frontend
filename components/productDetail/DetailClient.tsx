@@ -1,10 +1,16 @@
 "use client";
-
+import "yet-another-react-lightbox/styles.css"
 import Image from "next/image";
 import Carousel, { ArrowProps } from "react-multi-carousel";
 import PageContainer from "../Containers/PageContainer";
 import {Product} from "@/types";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import {useEffect, useState} from "react";
+import Lightbox from "yet-another-react-lightbox";
+import {FaMinus, FaPlus} from "react-icons/fa";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
+import {addToCart} from "@/store/cartSlice";
 
 const responsive = {
   superLargeDesktop: {
@@ -30,6 +36,22 @@ interface productProps {
 }
 
 const DetailClient = ({ product }: productProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [stockSizeState, setStockSizeState] = useState(product.colorSize[0])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(1);
+  const [stateProduct, setStateProduct] = useState<{size:string; color:string; image:string; totalStock: number; price: number; quantity: number}>({
+    size: '',
+    color:stockSizeState.color,
+    totalStock: '',
+    price: '',
+    quantity: 1
+  });
+
+  const toggleOpen = (state: boolean) => () => setIsModalOpen(state);
+
+  const updateIndex = ({ index: current }: { index: number }) =>
+      setPhotoIndex(current);
 
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
@@ -53,41 +75,42 @@ const DetailClient = ({ product }: productProps) => {
     );
   }
 
-  console.log(product)
-
   return (
     <PageContainer>
       <div
           className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8  md:rounded-lg  mb-10 w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
-        <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
+        <div className="w-full md:w-4/6 h-[300px]">
           <Carousel
               responsive={responsive}
               infinite
               autoPlay
+              slidesPerView={1}
               autoPlaySpeed={3000}
               transitionDuration={500}
               customLeftArrow={<CustomLeftArrow/>}
               customRightArrow={<CustomRightArrow/>}
           >
-            {product.colorSize[0].images?.map((img, index) => (
-                <div
-                    key={index}
-                    className=" w-full h-[300px]  md:h-[700px]  relative "
-                >
+            {stockSizeState?.images?.map((img, index) => (
+                <div key={index} className="flex justify-center items-center w-full">
                   <Image
-                      className="object-contain absolute "
+                      className="cursor-zoom-in"
+                      onClick={() => {
+                        setPhotoIndex(0);
+                        setIsModalOpen(true);
+                      }}
+                      objectFit="cover"
                       src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
                       alt={product.name}
-                      fill
+                      width={500}
+                      height={700}
                       priority
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
             ))}
           </Carousel>
         </div>
-        <div className=" w-full md:w-1/2 h-[300px]  md:h-[700px] relative">
+        <div className=" w-full md:w-2/6 mt-40 md:mt-0">
           <h3 className={'text-2xl font-semibold text-secondaryDark'}>{product.name}</h3>
           <span className={'flex flex-col gap-x-4 mt-5'}>
             {
@@ -101,20 +124,102 @@ const DetailClient = ({ product }: productProps) => {
                   <p className={'text-xl font-semibold'}>{product.price.toFixed(2)} ₺</p>
             }
           </span>
-          <div className={'flex flex-row flex-wrap gap-x-4 my-8'}>
-            {
-              product.colorSize.map((item, index) => (
-                  <div key={index}>
-                  <button><Image src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`} width={40} height={60}
-                                 className={'rounded'} alt={item.images[0]}/></button>
-                    <button></button>
-                  </div>
-              ))
-            }
+          <div className={'flex flex-col gap-x-4 mt-5'}>
+            <h4 className={'text-lg text-secondaryDark font-semibold'}>Renk: </h4>
+            <div className={'flex flex-row flex-wrap gap-x-4 my-4'}>
+              {
+                product.colorSize.map((item, index) => (
+                    <button
+                        onClick={() => {
+                          setStockSizeState(item)
+                          setStateProduct({size:'',color: item.color,totalStock:0,price:0, quantity:1})
+                        }}
+                        key={index}><Image src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
+                                           width={40} height={60}
+                                           className={`${stockSizeState?.color === item.color ? 'border-2 border-secondary' : 'border-0'} rounded`}
+                                           alt={item.images[0]}/></button>
+                ))
+              }
+            </div>
           </div>
 
-        </div>
+          <div className={'flex flex-col gap-x-4 mt-2'}>
+            <h4 className={'text-lg text-secondaryDark font-semibold'}>Beden: </h4>
+            <div className={'flex flex-row flex-wrap gap-x-4 my-4'}>
+              {
+                stockSizeState?.stockSize.map((item, index) => (
+                    <button onClick={()=> setStateProduct({...stateProduct,totalStock: item.stock, size:item.size})} key={index}
+                            className={`${stateProduct.size === item.size && 'bg-secondaryDark'} bg-secondary text-white rounded-lg px-2 py-1`}>{item.size}</button>
+                ))
+              }
+            </div>
+          </div>
 
+          <p className="text-lg text-secondaryDark font-semibold my-2">Adet: </p>
+          <span className="py-3 px-4 flex w-64 gap-x-8 flex-row items-center justify-between border border-secondary rounded">
+          {stateProduct?.quantity <= 1 ? (
+              <FaMinus
+                  className={`${
+                      stateProduct.quantity <= 1 && "text-gray-300 cursor-not-allowed"
+                  }`}
+              />
+          ) : (
+              <FaMinus
+                  className="cursor-pointer"
+                  onClick={() =>
+                      setStateProduct({
+                        ...stateProduct,
+                        quantity: stateProduct.quantity - 1,
+                      })
+                  }
+              />
+          )}
+            <p className={'text-xl font-semibold'}>{stateProduct.quantity}</p>
+          <FaPlus
+              className={`${
+                  stateProduct?.totalStock <= 1
+                      ? "text-gray-300 cursor-not-allowed"
+                      : "cursor-pointer"
+              }`}
+              onClick={() => {
+                if (stateProduct.quantity < stateProduct.totalStock) {
+                  setStateProduct({
+                    ...stateProduct,
+                    quantity: stateProduct.quantity + 1,
+                  });
+                }
+              }}
+          />
+        </span>
+
+          <button
+              onClick={()=> dispatch(addToCart(
+                  {
+                    id: product.id,
+                    name: product.name,
+                    color: stateProduct.color,
+                    image: stockSizeState?.images[0],
+                    size: stateProduct.size,
+                    quantity: stateProduct.quantity,
+                    price: product.price,
+                  }
+              ))}
+              className={'bg-secondary mt-10 p-2 w-64 rounded-lg text-xl text-white font-semibold'}>Sepete Ekle</button>
+
+          <p className={'text-secondary text-lg mt-4'}>{product.description}</p>
+
+        </div>
+        <Lightbox
+            open={isModalOpen}
+            close={toggleOpen(false)}
+            index={photoIndex}
+            slides={stockSizeState?.images?.map(img => ({
+              src: `${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`
+            }))}
+            on={{view: updateIndex}}
+            animation={{fade: 0}}
+            controller={{closeOnPullDown: true, closeOnBackdropClick: true}}
+        />
       </div>
     </PageContainer>
   );

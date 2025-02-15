@@ -102,7 +102,6 @@ export interface BlogProps {
 
 export interface CartSummaryProps {
   total: number;
-  tax: number;
 }
 
 //! Fav Page Props
