@@ -57,12 +57,12 @@ function LoginForm() {
       }}
       className={`${
         isLoginModalOpen ? "fixed" : "hidden"
-      } px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 cursor `}
+      } px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50  `}
     >
       <div
         className={`w-full md:w-1/4    bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300`}
       >
-        <h2 className="text-3xl font-semibold my-5 text-center">
+        <h2 className="text-2xl font-semibold my-5 text-center">
           {t("loginForm.welcomeBack")}
         </h2>
 
@@ -74,7 +74,7 @@ function LoginForm() {
             type={"button"}
             color="primary"
             onClick={() => dispatch(closeLoginModal())}
-            className="absolute top-6 right-6 text-primary hover:scale-95"
+            className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
           >
             <MdCancel size={28} />
           </button>

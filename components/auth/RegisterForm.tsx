@@ -51,7 +51,7 @@ function RegisterForm() {
       }}
       className={`${
         isRegisterModalOpen ? "fixed" : "hidden"
-      } inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50`}
+      } px-2 md:px-0 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50 `}
     >
       <div
         className={`w-full md:w-1/4 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-6 py-3`}
@@ -60,12 +60,12 @@ function RegisterForm() {
           type={"button"}
           color="primary"
           onClick={() => dispatch(closeRegisterModal())}
-          className="absolute top-6 right-6 text-primary hover:scale-95"
+          className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
         >
           <MdCancel size={28} />
         </button>
 
-        <h2 className="text-3xl font-semibold my-2 text-center">
+        <h2 className="text-2xl font-semibold my-2 text-center">
           {t("registerForm.createAccount")}
         </h2>
 
@@ -166,7 +166,7 @@ function RegisterForm() {
               type="submit"
               animation
               size="small"
-              className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg"
+              className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
             />
             {/* <Button
               size="small"

@@ -66,7 +66,7 @@ function CartSidebar() {
         <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start">
           <div
             ref={modalRef}
-            className="w-full sm:w-96 md:w-2/4 lg:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-5"
+            className="w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6"
           >
             <div className="absolute top-3 right-3">
               <Button

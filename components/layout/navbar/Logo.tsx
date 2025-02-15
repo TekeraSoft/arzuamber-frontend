@@ -5,14 +5,16 @@ import React from "react";
 function Logo() {
   return (
     <Link href="/">
-      <Image
-        src="/images/logo/navbarlogo.png"
-        alt="logo image"
-        width={250}
-        height={50}
-        layout="responsive"
-        className="object-cover  bg-center bg-cover"
-      />
+      <div className="relative w-full h-auto">
+        <Image
+          src="/images/logo/navbarlogo.svg"
+          alt="logo image"
+          width={250}
+          height={50}
+          layout="intrinsic"
+          className="object-cover bg-center bg-cover w-36 md:w-64"
+        />
+      </div>
     </Link>
   );
 }

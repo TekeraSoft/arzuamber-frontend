@@ -18,6 +18,8 @@ import { Dropdown } from "primereact/dropdown";
 import { Cities } from "@/constans/Citites";
 import { usePaymentValidationSchema } from "@/error/paymentSchema";
 import { Checkbox } from "primereact/checkbox";
+import "primereact/resources/primereact.min.css"; // PrimeReact ana stilleri
+import { Link } from "@/i18n/routing";
 
 const PaymentPage = () => {
   const t = useTranslations();
@@ -95,19 +97,6 @@ const PaymentPage = () => {
   }));
 
   const carts = useSelector((state: RootState) => state.cart.carts);
-
-  // Toplam fiyatı hesapla
-  const totalPrice = carts.reduce((total, product) => {
-    const discountedPrice =
-      product.price - (product.price * product.discountPercent) / 100;
-    return total + discountedPrice;
-  }, 0);
-
-  // Ekstra vergi
-  const tax = 150;
-
-  // Vergiyi ekleyerek toplam fiyatı hesapla
-  const finalPrice = totalPrice + tax;
 
   return (
     <form
@@ -453,7 +442,8 @@ const PaymentPage = () => {
                 {formik.errors.shippingAddress?.address &&
                   formik.touched.shippingAddress?.address && (
                     <div className="text-red-600 text-xs mt-1">
-                      {formik.errors.shippingAddress?.address}
+                      {formik.errors.shippingAddress?.address ||
+                        formik.touched.shippingAddress?.address}
                     </div>
                   )}
               </div>
@@ -466,13 +456,11 @@ const PaymentPage = () => {
                 </label>
 
                 <Checkbox
-                  inputId="billingAddressCheckbox"
-                  className="w-8 h-8 rounded-lg bg-secondary flex justify-center items-center text-mywhite font-bold"
-                  onChange={(e) => {
-                    const isChecked = e.checked;
-                    setChecked(isChecked); // `checked` değerini güncelle
-                  }}
+                  id="billingAddressCheckbox"
+                  name="billingAddressCheckbox"
+                  onChange={(e) => setChecked(e.checked)}
                   checked={checked}
+                  className=" !bg-secondary !rounded-lg w-6 h-6 justify-center items-center text-white"
                 />
               </div>
               <div className={`${checked ? "relative" : " hidden"} `}>
@@ -585,7 +573,7 @@ const PaymentPage = () => {
                         {t("CartPage.cartSummary.tax")}
                       </span>
                       <span className="text-sm font-semibold text-primary">
-                        {finalPrice} {t("CartPage.cartSummary.symbol")}
+                        {t("CartPage.cartSummary.symbol")}
                       </span>
                     </div>
 
@@ -595,14 +583,13 @@ const PaymentPage = () => {
                         {t("CartPage.cartSummary.total")}
                       </span>
                       <span className="text-sm font-semibold text-primary">
-                        {tax}
                         {t("CartPage.cartSummary.symbol")}
                       </span>
                     </div>
                   </div>
 
                   {/* Buttons and Input */}
-                  <div className="flex flex-col items-center justify-center w-full mt-2 gap-2 ">
+                  <div className="flex flex-col items-center justify-center w-full mt-3 gap-2 ">
                     <div className="w-full flex justify-center items-center gap-4">
                       <InputText
                         id="discountCode"
@@ -610,26 +597,27 @@ const PaymentPage = () => {
                         placeholder={t(
                           "CartPage.cartSummary.discountCodePlaceholder"
                         )}
-                        className="p-inputtext w-1/2 px-3 py-2 border rounded-lg outline-primary"
+                        className="p-inputtext w-1/2 px-3 py-2 border rounded-lg outline-primary text-xs"
                       />
 
                       <Button
-                        type="submit"
+                        type="button"
                         label={t("CartPage.cartSummary.submitDiscountCode")}
                         className="p-button  w-1/2  text-sm bg-primary text-white px-3 py-1  rounded-lg transition-all duration-300 hover:scale-105 h-8"
                       />
                     </div>
 
                     <div className=" flex flex-row w-full justify-center items-center gap-2 mb-3 mt-2">
-                      <Button
-                        label={t("CartPage.cartSummary.continueShopping")}
-                        color="primary"
-                        size="large"
-                        onClick={() => {}}
-                        icon={"FaArrowRightLong"}
-                        className="w-full  text-sm bg-primary text-white px-3 py-1  rounded-lg transition-all duration-300 hover:scale-105 h-8"
-                      />
-
+                      <Link href={`/products`} className="w-full">
+                        <Button
+                          label={t("CartPage.cartSummary.continueShopping")}
+                          color="primary"
+                          size="large"
+                          type="button"
+                          icon={"FaArrowRightLong"}
+                          className="w-full  text-sm bg-primary text-white px-3 py-1  rounded-lg transition-all duration-300 hover:scale-105 h-8"
+                        />
+                      </Link>
                       <Button
                         type="submit"
                         label={t("CartPage.cartSummary.proceedToPayment")}
