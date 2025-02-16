@@ -38,6 +38,7 @@ interface productProps {
 const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0])
+  const [errorState, setErrorState] = useState({sizeError: false, colorError: false});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(1);
   const [stateProduct, setStateProduct] = useState<{size:string; color:string; image:string; totalStock: number; price: number; quantity: number}>({
@@ -78,9 +79,9 @@ const DetailClient = ({ product }: productProps) => {
   return (
     <PageContainer>
       <div
-          className="flex flex-col lg:flex-row  justify-center items-start md:items-center lg:items-start gap-8 p-8  md:rounded-lg  mb-10 w-full h-full border-y md:border-none">
+          className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
-        <div className="w-full md:w-4/6 h-[300px]">
+        <div className="w-full md:w-4/6">
           <Carousel
               responsive={responsive}
               infinite
@@ -110,7 +111,7 @@ const DetailClient = ({ product }: productProps) => {
             ))}
           </Carousel>
         </div>
-        <div className=" w-full md:w-2/6 mt-40 md:mt-0">
+        <div className=" w-full md:w-2/6 mt-6 md:mt-0">
           <h3 className={'text-2xl font-semibold text-secondaryDark'}>{product.name}</h3>
           <span className={'flex flex-col gap-x-4 mt-5'}>
             {
@@ -144,12 +145,17 @@ const DetailClient = ({ product }: productProps) => {
           </div>
 
           <div className={'flex flex-col gap-x-4 mt-2'}>
-            <h4 className={'text-lg text-secondaryDark font-semibold'}>Beden: </h4>
+            <h4 className={'text-lg text-secondaryDark font-semibold'}>Beden:
+              <small className={`${errorState.sizeError ? 'text-red-600':'hidden'} ml-2`}>Lütfen beden seçiniz</small>
+            </h4>
             <div className={'flex flex-row flex-wrap gap-x-4 my-4'}>
               {
                 stockSizeState?.stockSize.map((item, index) => (
-                    <button onClick={()=> setStateProduct({...stateProduct,totalStock: item.stock, size:item.size})} key={index}
-                            className={`${stateProduct.size === item.size && 'bg-secondaryDark'} bg-secondary text-white rounded-lg px-2 py-1`}>{item.size}</button>
+                    <button onClick={()=>{
+                      setStateProduct({...stateProduct,totalStock: item.stock, size:item.size})
+                      setErrorState({...errorState, sizeError: false})
+                    }} key={index}
+                            className={`${stateProduct.size === item.size && 'bg-pink-600'} bg-secondary text-white rounded-lg px-2 py-1`}>{item.size}</button>
                 ))
               }
             </div>
@@ -193,17 +199,25 @@ const DetailClient = ({ product }: productProps) => {
         </span>
 
           <button
-              onClick={()=> dispatch(addToCart(
-                  {
-                    id: product.id,
-                    name: product.name,
-                    color: stateProduct.color,
-                    image: stockSizeState?.images[0],
-                    size: stateProduct.size,
-                    quantity: stateProduct.quantity,
-                    price: product.price,
-                  }
-              ))}
+              onClick={()=> {
+                if(!stateProduct.size) {
+                  setErrorState({...errorState, sizeError: true})
+                }else {
+                  dispatch(addToCart(
+                      {
+                        id: product.id,
+                        name: product.name,
+                        category1: product.category,
+                        category2: product.subCategory,
+                        color: stateProduct.color,
+                        image: stockSizeState?.images[0],
+                        size: stateProduct.size,
+                        quantity: stateProduct.quantity,
+                        price: product.price,
+                      }
+                  ))
+                }
+              }}
               className={'bg-secondary mt-10 p-2 w-64 rounded-lg text-xl text-white font-semibold'}>Sepete Ekle</button>
 
           <p className={'text-secondary text-lg mt-4'}>{product.description}</p>

@@ -31,6 +31,15 @@ export type Product = {
   colorSize: ColorSize[]
 }
 
+export type BasketItem = {
+  id: string;
+  name: string,
+  category1: string,
+  category2: string,
+  price: number,
+  quantity: number,
+}
+
 export type ColorSize = {
   color: string;
   stockCode: string;

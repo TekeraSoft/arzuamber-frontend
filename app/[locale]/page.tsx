@@ -50,14 +50,6 @@ export default function Home() {
           mobileImageUrl="/images/Brand/brand2.jpg"
           link="/products"
         />
-        <HomeContainer>
-          <Heading
-            text={t("HomePage.sliderAllProduct")}
-            center
-            textSize="3xl"
-          />
-          <ProductSlider />
-        </HomeContainer>
       </GradientColorContainer>
     </>
   );

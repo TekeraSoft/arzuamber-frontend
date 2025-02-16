@@ -14,7 +14,7 @@ function Layout({ children }) {
     const locale = useLocale()
     const path = usePathname()
     return (
-        <div className={'flex flex-row'}>
+        <div className={'flex flex-row bg-white'}>
                     <SideBar />
 
                     <div className={'flex flex-col w-full'}>

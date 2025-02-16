@@ -7,7 +7,6 @@ import { Jost } from "next/font/google";
 import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
-import "primereact/resources/primereact.min.css";
 
 const jost = Jost({
   subsets: ["latin"],

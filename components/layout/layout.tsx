@@ -10,6 +10,7 @@ import LoginForm from "../auth/LoginForm";
 import CartSidebar from "../cartclient/CartSideBar";
 import GradientColorContainer from "../Containers/BackGroundImageContainer";
 import {usePathname} from "@/i18n/routing";
+import {PrimeReactProvider} from "primereact/api";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -22,10 +23,11 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
 
   return (
     <div className={`flex flex-col `}>
+      <PrimeReactProvider>
       <GradientColorContainer>
         {path.startsWith("/admin") ? null:<Navbar />}
-        <ToastContainer />
-        <main className={`${path.startsWith("/admin") ? '':'flex-grow mt-16 md:mt-28'}`}>
+        <ToastContainer position={'bottom-right'} />
+        <main className={`${path.startsWith("/admin") ? '':'flex-grow mt-14 md:mt-24'}`}>
           <CartSidebar />
           <RegisterForm />
           <LoginForm />
@@ -33,6 +35,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
         </main>
         {path.startsWith("/admin") ? null:<Footer />}
       </GradientColorContainer>
+      </PrimeReactProvider>
     </div>
   );
 }

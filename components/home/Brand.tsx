@@ -42,7 +42,7 @@ function Brand({
         alt={title}
         fill
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-35 text-white p-7 md:p-5 rounded-lg">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-5 text-white p-7 md:p-5 rounded-lg">
         <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
         <p className="text-base md:text-lg text-center mb-4">{description}</p>
         <Link href={link || `/products`}>

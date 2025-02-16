@@ -35,7 +35,7 @@ const CartSummary = ({ total }: CartSummaryProps) => {
         />
         <div className="w-full flex flex-col gap-2   ">
           {/* Kargo */}
-          <div className="flex justify-between items-center  rounded-md">
+          <div className="flex justify-between items-center my-2 rounded-md">
             <span className="text-sm font-bold">
               {t("CartPage.cartSummary.shipping")}
             </span>
@@ -49,7 +49,7 @@ const CartSummary = ({ total }: CartSummaryProps) => {
             <span className="text-sm font-bold">
               {t("CartPage.cartSummary.total")}
             </span>
-            <span className="text-sm font-semibold text-primary">
+            <span className="text-lg font-semibold text-primary">
               {t("CartPage.cartSummary.symbol")}
               {total.toFixed(2)}
             </span>
