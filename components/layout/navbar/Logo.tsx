@@ -6,7 +6,7 @@ function Logo() {
   return (
     <Link href="/">
       <Image
-        src="/images/logo/navbarlogo.png"
+        src="/images/logo/navbarlogo.svg"
         alt="logo image"
         width={250}
         height={50}
