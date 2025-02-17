@@ -18,7 +18,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Cities } from "@/constans/Citites";
 import { usePaymentValidationSchema } from "@/error/paymentSchema";
 import { Checkbox } from "primereact/checkbox";
-import "primereact/resources/primereact.min.css"; // PrimeReact ana stilleri
+import "primereact/resources/primereact.min.css";
 import { Link } from "@/i18n/routing";
 
 const PaymentPage = () => {

@@ -3,83 +3,33 @@ import { BlogProps } from "@/types/Props";
 const blogs: BlogProps[] = [
   {
     id: "1",
-    category: "Technology",
-    title: "How to manage your remote team?",
+    category: "Fashion",
+    title: "How to Style Your Summer Wardrobe?",
     description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog1.jpg",
-    date: "June 12, 2021",
-    tags: ["Remote Work", "Team Management", "Productivity", "Leadership"],
+      "Discover the top tips and tricks for styling your summer wardrobe. From dresses to accessories, find out how to stay chic and comfortable all season long. Whether you're heading to the beach or a brunch, these tips will have you covered.",
+    image: "/images/blogs/blog3.jpg",
+    date: "March 15, 2023",
+    tags: ["Summer Fashion", "Styling Tips", "Outfits", "Trendy Looks"],
   },
   {
     id: "2",
-    category: "Marketing",
-    title: "6 Product launching emails you want to use on next campaign.",
+    category: "Accessories",
+    title: "Top 5 Accessories Every Woman Needs in Her Wardrobe",
     description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog2.jpg",
-    date: "June 12, 2021",
-    tags: [
-      "Email Marketing",
-      "Product Launch",
-      "Campaigns",
-      "Marketing Strategy",
-    ],
+      "Accessories can elevate any outfit! Check out the top 5 accessories every woman should have in her closet, including statement jewelry, handbags, scarves, and more. Find out how the right accessories can take your look to the next level.",
+    image: "/images/blogs/blog1.jpg",
+    date: "April 10, 2023",
+    tags: ["Accessories", "Jewelry", "Handbags", "Fashion Essentials"],
   },
   {
     id: "3",
-    category: "Marketing",
-    title: "Learn from the best: 7 email marketing ideas you can use",
+    category: "Beauty",
+    title: "Skincare Routine for a Radiant Glow",
     description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog3.jpg",
-    date: "June 12, 2021",
-    tags: [
-      "Email Ideas",
-      "Marketing Tips",
-      "Content Creation",
-      "Digital Marketing",
-    ],
-  },
-  {
-    id: "4",
-    category: "Technology",
-    title: "How to manage your remote team?",
-    description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog1.jpg",
-    date: "June 12, 2021",
-    tags: ["Remote Work", "Team Management", "Productivity", "Leadership"],
-  },
-  {
-    id: "5",
-    category: "Technology",
-    title: "How to manage your remote team?",
-    description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog1.jpg",
-    date: "June 12, 2021",
-    tags: ["Remote Work", "Team Management", "Productivity", "Leadership"],
-  },
-  {
-    id: "6",
-    category: "Technology",
-    title: "How to manage your remote team?",
-    description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog1.jpg",
-    date: "June 12, 2021",
-    tags: ["Remote Work", "Team Management", "Productivity", "Leadership"],
-  },
-  {
-    id: "7",
-    category: "Technology",
-    title: "How to manage your remote team?",
-    description:
-      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque sed atque laborum consequuntur quos nulla perferendis commodi consequatur ipsam rerum, architecto fugiat aliquam ipsa. Consequuntur fugiat dolores amet suscipit! Atque, laudantium. Quaerat veritatis placeat deserunt? Eligendi voluptatibus placeat veniam culpa libero temporibus corrupti laudantium iste facere sed modi asperiores a, quisquam quod ipsum itaque iure accusamus facilis ducimus, tempora aut. Laborum animi debitis quia porro suscipit impedit vel voluptates doloremque, sapiente, numquam omnis veniam iusto atque delectus est quis excepturi illo eius! Consectetur alias dolor quam tenetur, debitis cumque quas, minima unde beatae ea soluta itaque a qui? Aspernatur iusto ipsum atque omnis optio culpa dolores distinctio laudantium incidunt provident quam consequatur ab asperiores, fugiat corporis tempora possimus at fuga consectetur. Quaerat obcaecati necessitatibus dolore, distinctio provident tempora veniam quas voluptatibus nobis doloremque natus officiis reiciendis amet ullam sequi recusandae odio nesciunt laborum, error minima id? Dolore quas sunt est!",
-    image: "/images/blogs/blog1.jpg",
-    date: "June 12, 2021",
-    tags: ["Remote Work", "Team Management", "Productivity", "Leadership"],
+      "A glowing complexion starts with a great skincare routine. Learn how to take care of your skin with these easy steps for radiant and healthy skin. Whether you have oily, dry, or combination skin, this guide will work for you.",
+    image: "/images/blogs/blog2.jpg",
+    date: "May 5, 2023",
+    tags: ["Skincare", "Beauty Tips", "Radiant Skin", "Healthy Glow"],
   },
 ];
 

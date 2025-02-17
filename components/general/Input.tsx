@@ -15,6 +15,7 @@ interface InputProps {
   value?: string | number;
   label?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 }
 
 function Input({
@@ -29,6 +30,7 @@ function Input({
   min = 0,
   max,
   label,
+  name,
 }: InputProps) {
   return (
     <div className="flex flex-col w-full">
@@ -45,6 +47,7 @@ function Input({
         max={max}
         disabled={disabled}
         value={value}
+        name={name}
         type={type}
         {...register(id, {
           required: required && `${placeholder} is required`,

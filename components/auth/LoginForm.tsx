@@ -60,7 +60,7 @@ function LoginForm() {
       } px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50  `}
     >
       <div
-        className={`w-full md:w-1/4    bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300`}
+        className={`w-full md:w-2/4 lg:w-1/4   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300`}
       >
         <h2 className="text-2xl font-semibold my-5 text-center">
           {t("loginForm.welcomeBack")}
@@ -74,7 +74,7 @@ function LoginForm() {
             type={"button"}
             color="primary"
             onClick={() => dispatch(closeLoginModal())}
-            className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
+            className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95 outline-secondary"
           >
             <MdCancel size={28} />
           </button>
@@ -85,10 +85,14 @@ function LoginForm() {
               id="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              className="w-full h-10 rounded border px-2"
+              className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
             {formik.touched.email && formik.errors.email && (
-              <small className="text-xs text-red-600 mt-1 ">
+              <small className="text-xs text-red-600 mt-1  ">
                 {formik.errors.email}
               </small>
             )}
@@ -101,7 +105,11 @@ function LoginForm() {
               value={formik.values.password}
               type={"password"}
               onChange={formik.handleChange}
-              className="w-full  h-10 rounded border px-2"
+              className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.password && formik.errors.password
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
             {formik.touched.password && formik.errors.password && (
               <small className="text-xs text-red-600 mt-1">

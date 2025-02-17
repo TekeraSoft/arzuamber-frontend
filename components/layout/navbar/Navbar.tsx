@@ -7,12 +7,8 @@ import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
 import TopBar from "./TopBar";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  openCartModal,
-  openLoginModal,
-  openRegisterModal,
-} from "@/store/modalsSlice";
-import Button from "@/components/general/Button";
+import { openCartModal, openLoginModal } from "@/store/modalsSlice";
+
 import { AppDispatch, RootState } from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -70,7 +66,7 @@ function Navbar() {
                 onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
               />
               {isLangDropdownOpen && (
-                <ul className=" absolute top-10 right-28  mt-1 w-12 bg-white border rounded shadow-md text-sm">
+                <ul className=" absolute top-9 w-12 bg-white border rounded shadow-md text-sm">
                   {supportedLocales.map((lang) => (
                     <li key={lang}>
                       <button
@@ -86,18 +82,18 @@ function Navbar() {
             </li>
 
             <button
-              className="flex justify-center items-center"
+              className="flex justify-center items-center relative"
               onClick={openCart}
             >
               <BsCart2 size={26} className="cursor-pointer text-secondary" />
-              <span className="absolute  top-3 right-16 bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
+              <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
                 {carts.length}
               </span>
             </button>
 
             <button
               onClick={() => setOpenMenu(!openMenu)}
-              className="text-myblack text-lg focus:outline-none border border-black rounded-md p-1"
+              className="text-secondary text-lg focus:outline-none border border-secondary rounded-md p-1"
             >
               {openMenu ? <FaTimes /> : <FaBars />}
             </button>
@@ -135,19 +131,19 @@ function Navbar() {
             </li>
 
             <ul className="hidden lg:flex gap-x-4 items-center text-base font-semibold relative">
-              <li>
+              <li className="relative">
                 <IoEarth
                   size={32}
                   className="cursor-pointer text-secondary"
                   onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
                 />
                 {isLangDropdownOpen && (
-                  <ul className=" absolute top-7 right-8 mt-2 w-12 bg-white border rounded shadow-md text-sm">
+                  <ul className=" absolute  top-7 w-12  bg-white border rounded shadow-md text-sm">
                     {supportedLocales.map((lang) => (
                       <li key={lang}>
                         <button
                           onClick={() => changeLanguage(lang)}
-                          className="block w-full px-3 py-1 text-left hover:bg-gray-100 text-secondary "
+                          className="block w-full px-3 py-1 text-center hover:bg-gray-100 text-secondary "
                         >
                           {lang === "tr" ? "TR" : "EN"}
                         </button>
@@ -159,7 +155,9 @@ function Navbar() {
               <li className={"text-secondary relative"}>
                 {!session ? (
                   <button
-                    onClick={() => dispatch(openLoginModal())}
+                    onClick={() => {
+                      dispatch(openLoginModal());
+                    }}
                     className="flex items-center text-xl hover:underline"
                   >
                     {t("menuItems.login")}
@@ -185,6 +183,9 @@ function Navbar() {
                   } flex flex-col border rounded absolute  mt-1 left-0  w-20 bg-white`}
                 >
                   <Link
+                    onClick={() => {
+                      setOpenMenu(false);
+                    }}
                     className={"hover:bg-gray-200 px-2 py-1 text-sm"}
                     href={
                       session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
@@ -196,7 +197,10 @@ function Navbar() {
                     className={
                       "hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"
                     }
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      signOut();
+                      setOpenMenu(false);
+                    }}
                   >
                     {t("menuItems.logout")}
                   </button>
@@ -209,29 +213,37 @@ function Navbar() {
         {/* Mobile Menu */}
         {openMenu && (
           <div>
-            <ul className="lg:hidden grid items-center grid-cols-2  border-t text-myblack border-black  border-b mx-auto container gap-2 py-2">
+            <ul className="w-full  lg:hidden  flex justify-center flex-wrap items-center  border-t text-myblack border-black   mx-auto container gap-4 py-2">
               {navLinks.map((link) => (
-                <li key={link.url}>
+                <li
+                  key={link.url}
+                  onClick={() => {
+                    setOpenMenu(false);
+                  }}
+                >
                   <Link
                     href={link.url}
-                    className="block text-base underline underline-offset-4 px-2 rounded-md"
+                    className="block text-base text-primary "
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
-              <li className={"  text-myblack  "}>
+              <li className={"  text-primary  "}>
                 {!session ? (
                   <button
-                    onClick={() => dispatch(openLoginModal())}
-                    className="flex items-center px-5 py-1  gap-1 border border-myblack rounded-full text-sm"
+                    onClick={() => {
+                      dispatch(openLoginModal());
+                      setOpenMenu(false);
+                    }}
+                    className="flex items-center px-5 py-1  gap-1 border border-primary rounded-full text-sm "
                   >
                     {t("menuItems.login")}
                   </button>
                 ) : session?.user.role[0] === "ADMIN" ? (
                   <button
                     className={
-                      " flex flex-row  justify-center items-center px-5 py-1  gap-1 border border-myblack rounded-full text-sm"
+                      " flex flex-row  justify-center items-center px-5 py-1  gap-1 border border-primary rounded-full text-sm"
                     }
                     onClick={() => setOpenUserDropdown(!openUserDropdown)}
                   >
@@ -240,7 +252,10 @@ function Navbar() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => setOpenUserDropdown(!openUserDropdown)}
+                    onClick={() => {
+                      setOpenUserDropdown(!openUserDropdown);
+                      setOpenMenu(false);
+                    }}
                     className={"text-xl "}
                   >
                     {t("menuItems.myAccount")}
@@ -252,6 +267,9 @@ function Navbar() {
                   } flex flex-col border rounded absolute   py-1  right-24  w-20 bg-white`}
                 >
                   <Link
+                    onClick={() => {
+                      setOpenMenu(false);
+                    }}
                     className={
                       "hover:bg-gray-200 px-2 py-1 text-sm text-center"
                     }
@@ -265,7 +283,10 @@ function Navbar() {
                     className={
                       "hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"
                     }
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      signOut();
+                      setOpenMenu(false);
+                    }}
                   >
                     {t("menuItems.logout")}
                   </button>

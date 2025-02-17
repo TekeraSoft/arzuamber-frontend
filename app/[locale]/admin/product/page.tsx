@@ -90,7 +90,7 @@ function AllProductAdminPage() {
                 onClick={() => {
                   dispatch(
                     updatePriceByPercentageDispatch(
-                      parseFloat(String(percentageValue)).toFixed(1)
+                      parseFloat(parseFloat(String(percentageValue)).toFixed(1))
                     )
                   );
                   setPercentageValue(0);

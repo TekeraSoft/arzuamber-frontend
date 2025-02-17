@@ -11,7 +11,6 @@ function Logo() {
           alt="logo image"
           width={250}
           height={50}
-          layout="intrinsic"
           className="object-cover bg-center bg-cover w-36 md:w-64"
         />
       </div>

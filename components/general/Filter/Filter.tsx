@@ -20,7 +20,7 @@ function Filter() {
 
   const [openState, setOpenState] = React.useState({
     size: true,
-    color: true,
+    color: false,
     category: false,
     length: false,
   });
@@ -68,7 +68,7 @@ function Filter() {
         onClick={toggleMenu}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-20 right-4  md:hidden p-1 text-myblack  border  border-myblack rounded-md z-50  flex justify-center items-center bg-transparent backdrop-blur-md  `}
+        }   top-20 right-4  md:hidden p-1 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  `}
       >
         <MdFilterListAlt size={24} />
       </button>

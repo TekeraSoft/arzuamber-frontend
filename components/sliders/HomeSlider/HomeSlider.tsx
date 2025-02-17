@@ -29,6 +29,22 @@ const responsive = {
   },
 };
 
+interface CustomDotProps {
+  onClick: () => void;
+  active: boolean;
+}
+
+const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
+  return (
+    <li
+      onClick={onClick}
+      className={`w-8 h-2 rounded-lg cursor-pointer transition-all duration-300 ${
+        active ? "bg-primary scale-125" : "bg-white"
+      }`}
+    ></li>
+  );
+};
+
 // Özel buton grubu bileşeni
 const CustomButtonGroup = ({
   next,
@@ -71,7 +87,7 @@ function HomeSlider() {
   }, []);
 
   return (
-    <div className="homepage-slider-div relative">
+    <div className="homepage-slider-div relative w-full mx-auto">
       {loading ? (
         <Loading />
       ) : (
@@ -80,12 +96,14 @@ function HomeSlider() {
           swipeable={true}
           draggable={true}
           showDots={!isMobile}
+          customDot={<CustomDot onClick={() => {}} active={true} />}
           arrows={false}
           ssr={true}
           infinite={true}
           autoPlay={true}
           autoPlaySpeed={5000}
           keyBoardControl={true}
+          renderDotsOutside={false}
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
@@ -96,6 +114,7 @@ function HomeSlider() {
               <CustomButtonGroup next={() => {}} previous={() => {}} />
             ) : undefined
           }
+          dotListClass="flex justify-center items-center gap-2 bottom-4 z-10"
         >
           {images?.map((image: CarouselType) => (
             <HomeSliderItem image={image} key={image.id} />
