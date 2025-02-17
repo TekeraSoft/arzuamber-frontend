@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 function PaymentCallback() {
     const paymentId = new URLSearchParams(window.location.search).get('paymentId');
     const conversationId = new URLSearchParams(window.location.search).get('conversationId');
-
+    console.log(paymentId, conversationId);
     useEffect(() => {
         // Eğer ödeme parametreleri varsa backend'e ödeme tamamlama isteği gönderelim
         if (paymentId && conversationId) {
-            fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/complete-threeds`, {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/order/complete-threeds`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
