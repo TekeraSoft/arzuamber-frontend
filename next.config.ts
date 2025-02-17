@@ -13,12 +13,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "9000"
+        hostname: "arzuamber.com",
+        pathname: '/minio/**',
       },
     ],
   },
