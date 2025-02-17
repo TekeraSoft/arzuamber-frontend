@@ -48,7 +48,6 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const {size, color, name, id, image, price, quantity} = action.payload
       const existingProduct = state.cartProducts.find((p) => p.id === id && p.color === color);
-      console.log(existingProduct);
       if (existingProduct) {
           state.total = price * quantity;
           existingProduct.quantity = quantity;

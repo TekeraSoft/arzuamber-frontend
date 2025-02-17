@@ -74,9 +74,7 @@ export const getProductBySlugDispatch = (slug: string) => async(dispatch) => {
 
 export const filterProductDispatch = (params: object) => async(dispatch) => {
   dispatch(loading(true))
-  console.log(params)
   getGuardRequest({controller:'product', action:'filter-product',params: {size: params.size, color: params.color, category: params.category, length: params.length }}).then(res=> {
-    console.log(res)
     dispatch(getFilterProducts(res.data))
     dispatch(loading(false))
   }).finally(()=> {

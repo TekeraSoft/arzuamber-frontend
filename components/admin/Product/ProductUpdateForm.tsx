@@ -56,7 +56,6 @@ function ProductUpdateForm({ product }: ProductUpdateFormProps) {
   const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
     try {
       const formData = { ...data, images, sizes };
-      console.log("Form Data", formData);
 
       toast.success("Product Updated Successfully!");
     } catch (error) {

@@ -56,8 +56,6 @@ function Navbar() {
     dispatch(openCartModal());
   };
 
-  console.log(cartProducts)
-
   return (
     <header className="text-mywhite z-50 fixed w-full">
       {/* Top Bar */}
