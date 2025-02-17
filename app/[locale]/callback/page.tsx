@@ -1,35 +1,54 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function PaymentCallback() {
-    const paymentId = new URLSearchParams(window.location.search).get('paymentId');
-    const conversationId = new URLSearchParams(window.location.search).get('conversationId');
-    console.log(paymentId, conversationId);
-    useEffect(() => {
-        // Eğer ödeme parametreleri varsa backend'e ödeme tamamlama isteği gönderelim
-        if (paymentId && conversationId) {
-            fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/order/complete-threeds`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                params: {conversationId: conversationId, paymentId: paymentId}
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.status === "success") {
-                        console.log("Ödeme başarılı!");
-                    } else {
-                        console.error("Ödeme hatalı");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Bir hata oluştu: ", error);
-                });
-        }
-    }, [paymentId, conversationId]);
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState("Ödeme Tamamlanıyor...");
 
-    return <div>Ödeme Tamamlanıyor...</div>;
+    useEffect(() => {
+        if (typeof window === "undefined") return; // SSR ortamında çalışmasını engelle
+
+        const params = new URLSearchParams(window.location.search);
+        const paymentId = params.get('paymentId');
+        const conversationId = params.get('conversationId');
+
+        console.log("Payment ID:", paymentId, "Conversation ID:", conversationId);
+
+        // Eğer parametreler yoksa işlem yapma
+        if (!paymentId || !conversationId) {
+            setMessage("Geçersiz ödeme bilgileri.");
+            setLoading(false);
+            return;
+        }
+
+        // Backend'e ödeme tamamlama isteği gönder
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/order/complete-threeds`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ conversationId, paymentId }) // Doğru JSON body formatı
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === "success") {
+                    setMessage("Ödeme başarılı! Yönlendiriliyorsunuz...");
+                    setTimeout(() => {
+                        window.location.href = "/"; // Başarılı ödeme sonrası yönlendirme
+                    }, 3000);
+                } else {
+                    setMessage("Ödeme başarısız. Lütfen tekrar deneyin.");
+                }
+            })
+            .catch((error) => {
+                console.error("Bir hata oluştu: ", error);
+                setMessage("Ödeme işlemi sırasında hata oluştu.");
+            })
+            .finally(() => setLoading(false));
+
+    }, []);
+
+    return <div>{loading ? "Ödeme Tamamlanıyor..." : message}</div>;
 }
 
 export default PaymentCallback;
