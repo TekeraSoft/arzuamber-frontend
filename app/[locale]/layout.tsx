@@ -2,16 +2,15 @@ import StoreProvider from "@/store/StoreProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Jost } from 'next/font/google'
 import { Locale, routing } from "@/i18n/routing";
 import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["400", "200", "300", "600", "700", "900"],
-});
+//const jost = Jost({
+//  subsets: ["latin"],
+//  weight: ["400", "200", "300", "600", "700", "900"],
+//});
 
 export const metadata = {
   title: "Arzu Amber",
@@ -39,7 +38,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${jost.className} antialiased`}
+        className={`antialiased`}
         suppressHydrationWarning={true}
       >
         <NextIntlClientProvider messages={messages}>
