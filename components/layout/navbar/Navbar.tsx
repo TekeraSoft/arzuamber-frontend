@@ -22,7 +22,7 @@ function Navbar() {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
-  const carts = useSelector((state: RootState) => state.cart.carts);
+  const {cartProducts} = useSelector((state: RootState) => state.cart);
 
   // locale lang changes
   const supportedLocales = ["tr", "en"];
@@ -48,11 +48,11 @@ function Navbar() {
 
   return (
     <header className="text-mywhite z-50 fixed w-full ">
-      {/* Top Bar */}
-      <TopBar />
+      {/* <TopBar /> */}
+
 
       {/* Navbar */}
-      <nav className="bg-transparent backdrop-blur-2xl bg-opacity-0 w-full border-b border-black md:border-none ">
+      <nav className="bg-white  w-full border-b border-black md:border-none ">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Logo />
@@ -87,7 +87,7 @@ function Navbar() {
             >
               <BsCart2 size={26} className="cursor-pointer text-secondary" />
               <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
-                {carts.length}
+                {cartProducts.length}
               </span>
             </button>
 
@@ -125,7 +125,7 @@ function Navbar() {
               >
                 <BsCart2 size={30} className="cursor-pointer text-secondary" />
                 <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {carts.length}
+                  {cartProducts.length}
                 </span>
               </button>
             </li>

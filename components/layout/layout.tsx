@@ -27,7 +27,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
       <GradientColorContainer>
         {path.startsWith("/admin") ? null:<Navbar />}
         <ToastContainer position={'bottom-right'} />
-        <main className={`${path.startsWith("/admin") ? '':'flex-grow mt-14 md:mt-24'}`}>
+        <main className={`${path.startsWith("/admin") ? '':'flex-grow mt-14 md:mt-[65px]'}`}>
           <CartSidebar />
           <RegisterForm />
           <LoginForm />

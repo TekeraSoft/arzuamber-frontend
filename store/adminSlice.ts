@@ -49,7 +49,7 @@ export const createProductDispatch = (formData: FormData,resetForm:()=> void) =>
     })
 }
 
-export const getAllProductDispatch = (page: number, size: number) => async(dispatch:Dispatch) => {
+export const getAllProductDispatch = (page: number, size: number) => async(dispatch) => {
     dispatch(loading(true))
     getGuardRequest({controller:'admin',action:'get-all-product', params:{page: page, size: size}}).then(res=>{
         dispatch(getProducts(res.data))
@@ -74,14 +74,29 @@ export const deleteProductDispatch = (id:string) => async(dispatch) => {
 }
 
 export const createCategoryDispatch = (value: object) => async(dispatch) => {
+    dispatch(loading(true))
     postGuardRequest({controller:'admin',action: 'create-category'}, value).then((res)=> {
-        dispatch(res.data.message)
+        dispatch(loading(false))
+       toast.success(res.data.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        console.log(err)
+        toast.error(err.response.data);
+    }).finally(()=> {
+        dispatch(loading(false))
     })
 }
 
 export const getCategoriesDispatch = () => async (dispatch) => {
+    dispatch(loading(true))
     getRequest({controller:'admin', action:'get-all-category'}).then(res=> {
         dispatch(getCategories(res.data))
+        dispatch(loading(false))
+    }).catch(err => {
+        toast.error(err.response.data.message);
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
     })
 }
 

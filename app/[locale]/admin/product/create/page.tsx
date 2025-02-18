@@ -1,7 +1,7 @@
 'use client'
 import '@/app/[locale]/globals.css'
 import {InputText} from "primereact/inputtext";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {InputNumber} from "primereact/inputnumber";
 import {useFormik} from "formik";
 import {FiUpload} from "react-icons/fi";
@@ -11,12 +11,14 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 import {filterData} from "@/data/filterData";
 import {Checkbox} from "primereact/checkbox";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/store/store";
-import {createProductDispatch} from "@/store/adminSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {createProductDispatch, getCategoriesDispatch} from "@/store/adminSlice";
 
 export default function ProductCreatePage() {
     const dispatch = useDispatch<AppDispatch>();
+    const {categories, loading} = useSelector((state:RootState) => state.admin)
+    const [subCategoriesState,setSubCategoriesState] = useState([])
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -49,6 +51,17 @@ export default function ProductCreatePage() {
             dispatch(createProductDispatch(formData, resetForm));
         }
     })
+
+
+    useEffect(() => {
+        dispatch(getCategoriesDispatch())
+    }, []);
+
+    const handleSelectSubCategories = (name) => {
+        const updateState = categories.find((c) => c.name === name)
+        setSubCategoriesState(updateState.subCategories)
+    }
+
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, imageIndex: number) => {
         if (event.target.files && event.target.files[0]) {
@@ -184,15 +197,25 @@ export default function ProductCreatePage() {
                     <label htmlFor="price">Price</label>
                    </span>
 
-                    <span className="p-float-label">
-                    <Dropdown options={filterData?.categories.values} id="category" className='w-full'
+                    <div className={'flex flex-row gap-x-2 w-full'}>
+                        <span className="p-float-label w-full">
+                    <Dropdown options={categories.map(i => i.name)} id="category" className='w-full'
                               value={formik.values.category}
                               onChange={(e) => {
                                   formik.setFieldValue(`category`, e.target.value);
-                                  formik.setFieldValue('subCategory', e.target.value);
+                                  handleSelectSubCategories(e.target.value);
                               }}/>
                     <label htmlFor="username">Category</label>
                    </span>
+                        <span className="p-float-label w-full">
+                    <Dropdown options={subCategoriesState} id="category" className='w-full'
+                              value={formik.values.category}
+                              onChange={(e) => {
+                                  formik.setFieldValue(`subCategory`, e.target.value);
+                              }}/>
+                    <label htmlFor="username">Sub Category</label>
+                   </span>
+                    </div>
 
                     <span className="p-float-label">
                     <Dropdown options={filterData?.lengths.values} id="length" className='w-full'
