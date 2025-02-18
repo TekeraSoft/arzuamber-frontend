@@ -16,62 +16,60 @@ const PaymentPage = () => {
   const navigation = useRouter();
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const [isClient, setIsClient] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     if (cartProducts.length === 0) navigation.back();
-  }, [cartProducts]);
+  }, [cartProducts, navigation]);
 
   return (
     <PageContainer>
-      <div className="relative flex w-full  bg-mywhite ">
-        {/* Sol taraf - Beyaz arka plan */}
-        <div className="left-0 sm:hidden md:absolute top-0 w-1/2 h-full bg-white "></div>
+      {/* İçerikler için container */}
+      <div className=" px-5 flex flex-col-reverse md:flex-row w-full items-start justify-center bg-mywhite rounded-lg">
+        {/* Sol taraftaki içerik */}
+        <div className="md:w-1/2 w-full">
+          <PaymentForm />
+        </div>
 
-        {/* Sağ taraf - Gri arka plan */}
-
-        {/* İçerikler için container */}
-        <div className="container mx-auto flex flex-col-reverse md:flex-row w-full items-start justify-center">
-          {/* Sol taraftaki içerik */}
-          <div className="md:w-1/2 w-full">
-            <PaymentForm />
-          </div>
-
-          {/* Sağ taraftaki içerik */}
-          <div className="w-full  md:w-1/2  relative bg-white">
-            {cartProducts.map((item, index) => (
-              <div key={index} className="flex flex-row items-center w-full">
-                <div className="relative h-16 w-12">
-                  <Image
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-lg"
-                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
-                    alt="product.jpg"
-                  />
-                  <span
-                    className="bg-gray-700 text-white w-6 h-6 rounded-full absolute -top-3 -right-3 items-center
+        {/* Sağ taraftaki içerik */}
+        <div className="w-full  md:w-1/2  relative bg-white py-5">
+          {cartProducts.map((item, index) => (
+            <div key={index} className="flex flex-row items-center w-full">
+              <div className="relative h-16 w-12">
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
+                  alt="product.jpg"
+                />
+                <span
+                  className="bg-gray-700 text-white w-5 h-5 rounded-full absolute -top-3 -right-3 items-center
                       justify-center flex text-xs font-semibold"
-                  >
-                    {item.quantity}
-                  </span>
+                >
+                  {item.quantity}
+                </span>
+              </div>
+              <div className="flex flex-col w-full ml-6">
+                <div className="flex flex-row items-center justify-between w-full">
+                  <p className="text-sm font-semibold">{item.name}</p>
+                  <p className="text-sm font-medium">
+                    <span className="mr-1">Fiyat:</span>₺ {item.price}
+                  </p>
                 </div>
-                <div className="flex flex-col w-full ml-6">
-                  <div className="flex flex-row items-center justify-between w-full">
-                    <p className="text-sm font-semibold">{item.name}</p>
-                    <p className="text-sm font-medium">₺ {item.price}</p>
-                  </div>
-                  <div className="w-full">
-                    <p className="text-xs font-semibold text-gray-700">
-                      Beden - {item.size}
-                    </p>
-                    <p className="text-xs font-semibold text-gray-700">
-                      Renk - {item.color}
-                    </p>
-                  </div>
+                <div className="w-full">
+                  <p className="text-xs font-semibold text-gray-700">
+                    Beden - {item.size}
+                  </p>
+                  <p className="text-xs font-semibold text-gray-700">
+                    Renk - {item.color}
+                  </p>
                 </div>
               </div>
-            ))}
-            <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
+            </div>
+          ))}
+          <div className="flex flex-col justify-center items-center w-full gap-2 my-3">
+            <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
               <p>
                 Alt Toplam •{" "}
                 {cartProducts.reduce((total, item) => {
@@ -81,11 +79,11 @@ const PaymentPage = () => {
               </p>
               <p className="font-semibold text-lg">₺ {total.toFixed(2)}</p>
             </div>
-            <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
+            <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
               <p>Kargo</p>
-              <p className="font-semibold text-lg">Ücretsiz</p>
+              <p className="font-semibold text-sm">Ücretsiz</p>
             </div>
-            <div className="flex flex-row justify-between items-center p-4 text-2xl font-semibold w-full">
+            <div className="flex flex-row justify-between items-center text-xl font-semibold w-full">
               <p>Toplam</p>
               <p>₺ {total.toFixed(2)}</p>
             </div>

@@ -116,13 +116,12 @@
       "CVC": "CVC",
       "CardDate": {
         "title": "Kart Son Kullanım Tarihi",
-        "expireMonthLabel": "Son Kullanım Ay",
+        "expireMonthLabel": " Ay",
         "expireMonthPlaceHolder": "Ay Seçiniz",
         "expireYearLabelPlaceHolder": "Yıl Seçiniz",
-        "expireYearLabel": "Son Kullanım Yıl"
+        "expireYearLabel": "Yıl"
       },
       "BuyerInfo": {
-        "title": "  Alıcı Bilgileri",
         "name": "İsim",
         "surname": "Soy isim",
         "phone": "Telefon",
@@ -131,10 +130,15 @@
       "Adress": {
         "zipcode": "Posta Kodu",
         "cities": "Sehir Seçin",
+        "District": "İlçe",
+        "Neighborhood": "Mahalle",
+        "DetailedAddress": "Detaylı adress...",
         "OrderAdress": "Sipariş Adresi",
         "otherAdressLabel": "Faturamı Farklı Bir Adrese Gönder",
         "BillingAddress": "Fatura Adresi"
-      }
+      },
+      "choose": "Seçiniz",
+      "Button": "Ödeme Yap"
     },
 
     "paymentCard": {

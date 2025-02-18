@@ -121,10 +121,10 @@
       "CVC": "CVC",
       "CardDate": {
         "title": "Card Expiry Date",
-        "expireMonthLabel": "Expiry Month",
+        "expireMonthLabel": "Month",
         "expireMonthPlaceHolder": "Choose Month",
         "expireYearLabelPlaceHolder": "Choose Year",
-        "expireYearLabel": "Expiry Year"
+        "expireYearLabel": "Year"
       },
       "BuyerInfo": {
         "title": "Buyer Information",
@@ -136,10 +136,15 @@
       "Adress": {
         "zipcode": "Zip Code",
         "cities": "Select City",
+        "District": "District",
+        "Neighborhood": "Neighborhood",
+        "DetailedAddress": "Detailed address...",
         "OrderAdress": "Order Address",
         "otherAdressLabel": "Send My Invoice to a Different Address",
         "BillingAddress": "Billing Address"
-      }
+      },
+      "Button": "Payment",
+      "choose": "Select"
     },
 
     "paymentCard": {

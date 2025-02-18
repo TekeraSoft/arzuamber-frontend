@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { GoArrowSwitch } from "react-icons/go";
 import { FaTruck, FaRegCreditCard } from "react-icons/fa";
+import { BsBox } from "react-icons/bs";
 
 const Footer = () => {
   // Get social media links from Redux
@@ -19,24 +20,32 @@ const Footer = () => {
   const t = useTranslations();
 
   return (
-    <footer>
-      <div className=" border-t-2 border-secondary  min-h-24 mt-4">
-        <div className="grid grid-cols-4">
-          <div>
-            <GoArrowSwitch />
-            <span>90 Gün Boyunca Ücretsiz Değişim ve İade</span>
+    <footer className="w-full h-full mt-10">
+      <div className="flex justify-center items-center gap-2 h-28 md:h-20 bg-gray-50 ">
+        <div className="grid grid-cols-2 md:grid-cols-4 h-full px-2 md:px-12 w-full font-mono">
+          <div className="flex justify-center items-center h-full gap-2">
+            <GoArrowSwitch size={25} />
+            <span className="text-primary text-xs md:text-sm ">
+              15 Gün Ücretsiz İade
+            </span>
           </div>
-          <div>
-            <FaTruck />
-            <span></span>
+          <div className="flex justify-center items-center gap-2 ">
+            <FaTruck size={25} />
+            <span className="text-primary text-xs md:text-sm">
+              Süper Hızlı Teslimat
+            </span>
           </div>
-          <div>
-            <FaRegCreditCard />
-            <span></span>
+          <div className="flex justify-center items-center gap-2">
+            <FaRegCreditCard size={25} />
+            <span className="text-primary text-xs md:text-sm">
+              Güvenli ve Kolay Ödeme
+            </span>
           </div>
-          <div>
-            <FaTruck />
-            <span></span>
+          <div className="flex justify-center items-center gap-2">
+            <BsBox size={25} />
+            <span className="text-primary text-xs md:text-sm">
+              Özenli Paketleme
+            </span>
           </div>
         </div>
       </div>
@@ -55,7 +64,7 @@ const Footer = () => {
             />
 
             {/* About Us */}
-            <div>
+            <div className="flex flex-col justify-center items-start">
               <h2 className="text-xl font-bold mb-4">{t("footer.aboutUs")}</h2>
               <p className="text-sm leading-loose">
                 {t("footer.aboutDescription")}
@@ -63,11 +72,11 @@ const Footer = () => {
             </div>
 
             {/* Customer Service */}
-            <div>
+            <div className="flex flex-col justify-center items-start">
               <h2 className="text-xl font-bold mb-4">
                 {t("footer.customerService")}
               </h2>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-sm">
                 <li>
                   <Link href="/kvkk" className="hover:text-primary transition">
                     {t("footer.kvkk")}
@@ -114,7 +123,7 @@ const Footer = () => {
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-10 border-t border-gray-600 pt-6 flex flex-col md:flex-row justify-between items-center ">
+          <div className="mt-4 mb-2 border-t border-gray-600 pt-6 flex flex-col md:flex-row justify-between items-center ">
             {/* Copyright */}
             <p className="text-sm text-center mb-4 md:mb-0">
               {t("footer.copyright")}
