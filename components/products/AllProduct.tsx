@@ -10,6 +10,7 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import Filter from "../general/Filter/Filter";
+
 // import Filter from "../general/Filter";
 
 function AllProduct() {
@@ -38,14 +39,13 @@ function AllProduct() {
   const pageCount = Math.ceil(products.length / productsPerPage);
 
   return (
-    <main className="mx-auto container  rounded-lg">
+    <main className="mx-auto container rounded-lg">
       {loading ? (
         <Loading />
       ) : (
-        <div className="all-product-main-div border-t ">
+        <div className="all-product-main-div border-t">
           <Heading text={t("allProduct.allProducts")} center textSize="3xl" />
-
-          <div className="flex w-full h-full  gap-2 items-start justify-center">
+          <div className="flex w-full h-full gap-2 items-start justify-center">
             <Filter />
 
             <div className="w-full mb-3">

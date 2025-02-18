@@ -315,19 +315,20 @@
     "form": {
       "nameLabel": "Your name",
       "namePlaceholder": "Enter your full name",
-      "nameError": "Name is required",
+      "nameRequired": "Name is required",
       "emailLabel": "Email address",
       "emailPlaceholder": "Enter your email",
-      "emailError": "Email is required",
+      "emailInvalid": "Email is required",
+      "emailRequired": "Email is required",
       "lastNameLabel": "Last Name",
       "lastNamePlaceholder": "Enter your Last Name",
-      "lastNameError": "Last Name is required",
-      "companyLabel": "Company Name",
-      "companyPlaceholder": "Company Name",
+      "lastNameRequired": "Last Name is required",
       "messageLabel": "Message",
       "messagePlaceholder": "Your Messages...",
+      "messageRequired": "You must enter message",
       "submitButton": "Submit"
     },
+
     "sendButton": "Send",
     "address": {
       "street": "Kışla Neighborhood",
@@ -384,6 +385,8 @@
     "BlogNotFoundTitle": "Blog Not Found",
     "BlogNotFoundText": "The blog you're looking for could not be found.",
     "requiredText": "This field is required !",
-    "ButtonText": "Go To Home Page "
+    "ButtonText": "Go To Home Page ",
+    "somethingWentWrong": "Something went wrong. Please try again later.",
+    "serverError": "Oops! There seems to be a problem with the server."
   }
 }

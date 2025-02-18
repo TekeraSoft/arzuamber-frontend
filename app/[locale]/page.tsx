@@ -21,7 +21,7 @@ export default function Home() {
             textSize="3xl"
             center={true}
           />
-          <ProductSlider isPopulate />
+          <ProductSlider />
         </HomeContainer>
 
         <Brand
@@ -40,7 +40,7 @@ export default function Home() {
             center
             textSize="3xl"
           />
-          <ProductSlider showNewSeason />
+          <ProductSlider />
         </HomeContainer>
         <Brand
           title={t("brand.title")}

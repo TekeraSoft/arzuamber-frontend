@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import { Link } from "@/i18n/routing"
+import { Link } from "@/i18n/routing";
 
 import Heading from "../general/Heading";
 import { FaRegListAlt, FaPlus, FaMinus, FaTimes, FaBars } from "react-icons/fa";
@@ -70,7 +70,7 @@ const SideBar = () => {
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="fixed h-10 w-10 top-24 right-6 md:top-32 md:right-12 z-50 lg:hidden p-2 text-white bg-secondary border border-mywhite rounded-lg flex items-center justify-center"
+        className="fixed h-10 w-10 top-24 right-6 md:top-32 md:right-12  lg:hidden p-2 text-white bg-secondary border border-mywhite rounded-lg flex items-center justify-center z-50"
       >
         {isOpen ? <FaTimes size={17} /> : <FaBars size={17} />}
       </button>

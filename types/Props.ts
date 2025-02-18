@@ -34,15 +34,15 @@ export interface Product {
   subCategory: string;
   length: string;
   discountPrice: number;
-  colorSize: ColorSize
+  colorSize: ColorSize;
 }
 
 export type ColorSize = {
   color: string;
   size: string;
   stock: number;
-  images: string[]
-}
+  images: string[];
+};
 
 //! Cart adding Props
 
@@ -116,6 +116,13 @@ export interface ProductSliderProps {
   isPopulate?: boolean;
 }
 
+//! ArrowProps
 export interface ArrowProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+//! Warning page props
+export interface WarningTextProps {
+  title: string;
+  text: string;
 }

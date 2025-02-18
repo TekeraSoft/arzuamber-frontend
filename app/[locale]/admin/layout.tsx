@@ -1,22 +1,21 @@
 import Layout from "@/components/admin/Layout";
-import {NextIntlClientProvider} from "next-intl";
-import {getMessages} from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import StoreProvider from "@/store/StoreProvider";
 import React from "react";
 
-export default async function AdminLayout({children,}: {
-    children: React.ReactNode;
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
 }) {
+  const messages = await getMessages();
 
-    const messages = await getMessages()
-
-    return (
-        <NextIntlClientProvider messages={messages}>
-            <StoreProvider>
-        <Layout>
-            {children}
-        </Layout>
-            </StoreProvider>
-        </NextIntlClientProvider>
-    );
+  return (
+    <NextIntlClientProvider messages={messages}>
+      <StoreProvider>
+        <Layout>{children}</Layout>
+      </StoreProvider>
+    </NextIntlClientProvider>
+  );
 }

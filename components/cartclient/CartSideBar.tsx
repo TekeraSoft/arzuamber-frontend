@@ -18,7 +18,7 @@ import EmptyCart from "./EmptyCart";
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const {cartProducts, total} = useSelector((state: RootState) => state.cart);
+  const carts = useSelector((state: RootState) => state.cart.carts);
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,6 @@ function CartSidebar() {
   }, [isCartModalOpen, dispatch]);
 
   if (!isClient) {
-
     return <Loading />;
   }
 
@@ -67,7 +66,7 @@ function CartSidebar() {
         <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start">
           <div
             ref={modalRef}
-            className="w-full sm:w-96 md:w-2/4 lg:w-2/6 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-5"
+            className="w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6"
           >
             <div className="absolute top-3 right-3">
               <Button
@@ -85,33 +84,34 @@ function CartSidebar() {
               font="bold"
             />
 
-            {!cartProducts || cartProducts?.length === 0 ? (
+            {!carts || carts.length === 0 ? (
               <EmptyCart />
             ) : (
               <>
                 <div className="flex flex-col gap-5 w-full">
                   <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-1 rounded-lg">
-                    {cartProducts.map((cart,index) => {
+                    {carts.map((cart) => {
+                      const discountedPrice =
+                        cart.price - (cart.price * cart.discountPercent) / 100;
                       return (
                         <div
-                          key={index}
-                          className="flex flex-row justify-between items-center border-b border-gray-200 py-4 gap-4"
+                          key={cart.id}
+                          className="flex flex-row justify-between items-start border-b border-gray-200 py-4 gap-4"
                         >
                           <div className="flex justify-center sm:justify-start">
                             <Image
-                              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${cart.image}`}
+                              src={cart.image}
                               alt={cart.name}
                               width={80}
                               height={80}
-                              objectFit="contain"
                               priority
-                              className="rounded-md h-12 w-12"
+                              className="rounded-md object-cover h-12 w-12"
                             />
                           </div>
 
                           <div className="w-full sm:w-3/4 flex flex-row justify-around items-center sm:items-start gap-2 sm:gap-5">
                             <h3 className="font-semibold text-xs text-gray-900">
-                              {cart.name}
+                              {TextClip(cart.name)}
                             </h3>
                             <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
                               <p className="text-gray-500 text-xs">
@@ -122,6 +122,10 @@ function CartSidebar() {
                               </p>
                             </div>
                             <div className="flex flex-col  items-center jsutif-center">
+                              <p className="font-semibold text-gray-900 text-xs">
+                                {discountedPrice}
+                                {t("CartPage.cartPriceSymbol")}
+                              </p>
                               <p className="text-gray-500 text-xs">
                                 {cart.quantity} {t("CartPage.quantity")}
                               </p>
@@ -131,7 +135,7 @@ function CartSidebar() {
                           <div className="w-16 flex justify-center items-center">
                             <Button
                               type="button"
-                              onClick={() => removeItemFromCart({id:cart.id,color:cart.color})}
+                              onClick={() => removeItemFromCart(cart.id)}
                               icon={MdOutlineDeleteOutline}
                               iconSize={20}
                               color="third"
@@ -142,7 +146,19 @@ function CartSidebar() {
                       );
                     })}
                   </div>
-                  <CartSummary total={total}  />
+                  <CartSummary
+                    total={
+                      carts.reduce(
+                        (total, item) =>
+                          total +
+                          (item.price -
+                            (item.price * item.discountPercent) / 100) *
+                            item.quantity,
+                        0
+                      ) + 150
+                    }
+                    tax={150}
+                  />
                 </div>
               </>
             )}

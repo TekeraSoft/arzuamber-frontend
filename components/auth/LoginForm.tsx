@@ -1,21 +1,21 @@
 "use client";
 
 import Button from "@/components/general/Button";
-import Heading from "@/components/general/Heading";
 import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import React from "react";
-import { IoLogoGoogleplus } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { signIn } from "next-auth/react";
 import { MdCancel } from "react-icons/md";
+import { useTranslations } from "next-intl";
+import { useLoginValidationSchema } from "@/error/loginSchema";
 
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
-
+  const t = useTranslations();
   const { isLoginModalOpen } = useSelector((state: RootState) => state.modals);
 
   const formik = useFormik({
@@ -23,6 +23,7 @@ function LoginForm() {
       email: "",
       password: "",
     },
+    validationSchema: useLoginValidationSchema(),
     onSubmit: (values) => {
       signIn("credentials", {
         redirect: false,
@@ -56,85 +57,90 @@ function LoginForm() {
       }}
       className={`${
         isLoginModalOpen ? "fixed" : "hidden"
-      } inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}
+      } px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50  `}
     >
       <div
-        className={`w-full md:w-1/4 h-auto bg-white rounded-2xl p-10 shadow-lg relative transform transition-all duration-300`}
+        className={`w-full md:w-2/4 lg:w-1/4   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300`}
       >
-        <Heading
-          center
-          text="Welcome Back!"
-          // text={t("loginForm.welcomeBack")}
-          font="bold"
-          textSize="2xl"
-          color="black"
-        />
+        <h2 className="text-2xl font-semibold my-5 text-center">
+          {t("loginForm.welcomeBack")}
+        </h2>
 
         <form
           onSubmit={formik.handleSubmit}
-          className="space-y-3 w-full flex flex-col gap-y-6"
+          className=" w-full flex flex-col gap-4"
         >
           <button
             type={"button"}
             color="primary"
             onClick={() => dispatch(closeLoginModal())}
-            className="absolute top-6 right-6"
+            className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95 outline-secondary"
           >
-            <MdCancel size={24} />
+            <MdCancel size={28} />
           </button>
 
-          <span className="w-full relative flex flex-col">
-            <label className={"font-medium"}>Email</label>
+          <span className="w-full  flex flex-col">
+            <label className={"font-medium"}>{t("loginForm.email")}</label>
             <InputText
               id="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              className="w-full pl-2 h-12 rounded border"
+              className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
-            <small className="text-xs text-red-600 absolute -bottom-5">
-              Hello Guys
-            </small>
+            {formik.touched.email && formik.errors.email && (
+              <small className="text-xs text-red-600 mt-1  ">
+                {formik.errors.email}
+              </small>
+            )}
           </span>
 
-          <span className="w-full relative flex flex-col">
-            <label className={"font-medium"}>Password</label>
+          <span className="w-full flex flex-col">
+            <label className={"font-medium"}>{t("loginForm.password")}</label>
             <InputText
               id="password"
               value={formik.values.password}
               type={"password"}
               onChange={formik.handleChange}
-              className="w-full pl-2 h-12 rounded border"
+              className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.password && formik.errors.password
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
-            <small className="text-xs text-red-600 absolute -bottom-5">
-              Hello Guys
-            </small>
+            {formik.touched.password && formik.errors.password && (
+              <small className="text-xs text-red-600 mt-1">
+                {formik.errors.password}
+              </small>
+            )}
           </span>
 
           <Button
-            text="Login"
-            // text={t("loginForm.loginButton")}
+            text={t("loginForm.loginButton")}
             type="submit"
             color="primary"
             animation
-            size="small"
-            className="w-full bg-primary hover:bg-primaryDark text-mywhite py-3 rounded-lg transition duration-200 "
+            size="large"
+            className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg transition duration-200 "
           />
-          <Button
+          {/* <Button
             size="small"
             outline
             icon={IoLogoGoogleplus}
             iconSize={23}
             className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-3 transition duration-200"
-          />
+          /> */}
         </form>
 
         {/* login , register modal  */}
         <p
-          className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold"
+          className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold mt-4"
           onClick={() => handleChangeModal()}
         >
-          Don’t have an account? Sign up
-          {/* {t("loginForm.noAccount")} */}
+          {t("loginForm.noAccount")}
         </p>
       </div>
     </div>

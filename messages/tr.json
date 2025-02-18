@@ -310,17 +310,17 @@
     "form": {
       "nameLabel": "Adınız",
       "namePlaceholder": "Tam adınızı girin",
-      "nameError": "Ad alanı zorunludur",
+      "nameRequired": "Ad alanı zorunludur",
       "emailLabel": "E-posta adresi",
       "emailPlaceholder": "E-postanızı girin",
-      "emailError": "E-posta zorunludur",
+      "emailRequired": "E-posta zorunludur",
+      "emailInvalid": "Enter a valid email",
       "lastNameLabel": "Soy Adınız",
       "lastNamePlaceholder": "Soy adınızı girin",
-      "lastNameError": "Soy adınız zorunludur",
-      "companyLabel": "Şirket Adı",
-      "companyPlaceholder": "Şirket Adı",
+      "lastNameRequired": "Soy adınız zorunludur",
       "messageLabel": "Mesaj",
       "messagePlaceholder": "Mesajınızı yazın...",
+      "messageRequired": "Mesaj girmelisiniz",
       "submitButton": "Gönder"
     },
     "sendButton": "Gönder",
@@ -379,6 +379,8 @@
     "BlogNotFoundTitle": "Blog Bulunamadı",
     "BlogNotFoundText": "Aradığınız blog bulunamadı.",
     "requiredText": "Bu alan zorunlu !",
-    "ButtonText": "Ana sayfaya git"
+    "ButtonText": "Ana sayfaya git",
+    "somethingWentWrong": "Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin.",
+    "serverError": "Hoppala! Sunucuda bir sorun oluşmuş gibi görünüyor."
   }
 }

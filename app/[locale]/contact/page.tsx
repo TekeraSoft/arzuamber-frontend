@@ -1,24 +1,31 @@
 "use client";
 import Head from "next/head";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import PageContainer from "@/components/Containers/PageContainer";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
-import Input from "@/components/general/Input";
-import RichTextBox from "@/components/general/RichTextBox";
-import Button from "@/components/general/Button";
+import { useFormik } from "formik";
+
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { classNames } from "primereact/utils";
+import "primereact/resources/primereact.min.css";
+import { useContactPageValidationSchema } from "@/error/contactSchema";
 
 function ContactPage() {
   const t = useTranslations();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-  };
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      message: "",
+    },
+    validationSchema: useContactPageValidationSchema(),
+    onSubmit: (values) => {
+      console.log("Form Submitted", values);
+    },
+  });
 
   return (
     <>
@@ -28,121 +35,181 @@ function ContactPage() {
       </Head>
 
       <PageContainer>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <section className="py-6 ">
-            <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-              <div className="max-w-2xl mx-auto text-center">
-                <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
-                  {t("ContactPage.header")}
-                </h2>
-                <p className="max-w-xl mx-auto mt-1 text-base leading-relaxed text-gray-500">
-                  {t("ContactPage.subheader")}
-                </p>
+        <form onSubmit={formik.handleSubmit} className="py-6">
+          <div className=" mx-auto  ">
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
+                {t("ContactPage.header")}
+              </h2>
+              <p className="max-w-xl mx-auto mt-1 text-base leading-relaxed text-gray-500">
+                {t("ContactPage.subheader")}
+              </p>
+            </div>
+
+            <div className="max-w-5xl mx-auto mt-5">
+              <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-3">
+                <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
+                  <FaPhoneAlt className="w-10 h-10 text-secondary" />
+                  <p className="mt-6 text-base font-medium text-gray-900">
+                    +90-534-260-8385
+                  </p>
+                </div>
+                <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
+                  <FaEnvelope className="w-10 h-10 text-secondary" />
+                  <p className="mt-6 text-base font-medium text-gray-900">
+                    arzuambermoda@gmail.com
+                  </p>
+                </div>
+                <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
+                  <FaMapMarkerAlt className="w-10 h-10 text-secondary" />
+                  <p className="mt-6 text-sm font-medium text-gray-900">
+                    <span>{t("ContactPage.address.street")}, </span>
+                    <span>{t("ContactPage.address.building")}, </span>
+                    <span>
+                      {t("ContactPage.address.number")},
+                      {t("ContactPage.address.floor")}
+                    </span>
+                    <span>
+                      {t("ContactPage.address.city")},
+                      {t("ContactPage.address.district")},
+                      {t("ContactPage.address.country")}
+                    </span>
+                  </p>
+                </div>
               </div>
 
-              <div className="max-w-5xl mx-auto mt-5">
-                <div className="grid grid-cols-1 gap-6  text-center md:px-0 md:grid-cols-3">
-                  <div className="overflow-hidden bg-white rounded-xl flex flex-col justify-center items-center">
-                    <div className="p-6">
-                      <FaPhoneAlt className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400 " />
-                      <p className="mt-6 text-base font-medium text-gray-900">
-                        +90-534-260-8385
-                      </p>
-                    </div>
-                  </div>
+              <div className="mt-4 bg-white rounded-lg px-6 md:px-8 py-6 w-full">
+                <h3 className="text-3xl font-semibold text-center text-gray-900">
+                  {t("ContactPage.messageTitle")}
+                </h3>
 
-                  <div className="overflow-hidden bg-white rounded-xl flex flex-col justify-center items-center">
-                    <div className="p-6">
-                      <FaEnvelope className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400" />
-                      <p className="mt-6 text-base font-medium text-gray-900">
-                        arzuambermoda@gmail.com
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="overflow-hidden bg-white rounded-xl ">
-                    <div className="p-6 flex flex-col justify-center items-center">
-                      <FaMapMarkerAlt className="flex-shrink-0 w-10 h-10 mx-auto text-gray-400 " />
-                      <p className="mt-6  font-medium text-sm leading-relaxed text-gray-900">
-                        <span>{t("ContactPage.address.street")}, </span>
-                        <span>{t("ContactPage.address.building")}, </span>
-                        <span>
-                          {t("ContactPage.address.number")},
-                          {t("ContactPage.address.floor")},
-                        </span>
-                        <span>
-                          {t("ContactPage.address.city")},
-                          {t("ContactPage.address.district")},
-                          {t("ContactPage.address.country")}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 overflow-hidden bg-white rounded-xl">
-                  <div className="px-6 py-4 ">
-                    <h3 className="text-3xl font-semibold text-center text-gray-900">
-                      {t("ContactPage.messageTitle")}
-                    </h3>
-
-                    <div className="mt-6 w-full">
-                      <div className=" w-full grid grid-cols-1 sm:grid-cols-1 gap-2">
-                        <div className="grid items-center grid-cols-1 md:grid-cols-2 gap-2">
-                          <Input
-                            type="text"
-                            label={t("ContactPage.form.nameLabel")}
-                            placeholder={t("ContactPage.form.namePlaceholder")}
-                            id="firstName"
-                            register={register}
-                            errors={errors}
-                            required={true}
-                          />
-
-                          <Input
-                            type="text"
-                            label={t("ContactPage.form.lastNameLabel")}
-                            placeholder={t(
-                              "ContactPage.form.lastNamePlaceholder"
-                            )}
-                            id="lastName"
-                            register={register}
-                            errors={errors}
-                            required={true}
-                          />
+                <div className="mt-3 grid gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        htmlFor="firstName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        {t("ContactPage.form.nameLabel")}
+                      </label>
+                      <InputText
+                        id="firstName"
+                        name="firstName"
+                        placeholder={t("ContactPage.form.namePlaceholder")}
+                        value={formik.values.firstName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className={classNames(
+                          "w-full border px-2 py-2 h-10 rounded-lg outline-secondary text-sm",
+                          {
+                            "p-invalid":
+                              formik.touched.firstName &&
+                              formik.errors.firstName,
+                          }
+                        )}
+                      />
+                      {formik.touched.firstName && formik.errors.firstName && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {formik.errors.firstName}
                         </div>
-                        <Input
-                          type="email"
-                          label={t("ContactPage.form.emailLabel")}
-                          placeholder={t("ContactPage.form.emailPlaceholder")}
-                          id="email"
-                          register={register}
-                          errors={errors}
-                          required={true}
-                        />
-
-                        <RichTextBox
-                          label={t("ContactPage.form.messageLabel")}
-                          placeholder={t("ContactPage.form.messagePlaceholder")}
-                          id="message"
-                          register={register}
-                          errors={errors}
-                          required={true}
-                        />
-
-                        <div className="flex items-center justify-center">
-                          <Button
-                            size="small"
-                            text={t("ContactPage.form.submitButton")}
-                          />
+                      )}
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="lastName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        {t("ContactPage.form.lastNameLabel")}
+                      </label>
+                      <InputText
+                        id="lastName"
+                        name="lastName"
+                        placeholder={t("ContactPage.form.lastNamePlaceholder")}
+                        value={formik.values.lastName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className={classNames(
+                          "w-full border px-2 py-2 rounded-lg  h-10  outline-secondary text-sm",
+                          {
+                            "p-invalid":
+                              formik.touched.lastName && formik.errors.lastName,
+                          }
+                        )}
+                      />
+                      {formik.touched.lastName && formik.errors.lastName && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {formik.errors.lastName}
                         </div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      {t("ContactPage.form.emailLabel")}
+                    </label>
+                    <InputText
+                      id="email"
+                      name="email"
+                      placeholder={t("ContactPage.form.emailPlaceholder")}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={classNames(
+                        "w-full border px-2 py-2  h-10  rounded-lg outline-secondary text-sm",
+                        {
+                          "p-invalid":
+                            formik.touched.email && formik.errors.email,
+                        }
+                      )}
+                    />
+                    {formik.touched.email && formik.errors.email && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {formik.errors.email}
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      {t("ContactPage.form.messageLabel")}
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      placeholder={t("ContactPage.form.messagePlaceholder")}
+                      value={formik.values.message}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={classNames(
+                        "w-full min-h-24 p-2 border rounded-lg outline-secondary",
+                        {
+                          "p-invalid":
+                            formik.touched.message && formik.errors.message,
+                        }
+                      )}
+                    />
+                    {formik.touched.message && formik.errors.message && (
+                      <div className="text-red-500 text-sm mt-1">
+                        {formik.errors.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex justify-center mt-4">
+                    <Button
+                      label={t("ContactPage.form.submitButton")}
+                      type="submit"
+                      className="bg-secondary  shadow-sm  w-1/2 text-center py-2 text-mywhite rounded-lg hover:scale-105 transition duration-300"
+                    />
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
         </form>
       </PageContainer>
     </>

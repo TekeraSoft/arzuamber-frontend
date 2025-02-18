@@ -6,11 +6,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface blogState {
   blogs: BlogProps[];
   loading: boolean;
+  error: boolean;
 }
 
 const initialState: blogState = {
   blogs: blogs,
   loading: false,
+  error: true,
 };
 
 export const blogSlice = createSlice({

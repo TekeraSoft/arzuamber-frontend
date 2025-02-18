@@ -43,9 +43,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
-            <LayoutProvider>
-              {children}
-            </LayoutProvider>
+            <LayoutProvider>{children}</LayoutProvider>
           </StoreProvider>
         </NextIntlClientProvider>
       </body>
