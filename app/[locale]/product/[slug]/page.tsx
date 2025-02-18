@@ -3,12 +3,12 @@
 import DetailClient from "@/components/productDetail/DetailClient";
 import Loading from "@/components/utils/Loading";
 import WarningText from "@/components/utils/WarningText";
-import {AppDispatch, RootState} from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
 import React, { useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
-import {getProductBySlugDispatch} from "@/store/productSlice";
-import {useParams} from "next/navigation";
+import { getProductBySlugDispatch } from "@/store/productSlice";
+import { useParams } from "next/navigation";
 
 function ShopDetailPage() {
   const params = useParams();
@@ -19,12 +19,12 @@ function ShopDetailPage() {
   const t = useTranslations("");
 
   useEffect(() => {
-    dispatch(getProductBySlugDispatch(params.slug))
-  }, [params]);
+    dispatch(getProductBySlugDispatch(params.slug));
+  }, [params, dispatch]);
 
   return (
     <div>
-      {loading? (
+      {loading ? (
         <Loading />
       ) : product ? (
         <DetailClient product={product} />

@@ -356,6 +356,77 @@
     "yellow": "Yellow"
   },
 
+  "DistanceSellingContract": {
+    "contractTitle": "Distance Selling Agreement",
+    "contractText1": "All users who complete the membership process are deemed to have read and accepted the sales agreement. The Sales Agreement is an online sales agreement between www.akyabutik.com and the Customer.",
+    "contractText2": "The subject of this agreement is the sale and delivery of the product whose attributes and sales price are stated below, in accordance with the provisions of the Regulation on the Procedures and Principles of Distance Contracts under Law No. 4077 on the Protection of Consumers, and outlines the rights and obligations of the parties.",
+    "SellerInformation": {
+      "title": "SELLER INFORMATION",
+      "appellation": "Title",
+      "companyName": "ARZUAMBER",
+      "companyAddress": "Kışla Neighborhood, Street 40, Kayalar Apartment, No: 8,Block A, Floor: 4, Apartment: 7Antalya,Muratpasa,Turkey",
+      "phone": "Phone",
+      "phoneNumber": "+90-534-260-8385",
+      "email": "Email",
+      "emailAddress": "arzuambermoda@gmail.com",
+      "Address": "Address"
+    },
+    "BuyerInformation": {
+      "title": "BUYER INFORMATION",
+      "text": "All members: All buyers who register and shop on ARZUAMBER's e-commerce store at www.arzuamber.com. (Hereinafter referred to as buyer or customer)."
+    },
+    "ContractAndSubject": {
+      "title": "SUBJECT OF THE AGREEMENT AND PRODUCT INFORMATION",
+      "text": "The type, quantity, brand/model, color, unit price, and payment method of the product/service are as indicated on the site, and these promises may change without prior notice to the buyer."
+    },
+    "GeneralProvisions": {
+      "title": "GENERAL TERMS",
+      "text": "5.1 - The BUYER declares that they have read and understood all preliminary information regarding the product, its price, payment method, and delivery terms, and have confirmed their agreement electronically. 5.2 - The product will be delivered within the time stated in the preliminary information, depending on the distance from the buyer's place of residence, within a legal maximum of 30 days. 5.3 - If the product is to be delivered to someone else, the SELLER is not responsible for the refusal of acceptance by the recipient. 5.4 - The SELLER is responsible for delivering the product in good condition, complete, and in accordance with the specifications mentioned in the order, along with any warranty certificates and manuals. 5.5 - The product will only be delivered if the agreement has been confirmed electronically and the payment has been made by the buyer through their chosen payment method. If the payment is not completed or is canceled in bank records, the SELLER is relieved from the obligation to deliver the product. 5.6 - If, after delivery of the product, the buyer's credit card is used fraudulently or unlawfully by unauthorized persons, and the relevant bank or financial institution does not pay the product price to the SELLER, the BUYER must return the product within 3 business days to the SELLER. Shipping costs in such a case are borne by the BUYER. 5.7 - If the SELLER cannot deliver the product within the specified time due to force majeure or extraordinary events like bad weather, disruption of transport, etc., the SELLER must inform the BUYER. In this case, the BUYER may cancel the order, exchange it with a similar product, and/or delay the delivery until the obstacle is removed. If the BUYER cancels the order, the SELLER will initiate a refund to the BUYER's credit card within 7 days and inform the BUYER by email. 5.8 - If the product delivered to the BUYER or the recipient is defective or damaged, it must be returned to the SELLER within 3 days from the date of delivery at the BUYER's expense for repair or replacement. 5.9 - This agreement becomes valid once electronically approved by the buyer (after membership registration) and sent to akyabutik.com."
+    },
+    "RightOfWithdrawal": {
+      "title": "RIGHT OF WITHDRAWAL",
+      "text": "6.1 - The consumer has the right to withdraw from the agreement within fourteen days without providing any reason and without paying any penalty. 6.2 - For installment sales, the BUYER has the right to withdraw from the agreement within 3 days from the delivery of the product to themselves or the designated recipient. 6.3 - To use the right of withdrawal, the BUYER must notify the SELLER in writing within the specified period, and the product must not have been used as per the conditions in Article 6. 6.4 - In case of withdrawal, the BUYER must return the product with the cargo delivery receipt and the original invoice. The product packaging, manuals, accessories, and any free gifts provided with the product must also be returned in undamaged condition. The product price (minus the shipping cost paid by the SELLER) will be refunded to the BUYER within 10 days after the SELLER receives all the items. If the original invoice is not provided, the return request will not be accepted. The return shipping fee is the BUYER's responsibility. 6.5 - The BUYER must return the product using the carrier specified in the Preliminary Information Form. If the BUYER sends the product via a different carrier, the SELLER is not responsible for return costs or damage during shipping."
+    },
+    "RightOfWithdrawalExceptions": {
+      "title": "EXCEPTIONS TO THE RIGHT OF WITHDRAWAL",
+      "text": "The product must remain unopened, undamaged, unused, unwashed, and in a re-sellable condition. Additionally: 7.1 - If the BUYER starts using the service before the withdrawal period ends, they lose the right to withdraw. 7.2 - The right of withdrawal does not apply to products that cannot be returned for health and hygiene reasons once the seal, tape, or packaging is opened. 7.3 - The consumer may only inspect the product as required by an ordinary review; otherwise, they cannot exercise the right of withdrawal. 7.4 - Personalized or specially made-to-order products are not subject to return."
+    },
+    "Exceptions": {
+      "title": "EXCEPTIONS",
+      "text": "8.1 - Persons under 18 cannot make purchases from the SELLER. 8.2 - The SELLER is not responsible for pricing errors caused by typographical or system errors."
+    },
+    "PaymentsAndShipping": {
+      "title": "PAYMENT AND DELIVERY",
+      "text": "8.1 - The BUYER completes the payment for the product using the specified payment method and confirms the order. 8.2 - After the payment, the SELLER delivers the product to the specified address within 3 business days."
+    },
+    "Jurisdiction": {
+      "title": "JURISDICTION",
+      "text": "In case of any disputes regarding the execution of this agreement, the Consumer Arbitration Committees and Consumer Courts in the SELLER's place of residence are authorized up to the value declared by the Ministry of Industry and Trade. If the order is electronically confirmed, the BUYER is deemed to have accepted all the terms of this agreement."
+    }
+  },
+
+  "KVKK": {
+    "title1": "Personal Data Protection Notice",
+    "text1": "As a company, we prioritize the processing and safekeeping of your personal data in accordance with the Law on the Protection of Personal Data No. 6698 ('the Law'). We want to inform you about our purpose and methods for collecting, processing, and transferring your personal data, as well as your rights derived from the Law.",
+    "title2": "1. Methods for Collecting Personal Data",
+    "text2": "As a data controller, and within the framework of our legal obligations, we collect your personal data through verbal, website, social media platforms, mobile applications, and other means, with your consent, to provide you with our services, to inform you about our campaigns, to record your suggestions and complaints, to improve service standards, and for determining and implementing our commercial and business strategies.",
+    "title3": "2. Processing Personal Data and Its Purposes",
+    "text3": "As a data controller, we may collect, record, store, modify, update, periodically check, reorganize, classify, and preserve your personal data, either partially or completely, for the necessary period, using various channels such as call centers, written communication channels, social media pages, mobile communication channels, in-store communication channels, and/or others, in accordance with your consent and the purposes stated in the Law. These data can be shared or transferred to private or public entities in Turkey or abroad, as required by the law or service-related requirements, including collaborating parties, public institutions, and third parties.",
+    "title4": "3. Transfer of Personal Data",
+    "text4": "Your personal data will only be transferred to third parties with your explicit consent, or in accordance with the security and confidentiality principles outlined in the law. It may be shared with our group companies, business partners, suppliers, audit firms, or authorized public institutions and organizations, both within and outside the country, for the purpose of conducting business activities, ensuring communication between you and our company, and enhancing service quality.",
+    "title5": "4. Rights of the Personal Data Subject Under the KVK Law",
+    "text5": "In accordance with Article 11 of the Law, individuals have the following rights: a) To learn whether their personal data is processed and which data is being processed, b) To obtain information about the purpose of processing and whether the data is used in compliance with its purpose, c) To learn about the third parties to whom their data has been transferred, d) To request corrections if the data is incomplete or inaccurate, e) To request deletion or destruction of their data, f) To request that corrections, deletions, or destructions be communicated to third parties, g) To object to decisions made solely on automated processing, and h) To request a copy of their personal data.",
+    "title6": "Confidentiality and Security",
+    "text6": "In order to provide better services, your personal information such as name, age, interests, email, etc. may be requested. This data will only be used within our company for purposes such as targeted promotional campaigns, customer classification, and service quality improvements. We do not share this information with third parties without your consent, and we do not sell or commercially exploit it. However, official authorities may request this information under applicable mandatory laws.",
+    "title7": "Cookie Usage",
+    "text7": "Cookies are small text files or information stored on your computer or mobile device, such as smartphones or tablets, when you visit our website. We use cookies to enhance your experience on our site and to personalize it according to your preferences and needs. Cookies can also be used to collect statistical data to improve the design and usability of our website, helping us understand how visitors interact with it."
+  },
+
+  "ReturnAndCancelPolicy": {
+    "title": "Cancellation and Refund Policy",
+    "content": "You can exchange the products you have purchased from www.akyabutik.com within 14 DAYS from the invoice date, provided that they are unused. To be eligible for a return or exchange, the products must NOT BE WORN, NOT DAMAGED, NOT HAVE REMOVED TAGS, and MUST NOT HAVE LOST THEIR USABILITY. Create an easy return request, write to our WhatsApp line, and wait for the SHIPPING CODE. Discounted products are sold at the lowest prices; therefore, they cannot be returned, only exchanged. If you wish to make an exchange, you can contact us via our WhatsApp line at +90-534-260-8385 to request support. Shipping costs for returns are the responsibility of the customer (100 TL shipping fee). Once the returned product reaches our company, it will be inspected, and you will be informed before the refund is processed. For return conditions, simply write to our WhatsApp line. Our products undergo quality control. In rare cases where a defective product is sent, please contact our WhatsApp line at +90-534-260-8385 and send a picture of the incorrect or defective product."
+  },
+
   "footer": {
     "aboutUs": "About Us",
     "customerService": "Customer Service",
@@ -364,8 +435,8 @@
     "subscribeText": "Subscribe to stay updated with the latest news.",
     "copyright": "© 2025 Arzu Amber. All Rights Reserved.",
     "returnPolicy": "Return Policy ",
-    "faq": "Frequently Asked Questions",
-    "supportRequest": "Support Request",
+    "kvkk": "KVKK",
+    "distancesellingcontract": "Distance Selling Contract",
     "subscribeButton": "Subscribe",
     "emailPlaceholder": "Your email address"
   },

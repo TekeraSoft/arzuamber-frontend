@@ -11,6 +11,7 @@ interface BrandProps {
   mobileImageUrl: string;
   desktopImageUrl: string;
   link: string;
+  color: "standart" | "black"; // İleride farklı renkler eklenebilir
 }
 
 function Brand({
@@ -20,6 +21,7 @@ function Brand({
   mobileImageUrl,
   desktopImageUrl,
   link,
+  color,
 }: BrandProps) {
   const t = useTranslations();
   const [imageUrl, setImageUrl] = useState(desktopImageUrl);
@@ -34,23 +36,32 @@ function Brand({
     return () => window.removeEventListener("resize", updateImage);
   }, [mobileImageUrl, desktopImageUrl]);
 
+  // Renk sınıflarını tanımla
+  const colorClasses: { [key in BrandProps["color"]]: string } = {
+    standart: " text-white",
+    black: "bg-myblack bg-opacity-25  bg-black text-white",
+  };
+
   return (
-    <div className="w-full h-[700px] relative mt-3 md:mt-5">
+    <div className="w-full h-[500px] relative mt-3 md:mt-5">
       <Image
         className="object-cover bg-center"
         src={imageUrl} // Dinamik resim (mobil veya desktop)
         alt={title}
         fill
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-5 text-white p-7 md:p-5 rounded-lg">
-        <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
-        <p className="text-base md:text-lg text-center mb-4">{description}</p>
+      <div
+        className={`absolute inset-0 flex flex-col items-center justify-center p-7 md:p-5 rounded-lg  ${colorClasses[color]}`}
+      >
+        <h2 className="text-lg md:text-4xl font-bold mb-2">{title}</h2>
+        <p className="text-sm md:text-lg text-center mb-4">{description}</p>
         <Link href={link || `/products`}>
           <Button
             text={buttonText || t("brand.buttonText")}
             animation
             color="secondary"
-            size="small"
+            size="large"
+            className="px-7 "
           />
         </Link>
       </div>

@@ -18,7 +18,7 @@ import EmptyCart from "./EmptyCart";
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const carts = useSelector((state: RootState) => state.cart.carts);
+  const { total, cartProducts } = useSelector((state: RootState) => state.cart);
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -84,13 +84,13 @@ function CartSidebar() {
               font="bold"
             />
 
-            {!carts || carts.length === 0 ? (
+            {!cartProducts || cartProducts.length === 0 ? (
               <EmptyCart />
             ) : (
               <>
                 <div className="flex flex-col gap-5 w-full">
                   <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-1 rounded-lg">
-                    {carts.map((cart) => {
+                    {cartProducts.map((cart) => {
                       const discountedPrice =
                         cart.price - (cart.price * cart.discountPercent) / 100;
                       return (
@@ -100,7 +100,7 @@ function CartSidebar() {
                         >
                           <div className="flex justify-center sm:justify-start">
                             <Image
-                              src={cart.image}
+                              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${cart.image}`}
                               alt={cart.name}
                               width={80}
                               height={80}
@@ -146,19 +146,7 @@ function CartSidebar() {
                       );
                     })}
                   </div>
-                  <CartSummary
-                    total={
-                      carts.reduce(
-                        (total, item) =>
-                          total +
-                          (item.price -
-                            (item.price * item.discountPercent) / 100) *
-                            item.quantity,
-                        0
-                      ) + 150
-                    }
-                    tax={150}
-                  />
+                  <CartSummary total={total} />
                 </div>
               </>
             )}
