@@ -111,6 +111,17 @@
     "readMore": "Read More"
   },
 
+  "PaymentSummaryProductDetail": {
+    "size": "Size",
+    "color": "Color",
+    "Price": "Price",
+    "Product": "Product",
+    "Shipping": "Shipping",
+    "ShippingText": "Free",
+    "Total": "Total",
+    "Subtotal": "Subtotal"
+  },
+
   "paymentForm": {
     "title": "Payment Page",
     "PaymentLabels": {
@@ -177,6 +188,8 @@
       "addressMin": "Address must be at least 10 characters",
       "addressMax": "Address cannot exceed 200 characters",
       "city": "City is required",
+      "district": "District required",
+      "Neighbourhood": "Neighbourhood required",
       "country": "Country is required",
       "zipCodeMin": "Zip code must be at least 5 digits",
       "zipCodeMax": "Zip code cannot exceed 5 digits",

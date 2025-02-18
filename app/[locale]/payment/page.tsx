@@ -2,7 +2,7 @@
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
@@ -15,7 +15,6 @@ const PaymentPage = () => {
   // const t = useTranslations();
   const navigation = useRouter();
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
-  const [isClient, setIsClient] = useState(false);
   const t = useTranslations();
 
   useEffect(() => {
@@ -54,15 +53,19 @@ const PaymentPage = () => {
                 <div className="flex flex-row items-center justify-between w-full">
                   <p className="text-sm font-semibold">{item.name}</p>
                   <p className="text-sm font-medium">
-                    <span className="mr-1">Fiyat:</span>₺ {item.price}
+                    <span className="mr-1">
+                      {" "}
+                      {t("PaymentSummaryProductDetail.Price")}:
+                    </span>
+                    ₺{item.price}
                   </p>
                 </div>
                 <div className="w-full">
                   <p className="text-xs font-semibold text-gray-700">
-                    Beden - {item.size}
+                    {t("PaymentSummaryProductDetail.size")} - {item.size}
                   </p>
                   <p className="text-xs font-semibold text-gray-700">
-                    Renk - {item.color}
+                    {t("PaymentSummaryProductDetail.color")}- {item.color}
                   </p>
                 </div>
               </div>
@@ -71,20 +74,22 @@ const PaymentPage = () => {
           <div className="flex flex-col justify-center items-center w-full gap-2 my-3">
             <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
               <p>
-                Alt Toplam •{" "}
+                {t("PaymentSummaryProductDetail.Subtotal")} •{" "}
                 {cartProducts.reduce((total, item) => {
                   return total + item.quantity;
                 }, 0)}{" "}
-                Ürün
+                {t("PaymentSummaryProductDetail.Product")}
               </p>
               <p className="font-semibold text-lg">₺ {total.toFixed(2)}</p>
             </div>
             <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
-              <p>Kargo</p>
-              <p className="font-semibold text-sm">Ücretsiz</p>
+              <p> {t("PaymentSummaryProductDetail.Shipping")}</p>
+              <p className="font-semibold text-sm">
+                {t("PaymentSummaryProductDetail.ShippingText")}
+              </p>
             </div>
             <div className="flex flex-row justify-between items-center text-xl font-semibold w-full">
-              <p>Toplam</p>
+              <p> {t("PaymentSummaryProductDetail.Total")}</p>
               <p>₺ {total.toFixed(2)}</p>
             </div>
           </div>

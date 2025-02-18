@@ -6,7 +6,6 @@ import il from "@/data/il.json";
 import ice from "@/data/ilce.json";
 import { Field, Form, Formik } from "formik";
 import { BasketItem } from "@/types";
-import { orderSchema } from "@/error/orderSchema";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
@@ -18,6 +17,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
+import { useOrderValidationSchema } from "@/error/orderSchema";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
@@ -113,6 +113,7 @@ export default function PaymentForm() {
     //});
   };
 
+  const validationSchema = useOrderValidationSchema();
   return (
     <div className="flex flex-col gap-y-6 pr-6 py-6">
       {loading ? (
@@ -156,7 +157,7 @@ export default function PaymentForm() {
             },
           }}
           onSubmit={_handleSubmit}
-          validationSchema={orderSchema}
+          validationSchema={validationSchema}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
