@@ -27,7 +27,7 @@ function PaymentCallback() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ conversationId, paymentId }) // Doğru JSON body formatı
+            body: JSON.stringify({ conversationId:conversationId, paymentId:paymentId }) // Doğru JSON body formatı
         })
             .then((response) => response.json())
             .then((data) => {
