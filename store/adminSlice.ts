@@ -80,7 +80,6 @@ export const createCategoryDispatch = (value: object) => async(dispatch) => {
        toast.success(res.data.message);
     }).catch(err => {
         dispatch(loading(false))
-        console.log(err)
         toast.error(err.response.data);
     }).finally(()=> {
         dispatch(loading(false))

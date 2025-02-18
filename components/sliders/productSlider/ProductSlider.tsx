@@ -38,8 +38,6 @@ function ProductSlider() {
     dispatch(getNewSeasonProductsDispatch(0, 10));
   }, [dispatch]);
 
-  console.log(newSeasonProducts);
-
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
       <button
