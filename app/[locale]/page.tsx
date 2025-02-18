@@ -25,6 +25,7 @@ export default function Home() {
         </HomeContainer>
 
         <Brand
+          color="standart"
           title={t("brand.title")}
           description={t("brand.description")}
           buttonText={t("brand.buttonText")}
@@ -48,6 +49,7 @@ export default function Home() {
           buttonText={t("brand.buttonText")}
           desktopImageUrl="/images/Brand/brand2.jpg"
           mobileImageUrl="/images/Brand/brand2.jpg"
+          color="standart"
           link="/products"
         />
       </GradientColorContainer>

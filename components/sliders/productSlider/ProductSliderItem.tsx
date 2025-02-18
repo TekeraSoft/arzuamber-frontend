@@ -54,11 +54,23 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         <hr className="w-full" />
 
         <div className="flex  lex-row justify-between items-center w-full">
-          <div className="flex flex-row items-start justify-center gap-2">
-            <p className="text-red-700 text-sm line-through">
-              {product.price}₺
-            </p>
+          <div className="flex justify-center items-center gap-2">
+            {product.discountPrice > 0 ? (
+              <>
+                <span className="text-red-700 text-sm line-through">
+                  {product.price}₺
+                </span>
+                <p className="text-secondary text-base font-semibold">
+                  {product.discountPrice}₺
+                </p>
+              </>
+            ) : (
+              <p className="text-secondary text-base font-semibold">
+                {product.price}₺
+              </p>
+            )}
           </div>
+
           <Link
             className="flex items-center justify-center "
             href={`/product/${product?.slug}`}
