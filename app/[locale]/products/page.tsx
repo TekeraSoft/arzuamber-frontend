@@ -23,7 +23,7 @@ function Products() {
   const pageCount = Math.ceil(products.length / productsPerPage);
 
   useEffect(() => {
-    dispatch(getAllProductsDispatch(0, 10));
+    dispatch(getAllProductsDispatch(0, 25));
   }, [dispatch]);
 
   return (

@@ -60,6 +60,8 @@ function CartSidebar() {
     dispatch(closeCartModal());
   };
 
+  console.log(cartProducts)
+
   return (
     <div>
       {isCartModalOpen && (
@@ -129,7 +131,7 @@ function CartSidebar() {
                           <div className="w-16 flex justify-center items-center">
                             <Button
                               type="button"
-                              onClick={() => removeItemFromCart(cart.id)}
+                              onClick={() => removeItemFromCart({id:cart.id, color: cart.color})}
                               icon={MdOutlineDeleteOutline}
                               iconSize={20}
                               color="third"

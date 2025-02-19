@@ -35,7 +35,7 @@ function ProductSlider() {
   );
 
   useEffect(() => {
-    dispatch(getNewSeasonProductsDispatch(0, 10));
+    dispatch(getNewSeasonProductsDispatch(0, 20));
   }, [dispatch]);
 
   function CustomLeftArrow({ onClick }: ArrowProps) {
