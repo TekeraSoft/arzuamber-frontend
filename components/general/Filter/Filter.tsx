@@ -298,7 +298,7 @@ function Filter() {
       {/* Desktop'ta sabit filtreler */}
       <div className="hidden md:flex flex-col gap-4 w-3/4">
         <h3 className="text-center text-2xl font-bold text-primary border-b border-secondary">
-          Filter
+          {t("Filter.title")}
         </h3>
 
         {/* Bedenler */}
