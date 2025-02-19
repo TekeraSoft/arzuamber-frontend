@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
@@ -11,6 +11,7 @@ import CartSidebar from "../cartclient/CartSideBar";
 import GradientColorContainer from "../Containers/BackGroundImageContainer";
 import { usePathname } from "@/i18n/routing";
 import { PrimeReactProvider } from "primereact/api";
+import { useRouter } from "next/navigation";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -18,6 +19,14 @@ interface RoutesLayoutProps {
 
 function LayoutProvider({ children }: RoutesLayoutProps) {
   const path = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (path.startsWith("/profile")) {
+      // '/profile' sayfasına gidilmeye çalışıldığında anasayfaya yönlendir
+      router.push("/");
+    }
+  }, [path, router]);
 
   return (
     <div className={`flex flex-col `}>

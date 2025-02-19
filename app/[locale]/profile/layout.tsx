@@ -56,7 +56,7 @@ export default function ProfileLayout({
         </div>
 
         {/* Topbar for mobile */}
-        <div className="md:hidden flex justify-between items-center p-4 bg-secondary text-white">
+        <div className="md:hidden flex justify-between items-center p-5 bg-secondary text-white">
           <h3 className="text-lg font-semibold"> {t("profile.menuTitle")}</h3>
           <button onClick={toggleMenu} className="text-white">
             {/* Hamburger icon for mobile menu */}
@@ -97,7 +97,7 @@ export default function ProfileLayout({
         )}
 
         {/* Main content area */}
-        <div className="flex-1 h-full w-full min-h-[500px] ">{children}</div>
+        <div className="flex-1 h-full w-full min-h-[400px] ">{children}</div>
       </div>
     </div>
   );

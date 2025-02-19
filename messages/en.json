@@ -259,9 +259,9 @@
 
   "profileUpdate": {
     "updateInfo": "Update Your Info",
-    "email": "Email Address",
+    "address": "Detail Address...",
     "phone": "Phone Number",
-    "updateEmail": "Update Email",
+    "updateAddress": "Update Address",
     "updatePhone": "Update Phone"
   },
   "ordersPage": {

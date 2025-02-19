@@ -87,7 +87,7 @@ function OrderPage() {
   };
 
   return (
-    <div className="md:px-5 py-2 bg-gray-50">
+    <div className="px-5 py-2 bg-gray-50">
       {/* Show message if there are no orders */}
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col justify-center items-center  text-center py-8">
@@ -99,7 +99,7 @@ function OrderPage() {
         <>
           {/* Orders List */}
           {currentOrders.map((order) => (
-            <div key={order.id} className="mb-8 border-b pb-6 w-full">
+            <div key={order.id} className="mb-8 border-b  w-full">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-base md:text-lg font-semibold">
                   {t("ordersPage.order")} #{order.id}
