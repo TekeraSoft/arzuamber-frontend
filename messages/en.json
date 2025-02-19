@@ -260,6 +260,7 @@
   "profileUpdate": {
     "updateInfo": "Update Your Info",
     "address": "Detail Address...",
+    "email": "Email",
     "phone": "Phone Number",
     "updateAddress": "Update Address",
     "updatePhone": "Update Phone"
