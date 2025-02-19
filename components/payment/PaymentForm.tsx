@@ -368,7 +368,7 @@ export default function PaymentForm() {
                 {/*  BILLING ADDRESS */}
                 <div className="flex flex-col gap-y-4">
                   <div className="flex flex-row items-center w-full justify-between">
-                    <span className="text-xs font-semibold flex  justify-center items-center gap-1">
+                    <span className="text-xs md:text-sm font-semibold flex  justify-center items-center gap-1">
                       {t("paymentForm.PaymentLabels.Adress.otherAdressLabel")}
                       <IoIosArrowRoundForward size={25} className="" />
                     </span>

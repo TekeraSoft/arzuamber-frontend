@@ -129,13 +129,14 @@ const Footer = () => {
             <p className="text-sm text-center mb-4 md:mb-0">
               {t("footer.copyright")}
             </p>
-
             <div className="relative w-[300px] h-[30px] mb-4 md:mb-0 flex items-center">
               <Image
                 src="/images/utils/iyzicoImages.png"
                 alt="Iyzico Image"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw" // Adjust as needed
                 className="object-contain"
+                priority
               />
             </div>
 
