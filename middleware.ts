@@ -26,7 +26,6 @@ export default async function middleware(req) {
   const isTokenExpired = decodedToken?.exp < Math.floor(Date.now() / 1000);
 
   if (isAdminRoute && (isTokenExpired || !decodedToken?.role.includes("ADMIN"))) {
-    console.log("Oturum süresi doldu veya yetkisiz erişim!");
 
     const baseUrl = new URL("/", req.url);
     const response = NextResponse.redirect(baseUrl);

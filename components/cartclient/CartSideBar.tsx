@@ -60,8 +60,6 @@ function CartSidebar() {
     dispatch(closeCartModal());
   };
 
-  console.log(cartProducts)
-
   return (
     <div>
       {isCartModalOpen && (
