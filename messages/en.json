@@ -476,6 +476,8 @@
     "requiredText": "This field is required !",
     "ButtonText": "Go To Home Page ",
     "somethingWentWrong": "Something went wrong. Please try again later.",
-    "serverError": "Oops! There seems to be a problem with the server."
+    "serverError": "Oops! There seems to be a problem with the server.",
+    "pageNotFoundTitle": "Page Not Found",
+    "pageNotFoundText": "The page you're looking for could not be found. Please check the URL or go back to the home page."
   }
 }

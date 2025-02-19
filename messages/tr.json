@@ -471,6 +471,8 @@
     "requiredText": "Bu alan zorunlu !",
     "ButtonText": "Ana sayfaya git",
     "somethingWentWrong": "Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin.",
-    "serverError": "Hoppala! Sunucuda bir sorun oluşmuş gibi görünüyor."
+    "serverError": "Hoppala! Sunucuda bir sorun oluşmuş gibi görünüyor.",
+    "pageNotFoundTitle": "Sayfa Bulunamadı",
+    "pageNotFoundText": "Aradığınız sayfa bulunamadı. Lütfen URL'yi kontrol edin veya anasayfaya geri dönün."
   }
 }
