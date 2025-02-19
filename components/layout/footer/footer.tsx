@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { RootState } from "@/store/store";
 import Button from "../../general/Button";
 import Image from "next/image";
@@ -141,14 +141,14 @@ const Footer = () => {
             </div>
 
             {/* Social Media */}
-            <div className="flex gap-5">
+            <div className="flex gap-5 my-2 ">
               <Link
                 href={socialLinks?.facebook || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-primary transition"
               >
-                <FaFacebookF size={20} />
+                <FaFacebookF size={21} />
               </Link>
               <Link
                 href={socialLinks?.instagram || "#"}
@@ -156,15 +156,15 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-primary transition"
               >
-                <FaInstagram size={20} />
+                <FaInstagram size={23} />
               </Link>
               <Link
-                href={socialLinks?.twitter || "#"}
+                href={socialLinks?.whatsapp || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-primary transition"
               >
-                <FaTwitter size={20} />
+                <FaWhatsapp size={23} />
               </Link>
             </div>
           </div>

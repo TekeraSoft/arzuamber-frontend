@@ -7,11 +7,11 @@ export default function Page() {
 
   return (
     <PageContainer>
-      <div className=" flex flex-col justify-center items-center  gap-5">
-        <h1 className="text-lg  md:text-4xl text-gray-800 font-bold text-center">
+      <div className="flex flex-col justify-center items-center  gap-5">
+        <h1 className="text-xl  md:text-4xl text-gray-800 font-bold text-center">
           {t("ReturnAndCancelPolicy.title")}
         </h1>
-        <div className=" relative w-full h-[500px]">
+        <div className=" relative w-full h-[250px] md:h-[500px]">
           <Image
             src="/images/utils/boutique-4633332_1280.jpg" // Kendi resminizi buraya ekleyin
             alt="Return and Cancel Policy Image"
@@ -21,7 +21,7 @@ export default function Page() {
           />
         </div>
 
-        <p className="text-gray-500  text-sm  text-start tracking-wide">
+        <p className="text-gray-500  text-xs md:text-sm  text-start tracking-wide">
           {t("ReturnAndCancelPolicy.content")}
         </p>
       </div>
