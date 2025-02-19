@@ -9,7 +9,7 @@ import { BasketItem } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
-import { FaUser } from "react-icons/fa";
+import { FaLongArrowAltRight, FaUser } from "react-icons/fa";
 import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
+import { IoIosArrowForward, IoIosArrowRoundForward } from "react-icons/io";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
@@ -115,7 +116,7 @@ export default function PaymentForm() {
 
   const validationSchema = useOrderValidationSchema();
   return (
-    <div className="flex flex-col gap-y-6 pr-6 py-6">
+    <div className="flex flex-col  gap-2 py-3 ">
       {loading ? (
         <Loading />
       ) : (
@@ -154,6 +155,7 @@ export default function PaymentForm() {
               country: "Turkey",
               address: "",
               zipCode: "",
+              apartment: "",
             },
           }}
           onSubmit={_handleSubmit}
@@ -366,9 +368,9 @@ export default function PaymentForm() {
                 {/*  BILLING ADDRESS */}
                 <div className="flex flex-col gap-y-4">
                   <div className="flex flex-row items-center w-full justify-between">
-                    <span className="text-md">
+                    <span className="text-xs font-semibold flex  justify-center items-center gap-1">
                       {t("paymentForm.PaymentLabels.Adress.otherAdressLabel")}
-                      {` ->`}
+                      <IoIosArrowRoundForward size={25} className="" />
                     </span>
                     <InputSwitch
                       checked={openBillingAddress}
@@ -436,7 +438,7 @@ export default function PaymentForm() {
                             "paymentForm.PaymentLabels.Adress.District"
                           )}
                         >
-                          <option value="" selected disabled>
+                          <option value="" disabled>
                             {t("paymentForm.PaymentLabels.choose")}
                           </option>
                           {billingStates.map((item, index) => (
@@ -498,9 +500,9 @@ export default function PaymentForm() {
                   <h3 className="text-xl font-semibold text-center">
                     {t("paymentForm.PaymentLabels.PaymentPageTitle")}
                   </h3>
-                  <div className="p-inputgroup flex-1 relative">
+                  <div className="p-inputgroup flex-1 relative ">
                     <span className="p-inputgroup-addon">
-                      <FaUser size={24} />
+                      <FaUser className="text-base md:text-xl" />
                     </span>
                     <InputText
                       value={values.paymentCard.cardHolderName}
@@ -510,7 +512,7 @@ export default function PaymentForm() {
                           e.target.value
                         )
                       }
-                      className={`border px-4 text-md placeholder:text-md ${
+                      className={`border  px-4 text-md placeholder:text-md  ${
                         errors.paymentCard?.cardHolderName && "border-red-600"
                       }`}
                       placeholder={t(
@@ -550,7 +552,7 @@ export default function PaymentForm() {
                         </span>
                       )}
                   </div>
-                  <div className="grid grid-cols-2 gap-x-2 justify-between mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 justify-between mb-4">
                     <div className="p-inputgroup flex-1">
                       <span className="p-inputgroup-addon">
                         <VscCreditCard size={24} />
@@ -563,7 +565,7 @@ export default function PaymentForm() {
                           )
                         }
                         mask="99"
-                        className={`border px-2 text-md placeholder:text-md ${
+                        className={`border px-2 text-md placeholder:text-md  ${
                           errors.paymentCard?.expireMonth &&
                           touched.paymentCard?.cardNumber &&
                           "border-red-600"

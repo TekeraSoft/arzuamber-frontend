@@ -82,7 +82,7 @@ function LoginForm() {
           <span className="w-full  flex flex-col">
             <label className={"font-medium"}>{t("loginForm.email")}</label>
             <InputText
-              id="email"
+              id="LoginEmail"
               value={formik.values.email}
               onChange={formik.handleChange}
               className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
@@ -101,7 +101,7 @@ function LoginForm() {
           <span className="w-full flex flex-col">
             <label className={"font-medium"}>{t("loginForm.password")}</label>
             <InputText
-              id="password"
+              id="LoginpPassword"
               value={formik.values.password}
               type={"password"}
               onChange={formik.handleChange}

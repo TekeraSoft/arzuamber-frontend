@@ -61,6 +61,7 @@ const Footer = () => {
               height={40}
               alt="footer logo"
               className="object-contain"
+              priority
             />
 
             {/* About Us */}
@@ -135,7 +136,6 @@ const Footer = () => {
                 alt="Iyzico Image"
                 fill
                 className="object-contain"
-                sizes="(max-width: 768px) 150px, 300px"
               />
             </div>
 
