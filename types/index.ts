@@ -31,6 +31,13 @@ export type Product = {
   colorSize: ColorSize[]
 }
 
+export type Category = {
+  id: string;
+  name: string;
+  subCategories: string[];
+  lang: string;
+}
+
 export type BasketItem = {
   id: string;
   name: string,

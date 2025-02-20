@@ -44,7 +44,7 @@ export const productSlice = createSlice({
 
 export const getNewSeasonProductsDispatch = (page: number, size: number) => async(dispatch) => {
   dispatch(loading(true))
-  getGuardRequest({controller:'product',action: 'get-all-new-season',params: {page, size}}).then(res=> {
+  getGuardRequest({controller:'product',action: 'get-all-new-season',params: {page:page, size:size}}).then(res=> {
     dispatch(getNewSeasonProducts(res.data))
     dispatch(loading(false))
   }).finally(()=> {
@@ -54,7 +54,7 @@ export const getNewSeasonProductsDispatch = (page: number, size: number) => asyn
 
 export const getAllProductsDispatch = (page: number, size: number) => async(dispatch) => {
   dispatch(loading(true))
-  getGuardRequest({controller:'product', action: 'products',params:{page, size}}).then(res=> {
+  getGuardRequest({controller:'product', action: 'products',params:{page:page, size:size}}).then(res=> {
     dispatch(getProducts(res.data))
     dispatch(loading(false))
   }).finally(()=> {

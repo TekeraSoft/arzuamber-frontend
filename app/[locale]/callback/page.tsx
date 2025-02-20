@@ -12,8 +12,6 @@ function PaymentCallback() {
         const paymentId = params.get('paymentId');
         const conversationId = params.get('conversationId');
 
-        console.log("Payment ID:", paymentId, "Conversation ID:", conversationId);
-
         // Eğer parametreler yoksa işlem yapma
         if (!paymentId || !conversationId) {
             setMessage("Geçersiz ödeme bilgileri.");

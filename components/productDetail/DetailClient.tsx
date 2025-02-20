@@ -5,8 +5,9 @@ import Carousel, { ArrowProps } from "react-multi-carousel";
 import PageContainer from "../Containers/PageContainer";
 import {Product} from "@/types";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/store/store";
@@ -37,6 +38,7 @@ interface productProps {
 
 const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const zoomRef = useRef(null);
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0])
   const [errorState, setErrorState] = useState({sizeError: false, colorError: false});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -225,14 +227,23 @@ const DetailClient = ({ product }: productProps) => {
         </div>
         <Lightbox
             open={isModalOpen}
-            close={toggleOpen(false)}
+            plugins={[Zoom]}
+            close={() => toggleOpen(false)} // ❌ Hata düzeltildi
             index={photoIndex}
+            zoom={{
+              maxZoomPixelRatio: 3, // 🔥 Zoom seviyesi artırıldı
+              zoomInMultiplier: 2,
+              doubleTapDelay: 300
+            }}
+            inline={{
+              style: { width: "100%", maxWidth: "900px", aspectRatio: "3 / 2" },
+            }}
             slides={stockSizeState?.images?.map(img => ({
               src: `${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`
             }))}
-            on={{view: updateIndex}}
-            animation={{fade: 0}}
-            controller={{closeOnPullDown: true, closeOnBackdropClick: true}}
+            on={{ view: updateIndex }}
+            animation={{ fade: 0 }}
+            controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         />
       </div>
     </PageContainer>

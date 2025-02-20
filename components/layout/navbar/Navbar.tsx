@@ -22,7 +22,7 @@ function Navbar() {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
-  const { cartProducts } = useSelector((state: RootState) => state.cart);
+  const {cartProducts} = useSelector((state: RootState) => state.cart);
 
   // locale lang changes
   const supportedLocales = ["tr", "en"];
@@ -48,11 +48,11 @@ function Navbar() {
 
   return (
     <header className="text-mywhite z-50 fixed w-full ">
-      {/* Top Bar */}
-      <TopBar />
+      {/* <TopBar /> */}
+
 
       {/* Navbar */}
-      <nav className="bg-transparent backdrop-blur-2xl bg-opacity-0 w-full border-b border-black md:border-none ">
+      <nav className="bg-white  w-full border-b border-black md:border-none ">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Logo />
