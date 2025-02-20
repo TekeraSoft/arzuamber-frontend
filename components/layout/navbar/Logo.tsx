@@ -12,6 +12,7 @@ function Logo() {
           width={250}
           height={50}
           className="object-cover bg-center bg-cover w-36 md:w-64"
+          priority
         />
       </div>
     </Link>

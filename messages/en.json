@@ -111,6 +111,17 @@
     "readMore": "Read More"
   },
 
+  "PaymentSummaryProductDetail": {
+    "size": "Size",
+    "color": "Color",
+    "Price": "Price",
+    "Product": "Product",
+    "Shipping": "Shipping",
+    "ShippingText": "Free",
+    "Total": "Total",
+    "Subtotal": "Subtotal"
+  },
+
   "paymentForm": {
     "title": "Payment Page",
     "PaymentLabels": {
@@ -121,10 +132,10 @@
       "CVC": "CVC",
       "CardDate": {
         "title": "Card Expiry Date",
-        "expireMonthLabel": "Expiry Month",
+        "expireMonthLabel": "Month",
         "expireMonthPlaceHolder": "Choose Month",
         "expireYearLabelPlaceHolder": "Choose Year",
-        "expireYearLabel": "Expiry Year"
+        "expireYearLabel": "Year"
       },
       "BuyerInfo": {
         "title": "Buyer Information",
@@ -136,10 +147,15 @@
       "Adress": {
         "zipcode": "Zip Code",
         "cities": "Select City",
+        "District": "District",
+        "Neighborhood": "Neighborhood",
+        "DetailedAddress": "Detailed address...",
         "OrderAdress": "Order Address",
         "otherAdressLabel": "Send My Invoice to a Different Address",
         "BillingAddress": "Billing Address"
-      }
+      },
+      "Button": "Payment",
+      "choose": "Select"
     },
 
     "paymentCard": {
@@ -172,6 +188,8 @@
       "addressMin": "Address must be at least 10 characters",
       "addressMax": "Address cannot exceed 200 characters",
       "city": "City is required",
+      "district": "District required",
+      "Neighbourhood": "Neighbourhood required",
       "country": "Country is required",
       "zipCodeMin": "Zip code must be at least 5 digits",
       "zipCodeMax": "Zip code cannot exceed 5 digits",
@@ -241,9 +259,10 @@
 
   "profileUpdate": {
     "updateInfo": "Update Your Info",
-    "email": "Email Address",
+    "address": "Detail Address...",
+    "email": "Email",
     "phone": "Phone Number",
-    "updateEmail": "Update Email",
+    "updateAddress": "Update Address",
     "updatePhone": "Update Phone"
   },
   "ordersPage": {
@@ -358,13 +377,13 @@
 
   "DistanceSellingContract": {
     "contractTitle": "Distance Selling Agreement",
-    "contractText1": "All users who complete the membership process are deemed to have read and accepted the sales agreement. The Sales Agreement is an online sales agreement between www.akyabutik.com and the Customer.",
+    "contractText1": "All users who complete the membership process are deemed to have read and accepted the sales agreement. The Sales Agreement is an online sales agreement between www.arzuamber.com and the Customer.",
     "contractText2": "The subject of this agreement is the sale and delivery of the product whose attributes and sales price are stated below, in accordance with the provisions of the Regulation on the Procedures and Principles of Distance Contracts under Law No. 4077 on the Protection of Consumers, and outlines the rights and obligations of the parties.",
     "SellerInformation": {
       "title": "SELLER INFORMATION",
       "appellation": "Title",
       "companyName": "ARZUAMBER",
-      "companyAddress": "Kışla Neighborhood, Street 40, Kayalar Apartment, No: 8,Block A, Floor: 4, Apartment: 7Antalya,Muratpasa,Turkey",
+      "companyAddress": "Kışla Neighborhood, Street 40, Kayalar Apartment, No: 8,Block A, Floor: 4, Apartment: 7 Antalya,Muratpasa,Turkey",
       "phone": "Phone",
       "phoneNumber": "+90-534-260-8385",
       "email": "Email",
@@ -373,7 +392,7 @@
     },
     "BuyerInformation": {
       "title": "BUYER INFORMATION",
-      "text": "All members: All buyers who register and shop on ARZUAMBER's e-commerce store at www.arzuamber.com. (Hereinafter referred to as buyer or customer)."
+      "text": "All members: All buyers who register and make purchases on the e-commerce store www.arzuamber.com, which belongs to ARZUAMBER MODA TİCARET VE SANAYİ LİMİTED ŞİRKETİ. (From now on, these individuals will be referred to as 'buyer' or 'customer'.)"
     },
     "ContractAndSubject": {
       "title": "SUBJECT OF THE AGREEMENT AND PRODUCT INFORMATION",
@@ -381,7 +400,7 @@
     },
     "GeneralProvisions": {
       "title": "GENERAL TERMS",
-      "text": "5.1 - The BUYER declares that they have read and understood all preliminary information regarding the product, its price, payment method, and delivery terms, and have confirmed their agreement electronically. 5.2 - The product will be delivered within the time stated in the preliminary information, depending on the distance from the buyer's place of residence, within a legal maximum of 30 days. 5.3 - If the product is to be delivered to someone else, the SELLER is not responsible for the refusal of acceptance by the recipient. 5.4 - The SELLER is responsible for delivering the product in good condition, complete, and in accordance with the specifications mentioned in the order, along with any warranty certificates and manuals. 5.5 - The product will only be delivered if the agreement has been confirmed electronically and the payment has been made by the buyer through their chosen payment method. If the payment is not completed or is canceled in bank records, the SELLER is relieved from the obligation to deliver the product. 5.6 - If, after delivery of the product, the buyer's credit card is used fraudulently or unlawfully by unauthorized persons, and the relevant bank or financial institution does not pay the product price to the SELLER, the BUYER must return the product within 3 business days to the SELLER. Shipping costs in such a case are borne by the BUYER. 5.7 - If the SELLER cannot deliver the product within the specified time due to force majeure or extraordinary events like bad weather, disruption of transport, etc., the SELLER must inform the BUYER. In this case, the BUYER may cancel the order, exchange it with a similar product, and/or delay the delivery until the obstacle is removed. If the BUYER cancels the order, the SELLER will initiate a refund to the BUYER's credit card within 7 days and inform the BUYER by email. 5.8 - If the product delivered to the BUYER or the recipient is defective or damaged, it must be returned to the SELLER within 3 days from the date of delivery at the BUYER's expense for repair or replacement. 5.9 - This agreement becomes valid once electronically approved by the buyer (after membership registration) and sent to akyabutik.com."
+      "text": "5.1 - The BUYER declares that they have read and understood all preliminary information regarding the product, its price, payment method, and delivery terms, and have confirmed their agreement electronically. 5.2 - The product will be delivered within the time stated in the preliminary information, depending on the distance from the buyer's place of residence, within a legal maximum of 30 days. 5.3 - If the product is to be delivered to someone else, the SELLER is not responsible for the refusal of acceptance by the recipient. 5.4 - The SELLER is responsible for delivering the product in good condition, complete, and in accordance with the specifications mentioned in the order, along with any warranty certificates and manuals. 5.5 - The product will only be delivered if the agreement has been confirmed electronically and the payment has been made by the buyer through their chosen payment method. If the payment is not completed or is canceled in bank records, the SELLER is relieved from the obligation to deliver the product. 5.6 - If, after delivery of the product, the buyer's credit card is used fraudulently or unlawfully by unauthorized persons, and the relevant bank or financial institution does not pay the product price to the SELLER, the BUYER must return the product within 3 business days to the SELLER. Shipping costs in such a case are borne by the BUYER. 5.7 - If the SELLER cannot deliver the product within the specified time due to force majeure or extraordinary events like bad weather, disruption of transport, etc., the SELLER must inform the BUYER. In this case, the BUYER may cancel the order, exchange it with a similar product, and/or delay the delivery until the obstacle is removed. If the BUYER cancels the order, the SELLER will initiate a refund to the BUYER's credit card within 7 days and inform the BUYER by email. 5.8 - If the product delivered to the BUYER or the recipient is defective or damaged, it must be returned to the SELLER within 3 days from the date of delivery at the BUYER's expense for repair or replacement. 5.9 - This agreement becomes valid once electronically approved by the buyer (after membership registration) and sent to www.arzuamber.com."
     },
     "RightOfWithdrawal": {
       "title": "RIGHT OF WITHDRAWAL",
@@ -424,7 +443,7 @@
 
   "ReturnAndCancelPolicy": {
     "title": "Cancellation and Refund Policy",
-    "content": "You can exchange the products you have purchased from www.akyabutik.com within 14 DAYS from the invoice date, provided that they are unused. To be eligible for a return or exchange, the products must NOT BE WORN, NOT DAMAGED, NOT HAVE REMOVED TAGS, and MUST NOT HAVE LOST THEIR USABILITY. Create an easy return request, write to our WhatsApp line, and wait for the SHIPPING CODE. Discounted products are sold at the lowest prices; therefore, they cannot be returned, only exchanged. If you wish to make an exchange, you can contact us via our WhatsApp line at +90-534-260-8385 to request support. Shipping costs for returns are the responsibility of the customer (100 TL shipping fee). Once the returned product reaches our company, it will be inspected, and you will be informed before the refund is processed. For return conditions, simply write to our WhatsApp line. Our products undergo quality control. In rare cases where a defective product is sent, please contact our WhatsApp line at +90-534-260-8385 and send a picture of the incorrect or defective product."
+    "content": "You can exchange the products you have purchased from www.arzuamber.com within 14 DAYS from the invoice date, provided that they are unused. To be eligible for a return or exchange, the products must NOT BE WORN, NOT DAMAGED, NOT HAVE REMOVED TAGS, and MUST NOT HAVE LOST THEIR USABILITY. Create an easy return request, write to our WhatsApp line, and wait for the SHIPPING CODE. Discounted products are sold at the lowest prices; therefore, they cannot be returned, only exchanged. If you wish to make an exchange, you can contact us via our WhatsApp line at +90-534-260-8385 to request support. Shipping costs for returns are the responsibility of the customer (100 TL shipping fee). Once the returned product reaches our company, it will be inspected, and you will be informed before the refund is processed. For return conditions, simply write to our WhatsApp line. Our products undergo quality control. In rare cases where a defective product is sent, please contact our WhatsApp line at +90-534-260-8385 and send a picture of the incorrect or defective product."
   },
 
   "footer": {
@@ -458,6 +477,8 @@
     "requiredText": "This field is required !",
     "ButtonText": "Go To Home Page ",
     "somethingWentWrong": "Something went wrong. Please try again later.",
-    "serverError": "Oops! There seems to be a problem with the server."
+    "serverError": "Oops! There seems to be a problem with the server.",
+    "pageNotFoundTitle": "Page Not Found",
+    "pageNotFoundText": "The page you're looking for could not be found. Please check the URL or go back to the home page."
   }
 }
