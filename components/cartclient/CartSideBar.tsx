@@ -18,7 +18,7 @@ import EmptyCart from "./EmptyCart";
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const {cartProducts, total} = useSelector((state: RootState) => state.cart);
+  const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -89,8 +89,8 @@ function CartSidebar() {
             ) : (
               <>
                 <div className="flex flex-col gap-5 w-full">
-                  <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-1 rounded-lg">
-                    {cartProducts.map((cart,index) => {
+                  <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-2 rounded-lg">
+                    {cartProducts.map((cart, index) => {
                       return (
                         <div
                           key={index}
@@ -129,7 +129,12 @@ function CartSidebar() {
                           <div className="w-16 flex justify-center items-center">
                             <Button
                               type="button"
-                              onClick={() => removeItemFromCart({id:cart.id, color: cart.color})}
+                              onClick={() =>
+                                removeItemFromCart({
+                                  id: cart.id,
+                                  color: cart.color,
+                                })
+                              }
                               icon={MdOutlineDeleteOutline}
                               iconSize={20}
                               color="third"
@@ -140,9 +145,7 @@ function CartSidebar() {
                       );
                     })}
                   </div>
-                  <CartSummary
-                    total={total}
-                  />
+                  <CartSummary total={total} />
                 </div>
               </>
             )}

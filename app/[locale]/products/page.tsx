@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { getAllProductsDispatch } from "@/store/productSlice";
 import Loading from "@/components/utils/Loading";
+import { useTranslations } from "next-intl";
 
 function Products() {
   const dispatch = useDispatch<AppDispatch>();
+  const t = useTranslations();
 
   const { products, filterProducts, loading } = useSelector(
     (state: RootState) => state.products
@@ -33,7 +35,11 @@ function Products() {
           <Filter />
 
           <div className="w-full mb-3 h-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 space-y-5 md:space-y-0 items-start ">
+            <h2 className="text-center mb-5 text-3xl pb-2 font-semibold ">
+              {t("allProduct.allProducts")}
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 gap-6  items-start ">
               {loading ? (
                 <Loading />
               ) : filterProducts.length > 0 ? (

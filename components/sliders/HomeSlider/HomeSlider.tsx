@@ -87,7 +87,7 @@ function HomeSlider() {
   }, []);
 
   return (
-    <div className="homepage-slider-div relative w-full mx-auto">
+    <div className="homepage-slider-div relative w-full mx-auto h-full">
       {loading ? (
         <Loading />
       ) : (

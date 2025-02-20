@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import Image from "next/image";
-import { Product } from "@/types/Props";
 import { Link } from "@/i18n/routing";
 import Button from "@/components/general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { Product } from "@/types";
 
 interface ProductsSliderItemProps {
   product: Product;

@@ -4,9 +4,9 @@ import Loading from "../../utils/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
-import { Product } from "@/types/Props";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { getNewSeasonProductsDispatch } from "@/store/productSlice";
+import { Product } from "@/types";
 
 function ProductSlider() {
   const dispatch = useDispatch<AppDispatch>();
@@ -74,7 +74,7 @@ function ProductSlider() {
           ssr={true}
           infinite={true}
           autoPlay={true}
-          autoPlaySpeed={1000}
+          autoPlaySpeed={3000}
           keyBoardControl={true}
           customLeftArrow={<CustomLeftArrow />}
           customRightArrow={<CustomRightArrow />}

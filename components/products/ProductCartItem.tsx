@@ -5,8 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import Button from "../general/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { useTranslations } from "next-intl";
-import {Product} from "@/types";
+import { Product } from "@/types";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -15,16 +14,18 @@ interface ProductsSliderItemProps {
 function ProductCartItem({ product }: ProductsSliderItemProps) {
   // Rating
   const [isHovered, setIsHovered] = useState(false);
-  const t = useTranslations("");
+
+  console.log(product.colorSize);
 
   return (
     <div
       className="group flex flex-col justify-between space-y-1   transition duration-300  relative
-     h-[650px] md:h-[600px]  md:border-none "
+    min-h-[700px]  md:border-none "
     >
       {/* Görsel Alanı */}
-      <div
-        className="relative w-full h-full bg-center bg-cover"
+      <Link
+        href={`/product/${product.slug}`}
+        className="relative w-full min-h-[600px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -48,30 +49,47 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
-        <div className=" absolute right-3 top-5 md:top-2 lg:top-3  w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30 ">
-          %{Math.round(product.discountPrice)}
-        </div>
-      </div>
+        {product.discountPrice > 0 && product.price > 0 && (
+          <div className="absolute right-3 top-5 md:top-2 lg:top-3 w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30">
+            %
+            {Math.round(
+              ((product.price - product.discountPrice) / product.price) * 100
+            )}
+          </div>
+        )}
+      </Link>
 
       {/* Ürün Detayları */}
       <div className=" flex flex-col space-y-1  gap-2 w-full">
-        <h2 className="font-medium text-xl  text-secondary  ">
+        <h2 className="font-medium text-xl   text-secondary  ">
           {product.name}
         </h2>
 
-        <div className="flex  lex-row justify-between items-center">
-          <div className="flex   flex-row items-start justify-center  gap-2">
-            <p className="text-green-600 font-bold text-base">
-              {(
-                product.price -
-                (product.price * product.discountPrice) / 100
-              ).toFixed(2)}
-              {t("productDetail.priceSymbol")}
-            </p>
-            <p className="text-red-700 text-sm line-through">
-              {product.price} {t("productDetail.priceSymbol")}
-            </p>
-          </div>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {product.colorSize.map((colorItem, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 text-sm font-medium rounded-full bg-secondary text-white"
+            >
+              {colorItem.color}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex  flex-row justify-between items-center">
+          {product.discountPrice == 0 ? (
+            <p className="text-secondary font-semibold">{product.price}₺</p>
+          ) : (
+            <div className="flex flex-col justify-center items-start">
+              <p className="text-xs line-through text-red-600 ">
+                {product.price}₺
+              </p>
+              <p text-secondary font-semibold>
+                {product.discountPrice}₺
+              </p>
+            </div>
+          )}
+
           <Link
             className="flex items-center justify-center "
             href={`/product/${product.slug}`}
