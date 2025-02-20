@@ -5,37 +5,40 @@ import { jwtDecode } from "jwt-decode";
 
 export default async function middleware(req) {
   const intlMiddleware = createMiddleware(routing);
+  const res = await intlMiddleware(req); // i18n middleware çağrısı
 
-  const res = await intlMiddleware(req); // i18n routing için mevcut middleware çağrısı
-
-  const token =
-    req.cookies.get("session-token")?.value ||
-    req.cookies.get("__Secure-next-auth.session-token");
-  if (token) {
-    req.cookies.set("Authorization", `Bearer ${token}`);
-  }
+  const token = req.cookies.get("session-token")?.value;
   const locale = req.cookies.get("NEXT_LOCALE")?.value;
 
-  const decodedToken = token ? jwtDecode(token) : undefined;
+  if (!token) {
+    return res; // Kullanıcı zaten giriş yapmamış
+  }
 
-  // Admin route koruma
+  let decodedToken;
+  try {
+    decodedToken = jwtDecode(token);
+  } catch (error) {
+    console.error("JWT decode hatası:", error);
+    return res;
+  }
+
   const isAdminRoute = req.nextUrl.pathname.startsWith(`/${locale}/admin`);
+  const isTokenExpired = decodedToken?.exp < Math.floor(Date.now() / 1000);
 
-  if (
-    isAdminRoute &&
-    (!token ||
-      decodedToken?.role[0] !== "ADMIN" ||
-      decodedToken?.exp < new Date().getTime() / 1000)
-  ) {
-    req.cookies.delete("session-token");
-    req.cookies.delete("__Secure-next-auth.session-token");
+  if (isAdminRoute && (isTokenExpired || !decodedToken?.role.includes("ADMIN"))) {
+
     const baseUrl = new URL("/", req.url);
-    return NextResponse.redirect(baseUrl);
+    const response = NextResponse.redirect(baseUrl);
+
+    // ✅ Kullanıcıyı sistemden çıkar ve token'ı temizle
+    response.cookies.set("session-token", "", { expires: new Date(0) });
+
+    return response;
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ["/", "/(tr|en)/:path*", `/(tr|en)/admin/:path*`],
+  matcher: ["/", "/(tr|en)/:path*", "/(tr|en)/admin/:path*"],
 };
