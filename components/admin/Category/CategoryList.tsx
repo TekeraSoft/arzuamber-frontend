@@ -23,7 +23,6 @@ function CategoryList() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handleDelete = (categoryId: string) => {
-    console.log(categoryId, "silindi.");
 
     try {
       toast.success("Ürün başarıyla silindi!");

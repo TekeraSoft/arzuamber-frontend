@@ -23,7 +23,7 @@ function AllProductAdminPage() {
   const [percentageValue, setPercentageValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getAllProductDispatch(0, 10));
+    dispatch(getAllProductDispatch(0, 25));
   }, [dispatch]);
 
   const formattedData = products.flatMap((product) =>

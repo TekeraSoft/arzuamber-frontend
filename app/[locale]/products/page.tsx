@@ -23,7 +23,7 @@ function Products() {
   const pageCount = Math.ceil(products.length / productsPerPage);
 
   useEffect(() => {
-    dispatch(getAllProductsDispatch(0, 10));
+    dispatch(getAllProductsDispatch(0, 25));
   }, [dispatch]);
 
   return (
@@ -47,6 +47,7 @@ function Products() {
               )}
             </div>
 
+            {/*
             <div className="flex justify-center mt-5 mb-2">
               <ReactPaginate
                 previousLabel={<FaChevronLeft className="text-gray-600" />}
@@ -61,6 +62,7 @@ function Products() {
                 disabledClassName="cursor-not-allowed text-gray-400"
               />
             </div>
+            */}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 import '@/app/[locale]/globals.css'
 import {InputText} from "primereact/inputtext";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {InputNumber} from "primereact/inputnumber";
 import {useFormik} from "formik";
 import {FiUpload} from "react-icons/fi";
@@ -11,12 +11,15 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 import {filterData} from "@/data/filterData";
 import {Checkbox} from "primereact/checkbox";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/store/store";
-import {createProductDispatch} from "@/store/adminSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {createProductDispatch, getCategoriesDispatch} from "@/store/adminSlice";
+import Resizer from 'react-image-file-resizer'
 
 export default function ProductCreatePage() {
     const dispatch = useDispatch<AppDispatch>();
+    const {categories, loading} = useSelector((state:RootState) => state.admin)
+    const [subCategoriesState,setSubCategoriesState] = useState([])
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -30,39 +33,73 @@ export default function ProductCreatePage() {
             price: 0.0,
             purchasePrice: 0.0,
         },
-        onSubmit: (values,{resetForm}) => {
+        onSubmit: async (values, { resetForm }) => {
             const formData = new FormData();
 
             // ✅ JSON verisini FormData'ya ekle
             formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));
 
-            // ✅ Görselleri ilgili `colorSize`'e göre ekle
-            values.colorSize.forEach((colorItem) => {
-                colorItem.images.forEach((image, index) => {
+            // ✅ Küçültülmüş resimleri doğrudan FormData'ya ekle
+            for (const colorItem of values.colorSize) {
+                for (const [index, image] of colorItem.images.entries()) {
                     if (image instanceof File) {
-                        const fileName = `${colorItem.color}_${index}_${image.name}`; // "blue_0_image.jpg"
+                        const fileName = `${colorItem.color}_${index}_${image.name}`;
                         formData.append("images", new File([image], fileName, { type: image.type }));
                     }
-                });
-            });
+                }
+            }
 
             dispatch(createProductDispatch(formData, resetForm));
         }
     })
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, imageIndex: number) => {
+
+    useEffect(() => {
+        dispatch(getCategoriesDispatch())
+    }, []);
+
+    const handleSelectSubCategories = (name) => {
+        const updateState = categories.find((c) => c.name === name)
+        setSubCategoriesState(updateState.subCategories)
+    }
+
+
+    const handleImageChange = async (event, index, imageIndex) => {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
 
-            const newImages = [...formik.values.colorSize];
-            if (!newImages[index].images) {
-                newImages[index].images = [];
+            // ✅ Resizer ile resmi küçült
+            const resizeImage = (file) => {
+                return new Promise((resolve) => {
+                    Resizer.imageFileResizer(
+                        file,
+                        1200, // ✅ Genişlik
+                        2400, // ✅ Yükseklik
+                        "WEBP", // ✅ Format (PNG, WEBP de olabilir)
+                        100, // ✅ Kalite (0-100 arasında)
+                        0, // ✅ Rotasyon
+                        (resizedFile) => {
+                            resolve(new File([resizedFile], file.name, { type: file.type }));
+                        },
+                        "file" // ✅ Çıktıyı doğrudan File olarak al
+                    );
+                });
+            };
+
+            try {
+                const resizedImage = await resizeImage(file);  // ✅ Resmi küçült
+                const newImages = [...formik.values.colorSize];
+
+                if (!newImages[index].images) {
+                    newImages[index].images = [];
+                }
+
+                newImages[index].images[imageIndex] = resizedImage; // ✅ Küçültülmüş resmi kaydet
+
+                formik.setFieldValue("colorSize", newImages);
+            } catch (error) {
+                console.error("Resim küçültme hatası:", error);
             }
-
-            // Dosya türünü doğrudan sakla (Base64 değil!)
-            newImages[index].images[imageIndex] = file;
-
-            formik.setFieldValue("colorSize", newImages);
         }
     };
 
@@ -184,15 +221,25 @@ export default function ProductCreatePage() {
                     <label htmlFor="price">Price</label>
                    </span>
 
-                    <span className="p-float-label">
-                    <Dropdown options={filterData?.categories.values} id="category" className='w-full'
+                    <div className={'flex flex-row gap-x-2 w-full'}>
+                        <span className="p-float-label w-full">
+                    <Dropdown options={categories.map(i => i.name)} id="category" className='w-full'
                               value={formik.values.category}
                               onChange={(e) => {
                                   formik.setFieldValue(`category`, e.target.value);
-                                  formik.setFieldValue('subCategory', e.target.value);
+                                  handleSelectSubCategories(e.target.value);
                               }}/>
                     <label htmlFor="username">Category</label>
                    </span>
+                        <span className="p-float-label w-full">
+                    <Dropdown options={subCategoriesState} id="subCategory" className='w-full'
+                              value={formik.values.subCategory}
+                              onChange={(e) => {
+                                  formik.setFieldValue(`subCategory`, e.target.value);
+                              }}/>
+                    <label htmlFor="username">Sub Category</label>
+                   </span>
+                    </div>
 
                     <span className="p-float-label">
                     <Dropdown options={filterData?.lengths.values} id="length" className='w-full'
@@ -232,7 +279,7 @@ export default function ProductCreatePage() {
                           rows={6} value={formik.values.description} onChange={formik.handleChange} id="description"/>
             </div>
             <div className='flex w-100 justify-end'>
-                <Button type='submit' className='font-bold'>Send</Button>
+                <Button type='button' onClick={formik.handleSubmit} className='font-bold'>Send</Button>
             </div>
 
         </form>

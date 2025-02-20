@@ -15,7 +15,7 @@ export const store = configureStore({
     cart: cartReducer,
     favorites: favReducer,
     products: productReducer,
-    categories: categoryReducer,
+    category: categoryReducer,
     general: generalReducer,
     blogs: blogsReducer,
     auth: authReducer,
