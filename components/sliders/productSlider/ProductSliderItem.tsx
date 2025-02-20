@@ -18,7 +18,8 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div className="flex justify-center items-center flex-col space-y-1  rounded-lg   transition duration-500 h-[500px] p-6 w-[300px] relative ">
-      <div
+      <Link
+        href={`/product/${product?.slug}`}
         className="w-[300px] md:w-[400px] h-[350px] relative"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -42,7 +43,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </div>
+      </Link>
 
       <div className="flex flex-col justify-start items-start gap-2 w-full">
         <div className="flex justify-between items-center w-full mt-1">

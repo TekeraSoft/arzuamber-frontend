@@ -1,10 +1,10 @@
 "use client";
+
 import Head from "next/head";
 import PageContainer from "@/components/Containers/PageContainer";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
-
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
@@ -36,7 +36,7 @@ function ContactPage() {
 
       <PageContainer>
         <form onSubmit={formik.handleSubmit} className="py-6">
-          <div className=" mx-auto  ">
+          <div className=" mx-auto animate__animated animate__fadeIn  ">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
                 {t("ContactPage.header")}

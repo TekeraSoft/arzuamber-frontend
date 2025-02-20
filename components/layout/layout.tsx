@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./navbar/Navbar";
