@@ -62,7 +62,7 @@ function Filter() {
   };
 
   return (
-    <div className="relative md:w-1/4 md:z-40">
+    <div className="relative md:w-1/4 z-40">
       {/* Mobil Menü Butonu */}
       <button
         onClick={toggleMenu}
