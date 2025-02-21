@@ -25,11 +25,7 @@ const PaymentPage = () => {
       {/* İçerikler için container */}
       <div className="  flex flex-col-reverse md:flex-row w-full items-start justify-center gap-2 bg-mywhite rounded-lg px-4 py-2">
         {/* Sol taraftaki içerik */}
-        <div className="md:w-1/2 w-full border my-2 rounded-lg px-3">
-          <PaymentForm />
-        </div>
 
-        {/* Sağ taraftaki içerik */}
         <div className="w-full md:w-1/2 relative bg-white py-6 border border-gray-200 px-4 my-2 rounded-lg">
           {cartProducts.map((item, index) => (
             <div
@@ -84,17 +80,28 @@ const PaymentPage = () => {
                 ₺{total.toFixed(2)}
               </p>
             </div>
+
             <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
               <p>{t("PaymentSummaryProductDetail.Shipping")}</p>
               <p className="font-semibold text-gray-600">
                 {t("PaymentSummaryProductDetail.ShippingText")}
               </p>
             </div>
+
+            <div className="flex flex-row justify-end items-center text-sm font-semibold w-full">
+              <p>{t("PaymentSummaryProductDetail.KDV")}</p>
+            </div>
+
             <div className="flex flex-row justify-between items-center text-xl font-semibold w-full border-t pt-2">
               <p>{t("PaymentSummaryProductDetail.Total")}</p>
               <p className="text-primary">₺{total.toFixed(2)}</p>
             </div>
           </div>
+        </div>
+
+        {/* Sağ taraftaki içerik */}
+        <div className="md:w-1/2 w-full border my-2 rounded-lg px-3">
+          <PaymentForm />
         </div>
       </div>
     </div>

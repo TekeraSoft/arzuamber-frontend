@@ -139,22 +139,31 @@ const DetailClient = ({ product }: productProps) => {
           <h3 className={"text-2xl font-semibold text-secondaryDark"}>
             {product.name}
           </h3>
-          <span className={"flex flex-col gap-x-4 "}>
-            {product.discountPrice !== 0 && (
-              <p className={"text-xl text-red-600 line-through font-semibold"}>
-                {product.price.toFixed(2)} ₺
-              </p>
-            )}
-            {product.discountPrice !== 0 ? (
-              <p className={"text-xl font-semibold text-green-600"}>
-                {product.discountPrice.toFixed(2)} ₺
-              </p>
-            ) : (
-              <p className={"text-xl font-semibold text-green-600"}>
-                {product.price.toFixed(2)} ₺
-              </p>
-            )}
-          </span>
+
+          <div className="w-full flex  justify-between gap-x-1">
+            <span className={"flex flex-col gap-x-4 "}>
+              {product.discountPrice !== 0 && (
+                <p
+                  className={"text-xl text-red-600 line-through font-semibold"}
+                >
+                  {product.price.toFixed(2)} ₺
+                </p>
+              )}
+              {product.discountPrice !== 0 ? (
+                <p className={"text-xl font-semibold text-green-600"}>
+                  {product.discountPrice.toFixed(2)} ₺
+                </p>
+              ) : (
+                <p className={"text-xl font-semibold text-green-600"}>
+                  {product.price.toFixed(2)} ₺
+                </p>
+              )}
+            </span>
+            <div className="text-xs font-semibold">
+              {" "}
+              {t("productDetail.KDV")}
+            </div>
+          </div>
 
           <div className="w-full flex flex-col justify-center items-start gap-1 border-b py-1">
             <div className="w-1/2 md:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  items-center">
@@ -178,7 +187,7 @@ const DetailClient = ({ product }: productProps) => {
             <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
               {t("productDetail.color")}
             </h4>
-            <div className={"flex flex-row flex-wrap gap-4 "}>
+            <div className={"flex flex-row flex-wrap gap-4 w-full"}>
               {product.colorSize.map((item, index) => (
                 <button
                   onClick={() => {
@@ -192,16 +201,19 @@ const DetailClient = ({ product }: productProps) => {
                     });
                   }}
                   key={index}
+                  className={`  ${
+                    stockSizeState?.color === item.color
+                      ? "border-2 border-secondary"
+                      : "border-0 rounded"
+                  }`}
                 >
+                  <p className="text-xs first-letter:uppercase text-center text-white bg-secondary ">
+                    {item.color}
+                  </p>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
                     width={40}
                     height={60}
-                    className={`${
-                      stockSizeState?.color === item.color
-                        ? "border-2 border-secondary"
-                        : "border-0"
-                    } rounded`}
                     alt={item.images[0]}
                   />
                 </button>

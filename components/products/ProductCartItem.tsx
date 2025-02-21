@@ -3,34 +3,31 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import Button from "../general/Button";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import { Product } from "@/types";
+import { useTranslations } from "next-intl";
 
 interface ProductsSliderItemProps {
   product: Product;
 }
 
 function ProductCartItem({ product }: ProductsSliderItemProps) {
-  // Rating
   const [isHovered, setIsHovered] = useState(false);
-
-  console.log(product.colorSize);
+  const t = useTranslations();
 
   return (
     <div
       className="group flex flex-col justify-between space-y-2   transition duration-300  relative
-    min-h-[700px]  md:border-none "
+    min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative w-full min-h-[600px] bg-center bg-cover"
+        className="relative w-full min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <Image
-          className={`absolute object-cover rounded  md:rounded-none transition-opacity duration-700  ${
+          className={`absolute object-cover rounded-t  md:rounded-none transition-opacity duration-700  ${
             isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[0]}`}
@@ -40,7 +37,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         />
 
         <Image
-          className={` object-cover rounded md:rounded-none transition-opacity duration-700  ${
+          className={` object-cover rounded-t md:rounded-none transition-opacity duration-700  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
@@ -59,56 +56,51 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         )}
       </Link>
 
-      {/* Renk Seçenekleri */}
-      <div className="flex items-start justify-start flex-wrap gap-2 w-full">
-        {product.colorSize.map((color, index) => (
-          <div key={index} className="relative w-16 h-8">
+      <div className="px-3 pb-2">
+        {/* Renk Seçenekleri */}
+        <div className="flex flex-row gap-x-3 w-full">
+          {product.colorSize.map((color, index) => (
             <Image
-              className="object-cover rounded border border-gray-300"
+              key={index}
+              className="object-cover rounded "
               src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${color.images[0]}`}
               alt={product?.name}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              width={30}
+              height={30}
             />
+          ))}
+        </div>
+
+        {/* Ürün Detayları */}
+        <div className=" flex flex-col space-y-1  w-full mt-2">
+          <h2 className="font-medium text-base  text-secondary   ">
+            {product.name}
+          </h2>
+
+          <div className="flex  flex-row justify-between items-center">
+            {product.discountPrice > 0 &&
+            product.discountPrice !== product.price ? (
+              <div className="flex flex-col justify-center items-start">
+                <p className="text-xs line-through text-red-600 ">
+                  {product.price}₺
+                </p>
+                <p className="text-green-600 font-medium">
+                  {product.discountPrice}₺
+                </p>
+              </div>
+            ) : (
+              <p className="text-green-600 font-medium">{product.price}₺</p>
+            )}
+
+            <Link
+              className="flex items-center justify-center "
+              href={`/product/${product.slug}`}
+            >
+              <p className="text-mywhite  bg-secondary px-4 py-1 rounded text-sm transition-all hover:scale-105 duration-300">
+                {t("productDetail.detail")}
+              </p>
+            </Link>
           </div>
-        ))}
-      </div>
-
-      {/* Ürün Detayları */}
-      <div className=" flex flex-col space-y-1  gap-2 w-full">
-        <h2 className="font-medium text-lg   text-secondary   ">
-          {product.name}
-        </h2>
-
-        <div className="flex  flex-row justify-between items-center">
-          {product.discountPrice > 0 &&
-          product.discountPrice !== product.price ? (
-            <div className="flex flex-col justify-center items-start">
-              <p className="text-xs line-through text-red-600 ">
-                {product.price}₺
-              </p>
-              <p className="text-green-600 font-semibold">
-                {product.discountPrice}₺
-              </p>
-            </div>
-          ) : (
-            <p className="text-green-600 font-semibold">{product.price}₺</p>
-          )}
-
-          <Link
-            className="flex items-center justify-center "
-            href={`/product/${product.slug}`}
-          >
-            <Button
-              text="Detail"
-              icon={FaLongArrowAltRight}
-              size="large"
-              iconSize={16}
-              color="third"
-              className="h-8"
-              animation
-            />
-          </Link>
         </div>
       </div>
     </div>

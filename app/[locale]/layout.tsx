@@ -7,11 +7,12 @@ import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 import "animate.css";
+import { Jost } from "next/font/google";
 
-//const jost = Jost({
-//  subsets: ["latin"],
-//  weight: ["400", "200", "300", "600", "700", "900"],
-//});
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["400", "200", "300", "600", "700", "900"],
+});
 
 export const metadata = {
   title: "Arzu Amber",
@@ -38,7 +39,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning={true}>
-      <body className={`antialiased`}>
+      <body className={`${jost.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <LayoutProvider>{children}</LayoutProvider>

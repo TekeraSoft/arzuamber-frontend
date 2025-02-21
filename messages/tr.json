@@ -98,7 +98,7 @@
     "newSeason": "Yeni Sezon",
     "detail": "Detay",
     "size": "Beden",
-
+    "KDV": "Fiyatlarımıza KDV dahildir.",
     "length": "Uzunluk",
     "color": "Renk",
     "price": "Fiyat",
@@ -122,7 +122,8 @@
     "Shipping": "Kargo",
     "ShippingText": "Ücretsiz",
     "Total": "Toplam",
-    "Subtotal": "Ara Toplam"
+    "Subtotal": "Ara Toplam",
+    "KDV": "Fiyatlarımıza KDV dahildir."
   },
 
   "paymentForm": {

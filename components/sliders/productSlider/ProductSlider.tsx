@@ -18,7 +18,7 @@ function ProductSlider() {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -80,8 +80,6 @@ function ProductSlider() {
           customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
-          containerClass="carousel-container"
-          itemClass="flex justify-center items-center "
         >
           {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

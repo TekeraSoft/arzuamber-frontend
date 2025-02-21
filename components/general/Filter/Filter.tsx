@@ -64,7 +64,7 @@ function Filter() {
   };
 
   return (
-    <div className="relative md:w-1/4 z-40 ">
+    <div className="relative md:w-1/4 z-40  ">
       {/* Mobil Menü Butonu */}
       <button
         onClick={toggleMenu}
@@ -77,8 +77,10 @@ function Filter() {
 
       {/* Açılır Menü */}
       <div
-        className={`fixed inset-0 backdrop-blur-sm z-50 md:hidden transform transition-transform  ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-0 backdrop-blur-sm z-50 md:hidden transform transition-transform   ${
+          isMenuOpen
+            ? "translate-x-0 animate__fadeInLeft animate__animated animate__faster"
+            : "-translate-x-full "
         }`}
         onClick={toggleMenu}
       >

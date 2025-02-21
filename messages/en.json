@@ -105,7 +105,8 @@
     "color": "Color",
     "length": "Length",
     "price": "Price",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "KDV": "Our prices include VAT."
   },
 
   "blogPage": {
@@ -125,7 +126,8 @@
     "Shipping": "Shipping",
     "ShippingText": "Free",
     "Total": "Total",
-    "Subtotal": "Subtotal"
+    "Subtotal": "Subtotal",
+    "KDV": "Our prices include VAT."
   },
 
   "paymentForm": {

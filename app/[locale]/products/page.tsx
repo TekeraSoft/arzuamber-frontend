@@ -1,8 +1,8 @@
 "use client";
 import Filter from "@/components/general/Filter/Filter";
 import ProductCartItem from "@/components/products/ProductCartItem";
-import ReactPaginate from "react-paginate";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+// import ReactPaginate from "react-paginate";
+// import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -19,10 +19,10 @@ function Products() {
   );
 
   // Sayfa başına ürün sayısı
-  const productsPerPage = 6;
+  // const productsPerPage = 6;
 
   // Toplam sayfa sayısını hesaplamak
-  const pageCount = Math.ceil(products.length / productsPerPage);
+  // const pageCount = Math.ceil(products.length / productsPerPage);
 
   useEffect(() => {
     dispatch(getAllProductsDispatch(0, 25));
