@@ -35,7 +35,6 @@ const SideBar = () => {
       name: "Categories",
       icon: MdCategory,
       options: [
-        { name: "All Category", url: "/admin/category" },
         { name: "Create Category", url: "/admin/category/create" },
       ],
     },

@@ -26,7 +26,7 @@ export const adminSlice = createSlice({
             state.products = action.payload;
         },
         getProduct: (state, action) => {
-            state.products = action.payload;
+            state.product = action.payload;
         },
         getCategories: (state, action) => {
             state.categories = action.payload;
@@ -45,7 +45,19 @@ export const createProductDispatch = (formData: FormData,resetForm:()=> void) =>
         toast.success(res.data.message);
         resetForm()
     }).catch(err => {
-        toast.error(err.response.data.message);
+        toast.error(err.response.data);
+    })
+}
+
+export const updateProductDispatch = (formData: FormData) => async(dispatch) => {
+    dispatch(loading(true))
+    putGuardRequest({controller:'admin',action: 'update-product'}, formData).then((res) => {
+        dispatch(loading(false))
+        toast.success(res.data.message);
+    }).catch(err => {
+        toast.error(err.response.data);
+    }).finally(()=> {
+        dispatch(loading(false))
     })
 }
 
@@ -54,6 +66,18 @@ export const getAllProductDispatch = (page: number, size: number) => async(dispa
     getGuardRequest({controller:'admin',action:'get-all-product', params:{page: page, size: size}}).then(res=>{
         dispatch(getProducts(res.data))
         dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+export const getProductDispatch = (id: string) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'admin', action: 'get-product', params: {id: id}}).then(res=> {
+        dispatch(getProduct(res.data))
+        dispatch(loading(false))
+    }).catch(err=> {
+      toast.error(err.response.data);
     }).finally(()=> {
         dispatch(loading(false))
     })

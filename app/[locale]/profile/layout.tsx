@@ -17,10 +17,10 @@ export default function ProfileLayout({
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
-    <div className="  mx-auto container my-5">
-      <div className="flex  flex-col md:flex-row h-full">
+    <div className="container mt-24">
+      <div className="flex flex-col gap-x-12 md:flex-row h-full">
         {/* Sidebar for larger screens, Topbar for mobile */}
-        <div className="h-full  md:w-1/4 bg-secondary text-white p-6 md:block hidden">
+        <div className="h-full  md:w-1/4 rounded-lg bg-secondary text-white p-6 md:block hidden">
           <Link href="/profile">
             <h3 className="text-lg font-semibold mb-4 border-b">
               {t("profile.menuTitle")}
@@ -66,7 +66,7 @@ export default function ProfileLayout({
 
         {/* Mobile Menu (Appears when isMenuOpen is true) */}
         {isMenuOpen && (
-          <div className="md:hidden bg-secondary text-white p-3  border-t">
+          <div className="md:hidden bg-secondary text-white p-3 border-t">
             <ul className="space-y-4">
               <li>
                 <Link

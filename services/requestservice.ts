@@ -5,14 +5,14 @@ import { RequestOptions } from "@/types";
 axios.defaults.withCredentials = true;
 
 export const getGuardRequest = async (
-  requestParameter = RequestParameter,
-  id?: string
+    requestParameter = RequestParameter,
+    id?: string
 ) => {
   const lang = getCookie("NEXT_LOCALE");
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
-    requestParameter.controller
+      requestParameter.controller
   }${requestParameter.action ? `/${requestParameter.action}` : ""}${
-    id ? `/${id}` : ""
+      id ? `/${id}` : ""
   }`;
   return await axios.get(url, {
     params: { ...requestParameter.params, lang: lang },
@@ -22,9 +22,9 @@ export const getGuardRequest = async (
 export const getRequest = async (requestParameter = RequestParameter) => {
   const locale = getCookie("NEXT_LOCALE");
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
-    requestParameter.controller
+      requestParameter.controller
   }${requestParameter.action ? `/${requestParameter.action}` : ""}${
-    requestParameter.id ? `/${requestParameter.id}` : ""
+      requestParameter.id ? `/${requestParameter.id}` : ""
   }`;
   return await axios.get(url, {
     params: { ...requestParameter.params, lang: locale },
@@ -32,13 +32,13 @@ export const getRequest = async (requestParameter = RequestParameter) => {
 };
 
 export const getGuardParamsRequest = async (
-  requestParameter = RequestParameter
+    requestParameter = RequestParameter
 ) => {
   const locale = getCookie("NEXT_LOCALE");
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
-    requestParameter.controller
+      requestParameter.controller
   }${requestParameter.action ? `/${requestParameter.action}` : ""}${
-    requestParameter.id ? `/${requestParameter.id}` : ""
+      requestParameter.id ? `/${requestParameter.id}` : ""
   }`;
   return await axios.get(url, {
     params: { ...requestParameter.params, lang: locale },
@@ -49,10 +49,13 @@ export const putGuardRequest = async (
     requestParameter = RequestParameter,
     body: object
 ) => {
+  const locale = getCookie("NEXT_LOCALE");
   let url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${requestParameter.controller}${
       requestParameter.action ? `/${requestParameter.action}` : ""
   }`;
-  return await axios.put(url, body);
+  return await axios.put(url, body, {
+    params: { ...requestParameter.params, lang: locale }
+  });
 };
 
 export const deleteGuardRequest = async (
@@ -67,14 +70,14 @@ export const deleteGuardRequest = async (
 };
 
 export const postGuardRequest = async (
-  requestParameter = RequestParameter,
-  body: object
+    requestParameter = RequestParameter,
+    body: object
 ) => {
   const locale = getCookie("NEXT_LOCALE");
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
-    requestParameter.controller
+      requestParameter.controller
   }${requestParameter.action ? `/${requestParameter.action}` : ""}${
-    requestParameter.id ? `/${requestParameter.id}` : ""
+      requestParameter.id ? `/${requestParameter.id}` : ""
   }`;
   return await axios.post(url, body, {
     params: { ...requestParameter.params, lang: locale },

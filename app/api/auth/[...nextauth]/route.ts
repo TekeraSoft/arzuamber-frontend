@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {jwtDecode} from "jwt-decode";
-
+import { jwtDecode } from "jwt-decode";
+import { refreshToken } from "@/utils/refreshToken"; // Refresh Token fonksiyonu
 
 const authOptions = {
     providers: [
@@ -12,7 +12,6 @@ const authOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/authenticate`,
                     {
@@ -24,6 +23,7 @@ const authOptions = {
                         }),
                     }
                 );
+
                 const data = await response.json();
                 if (response.ok && data.accessToken) {
                     const decoded = jwtDecode(data.accessToken);
@@ -33,8 +33,10 @@ const authOptions = {
                         email: decoded.email,
                         role: decoded.role,
                         accessToken: data.accessToken,
+                        refreshToken: data.refreshToken, // Refresh Token
                     };
                 }
+                return null;
             },
         }),
     ],
@@ -53,6 +55,7 @@ const authOptions = {
                 name: decoded.nameSurname,
                 email: decoded.email,
                 role: decoded.role,
+                exp: decoded.exp, // Expiration süresi
             };
         },
         secret: process.env.NEXTAUTH_SECRET,
@@ -61,10 +64,27 @@ const authOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.accessToken = user.accessToken;
-                token.id = user.id;
-                token.name = user.name;
-                token.email = user.email;
-                token.role = user.role;
+                token.refreshToken = user.refreshToken;
+                const decoded = jwtDecode(user.accessToken);
+                token.exp = decoded.exp; // Expiration süresi
+            }
+
+            // Access Token süresi dolmuşsa Refresh Token kullanarak yenile
+            const now = Math.floor(Date.now() / 1000);
+            if (token.exp < now) {
+                try {
+                    console.log(now)
+                    const newTokens = await refreshToken(token.refreshToken);
+                    const decoded = jwtDecode(newTokens.accessToken);
+                    return {
+                        ...token,
+                        accessToken: newTokens.accessToken,
+                        refreshToken: newTokens.refreshToken,
+                        exp: decoded.exp, // Yeni Access Token süresi
+                    };
+                } catch (error) {
+                    return { ...token, error: "RefreshTokenExpired" }; // Refresh Token da süresi dolmuşsa
+                }
             }
             return token;
         },
@@ -81,15 +101,15 @@ const authOptions = {
     },
     cookies: {
         sessionToken: {
-            name: 'session-token',
+            name: "next-auth.session-token",
             options: {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
+                secure: false,
                 sameSite: "lax",
                 path: "/",
-            }
-        }
-    }
+            },
+        },
+    },
 };
 
 const handler = NextAuth(authOptions);

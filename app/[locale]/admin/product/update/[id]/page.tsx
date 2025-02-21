@@ -13,56 +13,74 @@ import {filterData} from "@/data/filterData";
 import {Checkbox} from "primereact/checkbox";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/store/store";
-import {createProductDispatch, getCategoriesDispatch, getProductDispatch} from "@/store/adminSlice";
+import {
+    createProductDispatch,
+    getCategoriesDispatch,
+    getProductDispatch,
+    updateProductDispatch
+} from "@/store/adminSlice";
 import Resizer from 'react-image-file-resizer'
 import {useParams} from "next/navigation";
+import Loading from "@/components/utils/Loading";
+import {useLocale} from "next-intl";
 
-export default function ProductCreatePage() {
+export default function UpdateProductPage() {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
-    const {categories, loading} = useSelector((state:RootState) => state.admin)
-    const [subCategoriesState,setSubCategoriesState] = useState([])
+    const locale = useLocale();
+    const {categories, loading, product} = useSelector((state: RootState) => state.admin);
+    const [subCategoriesState, setSubCategoriesState] = useState([]);
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            name: '',
-            category: '',
-            subCategory: '',
-            description: '',
-            populate: false,
-            newSeason: false,
-            length: '',
-            colorSize: [{color:'', sizeStock:[{size:'', stock:0}], images: []}],
-            price: 0.0,
-            purchasePrice: 0.0,
+            id: product?.id || '',
+            name: product?.name || '',
+            category: product?.category || '',
+            subCategory: product?.subCategory || '',
+            description: product?.description || '',
+            populate: product?.populate || false,
+            newSeason: product?.newSeason || false,
+            length: product?.length || '',
+            lang: locale,
+            colorSize: product?.colorSize?.map((item) => ({
+                color: item.color,
+                stockSize: item.stockSize?.map((s) => ({ size: s.size, stock: s.stock })) || [],
+                stockCode: item.stockCode,
+                images: item.images ? [...item.images] : [],
+            })) || [{ color: '', stockSize: [{ size: '', stock: 0 }], images: [] }],
+            price: product?.price || 0,
+            purchasePrice: product?.purchasePrice || 0,
+            discountPrice: product?.discountPrice || 0,
         },
-        onSubmit: async (values, { resetForm }) => {
+        onSubmit: async (values, {resetForm}) => {
             const formData = new FormData();
 
             // ✅ JSON verisini FormData'ya ekle
-            formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));
+            formData.append("data", new Blob([JSON.stringify(values)], {type: "application/json"}));
 
             // ✅ Küçültülmüş resimleri doğrudan FormData'ya ekle
             for (const colorItem of values.colorSize) {
                 for (const [index, image] of colorItem.images.entries()) {
                     if (image instanceof File) {
                         const fileName = `${colorItem.color}_${index}_${image.name}`;
-                        formData.append("images", new File([image], fileName, { type: image.type }));
+                        formData.append("images", new File([image], fileName, {type: image.type}));
                     }
                 }
             }
-            dispatch(createProductDispatch(formData, resetForm));
+            console.log(values);
+            dispatch(updateProductDispatch(formData));
         }
     })
 
-
     useEffect(() => {
-        dispatch(getProductDispatch(params.id))
         dispatch(getCategoriesDispatch())
-    }, [params, dispatch]);
+        dispatch(getProductDispatch(params.id))
+        handleSelectSubCategories(formik.values.category);
+    }, [dispatch, params.id]);
 
     const handleSelectSubCategories = (name) => {
         const updateState = categories.find((c) => c.name === name)
-        setSubCategoriesState(updateState.subCategories)
+        setSubCategoriesState(updateState?.subCategories)
     }
 
 
@@ -81,7 +99,7 @@ export default function ProductCreatePage() {
                         100, // ✅ Kalite (0-100 arasında)
                         0, // ✅ Rotasyon
                         (resizedFile) => {
-                            resolve(new File([resizedFile], file.name, { type: file.type }));
+                            resolve(new File([resizedFile], file.name, {type: file.type}));
                         },
                         "file" // ✅ Çıktıyı doğrudan File olarak al
                     );
@@ -89,39 +107,47 @@ export default function ProductCreatePage() {
             };
 
             try {
-                const resizedImage = await resizeImage(file);  // ✅ Resmi küçült
-                const newImages = [...formik.values.colorSize];
+                const resizedImage = await resizeImage(file); // ✅ Resmi küçült
 
-                if (!newImages[index].images) {
-                    newImages[index].images = [];
-                }
+                // **1️⃣ Yeni bir `colorSize` dizisi oluştur (React state değişikliğini algılasın)**
+                const newColorSize = formik.values.colorSize.map((item, i) => {
+                    if (i === index) {
+                        // **2️⃣ Seçili `index`'deki `images` dizisini kopyala ve değiştir**
+                        const updatedImages = [...item.images];
+                        updatedImages[imageIndex] = resizedImage; // ✅ Yeni resmi ekle/değiştir
 
-                newImages[index].images[imageIndex] = resizedImage; // ✅ Küçültülmüş resmi kaydet
+                        return {...item, images: updatedImages};
+                    }
+                    return item;
+                });
 
-                formik.setFieldValue("colorSize", newImages);
+                // **3️⃣ Güncellenmiş `colorSize` dizisini Formik'e aktar**
+                formik.setFieldValue("colorSize", newColorSize);
             } catch (error) {
                 console.error("Resim küçültme hatası:", error);
             }
         }
     };
 
+    if(loading) return <Loading />;
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className='flex flex-col'>
                 <div className={'flex flex-row items-center justify-between'}>
-                    <h1 className='text-3xl'>Create Product</h1>
+                    <h1 className='text-3xl text-secondary'>Update Product</h1>
                     <button
                         type={'button'}
-                        onClick={()=> formik.setFieldValue('colorSize', [
-                                ...formik.values.colorSize,
-                            { color: '', sizeStock: [{ size: '', stock: 0 }], images: [] }
+                        onClick={() => formik.setFieldValue('colorSize', [
+                            ...formik.values.colorSize,
+                            {color: '', stockSize: [{size: '', stock: 0}], images: []}
                         ])}
                         className={'rounded-full border bg-secondary w-fit h-fit p-2 px-4 text-mywhite flex flex-row gap-x-2 items-center'}>
                         Add Color And Size
                         <FaPlus/></button>
                 </div>
                 <div className='grid grid-cols-2 gap-x-2 mt-12 relative'>
-                    {formik.values.colorSize.map((item, index) => (
+                    {formik.values.colorSize?.map((item, index) => (
                         <div key={index}
                              className='rounded bg-white relative flex flex-col justify-center items-center gap-y-4 p-6 border'>
                             <button
@@ -145,8 +171,13 @@ export default function ProductCreatePage() {
                                         />
                                         <label htmlFor={`file-upload-${index}-${imageIndex}`}
                                                className="w-24 h-48 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
-                                            {item.images?.[imageIndex] instanceof File ? (
-                                                <img src={URL.createObjectURL(item.images[imageIndex])} alt="Preview"
+                                            {formik.values.colorSize[index]?.images?.[imageIndex] ? (
+                                                <img src={
+                                                    formik.values.colorSize[index].images[imageIndex] instanceof File
+                                                        ? URL.createObjectURL(formik.values.colorSize[index].images[imageIndex])
+                                                        : `${process.env.NEXT_PUBLIC_RESOURCE_API}${formik.values.colorSize[index].images[imageIndex]}`
+                                                }
+                                                     alt="Preview"
                                                      className="w-24 h-48 object-cover rounded-lg"/>
                                             ) : (
                                                 <FiUpload className="text-2xl"/>
@@ -163,45 +194,46 @@ export default function ProductCreatePage() {
                                               value={formik.values.colorSize[index].color}
                                               onChange={(e) => formik.setFieldValue(`colorSize[${index}].color`, e.value)}/>
                                 </div>
-                                    {
-                                        formik.values.colorSize[index].sizeStock.map((item, sizeStockIndex) => (
-                                            <div key={sizeStockIndex} className={'grid grid-cols-2 gap-x-2 mt-2'}>
-                                                <div  className='flex flex-col w-2/3'>
-                                                    <label>Size</label>
-                                                    <Dropdown value={formik.values.colorSize[index].sizeStock[sizeStockIndex].size}
-                                                              options={filterData.sizes.values}
-                                                              onChange={(e) => formik.setFieldValue(`colorSize[${index}].sizeStock[${sizeStockIndex}].size`,e.value)}/>
-                                                </div>
-
-                                                <div className='flex flex-col relative w-2/3'>
-                                                    <label>Stock</label>
-                                                    <InputNumber
-                                                                 onChange={(e) => formik.setFieldValue(`colorSize[${index}].sizeStock[${sizeStockIndex}].stock`, e.value)}
-                                                                 value={formik.values.colorSize[index].sizeStock[sizeStockIndex].stock}/>
-                                                     <div
-                                                            className={'flex flex-row gap-x-4 absolute -right-20 top-9'}>
-                                                            <button type={'button'} onClick={() => {
-                                                                formik.setFieldValue(`colorSize[${index}].sizeStock`, [...formik.values.colorSize[index].sizeStock, {
-                                                                    size: '',
-                                                                    stock: 0
-                                                                }])
-                                                            }}
-                                                                    className={'bg-blue-600 rounded-full p-1 text-white'}>
-                                                                <FaPlus/>
-                                                            </button>
-                                                            <button type={'button'}
-                                                                    onClick={() => {
-                                                                        const newState = formik.values.colorSize[index].sizeStock.filter((_, i) => i !== sizeStockIndex)
-                                                                        formik.setFieldValue(`colorSize[${index}].sizeStock`, newState)
-                                                                    }}
-                                                                className={'bg-red-600 rounded-full p-1 text-white'}>
-                                                                <FaMinus/></button>
-                                                        </div>
-
-                                                </div>
+                                {
+                                    formik.values.colorSize[index].stockSize.map((item, sizeStockIndex) => (
+                                        <div key={sizeStockIndex} className={'grid grid-cols-2 gap-x-2 mt-2'}>
+                                            <div className='flex flex-col w-2/3'>
+                                                <label>Size</label>
+                                                <Dropdown
+                                                    value={formik.values.colorSize[index].stockSize[sizeStockIndex].size}
+                                                    options={filterData.sizes.values}
+                                                    onChange={(e) => formik.setFieldValue(`colorSize[${index}].stockSize[${sizeStockIndex}].size`, e.value)}/>
                                             </div>
-                                        ))
-                                    }
+
+                                            <div className='flex flex-col relative w-2/3'>
+                                                <label>Stock</label>
+                                                <InputNumber
+                                                    onChange={(e) => formik.setFieldValue(`colorSize[${index}].stockSize[${sizeStockIndex}].stock`, e.value)}
+                                                    value={formik.values.colorSize[index].stockSize[sizeStockIndex].stock}/>
+                                                <div
+                                                    className={'flex flex-row gap-x-4 absolute -right-20 top-9'}>
+                                                    <button type={'button'} onClick={() => {
+                                                        formik.setFieldValue(`colorSize[${index}].stockSize`, [...formik.values.colorSize[index].stockSize, {
+                                                            size: '',
+                                                            stock: 0
+                                                        }])
+                                                    }}
+                                                            className={'bg-blue-600 rounded-full p-1 text-white'}>
+                                                        <FaPlus/>
+                                                    </button>
+                                                    <button type={'button'}
+                                                            onClick={() => {
+                                                                const newState = formik.values.colorSize[index].stockSize.filter((_, i) => i !== sizeStockIndex)
+                                                                formik.setFieldValue(`colorSize[${index}].stockSize`, newState)
+                                                            }}
+                                                            className={'bg-red-600 rounded-full p-1 text-white'}>
+                                                        <FaMinus/></button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     ))}
@@ -239,7 +271,7 @@ export default function ProductCreatePage() {
                               onChange={(e) => {
                                   formik.setFieldValue(`subCategory`, e.target.value);
                               }}/>
-                    <label htmlFor="username">Sub Category</label>
+                    <label>Sub Category</label>
                    </span>
                     </div>
 
@@ -250,23 +282,17 @@ export default function ProductCreatePage() {
                     <label htmlFor="username">Length</label>
                    </span>
 
-                    <div className={'flex flex-row items-center gap-x-6'}>
-                        <div className="flex align-items-center">
-                            <Checkbox id={'populate'}
-                                      onChange={e => formik.setFieldValue('populate', e.checked)}
-                                      checked={formik.values.populate === true}/>
-                            <label htmlFor="ingredient1" className="ml-2">İs Populate</label>
-                        </div>
-
-                        <div className="flex align-items-center">
-                            <Checkbox id={'newSeason'}
-                                      onChange={e => formik.setFieldValue('newSeason', e.checked)}
-                                      checked={formik.values.newSeason === true}/>
-                            <label htmlFor="ingredient1" className="ml-2">New Season</label>
-                        </div>
-                    </div>
 
                     <span className="p-float-label">
+                    <InputNumber id="discountPrice" name='discountPrice' className='w-full'
+                                 onValueChange={formik.handleChange}
+                                 value={formik.values.discountPrice}
+                                 mode='currency'
+                                 currency='TRY'/>
+                    <label htmlFor="price">Discount Price</label>
+                   </span>
+
+                <span className="p-float-label">
                     <InputNumber id="purchasePrice" name='purchasePrice' className='w-full'
                                  onValueChange={formik.handleChange}
                                  value={formik.values.purchasePrice}
@@ -274,16 +300,31 @@ export default function ProductCreatePage() {
                                  currency='TRY'/>
                     <label htmlFor="price">Purchase Price</label>
                    </span>
-                </div>
             </div>
-            <div className='w-full'>
+        </div>
+    <div className={'flex flex-row items-center gap-x-6 mb-6'}>
+        <div className="flex align-items-center">
+            <Checkbox id={'populate'}
+                      onChange={e => formik.setFieldValue('populate', e.checked)}
+                      checked={formik.values.populate === true}/>
+            <label htmlFor="ingredient1" className="ml-2">İs Populate</label>
+        </div>
+
+        <div className="flex align-items-center">
+            <Checkbox id={'newSeason'}
+                      onChange={e => formik.setFieldValue('newSeason', e.checked)}
+                      checked={formik.values.newSeason === true}/>
+            <label htmlFor="ingredient1" className="ml-2">New Season</label>
+        </div>
+    </div>
+        <div className='w-full'>
                 <textarea placeholder={'Description'} className={'w-full p-2 border-2 rounded'}
                           rows={6} value={formik.values.description} onChange={formik.handleChange} id="description"/>
-            </div>
-            <div className='flex w-100 justify-end'>
-                <Button type='button' onClick={formik.handleSubmit} className='font-bold'>Send</Button>
-            </div>
+        </div>
+        <div className='flex w-100 justify-end'>
+            <Button type='button' onClick={formik.handleSubmit} className='font-bold'>Send</Button>
+        </div>
 
-        </form>
-    )
+    </form>
+)
 }

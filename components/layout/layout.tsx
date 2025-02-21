@@ -27,7 +27,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
           <ToastContainer position={"bottom-right"} />
           <main
             className={`${
-              path.startsWith("/admin") ? "" : "flex-grow mt-14 md:mt-24"
+              path.startsWith("/admin") ? "" : "flex-grow mt-14 md:mt-[65px]"
             }`}
           >
             <CartSidebar />

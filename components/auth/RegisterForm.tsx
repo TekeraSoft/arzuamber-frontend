@@ -22,6 +22,11 @@ function RegisterForm() {
     dispatch(closeRegisterModal());
   };
 
+  const handleChangeModal = () => {
+    dispatch(closeRegisterModal());
+    dispatch(openLoginModal());
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -32,14 +37,9 @@ function RegisterForm() {
     },
     validationSchema: useRegisterValidationSchema(),
     onSubmit: (values, { resetForm }) => {
-      dispatch(registerUserDispatch(values, resetForm));
+      dispatch(registerUserDispatch(values, resetForm, handleChangeModal));
     },
   });
-
-  const handleChangeModal = () => {
-    dispatch(closeRegisterModal());
-    dispatch(openLoginModal());
-  };
 
   return (
     <div
@@ -73,17 +73,16 @@ function RegisterForm() {
           onSubmit={formik.handleSubmit}
           className={"flex flex-col gap-2 w-full"}
         >
-          <div className="flex gap-3 w-full justify-start items-center">
-            <div className="w-full  flex flex-col">
+          <div className="flex gap-x-3 w-full justify-start items-center">
+            <div className="w-full flex gap-y-2 flex-col">
               <label className={"font-medium text-sm"}>
                 {t("registerForm.firstName")}
-                {}
               </label>
               <InputText
                 id="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
-                className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                   formik.touched.name && formik.errors.name
                     ? "border-red-500"
                     : ""
@@ -95,7 +94,7 @@ function RegisterForm() {
                 </small>
               )}
             </div>
-            <span className="w-full relative flex flex-col">
+            <span className="w-full relative gap-y-2 flex flex-col">
               <label className={"font-medium text-sm"}>
                 {t("registerForm.lastName")}
               </label>
@@ -103,7 +102,7 @@ function RegisterForm() {
                 id="surname"
                 value={formik.values.surname}
                 onChange={formik.handleChange}
-                className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                   formik.touched.surname && formik.errors.surname
                     ? "border-red-500"
                     : ""
@@ -116,7 +115,7 @@ function RegisterForm() {
               )}
             </span>
           </div>
-          <span className="w-full relative flex flex-col">
+          <span className="w-full relative gap-y-2 flex flex-col">
             <label className={"font-medium text-sm"}>
               {t("registerForm.email")}
             </label>
@@ -124,7 +123,7 @@ function RegisterForm() {
               id="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+              className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                 formik.touched.email && formik.errors.email
                   ? "border-red-500"
                   : ""
@@ -138,7 +137,7 @@ function RegisterForm() {
           </span>
 
           <div className="flex  gap-2 justify-between items-center">
-            <span className="w-full relative flex flex-col">
+            <span className="w-full relative gap-y-2 flex flex-col">
               <label className={"font-medium text-sm"}>
                 {t("registerForm.password")}
               </label>
@@ -147,7 +146,7 @@ function RegisterForm() {
                 type={"password"}
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                   formik.touched.password && formik.errors.password
                     ? "border-red-500"
                     : ""
@@ -159,7 +158,7 @@ function RegisterForm() {
                 </small>
               )}
             </span>
-            <span className="w-full relative flex flex-col">
+            <span className="w-full relative gap-y-2 flex flex-col">
               <label className={"font-medium text-sm"}>
                 {t("registerForm.rePassword")}
               </label>
@@ -168,7 +167,7 @@ function RegisterForm() {
                 type={"password"}
                 value={formik.values.rePassword}
                 onChange={formik.handleChange}
-                className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
+                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                   formik.touched.rePassword && formik.errors.rePassword
                     ? "border-red-500"
                     : ""

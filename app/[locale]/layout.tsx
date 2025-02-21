@@ -36,8 +36,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className={`antialiased`} suppressHydrationWarning={true}>
+    <html lang={locale} suppressHydrationWarning={true}>
+      <body className={`antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <LayoutProvider>{children}</LayoutProvider>

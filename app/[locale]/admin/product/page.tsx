@@ -15,41 +15,49 @@ import Image from "next/image";
 import { BiCheck, BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
+import {Link} from "@/i18n/routing";
 
 function AllProductAdminPage() {
   const { products, loading } = useSelector((state: RootState) => state.admin);
+  const [expandedRows, setExpandedRows] = useState(null);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [pageable, setPageable] = useState({currentSize:20,currentPage:0});
 
   const [percentageValue, setPercentageValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getAllProductDispatch(0, 25));
-  }, [dispatch]);
+    dispatch(getAllProductDispatch(pageable.currentPage, pageable.currentSize));
+  }, []);
 
-  const formattedData = products.flatMap((product) =>
-    product.colorSize.map((item) => ({
-      id: product.id,
-      populate: product.populate,
-      newSeason: product.newSeason,
-      purchasePrice: product.purchasePrice,
-      productName: product.name,
-      category: product.category,
-      price: product.price,
-      discountPrice: product.discountPrice,
-      color: item.color,
-      stockSize: item.stockSize,
-      stockCode: item.stockCode,
-      images: item.images,
-    }))
-  );
+    const allowExpansion = (rowData) => {
+        return rowData.colorSize.length > 0;
+    };
 
-  const imageBodyTemplate = (rowData) => {
+  //const formattedData = products.flatMap((product) =>
+  //  product.colorSize.map((item) => ({
+  //    id: product.id,
+  //    populate: product.populate,
+  //    newSeason: product.newSeason,
+  //    purchasePrice: product.purchasePrice,
+  //    productName: product.name,
+  //    category: product.category,
+  //    price: product.price,
+  //    discountPrice: product.discountPrice,
+  //    color: item.color,
+  //    stockSize: item.stockSize,
+  //    stockCode: item.stockCode,
+  //    images: item.images,
+  //  }))
+  //);
+
+  const imageBodyTemplate = (rowData,options) => {
     return (
       <div style={{ display: "flex", gap: "5px" }}>
-        {rowData.images.slice(0, 3).map((img, index) => (
+        {rowData.colorSize.map((img, index) => (
           <Image
             key={index}
-            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
+            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img.images[0]}`}
             alt={img}
             width={35}
             height={35}
@@ -60,29 +68,75 @@ function AllProductAdminPage() {
     );
   };
 
+  const rowExpansionTemplate = (data) => {
+      return(
+          <DataTable size={'small'} tableStyle={{ minWidth: "50rem", fontSize: "14px" }} value={data.colorSize}>
+              <Column field="stockCode" header="Stok Kodu" />
+              <Column field="color" header="Renk" />
+              <Column
+                  field="stockSize"
+                  header="Beden"
+                  body={(row) => (
+                      <div className={"flex flex-col gap-y-2"}>
+                          {row.stockSize.map((item, index) => (
+                              <span key={index}>{item.size}</span>
+                          ))}
+                      </div>
+                  )}
+              />
+              <Column
+                  bodyStyle={{ fontWeight: "bold" }}
+                  field="stock"
+                  header="Stok"
+                  body={(row) => (
+                      <div className={"flex flex-col gap-y-2"}>
+                          {row.stockSize.map((item, index) => (
+                              <span
+                                  key={index}
+                                  className={`${
+                                      item.stock === 2 || item.stock === 1 ? "text-red-600" : "text-black"
+                                  }`}
+                              >
+                {item.stock}
+              </span>
+                          ))}
+                      </div>
+                  )}
+              />
+          </DataTable>
+      )
+  }
+
   return (
     <DataTable
-      size={"large"}
-      value={formattedData}
+      size={"small"}
+      value={products}
+      className={'rounded-lg'}
+      dataKey="id"
       tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
       paginator
-      rows={10}
+      rows={20}
       rowsPerPageOptions={[10, 25, 50]}
       loading={loading}
+      rowExpansionTemplate={rowExpansionTemplate}
+      expandedRows={expandedRows}
+      onRowToggle={(e)=> setExpandedRows(e.data)}
     >
+        <Column expander={allowExpansion} style={{ width: '5rem' }} />
       <Column header={"Resimler"} body={imageBodyTemplate} />
-      <Column field="productName" header="Ürün Adı" />
-      <Column field="category" header="Kategori" />
+      <Column field="name" header="Ürün Adı" sortable />
+      <Column field="category" header="Kategori" sortable />
       <Column
         field="price"
+        sortable
         bodyStyle={{ fontWeight: "bold" }}
-        body={(row) => row.price + " TL"}
+        body={(row)=> row.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
         header={() => (
-          <span className={"flex flex-row items-center gap-x-2"}>
+            <span className={"flex flex-row items-center gap-x-2"}>
             <h2>Fiyat</h2>
             <span className={"w-full flex flex-row items-center gap-x-2"}>
               <InputNumber
-                value={percentageValue}
+                  value={percentageValue}
                 onChange={(e) => setPercentageValue(e.value)}
                 className={"w-16 h-10"}
               />
@@ -103,7 +157,10 @@ function AllProductAdminPage() {
           </span>
         )}
       />
-      <Column field={"purchasePrice"} header={"Satın Alım"} />
+      <Column field={"purchasePrice"} header={"Satın Alım"} sortable body={(row) =>
+          row.purchasePrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} />
+        <Column field={"purchasePrice"} header={"İndirimli Fiyat"} sortable body={(row) =>
+            row.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} />
       <Column
         field={"populate"}
         header={"Popular"}
@@ -126,46 +183,15 @@ function AllProductAdminPage() {
           )
         }
       />
-      <Column field="color" header="Renk" />
-      <Column
-        field="stockSize"
-        header="Beden"
-        body={(row) => (
-          <div className={"flex flex-col gap-y-2"}>
-            {row.stockSize.map((item, index) => (
-              <span key={index}>{item.size}</span>
-            ))}
-          </div>
-        )}
-      />
-      <Column
-        bodyStyle={{ fontWeight: "bold" }}
-        field="stock"
-        header="Stok"
-        body={(row) => (
-          <div className={"flex flex-col gap-y-2"}>
-            {row.stockSize.map((item, index) => (
-              <span
-                key={index}
-                className={`${
-                  item.stock === 2 ? "text-red-600" : "text-black"
-                }`}
-              >
-                {item.stock}
-              </span>
-            ))}
-          </div>
-        )}
-      />
-      <Column field="stockCode" header="Stok Kodu" />
+
       <Column
         field={"id"}
         header={"Actions"}
         body={(opt) => (
           <span className={"flex flex-row gap-x-1"}>
-            <button className={"p-2"}>
+            <Link href={`/admin/product/update/${opt.id}`} className={"p-2"}>
               <BiEdit size={24} color={"blue"} />
-            </button>
+            </Link>
             <button
               onClick={() => {
                 const confRes = confirm("Are you sure delete this product?");

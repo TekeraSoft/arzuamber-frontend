@@ -18,7 +18,10 @@ function Layout({ children }) {
                     <SideBar />
 
                     <div className={'flex flex-col w-full'}>
-                        <Menubar className={'sticky w-full top-0 z-50'} style={{paddingRight:35}} start={()=> <span className={'text-lg font-mono'}>{path}</span>} end={()=> (
+                        <Menubar className={'sticky w-full top-0 z-50'} style={{paddingRight:35}} start={()=>
+                            <span className={'text-lg font-mono'}>{path.replace(/^\/admin\//, "").split("/").join(" > ")}</span>
+                        }
+                                 end={()=> (
                             <span className={'flex flex-row items-center gap-x-4'}>
                             <span className={'flex flex-row items-center gap-x-2'}>
                                 <Link href={path} locale={'tr'} className={`${locale === 'tr' ? 'bg-blue-600 text-white rounded':'border rounded'} p-1`}>TR</Link> /

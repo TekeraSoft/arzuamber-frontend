@@ -20,14 +20,16 @@ export const authSlice = createSlice({
   },
 });
 
-export const registerUserDispatch = (value: object,resetForm:()=> void) => async () => {
+export const registerUserDispatch = (value: object,resetForm:()=> void, handleChangeModal: any) => async () => {
   postGuardRequest({ controller: "auth", action: "register" }, value)
     .then((res) => {
       toast.success(res.data.message);
       resetForm()
+      handleChangeModal()
     })
     .catch((err) => {
-      toast.error(err.response.data);
+      console.log(err);
+      //toast.error(err.response.data);
     });
 };
 
