@@ -18,11 +18,11 @@ function ProductSlider() {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 4,
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 3,
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -81,7 +81,7 @@ function ProductSlider() {
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center gap-4 "
+          itemClass="flex justify-center items-center "
         >
           {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

@@ -35,13 +35,13 @@ function ContactPage() {
       </Head>
 
       <PageContainer>
-        <form onSubmit={formik.handleSubmit} className="py-6">
+        <form onSubmit={formik.handleSubmit}>
           <div className=" mx-auto animate__animated animate__fadeIn  ">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
                 {t("ContactPage.header")}
               </h2>
-              <p className="max-w-xl mx-auto mt-1 text-base leading-relaxed text-gray-500">
+              <p className="max-w-xl mx-auto mt-3 text-base leading-relaxed text-gray-500">
                 {t("ContactPage.subheader")}
               </p>
             </div>
