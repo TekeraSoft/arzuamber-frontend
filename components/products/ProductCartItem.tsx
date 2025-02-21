@@ -19,7 +19,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-1   transition duration-300  relative
+      className="group flex flex-col justify-between space-y-2   transition duration-300  relative
     min-h-[700px]  md:border-none "
     >
       {/* Görsel Alanı */}
@@ -59,35 +59,40 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         )}
       </Link>
 
+      {/* Renk Seçenekleri */}
+      <div className="flex items-start justify-start flex-wrap gap-2 w-full">
+        {product.colorSize.map((color, index) => (
+          <div key={index} className="relative w-16 h-8">
+            <Image
+              className="object-cover rounded border border-gray-300"
+              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${color.images[0]}`}
+              alt={product?.name}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+        ))}
+      </div>
+
       {/* Ürün Detayları */}
       <div className=" flex flex-col space-y-1  gap-2 w-full">
-        <h2 className="font-medium text-xl   text-secondary  ">
+        <h2 className="font-medium text-lg   text-secondary   ">
           {product.name}
         </h2>
 
-        <div className="flex flex-wrap gap-2 mt-2">
-          {product.colorSize.map((colorItem, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-sm font-medium rounded-full bg-secondary text-white"
-            >
-              {colorItem.color}
-            </span>
-          ))}
-        </div>
-
         <div className="flex  flex-row justify-between items-center">
-          {product.discountPrice == 0 ? (
-            <p className="text-secondary font-semibold">{product.price}₺</p>
-          ) : (
+          {product.discountPrice > 0 &&
+          product.discountPrice !== product.price ? (
             <div className="flex flex-col justify-center items-start">
               <p className="text-xs line-through text-red-600 ">
                 {product.price}₺
               </p>
-              <p text-secondary font-semibold>
+              <p className="text-green-600 font-semibold">
                 {product.discountPrice}₺
               </p>
             </div>
+          ) : (
+            <p className="text-green-600 font-semibold">{product.price}₺</p>
           )}
 
           <Link
