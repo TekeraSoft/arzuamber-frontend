@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[250px] h-[550px]  relative bg-slate-50">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[550px]  relative bg-slate-50">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-[400px] relative"
@@ -42,14 +42,28 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
             fill
           />
         )}
-        {product?.discountPrice > 0 && product?.price > 0 && (
-          <div className="absolute right-3 top-5 md:top-2 lg:top-3 w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30">
-            %
-            {Math.round(
-              ((product.price - product.discountPrice) / product.price) * 100
-            )}
-          </div>
-        )}
+        <div className="absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
+          {product?.discountPrice > 0 && product?.price > 0 && (
+            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              %
+              {Math.round(
+                ((product.price - product.discountPrice) / product.price) * 100
+              )}
+            </div>
+          )}
+
+          {product.newSeason == true && (
+            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.newSeason")}
+            </div>
+          )}
+
+          {product.populate == true && (
+            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.populate")}
+            </div>
+          )}
+        </div>
       </Link>
 
       <div className="px-2 w-full pb-2">

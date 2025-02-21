@@ -100,6 +100,7 @@
     "readMore": "Read more",
     "readLess": "Read less",
     "newSeason": "New Season",
+    "populate": "Popular",
     "detail": "Detail",
     "size": "Size",
     "color": "Color",
@@ -328,9 +329,9 @@
 
   "AboutPage": {
     "aboutPageTitle": "About Us",
-    "aboutPageDescription": "We are here to bring you the latest trends, quality products, and stylish combinations. Our mission is to make every woman feel special. Refresh your wardrobe with modern, stylish, and unique designs.",
+    "aboutPageDescription": "ARZUAMBER is a company founded in 2024. It is a unique fashion brand that combines distinctive styles with timeless elegance. With our slogan 'A Unique Clothing Brand,' we set out to ensure that every woman can reflect her unique beauty and style. Our collections blend modern and classic lines, offering evening dresses, casual wear, and daily fashion choices designed to accompany you in every moment. Crafted with high-quality fabrics, elegant details, and meticulous craftsmanship, our pieces aim to be the indispensable choice of stylish women. Prioritizing customer satisfaction, we bring you our original designs that set trends in fashion. Add sparkle to every moment with Arzu Amber and showcase your uniqueness through your style!",
     "visionTitle": "Our Vision",
-    "visionDescription": "We offer not just clothing, but a lifestyle. Each piece is designed to reflect your style. We aim not to follow fashion, but to lead it."
+    "visionDescription": "As ARZUAMBER, we aim to offer products that prioritize elegance and sophistication in fashion, enabling women to express themselves in the best possible way."
   },
 
   "ContactPage": {

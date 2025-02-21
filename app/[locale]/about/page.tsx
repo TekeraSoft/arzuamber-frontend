@@ -7,11 +7,11 @@ function AboutPage() {
 
   return (
     <PageContainer>
-      <div className="max-w-7xl mx-auto text-center ">
-        <h2 className="text-4xl font-bold text-gray-800  py-10">
+      <div className="max-w-7xl mx-auto text-center flex flex-col ">
+        <h2 className="text-4xl font-bold text-gray-800 mb-2">
           {t("AboutPage.aboutPageTitle")}
         </h2>
-        <p className="  md:text-lg text-gray-600 mb-8 max-w-4xl mx-auto">
+        <p className="text-sm  md:text-base text-gray-600 mb-8 max-w-4xl mx-auto">
           {t("AboutPage.aboutPageDescription")}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mb-8 md:mb-0">

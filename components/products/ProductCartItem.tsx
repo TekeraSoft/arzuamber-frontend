@@ -46,14 +46,28 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
-        {product.discountPrice > 0 && product.price > 0 && (
-          <div className="absolute right-3 top-5 md:top-2 lg:top-3 w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30">
-            %
-            {Math.round(
-              ((product.price - product.discountPrice) / product.price) * 100
-            )}
-          </div>
-        )}
+        <div className="   absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
+          {product?.discountPrice > 0 && product?.price > 0 && (
+            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              %
+              {Math.round(
+                ((product.price - product.discountPrice) / product.price) * 100
+              )}
+            </div>
+          )}
+
+          {product.newSeason == true && (
+            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.newSeason")}
+            </div>
+          )}
+
+          {product.populate == true && (
+            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.populate")}
+            </div>
+          )}
+        </div>
       </Link>
 
       <div className="px-3 pb-2">

@@ -96,6 +96,7 @@
     "readMore": "Daha fazla",
     "readLess": "Daha az",
     "newSeason": "Yeni Sezon",
+    "populate": "Popüler",
     "detail": "Detay",
     "size": "Beden",
     "KDV": "Fiyatlarımıza KDV dahildir.",
@@ -324,9 +325,9 @@
 
   "AboutPage": {
     "aboutPageTitle": "Hakkımızda",
-    "aboutPageDescription": "Moda dünyasında sizlere en yeni trendleri, kaliteli ürünleri ve şık kombinleri sunmak için buradayız. Misyonumuz, her kadının kendini özel hissetmesini sağlamak. Modern, şık ve özgün tasarımlar ile gardırobunuzu yenileyin.",
+    "aboutPageDescription": "ARZUAMBER 2024 yılında kurulmuş bir firmadır. Benzersiz stilleri ve zamansız şıklığı bir araya getiren özel bir moda markasıdır. “Benzersiz Giyim Markası” sloganımızla, her kadının kendine özgü güzelliğini ve tarzını yansıtmasını sağlamak için yola çıktık.Modern ve klasik çizgileri harmanlayan koleksiyonlarımız, abiye, elbise ve günlük giyim seçenekleriyle her anınıza eşlik edecek şekilde tasarlanır. Kaliteli kumaşlar, zarif detaylar ve özenli işçilikle ürettiğimiz parçalar, stil sahibi kadınların vazgeçilmezi olmayı hedefler.Müşteri memnuniyetini ön planda tutarak, modaya yön veren özgün tasarımlarımızı sizlerle buluşturuyoruz. Arzu Amber ile her anınıza ışıltı katın, farkınızı stilinizle gösterin!.",
     "visionTitle": "Vizyonumuz",
-    "visionDescription": "Sadece kıyafet değil, aynı zamanda bir yaşam tarzı sunuyoruz. Her bir parça, sizin tarzınızı yansıtacak şekilde tasarlanmıştır. Modayı takip etmek değil, ona yön vermek istiyoruz."
+    "visionDescription": "ARZUAMBER olarak, modada şıklığı ve zarafeti ön planda tutarak kadınların kendilerini en iyi şekilde ifade edebileceği ürünler sunmayı hedefliyoruz."
   },
 
   "ContactPage": {
