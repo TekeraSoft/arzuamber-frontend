@@ -1,17 +1,19 @@
 "use client";
 import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
-import Carousel, { ArrowProps } from "react-multi-carousel";
+import Carousel from "react-multi-carousel";
 import PageContainer from "../Containers/PageContainer";
 import { Product } from "@/types";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { addToCart } from "@/store/cartSlice";
+import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
+import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 
 const responsive = {
   superLargeDesktop: {
@@ -38,6 +40,7 @@ interface productProps {
 
 const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const t = useTranslations();
   const zoomRef = useRef(null);
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0]);
   const [errorState, setErrorState] = useState({
@@ -65,30 +68,9 @@ const DetailClient = ({ product }: productProps) => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const updateIndex = ({ index: current }: { index: number }) =>
+  const updateIndex = ({ index: current }: { index: number }) => {
     setPhotoIndex(current);
-
-  function CustomLeftArrow({ onClick }: ArrowProps) {
-    return (
-      <button
-        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
-        onClick={onClick}
-      >
-        <BiLeftArrow className="text-white" size={24} />
-      </button>
-    );
-  }
-
-  function CustomRightArrow({ onClick }: ArrowProps) {
-    return (
-      <button
-        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
-        onClick={onClick}
-      >
-        <BiRightArrow className="text-white" size={24} />
-      </button>
-    );
-  }
+  };
 
   return (
     <PageContainer>
@@ -135,7 +117,7 @@ const DetailClient = ({ product }: productProps) => {
                 <Image
                   className="cursor-zoom-in w-full h-full object-cover"
                   onClick={() => {
-                    setPhotoIndex(0);
+                    setPhotoIndex(index);
                     setIsModalOpen(true);
                   }}
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
@@ -280,6 +262,7 @@ const DetailClient = ({ product }: productProps) => {
             onClick={() => {
               if (!stateProduct.size) {
                 setErrorState({ ...errorState, sizeError: true });
+                toast.error(t("productDetail.sizeError"));
               } else {
                 dispatch(
                   addToCart({
@@ -294,6 +277,7 @@ const DetailClient = ({ product }: productProps) => {
                     price: product.price,
                   })
                 );
+                toast.success(t("productDetail.productAddedCartSuccess"));
               }
             }}
             className={
@@ -303,20 +287,17 @@ const DetailClient = ({ product }: productProps) => {
             Sepete Ekle
           </button>
 
-          <p className={"text-secondary text-lg mt-4"}>{product.description}</p>
+          <p className={"text-secondary text-lg mt-2"}>{product.description}</p>
         </div>
         <Lightbox
           open={isModalOpen}
           plugins={[Zoom]}
-          close={() => toggleOpen(false)} // ❌ Hata düzeltildi
+          close={() => toggleOpen()}
           index={photoIndex}
           zoom={{
-            maxZoomPixelRatio: 3, // 🔥 Zoom seviyesi artırıldı
+            maxZoomPixelRatio: 3,
             zoomInMultiplier: 2,
             doubleTapDelay: 300,
-          }}
-          inline={{
-            style: { width: "100%", maxWidth: "900px", aspectRatio: "3 / 2" },
           }}
           slides={stockSizeState?.images?.map((img) => ({
             src: `${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`,

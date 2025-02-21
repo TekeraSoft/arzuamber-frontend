@@ -222,13 +222,9 @@ function Navbar() {
         <div
           className={` border-t  ${
             openMenu
-              ? " relative w-full transform transition-all duration-700 max-h-96"
-              : "max-h-0 overflow-hidden "
-          }
-          
-          ${openMenu ? "translate-x-0" : "-translate-x-full"}
-          
-          `}
+              ? " relative w-full transform transition-all duration-700 max-h-96 translate-x-0"
+              : "max-h-0 overflow-hidden -translate-x-full "
+          }`}
         >
           <ul
             className={` ease-in-out w-full  lg:hidden  grid grid-cols-3 md:flex justify-around  items-center  text-myblack  mx-auto container gap-2 py-2 `}
