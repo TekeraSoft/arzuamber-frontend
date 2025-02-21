@@ -16,10 +16,10 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[550px]  relative bg-slate-50">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[550px]  relative bg-slate-50 shadow-md">
       <Link
         href={`/product/${product?.slug}`}
-        className=" w-full h-[400px] relative"
+        className=" w-full h-[500px] relative"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -34,7 +34,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
         {product.colorSize[0]?.images[1] && (
           <Image
-            className={`object-cover rounded-ttransition-opacity duration-700 ${
+            className={`object-cover rounded-t transition-opacity duration-700 ${
               isHovered ? "opacity-100" : "opacity-0"
             }`}
             src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0]?.images[1]}`}
@@ -66,7 +66,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         </div>
       </Link>
 
-      <div className="px-2 w-full pb-2">
+      <div className=" flex flex-col  space-y-1 px-2 w-full pb-2">
         {/* Renk Seçenekleri */}
         <div className="flex flex-row gap-x-3 w-full">
           {product.colorSize.map((color, index) => (
@@ -82,8 +82,8 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         </div>
 
         <div className="flex flex-col justify-start items-start  w-full">
-          <div className="flex justify-start items-center w-full h-16 ">
-            <h2 className="text-start text-secondary font-semibold text-md w-full">
+          <div className="flex justify-start items-center w-full h-8 mb-1 ">
+            <h2 className="text-start text-secondary font-semibold text-sm w-full">
               {product.name}
             </h2>
           </div>

@@ -390,7 +390,11 @@
     "kvkk": "KVKK",
     "distancesellingcontract": "Mesafeli Satış Sözleşmesi ",
     "subscribeButton": "Abone ol",
-    "emailPlaceholder": "E-posta adresiniz"
+    "emailPlaceholder": "E-posta adresiniz",
+    "freeReturn": "15 Gün Ücretsiz İade",
+    "fastDelivery": "Süper Hızlı Teslimat",
+    "securePayment": "Güvenli ve Kolay Ödeme",
+    "carefulPackaging": "Özenli Paketleme"
   },
 
   "DistanceSellingContract": {

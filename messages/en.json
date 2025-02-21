@@ -466,7 +466,11 @@
     "kvkk": "KVKK",
     "distancesellingcontract": "Distance Selling Contract",
     "subscribeButton": "Subscribe",
-    "emailPlaceholder": "Your email address"
+    "emailPlaceholder": "Your email address",
+    "freeReturn": "15 Days Free Return",
+    "fastDelivery": "Super Fast Delivery",
+    "securePayment": "Secure and Easy Payment",
+    "carefulPackaging": "Careful Packaging"
   },
 
   "SnackBar": {

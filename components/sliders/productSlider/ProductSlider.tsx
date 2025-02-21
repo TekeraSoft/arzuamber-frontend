@@ -13,19 +13,23 @@ function ProductSlider() {
 
   const responsive = {
     superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
+      breakpoint: { max: 4000, min: 1400 }, // 1400px üstü büyük ekran
       items: 4,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4,
+      breakpoint: { max: 1400, min: 1024 }, // Standart masaüstü
+      items: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1024, min: 768 }, // Tablet ekranı için düzeltme
       items: 2,
     },
+    smallTablet: {
+      breakpoint: { max: 768, min: 464 }, // Küçük tabletler için
+      items: 1,
+    },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 464, min: 0 }, // Küçük mobil için
       items: 1,
     },
   };
@@ -80,6 +84,8 @@ function ProductSlider() {
           customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
+          containerClass="carousel-container"
+          itemClass="flex justify-center items-center py-1 "
         >
           {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

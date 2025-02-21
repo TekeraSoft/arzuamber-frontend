@@ -1,66 +1,32 @@
 "use client";
 import React from "react";
-import { useSelector } from "react-redux";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { RootState } from "@/store/store";
+
 import Button from "../../general/Button";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { GoArrowSwitch } from "react-icons/go";
-import { FaTruck, FaRegCreditCard } from "react-icons/fa";
-import { BsBox } from "react-icons/bs";
+import FooterIcons from "./FooterIcons";
+import FooterSocials from "./FooterSocials";
 
 const Footer = () => {
-  // Get social media links from Redux
-  const socialLinks = useSelector(
-    (state: RootState) => state.footer.socialLinks
-  );
-
   const t = useTranslations();
 
   return (
     <footer className="w-full h-full mt-10">
-      <div className="flex justify-center items-center gap-2 h-28 md:h-20 bg-gray-50 ">
-        <div className="grid grid-cols-2 md:grid-cols-4 h-full px-2 md:px-12 w-full font-mono">
-          <div className="flex justify-center items-center h-full gap-2">
-            <GoArrowSwitch size={25} />
-            <span className="text-primary text-xs md:text-sm ">
-              15 Gün Ücretsiz İade
-            </span>
-          </div>
-          <div className="flex justify-center items-center gap-2 ">
-            <FaTruck size={25} />
-            <span className="text-primary text-xs md:text-sm">
-              Süper Hızlı Teslimat
-            </span>
-          </div>
-          <div className="flex justify-center items-center gap-2">
-            <FaRegCreditCard size={25} />
-            <span className="text-primary text-xs md:text-sm">
-              Güvenli ve Kolay Ödeme
-            </span>
-          </div>
-          <div className="flex justify-center items-center gap-2">
-            <BsBox size={25} />
-            <span className="text-primary text-xs md:text-sm">
-              Özenli Paketleme
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* İcons */}
+      <FooterIcons />
 
       <div className="bg-secondary text-white py-2">
         <div className="max-w-7xl mx-auto px-6">
           {/* Top Section */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7 md:gap-4 items-center">
             <Image
               src={`/images/logo/footerlogo.png`}
-              width={300}
+              width={400}
               height={40}
               alt="footer logo"
-              className="object-contain"
+              className="object-contain w-full h-full"
               priority
             />
 
@@ -141,32 +107,7 @@ const Footer = () => {
             </div>
 
             {/* Social Media */}
-            <div className="flex gap-5 my-2 ">
-              <Link
-                href={socialLinks?.facebook || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition"
-              >
-                <FaFacebookF size={21} />
-              </Link>
-              <Link
-                href={socialLinks?.instagram || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition"
-              >
-                <FaInstagram size={23} />
-              </Link>
-              <Link
-                href={socialLinks?.whatsapp || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-primary transition"
-              >
-                <FaWhatsapp size={23} />
-              </Link>
-            </div>
+            <FooterSocials />
           </div>
         </div>
       </div>

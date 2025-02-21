@@ -22,12 +22,12 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
       {/* Görsel Alanı */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative w-full min-h-[400px] bg-center bg-cover"
+        className="relative w-full h-[550px] md:min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <Image
-          className={`absolute object-cover rounded-t  md:rounded-none transition-opacity duration-700  ${
+          className={`absolute object-cover rounded-t  transition-opacity duration-700  ${
             isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[0]}`}
@@ -37,7 +37,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         />
 
         <Image
-          className={` object-cover rounded-t md:rounded-none transition-opacity duration-700  ${
+          className={` object-cover  rounded-t transition-opacity duration-700  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
