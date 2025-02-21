@@ -41,13 +41,14 @@ interface productProps {
 const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
-  const zoomRef = useRef(null);
+
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0]);
   const [errorState, setErrorState] = useState({
     sizeError: false,
     colorError: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lineClamp, setLineClamp] = useState(true);
   const [photoIndex, setPhotoIndex] = useState(1);
   const [stateProduct, setStateProduct] = useState<{
     size: string;
@@ -72,6 +73,10 @@ const DetailClient = ({ product }: productProps) => {
     setPhotoIndex(current);
   };
 
+  const toggleClamp = () => {
+    setLineClamp(!lineClamp);
+  };
+
   return (
     <PageContainer>
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
@@ -84,7 +89,7 @@ const DetailClient = ({ product }: productProps) => {
                 className="flex justify-center items-center w-full h-32 "
               >
                 <Image
-                  className="cursor-zoom-in w-full h-full object-cover"
+                  className="cursor-zoom-in w-full h-full object-cover rounded-lg "
                   onClick={() => {
                     setPhotoIndex(0);
                     setIsModalOpen(true);
@@ -115,7 +120,7 @@ const DetailClient = ({ product }: productProps) => {
                 className="flex justify-center items-center w-full h-[800px]"
               >
                 <Image
-                  className="cursor-zoom-in w-full h-full object-cover"
+                  className="cursor-zoom-in w-full h-full object-cover rounded-lg"
                   onClick={() => {
                     setPhotoIndex(index);
                     setIsModalOpen(true);
@@ -130,7 +135,7 @@ const DetailClient = ({ product }: productProps) => {
             ))}
           </Carousel>
         </div>
-        <div className=" w-full md:w-3/6 mt-6 md:mt-0 flex flex-col gap-3">
+        <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-3  border-secondary h-full px-1 rounded-lg min-h-[800px]">
           <h3 className={"text-2xl font-semibold text-secondaryDark"}>
             {product.name}
           </h3>
@@ -141,18 +146,39 @@ const DetailClient = ({ product }: productProps) => {
               </p>
             )}
             {product.discountPrice !== 0 ? (
-              <p className={"text-xl font-semibold"}>
+              <p className={"text-xl font-semibold text-green-600"}>
                 {product.discountPrice.toFixed(2)} ₺
               </p>
             ) : (
-              <p className={"text-xl font-semibold"}>
+              <p className={"text-xl font-semibold text-green-600"}>
                 {product.price.toFixed(2)} ₺
               </p>
             )}
           </span>
-          <div className={"flex flex-col gap-x-4 "}>
-            <h4 className={"text-lg text-secondaryDark font-semibold"}>Renk</h4>
-            <div className={"flex flex-row flex-wrap gap-x-4 "}>
+
+          <div className="w-full flex flex-col justify-center items-start gap-1 border-b py-1">
+            <div className="w-1/2 md:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  items-center">
+              {product.newSeason && (
+                <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1 ">
+                  {t("productDetail.newSeason")}
+                </p>
+              )}
+
+              <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-1">
+                {t("productDetail.productCategory")}: {product.category}
+              </div>
+
+              <div className="text-center text-sm font-semibold text-mywhite bg-secondary  rounded-lg  py-1">
+                {t("productDetail.length")}:{product.length}
+              </div>
+            </div>
+          </div>
+
+          <div className={"flex flex-col gap-2 "}>
+            <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
+              {t("productDetail.color")}
+            </h4>
+            <div className={"flex flex-row flex-wrap gap-4 "}>
               {product.colorSize.map((item, index) => (
                 <button
                   onClick={() => {
@@ -186,7 +212,7 @@ const DetailClient = ({ product }: productProps) => {
           <div className={"flex flex-col "}>
             <div className="flex justify-start items-center gap-2">
               <h4 className={"text-lg text-secondaryDark font-semibold"}>
-                Beden:
+                {t("productDetail.size")}:
               </h4>
               <div className={"flex flex-row flex-wrap gap-x-4 "}>
                 {stockSizeState?.stockSize.map((item, index) => (
@@ -201,8 +227,10 @@ const DetailClient = ({ product }: productProps) => {
                     }}
                     key={index}
                     className={`${
-                      stateProduct.size === item.size && "bg-pink-600"
-                    } bg-secondary text-white rounded-lg px-2 py-1`}
+                      stateProduct.size === item.size
+                        ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
+                        : "bg-mywhite text-secondary border border-secondary"
+                    }  rounded-lg px-2 py-1 `}
                   >
                     {item.size}
                   </button>
@@ -214,12 +242,12 @@ const DetailClient = ({ product }: productProps) => {
                 errorState.sizeError ? "text-red-600 font-semibold" : "hidden"
               } `}
             >
-              Lütfen beden seçiniz *
+              {t("productDetail.sizeError")}*
             </small>
           </div>
 
           <p className="text-lg text-secondaryDark font-semibold my-2">
-            Adet:{" "}
+            {t("productDetail.quantity")}:
           </p>
           <span className="py-3 px-4 flex w-64 gap-x-8 flex-row items-center justify-between border border-secondary rounded">
             {stateProduct?.quantity <= 1 ? (
@@ -284,10 +312,33 @@ const DetailClient = ({ product }: productProps) => {
               "bg-secondary  p-2 w-64 rounded-lg text-xl text-white font-semibold"
             }
           >
-            Sepete Ekle
+            {t("productDetail.productAddCart")}
           </button>
 
-          <p className={"text-secondary text-lg mt-2"}>{product.description}</p>
+          <div className="mt-2">
+            <div className="col-span-full sm:col-span-2 lg:col-span-3">
+              <h3 className="text-xl text-secondary font-semibold">
+                {t("productDetail.productDescription")}:
+              </h3>
+            </div>
+            <p
+              className={`text-secondary text-base ${
+                lineClamp ? "line-clamp-3" : "line-clamp-none"
+              }`}
+            >
+              {product.description}
+            </p>
+            {product.description.length > 250 && (
+              <button
+                onClick={toggleClamp}
+                className="text-secondary font-semibold text-end mt-1 hover:underline"
+              >
+                {lineClamp
+                  ? t("productDetail.readMore")
+                  : t("productDetail.readLess")}
+              </button>
+            )}
+          </div>
         </div>
         <Lightbox
           open={isModalOpen}

@@ -94,12 +94,18 @@
     "productRemovedFav": "Product Removed Favorites.",
     "productsClearedFav": "Cleared all favorites.",
     "productAlreadyFav": "The product is already on the favorites.",
-    "product": "Cleared all favorites.",
+    "productDescription": "Description",
     "productCategory": "Category",
     "priceSymbol": "₺",
     "readMore": "Read more",
     "readLess": "Read less",
-    "detail": "Detail"
+    "newSeason": "New Season",
+    "detail": "Detail",
+    "size": "Size",
+    "color": "Color",
+    "length": "Length",
+    "price": "Price",
+    "quantity": "Quantity"
   },
 
   "blogPage": {

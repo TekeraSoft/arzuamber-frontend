@@ -91,10 +91,18 @@
     "productsClearedFav": "Bütün Favoriler Kaldırıldı.",
     "productAlreadyFav": "Ürün favorilerde mevcut.",
     "productCategory": "Kategori",
+    "productDescription": "Ürün Açıklaması",
     "priceSymbol": "₺",
     "readMore": "Daha fazla",
     "readLess": "Daha az",
-    "detail": "Detay"
+    "newSeason": "Yeni Sezon",
+    "detail": "Detay",
+    "size": "Beden",
+
+    "length": "Uzunluk",
+    "color": "Renk",
+    "price": "Fiyat",
+    "quantity": "Adet"
   },
 
   "blogPage": {
