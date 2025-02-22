@@ -106,8 +106,8 @@ function HomeSlider() {
           autoPlaySpeed={5000}
           keyBoardControl={true}
           renderDotsOutside={false}
-          customTransition="all .7s"
-          transitionDuration={1000}
+          customTransition="all 1s"
+          transitionDuration={2000}
           containerClass="carousel-container"
           itemClass="flex justify-center items-center bg-center bg-cover"
           renderButtonGroupOutside={isMobile}
