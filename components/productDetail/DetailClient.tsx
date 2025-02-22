@@ -165,10 +165,10 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col justify-center items-start gap-1 border-b py-1">
-            <div className="w-1/2 md:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  items-center">
+          <div className="w-full flex flex-col justify-center items-start gap-1 py-1">
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 items-center">
               {product.newSeason && (
-                <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1 ">
+                <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1">
                   {t("productDetail.newSeason")}
                 </p>
               )}
@@ -177,8 +177,8 @@ const DetailClient = ({ product }: productProps) => {
                 {t("productDetail.productCategory")}: {product.category}
               </div>
 
-              <div className="text-center text-sm font-semibold text-mywhite bg-secondary  rounded-lg  py-1">
-                {t("productDetail.length")}:{product.length}
+              <div className="text-center text-sm font-semibold text-mywhite bg-secondary rounded-lg py-1">
+                {t("productDetail.length")}: {product.length}
               </div>
             </div>
           </div>
@@ -203,8 +203,8 @@ const DetailClient = ({ product }: productProps) => {
                   key={index}
                   className={`  ${
                     stockSizeState?.color === item.color
-                      ? "border-2 border-secondary"
-                      : "border-0 rounded"
+                      ? "border-2 border-secondary p-0.5 rounded"
+                      : "rounded"
                   }`}
                 >
                   <p className="text-xs first-letter:uppercase text-center text-white bg-secondary ">
@@ -215,6 +215,7 @@ const DetailClient = ({ product }: productProps) => {
                     width={40}
                     height={60}
                     alt={item.images[0]}
+                    className="border border-gray-400"
                   />
                 </button>
               ))}
