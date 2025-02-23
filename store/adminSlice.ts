@@ -55,6 +55,7 @@ export const updateProductDispatch = (formData: FormData) => async(dispatch) => 
         dispatch(loading(false))
         toast.success(res.data.message);
     }).catch(err => {
+        dispatch(loading(false))
         toast.error(err.response.data);
     }).finally(()=> {
         dispatch(loading(false))

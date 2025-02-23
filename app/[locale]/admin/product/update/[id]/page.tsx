@@ -21,7 +21,6 @@ import {
 } from "@/store/adminSlice";
 import Resizer from 'react-image-file-resizer'
 import {useParams} from "next/navigation";
-import Loading from "@/components/utils/Loading";
 import {useLocale} from "next-intl";
 
 export default function UpdateProductPage() {
@@ -41,36 +40,48 @@ export default function UpdateProductPage() {
             populate: product?.populate || false,
             newSeason: product?.newSeason || false,
             length: product?.length || '',
-            lang: locale,
             colorSize: product?.colorSize?.map((item) => ({
                 color: item.color,
                 stockSize: item.stockSize?.map((s) => ({ size: s.size, stock: s.stock })) || [],
                 stockCode: item.stockCode,
-                images: item.images ? [...item.images] : [],
+                images: [...item.images]
             })) || [{ color: '', stockSize: [{ size: '', stock: 0 }], images: [] }],
             price: product?.price || 0,
             purchasePrice: product?.purchasePrice || 0,
             discountPrice: product?.discountPrice || 0,
         },
-        onSubmit: async (values, {resetForm}) => {
+        onSubmit: async (values) => {
             const formData = new FormData();
 
-            // ✅ JSON verisini FormData'ya ekle
-            formData.append("data", new Blob([JSON.stringify(values)], {type: "application/json"}));
+            // ✅ JSON verisini string olarak ekle
+            const cleanedValues = {
+                ...values,
+                colorSize: values.colorSize.map((colorItem) => ({
+                    ...colorItem,
+                    images: colorItem.images.filter(image => typeof image === "string"), // ✅ Sadece string URL'leri tut
+                })),
+            };
 
-            // ✅ Küçültülmüş resimleri doğrudan FormData'ya ekle
-            for (const colorItem of values.colorSize) {
-                for (const [index, image] of colorItem.images.entries()) {
-                    if (image instanceof File) {
-                        const fileName = `${colorItem.color}_${index}_${image.name}`;
-                        formData.append("images", new File([image], fileName, {type: image.type}));
-                    }
-                }
+            formData.append("data", JSON.stringify(cleanedValues));
+
+            // ✅ Resimleri `{color}_{filename}` formatında FormData'ya ekle
+            values.colorSize.forEach((colorItem) => {
+                colorItem.images
+                    .filter((image) => image instanceof File) // ❌ `{}` olanları tamamen filtrele
+                    .forEach((image) => {
+                        const fileName = `${colorItem.color}_${image.name}`;
+                        formData.append("images", new File([image], fileName, { type: image.type }));
+                    });
+            });
+
+            try {
+                console.log("Gönderilen formData:", [...formData.entries()]);
+                await dispatch(updateProductDispatch(formData));
+            } catch (error) {
+                console.error("Ürün güncelleme hatası:", error);
             }
-            console.log(values);
-            dispatch(updateProductDispatch(formData));
         }
-    })
+    });
 
     useEffect(() => {
         dispatch(getCategoriesDispatch())
@@ -88,48 +99,55 @@ export default function UpdateProductPage() {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
 
-            // ✅ Resizer ile resmi küçült
             const resizeImage = (file) => {
                 return new Promise((resolve) => {
                     Resizer.imageFileResizer(
                         file,
-                        1200, // ✅ Genişlik
-                        2400, // ✅ Yükseklik
-                        "WEBP", // ✅ Format (PNG, WEBP de olabilir)
-                        100, // ✅ Kalite (0-100 arasında)
-                        0, // ✅ Rotasyon
+                        1200,
+                        2400,
+                        "WEBP",
+                        100,
+                        0,
                         (resizedFile) => {
-                            resolve(new File([resizedFile], file.name, {type: file.type}));
+                            resolve(new File([resizedFile], file.name, { type: file.type }));
                         },
-                        "file" // ✅ Çıktıyı doğrudan File olarak al
+                        "file"
                     );
                 });
             };
 
             try {
-                const resizedImage = await resizeImage(file); // ✅ Resmi küçült
+                const resizedImage = await resizeImage(file);
 
-                // **1️⃣ Yeni bir `colorSize` dizisi oluştur (React state değişikliğini algılasın)**
-                const newColorSize = formik.values.colorSize.map((item, i) => {
-                    if (i === index) {
-                        // **2️⃣ Seçili `index`'deki `images` dizisini kopyala ve değiştir**
-                        const updatedImages = [...item.images];
-                        updatedImages[imageIndex] = resizedImage; // ✅ Yeni resmi ekle/değiştir
+                formik.setValues((prevValues) => {
+                    const newColorSize = prevValues.colorSize.map((item, i) => {
+                        if (i === index) {
+                            let updatedImages = [...item.images];
 
-                        return {...item, images: updatedImages};
-                    }
-                    return item;
+                            // Eğer eski resim URL ise kaldır
+                            if (typeof updatedImages[imageIndex] === "string") {
+                                updatedImages.splice(imageIndex, 1);
+                            }
+
+                            // Yeni resmi ekle veya değiştir
+                            if (imageIndex >= updatedImages.length) {
+                                updatedImages.push(resizedImage);
+                            } else {
+                                updatedImages[imageIndex] = resizedImage;
+                            }
+
+                            return { ...item, images: updatedImages };
+                        }
+                        return item;
+                    });
+                    return { ...prevValues, colorSize: newColorSize };
                 });
-
-                // **3️⃣ Güncellenmiş `colorSize` dizisini Formik'e aktar**
-                formik.setFieldValue("colorSize", newColorSize);
             } catch (error) {
                 console.error("Resim küçültme hatası:", error);
             }
         }
     };
 
-    if(loading) return <Loading />;
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -163,25 +181,16 @@ export default function UpdateProductPage() {
                             <div className='flex flex-row gap-x-4'>
                                 {[0, 1, 2].map((imageIndex) => (
                                     <div key={imageIndex} className="flex flex-col items-center space-y-2">
-                                        <input
-                                            type="file"
-                                            id={`file-upload-${index}-${imageIndex}`}
-                                            className="hidden"
-                                            onChange={(e) => handleImageChange(e, index, imageIndex)}
-                                        />
-                                        <label htmlFor={`file-upload-${index}-${imageIndex}`}
-                                               className="w-24 h-48 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                                        <input type="file" id={`file-upload-${index}-${imageIndex}`} className="hidden"
+                                               onChange={(e) => handleImageChange(e, index, imageIndex)} />
+                                        <label htmlFor={`file-upload-${index}-${imageIndex}`} className="w-24 h-48 flex items-center justify-center border cursor-pointer">
                                             {formik.values.colorSize[index]?.images?.[imageIndex] ? (
                                                 <img src={
                                                     formik.values.colorSize[index].images[imageIndex] instanceof File
                                                         ? URL.createObjectURL(formik.values.colorSize[index].images[imageIndex])
                                                         : `${process.env.NEXT_PUBLIC_RESOURCE_API}${formik.values.colorSize[index].images[imageIndex]}`
-                                                }
-                                                     alt="Preview"
-                                                     className="w-24 h-48 object-cover rounded-lg"/>
-                                            ) : (
-                                                <FiUpload className="text-2xl"/>
-                                            )}
+                                                } alt="Preview" className="w-24 h-48 object-cover" />
+                                            ) : <FiUpload className="text-2xl" />}
                                         </label>
                                     </div>
                                 ))}
@@ -322,7 +331,7 @@ export default function UpdateProductPage() {
                           rows={6} value={formik.values.description} onChange={formik.handleChange} id="description"/>
         </div>
         <div className='flex w-100 justify-end'>
-            <Button type='button' onClick={formik.handleSubmit} className='font-bold'>Send</Button>
+            <Button loading={loading} type='button' onClick={formik.handleSubmit} className='font-bold'>Send</Button>
         </div>
 
     </form>
