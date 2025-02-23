@@ -7,9 +7,16 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { FaRegCreditCard } from "react-icons/fa";
 import { CartSummaryProps } from "@/types/Props";
 import { Link } from "@/i18n/routing";
+import { useDispatch } from "react-redux";
+import { closeCartModal } from "@/store/modalsSlice";
 
 const CartSummary = ({ total }: CartSummaryProps) => {
   const t = useTranslations();
+  const dispatch = useDispatch();
+
+  const handleCloseModal = () => {
+    dispatch(closeCartModal());
+  };
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -46,7 +53,7 @@ const CartSummary = ({ total }: CartSummaryProps) => {
 
         {/* Buttons and Input */}
         <div className="flex flex-col items-center justify-center w-full border-t mt-2">
-          <div className="flex flex-row w-full justify-center items-center gap-2 mb-3 mt-2">
+          <div className="flex flex-col  w-full justify-center items-center gap-2 mb-3 mt-2">
             <Link href={`/products`} className="w-full">
               <Button
                 text={t("CartPage.cartSummary.continueShopping")}
@@ -55,7 +62,8 @@ const CartSummary = ({ total }: CartSummaryProps) => {
                 icon={FaArrowRightLong}
                 iconSize={15}
                 animation
-                className="text-xs "
+                className="text-xs"
+                onClick={handleCloseModal}
               />
             </Link>
             <Link href={`/payment`} className="w-full ">
@@ -66,7 +74,8 @@ const CartSummary = ({ total }: CartSummaryProps) => {
                 size="large"
                 icon={FaRegCreditCard}
                 iconSize={15}
-                className="text-xs "
+                className="text-xs"
+                onClick={handleCloseModal}
               />
             </Link>
           </div>

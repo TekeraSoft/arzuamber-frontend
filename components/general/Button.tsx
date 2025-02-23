@@ -4,7 +4,7 @@ import { IconType } from "react-icons";
 interface ButtonProps {
   text?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  size?: "icon" | "small" | "medium" | "large" | "cart" | "cartIcon";
+  size?: "icon" | "small" | "medium" | "large" | "cart" | "cartIcon" | "center";
   color?: "primary" | "secondary" | "third" | "fourth" | "default";
   outline?: boolean;
   icon?: IconType | undefined;
@@ -33,6 +33,7 @@ function Button({
     small: "w-[250px]",
     medium: "w-[800px]",
     large: "w-full h-10",
+    center: "w-3/4 h-10",
     cartIcon:
       "w-8 h-8 flex justify-center items-center r text-mywhite rounded-lg hover:bg-secondaryLight hover:text-primary hover:scale-110 transition-all shadow-md",
   };

@@ -36,4 +36,10 @@ export const carouselList: CarouselType[] = [
     urlDesktop: "/images/HomeSlider/Mobile/5.png",
     description: "slider5",
   },
+  {
+    id: "6",
+    urlMobile: "/images/HomeSlider/Desktop/6.png",
+    urlDesktop: "/images/HomeSlider/Mobile/6.png",
+    description: "slider6",
+  },
 ];

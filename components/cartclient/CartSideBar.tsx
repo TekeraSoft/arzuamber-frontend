@@ -18,7 +18,7 @@ import EmptyCart from "./EmptyCart";
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const {cartProducts, total} = useSelector((state: RootState) => state.cart);
+  const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -63,10 +63,10 @@ function CartSidebar() {
   return (
     <div>
       {isCartModalOpen && (
-        <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start">
+        <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start ">
           <div
             ref={modalRef}
-            className="w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6"
+            className={`w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
             <div className="absolute top-3 right-3">
               <Button
@@ -89,8 +89,8 @@ function CartSidebar() {
             ) : (
               <>
                 <div className="flex flex-col gap-5 w-full">
-                  <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-1 rounded-lg">
-                    {cartProducts.map((cart,index) => {
+                  <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-2 rounded-lg">
+                    {cartProducts.map((cart, index) => {
                       return (
                         <div
                           key={index}
@@ -129,7 +129,12 @@ function CartSidebar() {
                           <div className="w-16 flex justify-center items-center">
                             <Button
                               type="button"
-                              onClick={() => removeItemFromCart({id:cart.id, color: cart.color})}
+                              onClick={() =>
+                                removeItemFromCart({
+                                  id: cart.id,
+                                  color: cart.color,
+                                })
+                              }
                               icon={MdOutlineDeleteOutline}
                               iconSize={20}
                               color="third"
@@ -140,9 +145,7 @@ function CartSidebar() {
                       );
                     })}
                   </div>
-                  <CartSummary
-                    total={total}
-                  />
+                  <CartSummary total={total} />
                 </div>
               </>
             )}

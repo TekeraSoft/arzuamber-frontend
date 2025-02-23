@@ -57,10 +57,10 @@ function LoginForm() {
       }}
       className={`${
         isLoginModalOpen ? "fixed" : "hidden"
-      } px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50  `}
+      }   px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50   `}
     >
       <div
-        className={`w-full md:w-2/4 lg:w-1/4   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300`}
+        className={`w-full md:w-2/4  lg:w-4/12 h-auto   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300 animate__animated  animate__fadeIn `}
       >
         <h2 className="text-2xl font-semibold my-5 text-center">
           {t("loginForm.welcomeBack")}
@@ -118,21 +118,23 @@ function LoginForm() {
             )}
           </span>
 
-          <Button
-            text={t("loginForm.loginButton")}
-            type="submit"
-            color="primary"
-            animation
-            size="large"
-            className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg transition duration-200 "
-          />
-          {/* <Button
+          <div className="flex flex-col justify-center items-center w-full ">
+            <Button
+              text={t("loginForm.loginButton")}
+              type="submit"
+              color="primary"
+              animation
+              size="center"
+              className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg transition duration-200 "
+            />
+            {/* <Button
             size="small"
             outline
             icon={IoLogoGoogleplus}
             iconSize={23}
             className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-3 transition duration-200"
           /> */}
+          </div>
         </form>
 
         {/* login , register modal  */}

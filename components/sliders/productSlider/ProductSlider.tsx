@@ -4,28 +4,32 @@ import Loading from "../../utils/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
-import { Product } from "@/types/Props";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { getNewSeasonProductsDispatch } from "@/store/productSlice";
+import { Product } from "@/types";
 
 function ProductSlider() {
   const dispatch = useDispatch<AppDispatch>();
 
   const responsive = {
     superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
+      breakpoint: { max: 4000, min: 1400 }, // 1400px üstü büyük ekran
       items: 4,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1400, min: 1024 }, // Standart masaüstü
       items: 3,
     },
+    tablet: {
+      breakpoint: { max: 1024, min: 768 }, // Tablet ekranı için düzeltme
+      items: 2,
+    },
+    smallTablet: {
+      breakpoint: { max: 768, min: 464 }, // Küçük tabletler için
+      items: 1,
+    },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 464, min: 0 }, // Küçük mobil için
       items: 1,
     },
   };
@@ -74,14 +78,14 @@ function ProductSlider() {
           ssr={true}
           infinite={true}
           autoPlay={true}
-          autoPlaySpeed={1000}
+          autoPlaySpeed={3000}
           keyBoardControl={true}
           customLeftArrow={<CustomLeftArrow />}
           customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center gap-4 "
+          itemClass="flex justify-center items-center py-1 "
         >
           {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

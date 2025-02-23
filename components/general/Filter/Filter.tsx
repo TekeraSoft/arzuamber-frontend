@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { filterData } from "../../../constans/Filter";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
@@ -62,7 +64,7 @@ function Filter() {
   };
 
   return (
-    <div className="relative md:w-1/4 md:z-40">
+    <div className="relative md:w-1/4 z-40  ">
       {/* Mobil Menü Butonu */}
       <button
         onClick={toggleMenu}
@@ -75,58 +77,59 @@ function Filter() {
 
       {/* Açılır Menü */}
       <div
-        className={`fixed inset-0 backdrop-blur-sm z-50 md:hidden transform transition-transform ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-0 backdrop-blur-sm z-50 md:hidden transform transition-transform   ${
+          isMenuOpen
+            ? "translate-x-0 animate__fadeInLeft animate__animated animate__faster"
+            : "-translate-x-full "
         }`}
         onClick={toggleMenu}
       >
         <div
-          className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2"
-          onClick={(e) => e.stopPropagation()} // Menü dışına tıklanmasını engellemek için
+          className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
+          onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="text-center text-2xl font-bold text-primary mb-4">
-            {t("Filter.title")}
-          </h3>
-
-          <button
-            onClick={toggleMenu}
-            className="fixed top-6 left-60  md:hidden p-1 text-myblack  border  border-myblack rounded-md z-50  flex justify-center items-center  bg-mywhite"
-          >
-            <FaTimes size={16} />
-          </button>
+          <div className="flex flex-col justify-center items-end  mt-12 w-full">
+            <button
+              onClick={toggleMenu}
+              className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
+            >
+              <FaTimes size={16} />
+            </button>
+            <h3 className="text-center text-2xl font-bold text-primary  w-full border-b border-secondary ">
+              {t("Filter.title")}
+            </h3>
+          </div>
 
           {/* Bedenler */}
-
-          <div className={"flex flex-col"}>
-            <div className={"flex flex-row items-center justify-between "}>
-              <h3 className={"text-lg text-secondaryDark font-semibold"}>
-                {t("Filter.sizes")}
-              </h3>
+          <div className={"flex flex-col "}>
+            <div
+              className={
+                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+              }
+              onClick={() =>
+                setOpenState({ ...openState, size: !openState.size })
+              }
+            >
+              <h3 className={"text-lg  font-semibold"}>{t("Filter.sizes")}</h3>
               {openState.size ? (
-                <FaMinus
-                  onClick={() =>
-                    setOpenState({ ...openState, size: !openState.size })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaMinus className={"font-semibold"} />
               ) : (
-                <FaPlus
-                  onClick={() =>
-                    setOpenState({ ...openState, size: !openState.size })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaPlus className={"font-semibold"} />
               )}
             </div>
             <ul
-              className={`${
-                openState.size ? "block" : "hidden"
-              } flex flex-col gap-y-2 mt-2`}
+              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                openState.size ? "max-h-[500px]" : "max-h-0"
+              } flex flex-col`}
             >
               {filterData.sizes.values.map((size, index) => (
-                <li key={index} className={"flex flex-row gap-x-3"}>
+                <li
+                  key={index}
+                  className={"flex flex-row justify-start items-center gap-x-2"}
+                >
                   <input
-                    type={"radio"}
+                    type="radio"
+                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                     checked={selectedFilters.sizes === size}
                     value={size}
                     onChange={(e) =>
@@ -136,45 +139,52 @@ function Filter() {
                       })
                     }
                   />
-                  <label>{size}</label>
+
+                  <label
+                    className={`font-medium transition-all duration-300 text-base ${
+                      selectedFilters.sizes === size
+                        ? "text-primary font-bold"
+                        : "text-gray-500 font-thin"
+                    }`}
+                  >
+                    {size}
+                  </label>
                 </li>
               ))}
             </ul>
-            <hr className={"bg-secondaryDark mt-2"} />
+            <hr className={"bg-secondaryDark mt-1"} />
           </div>
 
           {/* Renkler */}
-
           <div className={"flex flex-col"}>
-            <div className={"flex flex-row items-center justify-between "}>
-              <h3 className={"text-lg text-secondaryDark font-semibold"}>
-                {t("Filter.colors")}
-              </h3>
+            <div
+              className={
+                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+              }
+              onClick={() =>
+                setOpenState({ ...openState, color: !openState.color })
+              }
+            >
+              <h3 className={"text-lg font-semibold"}>{t("Filter.colors")}</h3>
               {openState.color ? (
-                <FaMinus
-                  onClick={() =>
-                    setOpenState({ ...openState, color: !openState.color })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaMinus className={"font-semibold"} />
               ) : (
-                <FaPlus
-                  onClick={() =>
-                    setOpenState({ ...openState, color: !openState.color })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaPlus className={" font-semibold"} />
               )}
             </div>
             <ul
-              className={`${
-                openState.color ? "block" : "hidden"
-              } transition-all flex flex-col gap-y-2 mt-2`}
+              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                openState.color ? "max-h-[500px]" : "max-h-0"
+              } flex flex-col`}
             >
               {filterData.colors.values.map((color, index) => (
-                <li key={index} className={"flex flex-row gap-x-3"}>
+                <li
+                  key={index}
+                  className={"flex flex-row justify-start items-center gap-x-2"}
+                >
                   <input
-                    type={"radio"}
+                    type="radio"
+                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                     checked={selectedFilters.colors === color}
                     value={color}
                     onChange={(e) =>
@@ -184,51 +194,54 @@ function Filter() {
                       })
                     }
                   />
-                  <label>{t(`Filter.${color}`)}</label>
+
+                  <label
+                    className={`font-medium transition-all duration-300 text-base ${
+                      selectedFilters.colors === color
+                        ? "text-primary font-bold"
+                        : "text-gray-500 font-thin"
+                    }`}
+                  >
+                    {t(`Filter.${color}`)}
+                  </label>
                 </li>
               ))}
             </ul>
-            <hr className={"bg-secondaryDark mt-2"} />
+            <hr className={"bg-secondaryDark mt-1"} />
           </div>
 
           {/* Kategoriler */}
-
           <div className={"flex flex-col"}>
-            <div className={"flex flex-row items-center justify-between "}>
-              <h3 className={"text-lg text-secondaryDark font-semibold"}>
+            <div
+              onClick={() =>
+                setOpenState({ ...openState, category: !openState.category })
+              }
+              className={
+                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+              }
+            >
+              <h3 className={"text-lg font-semibold"}>
                 {t("Filter.categories")}
               </h3>
               {openState.category ? (
-                <FaMinus
-                  onClick={() =>
-                    setOpenState({
-                      ...openState,
-                      category: !openState.category,
-                    })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaMinus className={" font-semibold"} />
               ) : (
-                <FaPlus
-                  onClick={() =>
-                    setOpenState({
-                      ...openState,
-                      category: !openState.category,
-                    })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaPlus className={"font-semibold"} />
               )}
             </div>
             <ul
-              className={`${
-                openState.category ? "block" : "hidden"
-              } transition-all flex flex-col gap-y-2 mt-2`}
+              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                openState.category ? "max-h-[500px]" : "max-h-0"
+              } flex flex-col`}
             >
               {filterData.categories.values.map((category, index) => (
-                <li key={index} className={"flex flex-row gap-x-3"}>
+                <li
+                  key={index}
+                  className={"flex flex-row justify-start items-center gap-x-2"}
+                >
                   <input
-                    type={"radio"}
+                    type="radio"
+                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                     checked={selectedFilters.categories === category}
                     value={category}
                     onChange={(e) =>
@@ -238,45 +251,52 @@ function Filter() {
                       })
                     }
                   />
-                  <label>{category}</label>
+
+                  <label
+                    className={`font-medium transition-all duration-300 text-base ${
+                      selectedFilters.categories === category
+                        ? "text-primary font-bold"
+                        : "text-gray-500 font-thin"
+                    }`}
+                  >
+                    {category}
+                  </label>
                 </li>
               ))}
             </ul>
-            <hr className={"bg-secondaryDark mt-2"} />
+            <hr className={"bg-secondaryDark mt-1"} />
           </div>
 
           {/* Uzunluk */}
-
           <div className={"flex flex-col"}>
-            <div className={"flex flex-row items-center justify-between "}>
-              <h3 className={"text-lg text-secondaryDark font-semibold"}>
-                {t("Filter.lengths")}
-              </h3>
+            <div
+              className={
+                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+              }
+              onClick={() =>
+                setOpenState({ ...openState, length: !openState.length })
+              }
+            >
+              <h3 className={"text-lg font-semibold"}>{t("Filter.lengths")}</h3>
               {openState.length ? (
-                <FaMinus
-                  onClick={() =>
-                    setOpenState({ ...openState, length: !openState.length })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaMinus className={"font-semibold"} />
               ) : (
-                <FaPlus
-                  onClick={() =>
-                    setOpenState({ ...openState, length: !openState.length })
-                  }
-                  className={"text-secondaryDark cursor-pointer font-semibold"}
-                />
+                <FaPlus className={"font-semibold"} />
               )}
             </div>
             <ul
-              className={`${
-                openState.length ? "block" : "hidden"
-              } transition-all flex flex-col gap-y-2 mt-2`}
+              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                openState.length ? "max-h-[500px]" : "max-h-0"
+              } flex flex-col`}
             >
               {filterData.lengths.values.map((length, index) => (
-                <li key={index} className={"flex flex-row gap-x-3"}>
+                <li
+                  key={index}
+                  className={"flex flex-row justify-start items-center gap-x-2"}
+                >
                   <input
-                    type={"radio"}
+                    type="radio"
+                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                     checked={selectedFilters.lengths === length}
                     value={length}
                     onChange={(e) =>
@@ -286,53 +306,56 @@ function Filter() {
                       })
                     }
                   />
-                  <label>{length}</label>
+                  <label
+                    className={`font-medium transition-all duration-300 text-base ${
+                      selectedFilters.lengths === length
+                        ? "text-primary font-bold"
+                        : "text-gray-500 font-thin"
+                    }`}
+                  >
+                    {length}
+                  </label>
                 </li>
               ))}
             </ul>
-            <hr className={"bg-secondaryDark mt-2"} />
+            <hr className={"bg-secondaryDark mt-1"} />
           </div>
         </div>
       </div>
 
       {/* Desktop'ta sabit filtreler */}
-      <div className="hidden md:flex flex-col gap-4 w-3/4">
+      <div className="hidden md:flex flex-col gap-4 w-3/4 min-h-96">
         <h3 className="text-center text-2xl font-bold text-primary border-b border-secondary">
           {t("Filter.title")}
         </h3>
 
         {/* Bedenler */}
-
         <div className={"flex flex-col"}>
-          <div className={"flex flex-row items-center justify-between pb-4"}>
-            <h3 className={"text-lg text-secondaryDark font-semibold"}>
-              {t("Filter.sizes")}
-            </h3>
+          <div
+            className={
+              "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+            }
+            onClick={() =>
+              setOpenState({ ...openState, size: !openState.size })
+            }
+          >
+            <h3 className={"text-lg font-semibold"}>{t("Filter.sizes")}</h3>
             {openState.size ? (
-              <FaMinus
-                onClick={() =>
-                  setOpenState({ ...openState, size: !openState.size })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaMinus className={"font-semibold"} />
             ) : (
-              <FaPlus
-                onClick={() =>
-                  setOpenState({ ...openState, size: !openState.size })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
-            className={`${
-              openState.size ? "block" : "hidden"
-            } flex flex-col gap-y-2 mt-2`}
+            className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+              openState.size ? "max-h-[300px]" : "max-h-0"
+            } flex flex-col`}
           >
             {filterData.sizes.values.map((size, index) => (
               <li key={index} className={"flex flex-row gap-x-3"}>
                 <input
-                  type={"radio"}
+                  type="radio"
+                  className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                   checked={selectedFilters.sizes === size}
                   value={size}
                   onChange={(e) =>
@@ -342,45 +365,48 @@ function Filter() {
                     })
                   }
                 />
-                <label>{size}</label>
+                <label
+                  className={`font-medium transition-all duration-300 text-sm ${
+                    selectedFilters.sizes === size
+                      ? "text-primary font-bold"
+                      : "text-gray-500 font-thin"
+                  }`}
+                >
+                  {size}
+                </label>
               </li>
             ))}
           </ul>
-          <hr className={"bg-secondaryDark mt-4"} />
+          <hr className={"bg-secondaryDark mt-1"} />
         </div>
 
         {/* Renkler */}
-
         <div className={"flex flex-col"}>
-          <div className={"flex flex-row items-center justify-between pb-4"}>
-            <h3 className={"text-lg text-secondaryDark font-semibold"}>
-              {t("Filter.colors")}
-            </h3>
+          <div
+            className={
+              "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+            }
+            onClick={() =>
+              setOpenState({ ...openState, color: !openState.color })
+            }
+          >
+            <h3 className={"text-lg font-semibold"}>{t("Filter.colors")}</h3>
             {openState.color ? (
-              <FaMinus
-                onClick={() =>
-                  setOpenState({ ...openState, color: !openState.color })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaMinus className={" font-semibold"} />
             ) : (
-              <FaPlus
-                onClick={() =>
-                  setOpenState({ ...openState, color: !openState.color })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
-            className={`${
-              openState.color ? "block" : "hidden"
-            } transition-all flex flex-col gap-y-2 mt-2`}
+            className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+              openState.color ? "max-h-[300px]" : "max-h-0"
+            } flex flex-col`}
           >
             {filterData.colors.values.map((color, index) => (
               <li key={index} className={"flex flex-row gap-x-3"}>
                 <input
-                  type={"radio"}
+                  type="radio"
+                  className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                   checked={selectedFilters.colors === color}
                   value={color}
                   onChange={(e) =>
@@ -390,45 +416,51 @@ function Filter() {
                     })
                   }
                 />
-                <label>{t(`Filter.${color}`)}</label>
+
+                <label
+                  className={`font-medium transition-all duration-300 text-sm ${
+                    selectedFilters.colors === color
+                      ? "text-primary font-bold"
+                      : "text-gray-500 font-thin"
+                  }`}
+                >
+                  {t(`Filter.${color}`)}
+                </label>
               </li>
             ))}
           </ul>
-          <hr className={"bg-secondaryDark mt-4"} />
+          <hr className={"bg-secondaryDark mt-1"} />
         </div>
 
         {/* Kategoriler */}
-
         <div className={"flex flex-col"}>
-          <div className={"flex flex-row items-center justify-between pb-4"}>
-            <h3 className={"text-lg text-secondaryDark font-semibold"}>
+          <div
+            className={
+              "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+            }
+            onClick={() =>
+              setOpenState({ ...openState, category: !openState.category })
+            }
+          >
+            <h3 className={"text-lg font-semibold"}>
               {t("Filter.categories")}
             </h3>
             {openState.category ? (
-              <FaMinus
-                onClick={() =>
-                  setOpenState({ ...openState, category: !openState.category })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaMinus className={" font-semibold"} />
             ) : (
-              <FaPlus
-                onClick={() =>
-                  setOpenState({ ...openState, category: !openState.category })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
-            className={`${
-              openState.category ? "block" : "hidden"
-            } transition-all flex flex-col gap-y-2 mt-2`}
+            className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+              openState.category ? "max-h-[500px]" : "max-h-0"
+            } flex flex-col`}
           >
             {filterData.categories.values.map((category, index) => (
               <li key={index} className={"flex flex-row gap-x-3"}>
                 <input
-                  type={"radio"}
+                  type="radio"
+                  className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                   checked={selectedFilters.categories === category}
                   value={category}
                   onChange={(e) =>
@@ -438,45 +470,52 @@ function Filter() {
                     })
                   }
                 />
-                <label>{category}</label>
+
+                <label
+                  className={`font-medium transition-all duration-300 text-sm ${
+                    selectedFilters.categories === category
+                      ? "text-primary font-bold"
+                      : "text-gray-500 font-thin"
+                  }`}
+                >
+                  {category}
+                </label>
               </li>
             ))}
           </ul>
-          <hr className={"bg-secondaryDark mt-4"} />
+          <hr className={"bg-secondaryDark mt-1"} />
         </div>
 
         {/* Uzunluk */}
-
         <div className={"flex flex-col"}>
-          <div className={"flex flex-row items-center justify-between pb-4"}>
-            <h3 className={"text-lg text-secondaryDark font-semibold"}>
-              {t("Filter.lengths")}
-            </h3>
+          <div
+            className={
+              "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+            }
+            onClick={() =>
+              setOpenState({ ...openState, length: !openState.length })
+            }
+          >
+            <h3 className={"text-lg font-semibold"}>{t("Filter.lengths")}</h3>
             {openState.length ? (
-              <FaMinus
-                onClick={() =>
-                  setOpenState({ ...openState, length: !openState.length })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaMinus className={" font-semibold"} />
             ) : (
-              <FaPlus
-                onClick={() =>
-                  setOpenState({ ...openState, length: !openState.length })
-                }
-                className={"text-secondaryDark cursor-pointer font-semibold"}
-              />
+              <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
-            className={`${
-              openState.length ? "block" : "hidden"
-            } transition-all flex flex-col gap-y-2 mt-2`}
+            className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+              openState.length ? "max-h-[500px]" : "max-h-0"
+            } flex flex-col`}
           >
             {filterData.lengths.values.map((length, index) => (
-              <li key={index} className={"flex flex-row gap-x-3"}>
+              <li
+                key={index}
+                className="flex flex-row justify-start items-center gap-x-3"
+              >
                 <input
-                  type={"radio"}
+                  type="radio"
+                  className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                   checked={selectedFilters.lengths === length}
                   value={length}
                   onChange={(e) =>
@@ -486,11 +525,19 @@ function Filter() {
                     })
                   }
                 />
-                <label>{length}</label>
+                <label
+                  className={`font-medium transition-all duration-300 text-sm ${
+                    selectedFilters.lengths === length
+                      ? "text-primary font-bold"
+                      : "text-gray-500 font-thin"
+                  }`}
+                >
+                  {length}
+                </label>
               </li>
             ))}
           </ul>
-          <hr className={"bg-secondaryDark mt-4"} />
+          <hr className={"bg-secondaryDark mt-1"} />
         </div>
       </div>
     </div>

@@ -51,10 +51,10 @@ function RegisterForm() {
       }}
       className={`${
         isRegisterModalOpen ? "fixed" : "hidden"
-      } px-4 md:px-0 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50 `}
+      } px-4 md:px-0 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50   `}
     >
       <div
-        className={`w-full md:w-2/4 lg:w-1/4 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-5 py-3`}
+        className={`w-full md:w-2/4  lg:w-4/12 h-autoflex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-5 py-3 animate__animated  animate__fadeIn `}
       >
         <button
           type={"button"}
@@ -180,13 +180,13 @@ function RegisterForm() {
               )}
             </span>
           </div>
-          <div className="flex flex-col space-y-2 ">
+          <div className="flex flex-col space-y-2 w-full justify-center items-center ">
             <Button
               text={t("registerForm.registerButton")}
               type="submit"
               animation
-              size="small"
-              className="w-full bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
+              size="center"
+              className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
             />
             {/* <Button
               size="small"

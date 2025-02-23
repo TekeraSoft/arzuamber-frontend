@@ -91,10 +91,19 @@
     "productsClearedFav": "Bütün Favoriler Kaldırıldı.",
     "productAlreadyFav": "Ürün favorilerde mevcut.",
     "productCategory": "Kategori",
+    "productDescription": "Ürün Açıklaması",
     "priceSymbol": "₺",
     "readMore": "Daha fazla",
     "readLess": "Daha az",
-    "detail": "Detay"
+    "newSeason": "Yeni Sezon",
+    "populate": "Popüler",
+    "detail": "Detay",
+    "size": "Beden",
+    "KDV": "Fiyatlarımıza KDV dahildir.",
+    "length": "Uzunluk",
+    "color": "Renk",
+    "price": "Fiyat",
+    "quantity": "Adet"
   },
 
   "blogPage": {
@@ -114,7 +123,8 @@
     "Shipping": "Kargo",
     "ShippingText": "Ücretsiz",
     "Total": "Toplam",
-    "Subtotal": "Ara Toplam"
+    "Subtotal": "Ara Toplam",
+    "KDV": "Fiyatlarımıza KDV dahildir."
   },
 
   "paymentForm": {
@@ -315,9 +325,9 @@
 
   "AboutPage": {
     "aboutPageTitle": "Hakkımızda",
-    "aboutPageDescription": "Moda dünyasında sizlere en yeni trendleri, kaliteli ürünleri ve şık kombinleri sunmak için buradayız. Misyonumuz, her kadının kendini özel hissetmesini sağlamak. Modern, şık ve özgün tasarımlar ile gardırobunuzu yenileyin.",
+    "aboutPageDescription": "ARZUAMBER 2024 yılında kurulmuş bir firmadır. Benzersiz stilleri ve zamansız şıklığı bir araya getiren özel bir moda markasıdır. “Benzersiz Giyim Markası” sloganımızla, her kadının kendine özgü güzelliğini ve tarzını yansıtmasını sağlamak için yola çıktık.Modern ve klasik çizgileri harmanlayan koleksiyonlarımız, abiye, elbise ve günlük giyim seçenekleriyle her anınıza eşlik edecek şekilde tasarlanır. Kaliteli kumaşlar, zarif detaylar ve özenli işçilikle ürettiğimiz parçalar, stil sahibi kadınların vazgeçilmezi olmayı hedefler.Müşteri memnuniyetini ön planda tutarak, modaya yön veren özgün tasarımlarımızı sizlerle buluşturuyoruz. Arzu Amber ile her anınıza ışıltı katın, farkınızı stilinizle gösterin!.",
     "visionTitle": "Vizyonumuz",
-    "visionDescription": "Sadece kıyafet değil, aynı zamanda bir yaşam tarzı sunuyoruz. Her bir parça, sizin tarzınızı yansıtacak şekilde tasarlanmıştır. Modayı takip etmek değil, ona yön vermek istiyoruz."
+    "visionDescription": "ARZUAMBER olarak, modada şıklığı ve zarafeti ön planda tutarak kadınların kendilerini en iyi şekilde ifade edebileceği ürünler sunmayı hedefliyoruz."
   },
 
   "ContactPage": {
@@ -380,7 +390,11 @@
     "kvkk": "KVKK",
     "distancesellingcontract": "Mesafeli Satış Sözleşmesi ",
     "subscribeButton": "Abone ol",
-    "emailPlaceholder": "E-posta adresiniz"
+    "emailPlaceholder": "E-posta adresiniz",
+    "freeReturn": "15 Gün Ücretsiz İade",
+    "fastDelivery": "Süper Hızlı Teslimat",
+    "securePayment": "Güvenli ve Kolay Ödeme",
+    "carefulPackaging": "Özenli Paketleme"
   },
 
   "DistanceSellingContract": {

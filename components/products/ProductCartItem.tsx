@@ -3,33 +3,31 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import Button from "../general/Button";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { Product } from "@/types";
 import { useTranslations } from "next-intl";
-import {Product} from "@/types";
 
 interface ProductsSliderItemProps {
   product: Product;
 }
 
 function ProductCartItem({ product }: ProductsSliderItemProps) {
-  // Rating
   const [isHovered, setIsHovered] = useState(false);
-  const t = useTranslations("");
+  const t = useTranslations();
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-1   transition duration-300  relative
-     h-[650px] md:h-[600px]  md:border-none "
+      className="group flex flex-col justify-between space-y-2   transition duration-300  relative
+    min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
-      <div
-        className="relative w-full h-full bg-center bg-cover"
+      <Link
+        href={`/product/${product.slug}`}
+        className="relative w-full h-[550px] md:min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <Image
-          className={`absolute object-cover rounded  md:rounded-none transition-opacity duration-700  ${
+          className={`absolute object-cover rounded-t  transition-opacity duration-700  ${
             isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[0]}`}
@@ -39,7 +37,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         />
 
         <Image
-          className={` object-cover rounded md:rounded-none transition-opacity duration-700  ${
+          className={` object-cover  rounded-t transition-opacity duration-700  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
@@ -48,44 +46,75 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
-        <div className=" absolute right-3 top-5 md:top-2 lg:top-3  w-12 h-6 flex justify-center items-center bg-red-600 text-mywhite rounded text-sm shadow-md z-30 ">
-          %{Math.round(product.discountPrice)}
+        <div className="   absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
+          {product?.discountPrice > 0 && product?.price > 0 && (
+            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              %
+              {Math.round(
+                ((product.price - product.discountPrice) / product.price) * 100
+              )}
+            </div>
+          )}
+
+          {product.newSeason == true && (
+            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.newSeason")}
+            </div>
+          )}
+
+          {product.populate == true && (
+            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+              {t("productDetail.populate")}
+            </div>
+          )}
         </div>
-      </div>
+      </Link>
 
-      {/* Ürün Detayları */}
-      <div className=" flex flex-col space-y-1  gap-2 w-full">
-        <h2 className="font-medium text-xl  text-secondary  ">
-          {product.name}
-        </h2>
-
-        <div className="flex  lex-row justify-between items-center">
-          <div className="flex   flex-row items-start justify-center  gap-2">
-            <p className="text-green-600 font-bold text-base">
-              {(
-                product.price -
-                (product.price * product.discountPrice) / 100
-              ).toFixed(2)}
-              {t("productDetail.priceSymbol")}
-            </p>
-            <p className="text-red-700 text-sm line-through">
-              {product.price} {t("productDetail.priceSymbol")}
-            </p>
-          </div>
-          <Link
-            className="flex items-center justify-center "
-            href={`/product/${product.slug}`}
-          >
-            <Button
-              text="Detail"
-              icon={FaLongArrowAltRight}
-              size="large"
-              iconSize={16}
-              color="third"
-              className="h-8"
-              animation
+      <div className="px-3 pb-2">
+        {/* Renk Seçenekleri */}
+        <div className="flex flex-row gap-x-3 w-full">
+          {product.colorSize.map((color, index) => (
+            <Image
+              key={index}
+              className="object-cover rounded "
+              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${color.images[0]}`}
+              alt={product?.name}
+              width={30}
+              height={30}
             />
-          </Link>
+          ))}
+        </div>
+
+        {/* Ürün Detayları */}
+        <div className=" flex flex-col space-y-1  w-full mt-2">
+          <h2 className="font-medium text-base  text-secondary   ">
+            {product.name}
+          </h2>
+
+          <div className="flex  flex-row justify-between items-center">
+            {product.discountPrice > 0 &&
+            product.discountPrice !== product.price ? (
+              <div className="flex flex-col justify-center items-start">
+                <p className="text-xs line-through text-red-600 ">
+                  {product.price}₺
+                </p>
+                <p className="text-green-600 font-medium">
+                  {product.discountPrice}₺
+                </p>
+              </div>
+            ) : (
+              <p className="text-green-600 font-medium">{product.price}₺</p>
+            )}
+
+            <Link
+              className="flex items-center justify-center "
+              href={`/product/${product.slug}`}
+            >
+              <p className="text-mywhite  bg-secondary px-4 py-1 rounded text-sm transition-all hover:scale-105 duration-300">
+                {t("productDetail.detail")}
+              </p>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
