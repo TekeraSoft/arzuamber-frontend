@@ -2,8 +2,8 @@
 
 import Button from "@/components/general/Button";
 import { registerUserDispatch } from "@/store/authSlice";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
 import { closeRegisterModal, openLoginModal } from "@/store/modalsSlice";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
@@ -14,13 +14,6 @@ import { useRegisterValidationSchema } from "@/error/registerSchema";
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
-  const { isRegisterModalOpen } = useSelector(
-    (state: RootState) => state.modals
-  );
-
-  const handleClose = () => {
-    dispatch(closeRegisterModal());
-  };
 
   const handleChangeModal = () => {
     dispatch(closeRegisterModal());
@@ -42,20 +35,8 @@ function RegisterForm() {
   });
 
   return (
-    <div
-      onClick={(e) => {
-        // Form dışına tıklanırsa kapanmasını sağlıyoruz
-        if (e.target === e.currentTarget) {
-          handleClose();
-        }
-      }}
-      className={`${
-        isRegisterModalOpen ? "fixed" : "hidden"
-      } px-4 md:px-0 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50   `}
-    >
-      <div
-        className={`w-full md:w-2/4  lg:w-4/12  xl:w-3/12 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-5 py-3 animate__animated  animate__fadeIn `}
-      >
+    <div>
+      <div>
         <button
           type={"button"}
           color="primary"

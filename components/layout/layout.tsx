@@ -4,13 +4,12 @@ import React from "react";
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./navbar/Navbar";
+
 import CartSidebar from "../cartclient/CartSideBar";
 import GradientColorContainer from "../Containers/BackGroundImageContainer";
 import { usePathname } from "@/i18n/routing";
 import { PrimeReactProvider } from "primereact/api";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
-import dynamic from "next/dynamic";
+import AuthLayout from "../auth/AuthLayout";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -18,16 +17,6 @@ interface RoutesLayoutProps {
 
 function LayoutProvider({ children }: RoutesLayoutProps) {
   const path = usePathname();
-
-  const { isRegisterModalOpen, isLoginModalOpen } = useSelector(
-    (state: RootState) => state.modals
-  );
-
-  // Lazy load için modalları dinamik olarak içe aktar
-  const RegisterForm = dynamic(() => import("../auth/RegisterForm"), {
-    ssr: false,
-  });
-  const LoginForm = dynamic(() => import("../auth/LoginForm"), { ssr: false });
 
   return (
     <div className={`flex flex-col `}>
@@ -41,10 +30,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
             }`}
           >
             <CartSidebar />
-            {/* Modalları sadece açık olduklarında render et */}
-            {isRegisterModalOpen && <RegisterForm />}
-            {isLoginModalOpen && <LoginForm />}
-
+            <AuthLayout />
             {children}
           </main>
           {path.startsWith("/admin") ? null : <Footer />}
