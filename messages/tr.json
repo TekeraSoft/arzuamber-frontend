@@ -103,7 +103,8 @@
     "length": "Uzunluk",
     "color": "Renk",
     "price": "Fiyat",
-    "quantity": "Adet"
+    "quantity": "Adet",
+    "stockCode": "Stok Kodu:"
   },
 
   "blogPage": {
@@ -469,8 +470,8 @@
   },
 
   "SnackBar": {
-    "coypLinkSuccess": "Paylaşım bağlantısı kopyalandı!",
-    "coypLinkUnsuccess": "Paylaşım bağlantısı kopyalanamadı!"
+    "coypLinkSuccess": "Bağlantısı kopyalandı!",
+    "coypLinkUnsuccess": "Bağlantısı kopyalanamadı!"
   },
 
   "warningText": {

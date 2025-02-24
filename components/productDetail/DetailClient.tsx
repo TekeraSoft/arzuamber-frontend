@@ -4,7 +4,7 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import PageContainer from "../Containers/PageContainer";
 import { Product } from "@/types";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -15,6 +15,10 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { IoMdShare } from "react-icons/io";
+
+import "primereact/resources/primereact.min.css";
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -77,9 +81,19 @@ const DetailClient = ({ product }: productProps) => {
     setLineClamp(!lineClamp);
   };
 
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    // URL'yi kopyalama
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      toast.success(t("SnackBar.coypLinkSuccess"));
+    });
+  };
+
   return (
     <PageContainer>
-      <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
+      <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none bg*">
         {/* Image Section with Carousel */}
         <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6">
           <div className="w-full md:w-1/6 grid grid-cols-3  md:flex  flex-col  gap-1 ">
@@ -136,9 +150,14 @@ const DetailClient = ({ product }: productProps) => {
           </Carousel>
         </div>
         <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-3  border-secondary h-full px-1 rounded-lg min-h-[800px]">
-          <h3 className={"text-2xl font-semibold text-secondaryDark"}>
-            {product.name}
-          </h3>
+          <div className=" w-full flex flex-col lg:flex-row justify-between items-start lg:items-center   ">
+            <h3 className={"text-2xl font-semibold text-secondaryDark"}>
+              {product.name}
+            </h3>
+            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 rounded-md">
+              {t("productDetail.stockCode")} {stockSizeState.stockCode}
+            </p>
+          </div>
 
           <div className="w-full flex  justify-between gap-x-1">
             <span className={"flex flex-col gap-x-4 "}>
@@ -160,13 +179,12 @@ const DetailClient = ({ product }: productProps) => {
               )}
             </span>
             <div className="text-xs font-semibold">
-              {" "}
               {t("productDetail.KDV")}
             </div>
           </div>
 
           <div className="w-full flex flex-col justify-center items-start gap-1 py-1">
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 items-center">
+            <div className="w-full grid grid-cols-3 gap-2 md:gap-4 items-center">
               {product.newSeason && (
                 <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1">
                   {t("productDetail.newSeason")}
@@ -299,35 +317,46 @@ const DetailClient = ({ product }: productProps) => {
             />
           </span>
 
-          <button
-            onClick={() => {
-              if (!stateProduct.size) {
-                setErrorState({ ...errorState, sizeError: true });
-                toast.error(t("productDetail.sizeError"));
-              } else {
-                dispatch(
-                  addToCart({
-                    id: product.id,
-                    name: product.name,
-                    category1: product.category,
-                    category2: product.subCategory,
-                    color: stateProduct.color,
-                    image: stockSizeState?.images[0],
-                    size: stateProduct.size,
-                    quantity: stateProduct.quantity,
-                    price: product.price,
-                  })
-                );
-                toast.success(t("productDetail.productAddedCartSuccess"));
+          <div className="flex justify-start items-center gap-1 h-12">
+            <button
+              onClick={() => {
+                if (!stateProduct.size) {
+                  setErrorState({ ...errorState, sizeError: true });
+                  toast.error(t("productDetail.sizeError"));
+                } else {
+                  dispatch(
+                    addToCart({
+                      id: product.id,
+                      name: product.name,
+                      category1: product.category,
+                      category2: product.subCategory,
+                      color: stateProduct.color,
+                      image: stockSizeState?.images[0],
+                      size: stateProduct.size,
+                      quantity: stateProduct.quantity,
+                      price: product.price,
+                    })
+                  );
+                  toast.success(t("productDetail.productAddedCartSuccess"));
+                }
+              }}
+              className={
+                "bg-secondary h-full  w-64 rounded-lg text-xl text-white font-semibold"
               }
-            }}
-            className={
-              "bg-secondary  p-2 w-64 rounded-lg text-xl text-white font-semibold"
-            }
-          >
-            {t("productDetail.productAddCart")}
-          </button>
+            >
+              {t("productDetail.productAddCart")}
+            </button>
 
+            <div className="flex justify-start items-center w-3/4,  h-full gap-1">
+              {/* Icon butonu */}
+              <button
+                onClick={copyToClipboard}
+                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-full !w-16 rounded-lg text-white flex items-center justify-center "
+              >
+                <IoMdShare size={22} />
+              </button>
+            </div>
+          </div>
           <div className="mt-2">
             <div className="col-span-full sm:col-span-2 lg:col-span-3">
               <h3 className="text-xl text-secondary font-semibold">

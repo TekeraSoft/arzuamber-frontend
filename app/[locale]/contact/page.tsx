@@ -203,7 +203,7 @@ function ContactPage() {
                     <Button
                       label={t("ContactPage.form.submitButton")}
                       type="submit"
-                      className="bg-secondary  shadow-sm  w-1/2 text-center py-2 text-mywhite rounded-lg hover:scale-105 transition duration-300"
+                      className="!bg-secondary  !shadow-sm  !w-1/2 !text-center  text-mywhite !rounded-lg hover:scale-105 !transition !duration-300 !border-none"
                     />
                   </div>
                 </div>

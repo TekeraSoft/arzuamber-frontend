@@ -107,7 +107,8 @@
     "length": "Length",
     "price": "Price",
     "quantity": "Quantity",
-    "KDV": "Our prices include VAT."
+    "KDV": "Our prices include VAT.",
+    "stockCode": "Stok Kodu:"
   },
 
   "blogPage": {
