@@ -105,6 +105,14 @@ const Footer = () => {
                 priority
               />
             </div>
+            <div className="flex justify-center items-center">
+              <Image
+                src={"/images/logo/tekeralogo.svg"}
+                alt="tekera logo"
+                width={300}
+                height={200}
+              />
+            </div>
 
             {/* Social Media */}
             <FooterSocials />

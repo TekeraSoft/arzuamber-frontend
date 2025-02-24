@@ -13,7 +13,7 @@ export default function Page() {
         </h1>
         <div className=" relative w-full h-[250px] md:h-[500px]">
           <Image
-            src="/images/utils/boutique-4633332_1280.jpg" // Kendi resminizi buraya ekleyin
+            src="/images/utils/returnImage.png"
             alt="Return and Cancel Policy Image"
             layout="fill"
             objectFit="cover"
