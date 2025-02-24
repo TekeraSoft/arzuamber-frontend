@@ -130,6 +130,7 @@
 
   "paymentForm": {
     "title": "Ödeme Sayfası",
+    "paymentLoading": "Ödeme alınıyor...",
     "PaymentLabels": {
       "PaymentPageTitle": "Kart Bilgileri",
       "cardHolderNameLabel": "Kart Sahibi",

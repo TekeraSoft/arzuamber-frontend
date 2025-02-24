@@ -134,6 +134,7 @@
 
   "paymentForm": {
     "title": "Payment Page",
+    "paymentLoading": "Processing payment...",
     "PaymentLabels": {
       "PaymentPageTitle": "Card Information",
       "cardHolderNameLabel": "Card Holder",
