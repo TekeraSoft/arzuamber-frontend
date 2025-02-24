@@ -8,11 +8,11 @@ function AboutPage() {
   const locale = useLocale();
 
   return (
-    <div className=" mt-24 text-center flex flex-col justify-center items-center animate__animated  animate__fadeIn ">
+    <div className=" mt-24 text-center flex flex-col justify-center items-center animate__animated  animate__fadeIn mx-5 md:mx-0 ">
       <h2 className="text-4xl font-bold text-gray-800 mb-2">
         {t("AboutPage.aboutPageTitle")}
       </h2>
-      <p className="text-sm  md:text-base text-gray-600 mb-8 max-w-4xl mx-auto">
+      <p className="text-xs  md:text-base text-gray-600 mb-8 max-w-4xl mx-auto">
         {t("AboutPage.aboutPageDescription")}
       </p>
 
@@ -33,7 +33,7 @@ function AboutPage() {
         <h3 className="text-3xl font-semibold text-gray-800 mb-4">
           {t("AboutPage.visionTitle")}
         </h3>
-        <p className="  md:text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className=" text-sm  md:text-lg text-gray-600 max-w-3xl mx-auto">
           {t("AboutPage.visionDescription")}
         </p>
       </div>

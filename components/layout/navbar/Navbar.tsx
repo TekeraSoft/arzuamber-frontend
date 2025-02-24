@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
-import { IoEarth } from "react-icons/io5";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
 // import TopBar from "./TopBar";
@@ -12,6 +11,7 @@ import { useLocale } from "next-intl";
 import { AppDispatch, RootState } from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { FaUserShield } from "react-icons/fa";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -60,7 +60,7 @@ function Navbar() {
           {/* Hamburger Menu (Mobile) */}
           <div className="lg:hidden flex items-center justify-center gap-4 ">
             <li
-              className="flex  justify-center items-center"
+              className="flex  justify-center items-center relative z-50"
               onMouseLeave={() => setIsLangDropdownOpen(false)}
             >
               <button
@@ -73,7 +73,7 @@ function Navbar() {
               </button>
               {isLangDropdownOpen && (
                 <ul
-                  className=" absolute top-11 w-8 bg-white border   shadow-md text-sm rounded"
+                  className=" absolute  top-7 w-8 bg-white border   shadow-md text-sm rounded"
                   onMouseEnter={() => setIsLangDropdownOpen(true)}
                 >
                   {supportedLocales.map((lang) => (
@@ -132,7 +132,7 @@ function Navbar() {
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-4">
             <li
-              className="relative"
+              className="relative z-50"
               onMouseLeave={() => setIsLangDropdownOpen(false)}
             >
               <button
@@ -189,33 +189,42 @@ function Navbar() {
                   <button
                     className={"text-xl flex flex-row items-center gap-x-1"}
                     onClick={() => setOpenUserDropdown(!openUserDropdown)}
+                    onMouseEnter={() => setOpenUserDropdown(true)}
+                    onMouseLeave={() => setOpenUserDropdown(false)}
                   >
-                    <FaUser size={28} />
+                    <FaUserShield size={32} />
                   </button>
                 ) : (
                   <button
+                    className="flex justify-center items-center"
                     onClick={() => setOpenUserDropdown(!openUserDropdown)}
-                    className={"text-xl "}
+                    onMouseEnter={() => setOpenUserDropdown(true)}
+                    onMouseLeave={() => setOpenUserDropdown(false)}
                   >
-                    {t("menuItems.myAccount")}
+                    <FaUser size={26} />
                   </button>
                 )}
                 <span
                   className={`${
                     openUserDropdown ? "block" : "hidden"
-                  } flex flex-col border rounded absolute  mt-1 left-0  w-20 bg-white`}
+                  } flex flex-col border rounded absolute   left-0  w-20 bg-white z-50`}
+                  onMouseEnter={() => setOpenUserDropdown(true)}
+                  onMouseLeave={() => setOpenUserDropdown(false)}
                 >
                   <Link
                     onClick={() => {
                       setOpenMenu(false);
                     }}
-                    className={"hover:bg-gray-200 px-2 py-1 text-sm"}
+                    className="hover:bg-gray-200 px-2 py-1 text-sm flex justify-center items-center"
                     href={
                       session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
                     }
                   >
-                    {session?.user.role[0] === "ADMIN" ? "Admin" : "Profile"}
+                    {session?.user.role[0] === "ADMIN"
+                      ? "Admin"
+                      : t("menuItems.myAccount")}
                   </Link>
+
                   <button
                     className={
                       "hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"
@@ -236,7 +245,7 @@ function Navbar() {
         {/* Mobile Menu */}
 
         <div
-          className={` border-t  ${
+          className={` border-y flex items-center justify-center ${
             openMenu
               ? " relative w-full transform transition-all duration-700 max-h-96 translate-x-0"
               : "max-h-0 overflow-hidden -translate-x-full "
@@ -260,7 +269,11 @@ function Navbar() {
                 </Link>
               </li>
             ))}
-            <li className={"  text-primary  "}>
+            <li
+              className={
+                "  text-primary relative flex justify-center items-center   "
+              }
+            >
               {!session ? (
                 <button
                   onClick={() => {
@@ -270,27 +283,31 @@ function Navbar() {
                   className="flex justify-center items-center w-full  text-center   "
                 >
                   <span className="gap-1 border border-primary rounded-full text-sm  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
-                    {" "}
                     {t("menuItems.login")}
                   </span>
                 </button>
               ) : session?.user.role[0] === "ADMIN" ? (
                 <button
                   className={
-                    " flex flex-row  justify-center items-center px-4 py-1  gap-1 border border-primary rounded-full text-sm"
+                    " flex flex-row  justify-center items-center px-4 py-1  gap-1 border border-primary rounded-full text-sm relative"
                   }
-                  onClick={() => setOpenUserDropdown(!openUserDropdown)}
+                  onClick={() => {
+                    setOpenUserDropdown(!openUserDropdown);
+                  }}
+                  onMouseEnter={() => setOpenUserDropdown(true)}
+                  onMouseLeave={() => setOpenUserDropdown(false)}
                 >
                   <FaUser />
                   {t("menuItems.myAccount")}
                 </button>
               ) : (
                 <button
+                  className={
+                    " flex flex-row  justify-center items-center px-4   border border-primary rounded-full  relative w-full"
+                  }
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
-                    setOpenMenu(false);
                   }}
-                  className={"text-xl "}
                 >
                   {t("menuItems.myAccount")}
                 </button>
@@ -298,7 +315,9 @@ function Navbar() {
               <span
                 className={`${
                   openUserDropdown ? "block" : "hidden"
-                } flex flex-col border rounded absolute   py-1  right-24  w-20 bg-white`}
+                } flex flex-col border rounded absolute  top-6  w-20  bg-white`}
+                onMouseEnter={() => setOpenUserDropdown(true)}
+                onMouseLeave={() => setOpenUserDropdown(false)}
               >
                 <Link
                   onClick={() => {
@@ -309,7 +328,9 @@ function Navbar() {
                     session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
                   }
                 >
-                  {session?.user.role[0] === "ADMIN" ? "Admin" : "Profile"}
+                  {session?.user.role[0] === "ADMIN"
+                    ? "Admin"
+                    : t("menuItems.profile")}
                 </Link>
                 <button
                   className={"hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"}

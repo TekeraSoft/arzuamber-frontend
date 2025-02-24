@@ -60,7 +60,7 @@ function LoginForm() {
       }   px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50   `}
     >
       <div
-        className={`w-full md:w-2/4  lg:w-4/12 h-auto   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300 animate__animated  animate__fadeIn `}
+        className={`w-full md:w-2/4  lg:w-4/12 xl:w-3/12 h-auto   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300 animate__animated  animate__fadeIn `}
       >
         <h2 className="text-2xl font-semibold my-5 text-center">
           {t("loginForm.welcomeBack")}

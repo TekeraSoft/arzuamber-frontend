@@ -54,7 +54,7 @@ function RegisterForm() {
       } px-4 md:px-0 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50   `}
     >
       <div
-        className={`w-full md:w-2/4  lg:w-4/12 h-autoflex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-5 py-3 animate__animated  animate__fadeIn `}
+        className={`w-full md:w-2/4  lg:w-4/12  xl:w-3/12 h-auto flex flex-col justify-center items-center bg-mywhite rounded-xl  shadow-xl space-y-4 relative  px-5 py-3 animate__animated  animate__fadeIn `}
       >
         <button
           type={"button"}
