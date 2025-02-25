@@ -9,7 +9,7 @@ import CartSidebar from "../cartclient/CartSideBar";
 import GradientColorContainer from "../Containers/BackGroundImageContainer";
 import { usePathname } from "@/i18n/routing";
 import { PrimeReactProvider } from "primereact/api";
-import AuthLayout from "../auth/AuthLayout";
+import AuthLayout from "@/components/auth/authLayout";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;

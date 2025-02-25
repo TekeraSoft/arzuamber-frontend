@@ -10,8 +10,13 @@ export interface ProductProps {
   product: Product;
   products: Product[];
   categories: Category[];
+  colors: Color[];
   loading: boolean;
   page: {size: number; totalElements: number; totalPages: number, number: number};
+}
+
+export type Color = {
+  name: string;
 }
 
 export type Product = {

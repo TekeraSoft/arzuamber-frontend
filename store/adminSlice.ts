@@ -8,14 +8,13 @@ import {
     putGuardRequest
 } from "@/services/requestservice";
 import {toast} from "react-toastify";
-import {Dispatch} from "react";
-import {setTimeout} from "next/dist/compiled/@edge-runtime/primitives";
 
 const initialState: ProductProps = {
     products: [],
     product: null,
     categories: [],
     page: {},
+    colors: [],
     loading: false,
 }
 
@@ -35,6 +34,9 @@ export const adminSlice = createSlice({
         },
         deleteProduct: (state, action) => {
             state.products = state.products.filter((item) => item.id !== action.payload);
+        },
+        getColors: (state, action) => {
+            state.colors = action.payload;
         },
         loading: (state, action) => {
             state.loading = action.payload;
@@ -153,14 +155,33 @@ export const updatePriceByPercentageDispatch = (updatedValue: Number) => async(d
     })
 }
 
-//export const getProductsDispatch = (page:number,size:number) => async(dispatch) => {
-//    getGuardRequest({})
-//}
+export const createColorDispatch = (value: object) => async(dispatch) => {
+    dispatch(loading(true))
+    postGuardRequest({controller:'admin',action:'create-color'}).then(res=> {
+        dispatch(loading(false))
+        toast.success(res.data.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data);
+    })
+}
+
+export const getAllColorsDispatch = () => async (dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'admin',action:'get-all-colors'}).then(res=> {
+        dispatch(loading(false))
+        dispatch(getColors(res.data))
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data);
+    })
+}
 
 export const {
     loading,
     deleteProduct,
     getProducts,
     getProduct ,
-    getCategories} = adminSlice.actions;
+    getCategories,
+    getColors} = adminSlice.actions;
 export default adminSlice.reducer;

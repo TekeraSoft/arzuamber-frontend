@@ -15,7 +15,7 @@ export default async function middleware(req) {
   if (token) {
     req.cookies.set("Authorization", `Bearer ${token}`);
   }
-  const locale = req.cookies.get("NEXT_LOCALE").value;
+  const locale = req.cookies.get("NEXT_LOCALE")?.value;
 
   const decodedToken = token ? jwtDecode(token) : undefined;
   // Admin route koruma
