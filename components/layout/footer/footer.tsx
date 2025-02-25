@@ -95,12 +95,12 @@ const Footer = () => {
             <p className="text-sm text-center mb-4 md:mb-0">
               {t("footer.copyright")}
             </p>
-            <div className="relative w-[300px] h-[30px] mb-4 md:mb-0 flex items-center">
+            <div className=" mb-4 md:mb-0 flex items-center">
               <Image
                 src="/images/utils/iyzicoImages.png"
                 alt="Iyzico Image"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw" // Adjust as needed
+                width={270}
+                height={50}
                 className="object-contain"
                 priority
               />
@@ -110,7 +110,7 @@ const Footer = () => {
                 src={"/images/logo/tekeralogo.svg"}
                 alt="tekera logo"
                 width={300}
-                height={200}
+                height={50}
               />
             </div>
 
