@@ -133,6 +133,7 @@ function CartSidebar() {
                                 removeItemFromCart({
                                   id: cart.id,
                                   color: cart.color,
+                                  size: cart.size
                                 })
                               }
                               icon={MdOutlineDeleteOutline}

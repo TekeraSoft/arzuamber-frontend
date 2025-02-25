@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import { getNewSeasonProductsDispatch } from "@/store/productSlice";
+import {getNewSeasonProductsDispatch, getPopulateProductsDispatch} from "@/store/productSlice";
 import { Product } from "@/types";
 
 function ProductSlider() {
@@ -39,7 +39,7 @@ function ProductSlider() {
   );
 
   useEffect(() => {
-    dispatch(getNewSeasonProductsDispatch(0, 20));
+    dispatch(getNewSeasonProductsDispatch(0, 10));
   }, [dispatch]);
 
   function CustomLeftArrow({ onClick }: ArrowProps) {

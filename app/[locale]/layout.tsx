@@ -6,11 +6,7 @@ import { Locale, routing } from "@/i18n/routing";
 import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
-
-//const jost = Jost({
-//  subsets: ["latin"],
-//  weight: ["400", "200", "300", "600", "700", "900"],
-//});
+import 'animate.css';
 
 export const metadata = {
   title: "Arzu Amber",

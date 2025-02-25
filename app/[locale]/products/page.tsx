@@ -1,32 +1,33 @@
 "use client";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import Filter from "@/components/general/Filter/Filter";
 import ProductCartItem from "@/components/products/ProductCartItem";
-// import ReactPaginate from "react-paginate";
-// import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { getAllProductsDispatch } from "@/store/productSlice";
 import Loading from "@/components/utils/Loading";
 import { useTranslations } from "next-intl";
+import {Paginator} from "primereact/paginator";
 
 function Products() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
+  const [pageable, setPageable] = useState({currentPage: 0, size: 9})
 
-  const { products, filterProducts, loading } = useSelector(
+  const { products, filterProducts, loading, page } = useSelector(
     (state: RootState) => state.products
   );
 
-  // Sayfa başına ürün sayısı
-  // const productsPerPage = 6;
-
-  // Toplam sayfa sayısını hesaplamak
-  // const pageCount = Math.ceil(products.length / productsPerPage);
 
   useEffect(() => {
-    dispatch(getAllProductsDispatch(0, 25));
-  }, [dispatch]);
+    dispatch(getAllProductsDispatch(pageable.currentPage, pageable.size));
+  }, [dispatch,pageable.currentPage,pageable.size]);
+
+  const onPageChange = (event) => {
+    setPageable({size: event.rows, currentPage: event.page})
+  }
 
   return (
     <main className="mx-auto  container mt-20 r  ">
@@ -52,22 +53,8 @@ function Products() {
             )}
           </div>
 
-          {/*
-            <div className="flex justify-center mt-5 mb-2">
-              <ReactPaginate
-                previousLabel={<FaChevronLeft className="text-gray-600" />}
-                nextLabel={<FaChevronRight className="text-gray-600" />}
-                pageCount={pageCount}
-                containerClassName="flex items-center space-x-4"
-                pageClassName="px-4 py-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-black cursor-pointer"
-                activeClassName="bg-secondary text-white"
-                breakClassName="px-4 py-2 text-gray-500"
-                pageLinkClassName="cursor-pointer"
-                breakLinkClassName="cursor-pointer"
-                disabledClassName="cursor-not-allowed text-gray-400"
-              />
-            </div>
-            */}
+          <Paginator className={'my-12'} first={pageable.currentPage} rows={pageable.size} totalRecords={page.totalElements} rowsPerPageOptions={[10, 20, 30]} onPageChange={onPageChange} />
+
         </div>
       </div>
     </main>

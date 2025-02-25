@@ -4,7 +4,7 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import PageContainer from "../Containers/PageContainer";
 import { Product } from "@/types";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -55,16 +55,19 @@ const DetailClient = ({ product }: productProps) => {
     color: string;
     image: string;
     totalStock: number;
+    stockSizeId: string;
     price: number;
     quantity: number;
   }>({
     size: "",
     color: stockSizeState.color,
     totalStock: "",
+    stockSizeId: "",
     price: "",
     quantity: 1,
   });
 
+  console.log(stateProduct)
   const toggleOpen = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -76,6 +79,7 @@ const DetailClient = ({ product }: productProps) => {
   const toggleClamp = () => {
     setLineClamp(!lineClamp);
   };
+
 
   return (
     <PageContainer>
@@ -146,16 +150,16 @@ const DetailClient = ({ product }: productProps) => {
                 <p
                   className={"text-xl text-red-600 line-through font-semibold"}
                 >
-                  {product.price.toFixed(2)} ₺
+                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
                 </p>
               )}
               {product.discountPrice !== 0 ? (
                 <p className={"text-xl font-semibold text-green-600"}>
-                  {product.discountPrice.toFixed(2)} ₺
+                  {product.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
                 </p>
               ) : (
                 <p className={"text-xl font-semibold text-green-600"}>
-                  {product.price.toFixed(2)} ₺
+                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
                 </p>
               )}
             </span>
@@ -196,6 +200,7 @@ const DetailClient = ({ product }: productProps) => {
                       size: "",
                       color: item.color,
                       totalStock: 0,
+                      stockSizeId: "",
                       price: 0,
                       quantity: 1,
                     });
@@ -233,6 +238,7 @@ const DetailClient = ({ product }: productProps) => {
                     onClick={() => {
                       setStateProduct({
                         ...stateProduct,
+                        stockSizeId: item.id,
                         totalStock: item.stock,
                         size: item.size,
                       });
@@ -314,8 +320,9 @@ const DetailClient = ({ product }: productProps) => {
                     color: stateProduct.color,
                     image: stockSizeState?.images[0],
                     size: stateProduct.size,
+                    stockSizeId: stateProduct?.stockSizeId,
                     quantity: stateProduct.quantity,
-                    price: product.price,
+                    price: product.discountPrice !== 0 ? product.discountPrice: product.price,
                   })
                 );
                 toast.success(t("productDetail.productAddedCartSuccess"));

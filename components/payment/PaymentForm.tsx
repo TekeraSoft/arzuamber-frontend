@@ -25,9 +25,7 @@ export default function PaymentForm() {
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
-  const [billingStates, setBillingStates] = useState<
-    { id: string; il_id: string; name: string }[]
-  >([]);
+  const [billingStates, setBillingStates] = useState<{ id: string; il_id: string; name: string }[]>([]);
   const [openBillingAddress, setOpenBillingAddress] = useState<boolean>(false);
   const [ip, setIp] = useState();
   const [threeDsModal, setThreeDsModal] = useState(false);
@@ -50,6 +48,9 @@ export default function PaymentForm() {
       category2: cp.category2,
       price: cp.price,
       quantity: cp.quantity,
+      size: cp.size,
+      stockSizeId: cp.stockSizeId,
+      color: cp.color,
     }));
     setBasketItems(basketItems);
   }, [cartProducts]);
@@ -159,7 +160,6 @@ export default function PaymentForm() {
             },
           }}
           onSubmit={_handleSubmit}
-          validationSchema={validationSchema}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
@@ -622,9 +622,9 @@ export default function PaymentForm() {
                 <div className="w-full flex justify-center items-center">
                   <button
                     type="submit"
-                    className="bg-secondary font-semibold text-white rounded-lg py-3 text-sm hover:scale-105 w-3/4 transition duration-300"
+                    className="bg-secondary font-extrabold text-white rounded-lg py-3 text-lg hover:scale-105 w-full transition duration-300"
                   >
-                    {t("paymentForm.PaymentLabels.Button")} - {total.toFixed(2)}{" "}
+                    {t("paymentForm.PaymentLabels.Button")} - {total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}{" "}
                     TL
                   </button>
                 </div>

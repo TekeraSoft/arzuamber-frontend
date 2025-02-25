@@ -12,7 +12,7 @@ const Footer = () => {
   const t = useTranslations();
 
   return (
-    <footer className="w-full h-full mt-10">
+    <footer className="w-full h-full">
       {/* İcons */}
       <FooterIcons />
 

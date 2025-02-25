@@ -11,6 +11,7 @@ export interface ProductProps {
   products: Product[];
   categories: Category[];
   loading: boolean;
+  page: {size: number; totalElements: number; totalPages: number, number: number};
 }
 
 export type Product = {
@@ -48,6 +49,6 @@ export type BasketItem = {
 export type ColorSize = {
   color: string;
   stockCode: string;
-  stockSize: { size: string; stock: number }[];
+  stockSize: { id: string; size: string; stock: number }[];
   images: string[];
 };

@@ -44,7 +44,7 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const { size, color, name, id, image, price, quantity } = action.payload;
       const existingProduct = state.cartProducts.find(
-        (p) => p.id === id && p.color === color
+        (p) => p.id === id && p.color === color && p.size === size
       );
       if (existingProduct) {
         state.total = price * quantity;
@@ -64,7 +64,7 @@ export const cartSlice = createSlice({
       state.cartProducts = state.cartProducts.filter(
         (item) =>
           !(
-            item.id === action.payload.id && item.color === action.payload.color
+            item.id === action.payload.id && item.color === action.payload.color && item.size === action.payload.size
           )
       );
       state.total = state.cartProducts.reduce(

@@ -7,15 +7,19 @@ import {getGuardRequest} from "@/services/requestservice";
 export interface CartState {
   products: Product[];
   newSeasonProducts: Product[];
+  populateProducts: Product[];
   filterProducts: Product[];
   product: Product |null;
+  page: {}
   loading: boolean;
 }
 
 const initialState: CartState = {
   products: [],
   newSeasonProducts: [],
+  populateProducts: [],
   filterProducts: [],
+  page: {},
   product: null,
   loading: false
 }
@@ -27,8 +31,12 @@ export const productSlice = createSlice({
     getNewSeasonProducts: (state,action) => {
       state.newSeasonProducts = action.payload;
     },
+    getPopulateProducts: (state,action) => {
+      state.populateProducts = action.payload;
+    },
     getProducts: (state, action) => {
-      state.products = action.payload;
+      state.products = action.payload._embedded.productDtoes;
+      state.page = action.payload.page;
     },
     getProduct: (state, action) => {
       state.product = action.payload;
@@ -46,6 +54,16 @@ export const getNewSeasonProductsDispatch = (page: number, size: number) => asyn
   dispatch(loading(true))
   getGuardRequest({controller:'product',action: 'get-all-new-season',params: {page:page, size:size}}).then(res=> {
     dispatch(getNewSeasonProducts(res.data))
+    dispatch(loading(false))
+  }).finally(()=> {
+    dispatch(loading(false))
+  })
+}
+
+export const getPopulateProductsDispatch = (page: number, size: number) => async(dispatch) => {
+  dispatch(loading(true))
+  getGuardRequest({controller:'product',action: 'get-all-populate',params: {page:page, size:size}}).then(res=> {
+    dispatch(getPopulateProducts(res.data))
     dispatch(loading(false))
   }).finally(()=> {
     dispatch(loading(false))
@@ -88,6 +106,7 @@ export const {
   getProducts,
   getNewSeasonProducts,
   getProduct,
-  getFilterProducts} = productSlice.actions;
+  getFilterProducts,
+  getPopulateProducts} = productSlice.actions;
 
 export default productSlice.reducer;

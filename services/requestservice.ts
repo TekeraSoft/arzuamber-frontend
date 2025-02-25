@@ -31,6 +31,17 @@ export const getRequest = async (requestParameter = RequestParameter) => {
   });
 };
 
+export const patchRequest = async (requestParameter = RequestParameter) => {
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
+      requestParameter.controller
+  }${requestParameter.action ? `/${requestParameter.action}` : ""}${
+      requestParameter.id ? `/${requestParameter.id}` : ""
+  }`;
+  return await axios.patch(url, null,{
+    params: { ...requestParameter.params },
+  });
+};
+
 export const getGuardParamsRequest = async (
     requestParameter = RequestParameter
 ) => {

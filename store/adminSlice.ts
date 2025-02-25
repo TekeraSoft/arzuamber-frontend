@@ -3,7 +3,7 @@ import {Product, ProductProps} from "@/types";
 import {
     deleteGuardRequest,
     getGuardRequest,
-    getRequest,
+    getRequest, patchRequest,
     postGuardRequest,
     putGuardRequest
 } from "@/services/requestservice";
@@ -15,6 +15,7 @@ const initialState: ProductProps = {
     products: [],
     product: null,
     categories: [],
+    page: {},
     loading: false,
 }
 
@@ -23,7 +24,8 @@ export const adminSlice = createSlice({
     initialState,
     reducers: {
         getProducts: (state, action) => {
-            state.products = action.payload;
+            state.products = action.payload._embedded.productDtoes;
+            state.page = action.payload.page;
         },
         getProduct: (state, action) => {
             state.product = action.payload;
@@ -59,6 +61,20 @@ export const updateProductDispatch = (formData: FormData) => async(dispatch) => 
         toast.error(err.response.data);
     }).finally(()=> {
         dispatch(loading(false))
+    })
+}
+
+export const updateActiveDispatch = (id,active) => async(dispatch) => {
+    dispatch(loading(true))
+    patchRequest({controller:'admin', action: 'update-product-active', params:{productId: id,active: active}})
+        .then((res)=> {
+            location.reload()
+        toast.success(res.data.message);
+        dispatch(loading(false))
+    }).catch(err => {
+        dispatch(loading(false))
+        console.log("Axios Request Hatası:", err.config.url);
+        toast.error(err.response.data);
     })
 }
 

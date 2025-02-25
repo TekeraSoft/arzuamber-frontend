@@ -75,8 +75,8 @@ export default function ProductCreatePage() {
                 return new Promise((resolve) => {
                     Resizer.imageFileResizer(
                         file,
-                        1200, // ✅ Genişlik
-                        2400, // ✅ Yükseklik
+                        920, // ✅ Genişlik
+                        1840, // ✅ Yükseklik
                         "WEBP", // ✅ Format (PNG, WEBP de olabilir)
                         100, // ✅ Kalite (0-100 arasında)
                         0, // ✅ Rotasyon

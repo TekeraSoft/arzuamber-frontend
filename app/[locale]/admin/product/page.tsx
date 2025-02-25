@@ -4,9 +4,9 @@ import { DataTable } from "primereact/datatable";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
-  deleteProductDispatch,
-  getAllProductDispatch,
-  updatePriceByPercentageDispatch,
+    deleteProductDispatch,
+    getAllProductDispatch, updateActiveDispatch,
+    updatePriceByPercentageDispatch,
 } from "@/store/adminSlice";
 import { Column } from "primereact/column";
 import { InputNumber } from "primereact/inputnumber";
@@ -16,40 +16,29 @@ import { BiCheck, BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
 import {Link} from "@/i18n/routing";
+import {Checkbox} from "primereact/checkbox";
 
 function AllProductAdminPage() {
-  const { products, loading } = useSelector((state: RootState) => state.admin);
+  const { products, loading, page } = useSelector((state: RootState) => state.admin);
   const [expandedRows, setExpandedRows] = useState(null);
   const dispatch = useDispatch<AppDispatch>();
-
-  const [pageable, setPageable] = useState({currentSize:20,currentPage:0});
-
+    const [pageable, setPageable] = useState({currentPage: 0, size: 15})
   const [percentageValue, setPercentageValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getAllProductDispatch(pageable.currentPage, pageable.currentSize));
-  }, []);
+    dispatch(getAllProductDispatch(pageable.currentPage, pageable.size));
+  }, [pageable.currentPage,pageable.size]);
+
+    const onPageChange = (event) => {
+        console.log(event)
+        setPageable({size: event.rows, currentPage: event.page});
+    }
 
     const allowExpansion = (rowData) => {
         return rowData.colorSize.length > 0;
     };
 
-  //const formattedData = products.flatMap((product) =>
-  //  product.colorSize.map((item) => ({
-  //    id: product.id,
-  //    populate: product.populate,
-  //    newSeason: product.newSeason,
-  //    purchasePrice: product.purchasePrice,
-  //    productName: product.name,
-  //    category: product.category,
-  //    price: product.price,
-  //    discountPrice: product.discountPrice,
-  //    color: item.color,
-  //    stockSize: item.stockSize,
-  //    stockCode: item.stockCode,
-  //    images: item.images,
-  //  }))
-  //);
+    console.log(page)
 
   const imageBodyTemplate = (rowData,options) => {
     return (
@@ -115,8 +104,11 @@ function AllProductAdminPage() {
       dataKey="id"
       tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
       paginator
-      rows={20}
-      rowsPerPageOptions={[10, 25, 50]}
+      rows={pageable.size}
+      first={pageable.currentPage}
+      totalRecords={page.totalElements}
+      onPage={onPageChange}
+      rowsPerPageOptions={[15, 25, 100]}
       loading={loading}
       rowExpansionTemplate={rowExpansionTemplate}
       expandedRows={expandedRows}
@@ -183,6 +175,17 @@ function AllProductAdminPage() {
           )
         }
       />
+
+        <Column
+            field={"newSeason"}
+            header={"Is Active"}
+            body={(row) => (
+                <Checkbox id={'populate'}
+                          value={row.isActive}
+                          onChange={e => dispatch(updateActiveDispatch(row.id,e.checked))}
+                          checked={row.isActive === true}/>
+            )}
+        />
 
       <Column
         field={"id"}

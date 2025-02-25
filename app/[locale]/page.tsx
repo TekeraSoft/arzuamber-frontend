@@ -7,6 +7,7 @@ import Brand from "@/components/home/Brand";
 import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
+import PopulateProductSlider from "@/components/sliders/productSlider/PopulateProductSlider";
 
 export default function Home() {
   const t = useTranslations();
@@ -41,7 +42,7 @@ export default function Home() {
             center
             textSize="3xl"
           />
-          <ProductSlider />
+          <PopulateProductSlider />
         </HomeContainer>
         <Brand
           title={t("brand.title")}

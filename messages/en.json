@@ -163,7 +163,7 @@
         "otherAdressLabel": "Send My Invoice to a Different Address",
         "BillingAddress": "Billing Address"
       },
-      "Button": "Payment",
+      "Button": "PAYMENT",
       "choose": "Select"
     },
 

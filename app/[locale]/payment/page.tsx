@@ -21,7 +21,7 @@ const PaymentPage = () => {
   }, [cartProducts, navigation]);
 
   return (
-    <div className="md:container md:mx-auto rounded-lg">
+    <div className="md:container md:mx-auto rounded-lg my-20">
       {/* İçerikler için container */}
       <div className="  flex flex-col-reverse md:flex-row w-full items-start justify-center gap-2 bg-mywhite rounded-lg px-4 py-2">
         {/* Sol taraftaki içerik */}

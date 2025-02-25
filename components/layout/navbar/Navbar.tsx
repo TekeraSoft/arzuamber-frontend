@@ -130,7 +130,7 @@ function Navbar() {
           </ul>
 
           {/* Icons */}
-          <ul className="hidden lg:flex items-center justify-center gap-4">
+          <ul className="hidden lg:flex items-center justify-center gap-x-6">
             <li
               className="relative"
               onMouseLeave={() => setIsLangDropdownOpen(false)}
@@ -175,13 +175,13 @@ function Navbar() {
             </li>
 
             <ul className="hidden lg:flex gap-x-4 items-center text-base font-semibold relative">
-              <li className={"text-secondary relative"}>
+              <li className={"text-secondaryDark relative"}>
                 {!session ? (
                   <button
                     onClick={() => {
                       dispatch(openLoginModal());
                     }}
-                    className="flex items-center text-xl hover:underline"
+                    className="flex items-center text-sm underline"
                   >
                     {t("menuItems.login")}
                   </button>
