@@ -492,7 +492,7 @@
     "pageNotFoundText": "Aradığınız sayfa bulunamadı. Lütfen URL'yi kontrol edin veya anasayfaya geri dönün.",
     "notFoundProduct": {
       "title": "Ürün Bulunamadı",
-      "message": "Aradığınız ürün şu anda mevcut değil. Lütfen ana sayfaya dönün.",
+      "message": "Aradığınız ürün şu anda mevcut değil.",
       "returnHome": "Ana Sayfaya Dön"
     }
   }

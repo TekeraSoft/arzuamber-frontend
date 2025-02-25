@@ -497,7 +497,7 @@
     "pageNotFoundText": "The page you're looking for could not be found. Please check the URL or go back to the home page.",
     "notFoundProduct": {
       "title": "Product Not Found",
-      "message": "The product you are looking for is not available at the moment. Please return to the homepage.",
+      "message": "The product you are looking for is not available at the moment.",
       "returnHome": "Go Back to Home"
     }
   }

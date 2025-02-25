@@ -181,7 +181,7 @@ function Navbar() {
                     onClick={() => {
                       dispatch(openLoginModal());
                     }}
-                    className="flex items-center text-base underline"
+                    className="flex items-center text-base hover:underline transition-all duration-300"
                   >
                     {t("menuItems.login")}
                   </button>
