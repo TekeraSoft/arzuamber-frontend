@@ -7,9 +7,12 @@ import { Button } from "primereact/button";
 import React, { useState } from "react";
 import * as yup from "yup";
 import { TiMinus } from "react-icons/ti";
+import { useLocale } from "next-intl";
 
 function ProductColorsEditPage() {
   const [localColors, setLocalColors] = useState([]);
+
+  const local = useLocale();
 
   const colorValidationSchema = yup.object().shape({
     color: yup.string().required("You should enter color name.*"),
@@ -41,9 +44,12 @@ function ProductColorsEditPage() {
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-center gap-4 w-full max-w-md"
       >
-        <h2 className="text-lg text-red-600">
-          *Please enter the color names in English.*
-        </h2>
+        <p className="text-sm text-red-600">
+          {local == "tr"
+            ? "TR için renk girişi yapıyorsunuzz"
+            : "EN için renk girişi yapıyorsunuz"}
+        </p>
+
         <div className="w-full">
           <InputText
             type="text"
