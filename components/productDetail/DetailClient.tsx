@@ -14,6 +14,7 @@ import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
+import { IoMdShare } from "react-icons/io";
 
 const responsive = {
   superLargeDesktop: {
@@ -67,7 +68,7 @@ const DetailClient = ({ product }: productProps) => {
     quantity: 1,
   });
 
-  console.log(stateProduct)
+  console.log(stateProduct);
   const toggleOpen = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -80,6 +81,15 @@ const DetailClient = ({ product }: productProps) => {
     setLineClamp(!lineClamp);
   };
 
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    // URL'yi kopyalama
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      toast.success(t("SnackBar.coypLinkSuccess"));
+    });
+  };
 
   return (
     <PageContainer>
@@ -140,26 +150,42 @@ const DetailClient = ({ product }: productProps) => {
           </Carousel>
         </div>
         <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-3  border-secondary h-full px-1 rounded-lg min-h-[800px]">
-          <h3 className={"text-2xl font-semibold text-secondaryDark"}>
-            {product.name}
-          </h3>
-
+          <div className=" w-full flex flex-col lg:flex-row justify-between items-start lg:items-center   ">
+            <h3 className={"text-2xl font-semibold text-secondaryDark"}>
+              {product.name}
+            </h3>
+            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 rounded-md">
+              {t("productDetail.stockCode")} {stockSizeState.stockCode}
+            </p>
+          </div>
           <div className="w-full flex  justify-between gap-x-1">
             <span className={"flex flex-col gap-x-4 "}>
               {product.discountPrice !== 0 && (
                 <p
                   className={"text-xl text-red-600 line-through font-semibold"}
                 >
-                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
+                  {product.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}{" "}
+                  ₺
                 </p>
               )}
               {product.discountPrice !== 0 ? (
                 <p className={"text-xl font-semibold text-green-600"}>
-                  {product.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
+                  {product.discountPrice.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}{" "}
+                  ₺
                 </p>
               ) : (
                 <p className={"text-xl font-semibold text-green-600"}>
-                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} ₺
+                  {product.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}{" "}
+                  ₺
                 </p>
               )}
             </span>
@@ -170,7 +196,7 @@ const DetailClient = ({ product }: productProps) => {
           </div>
 
           <div className="w-full flex flex-col justify-center items-start gap-1 py-1">
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 items-center">
+            <div className="w-full grid grid-cols-3 gap-2 md:gap-4 items-center">
               {product.newSeason && (
                 <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1">
                   {t("productDetail.newSeason")}
@@ -305,35 +331,49 @@ const DetailClient = ({ product }: productProps) => {
             />
           </span>
 
-          <button
-            onClick={() => {
-              if (!stateProduct.size) {
-                setErrorState({ ...errorState, sizeError: true });
-                toast.error(t("productDetail.sizeError"));
-              } else {
-                dispatch(
-                  addToCart({
-                    id: product.id,
-                    name: product.name,
-                    category1: product.category,
-                    category2: product.subCategory,
-                    color: stateProduct.color,
-                    image: stockSizeState?.images[0],
-                    size: stateProduct.size,
-                    stockSizeId: stateProduct?.stockSizeId,
-                    quantity: stateProduct.quantity,
-                    price: product.discountPrice !== 0 ? product.discountPrice: product.price,
-                  })
-                );
-                toast.success(t("productDetail.productAddedCartSuccess"));
+          <div className="flex justify-start items-center gap-1 h-12">
+            <button
+              onClick={() => {
+                if (!stateProduct.size) {
+                  setErrorState({ ...errorState, sizeError: true });
+                  toast.error(t("productDetail.sizeError"));
+                } else {
+                  dispatch(
+                    addToCart({
+                      id: product.id,
+                      name: product.name,
+                      category1: product.category,
+                      category2: product.subCategory,
+                      color: stateProduct.color,
+                      image: stockSizeState?.images[0],
+                      size: stateProduct.size,
+                      stockSizeId: stateProduct?.stockSizeId,
+                      quantity: stateProduct.quantity,
+                      price:
+                        product.discountPrice !== 0 && product.discountPrice
+                          ? product.discountPrice
+                          : product.price,
+                    })
+                  );
+                  toast.success(t("productDetail.productAddedCartSuccess"));
+                }
+              }}
+              className={
+                "bg-secondary  p-2 w-64 rounded-lg text-xl text-white font-semibold"
               }
-            }}
-            className={
-              "bg-secondary  p-2 w-64 rounded-lg text-xl text-white font-semibold"
-            }
-          >
-            {t("productDetail.productAddCart")}
-          </button>
+            >
+              {t("productDetail.productAddCart")}
+            </button>
+            <div className="flex justify-start items-center w-3/4,  h-full gap-1">
+              {/* Icon butonu */}
+              <button
+                onClick={copyToClipboard}
+                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-full !w-16 rounded-lg text-white flex items-center justify-center "
+              >
+                <IoMdShare size={22} />
+              </button>
+            </div>
+          </div>
 
           <div className="mt-2">
             <div className="col-span-full sm:col-span-2 lg:col-span-3">

@@ -494,6 +494,11 @@
     "somethingWentWrong": "Something went wrong. Please try again later.",
     "serverError": "Oops! There seems to be a problem with the server.",
     "pageNotFoundTitle": "Page Not Found",
-    "pageNotFoundText": "The page you're looking for could not be found. Please check the URL or go back to the home page."
+    "pageNotFoundText": "The page you're looking for could not be found. Please check the URL or go back to the home page.",
+    "notFoundProduct": {
+      "title": "Product Not Found",
+      "message": "The product you are looking for is not available at the moment. Please return to the homepage.",
+      "returnHome": "Go Back to Home"
+    }
   }
 }

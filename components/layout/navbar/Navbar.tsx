@@ -181,7 +181,7 @@ function Navbar() {
                     onClick={() => {
                       dispatch(openLoginModal());
                     }}
-                    className="flex items-center text-sm underline"
+                    className="flex items-center text-base underline"
                   >
                     {t("menuItems.login")}
                   </button>

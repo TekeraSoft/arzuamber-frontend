@@ -489,6 +489,11 @@
     "somethingWentWrong": "Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin.",
     "serverError": "Hoppala! Sunucuda bir sorun oluşmuş gibi görünüyor.",
     "pageNotFoundTitle": "Sayfa Bulunamadı",
-    "pageNotFoundText": "Aradığınız sayfa bulunamadı. Lütfen URL'yi kontrol edin veya anasayfaya geri dönün."
+    "pageNotFoundText": "Aradığınız sayfa bulunamadı. Lütfen URL'yi kontrol edin veya anasayfaya geri dönün.",
+    "notFoundProduct": {
+      "title": "Ürün Bulunamadı",
+      "message": "Aradığınız ürün şu anda mevcut değil. Lütfen ana sayfaya dönün.",
+      "returnHome": "Ana Sayfaya Dön"
+    }
   }
 }

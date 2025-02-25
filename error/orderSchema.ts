@@ -5,22 +5,22 @@ export const useOrderValidationSchema = () => {
   const t = useTranslations("paymentForm");
 
   return yup.object().shape({
-    cardHolderName: yup.string().required("Ad zorunlu alan !"),
+    cardHolderName: yup.string().required(t("paymentCard.cardHolderName")),
     cardNumber: yup
       .string()
-      .min(16, "Minimum 16 karakter !")
-      .required(t("paymentCard.cardHolderName")),
+      .min(16, t("paymentCard.cardNumber"))
+      .required(t("paymentCard.cardNumber")),
     expireMonth: yup
       .string()
       .min(2)
       .max(2)
       .required(t("paymentCard.expireMonth.required")),
-    expireYear: yup.string().min(2).max(2).required("Yıl zorunlu alan !"),
-    cvc: yup
+    expireYear: yup
       .string()
-      .min(3)
-      .max(3)
+      .min(2)
+      .max(2)
       .required(t("paymentCard.expireYear.required")),
+    cvc: yup.string().min(3).max(3).required(t("paymentCard.cvcRequired")),
 
     buyer: yup.object({
       name: yup.string().required(t("buyer.name")),

@@ -5,11 +5,11 @@ import { RootState } from "@/store/store";
 import il from "@/data/il.json";
 import ice from "@/data/ilce.json";
 import { Field, Form, Formik } from "formik";
-import { BasketItem } from "@/types";
+import { BasketItem, PaymentFormValues } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
-import { FaLongArrowAltRight, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
@@ -18,14 +18,16 @@ import { toast } from "react-toastify";
 import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
-import { IoIosArrowForward, IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
-  const [billingStates, setBillingStates] = useState<{ id: string; il_id: string; name: string }[]>([]);
+  const [billingStates, setBillingStates] = useState<
+    { id: string; il_id: string; name: string }[]
+  >([]);
   const [openBillingAddress, setOpenBillingAddress] = useState<boolean>(false);
   const [ip, setIp] = useState();
   const [threeDsModal, setThreeDsModal] = useState(false);
@@ -121,7 +123,7 @@ export default function PaymentForm() {
       {loading ? (
         <Loading />
       ) : (
-        <Formik
+        <Formik<PaymentFormValues>
           initialValues={{
             paymentCard: {
               cardHolderName: "",
@@ -159,6 +161,7 @@ export default function PaymentForm() {
               apartment: "",
             },
           }}
+          validationSchema={validationSchema}
           onSubmit={_handleSubmit}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
@@ -205,7 +208,6 @@ export default function PaymentForm() {
                     )}
                   </div>
                 </div>
-
                 <div className="flex flex-col gap-y-2 relative">
                   <label className="text-sm">
                     {t("paymentForm.PaymentLabels.BuyerInfo.email")}{" "}
@@ -222,7 +224,6 @@ export default function PaymentForm() {
                     </span>
                   )}
                 </div>
-
                 <div className="grid grid-cols-2 gap-x-2 relative">
                   <div className="flex flex-col gap-y-2">
                     <label className=" text-sm text-gray-600">
@@ -283,7 +284,6 @@ export default function PaymentForm() {
                       )}
                   </div>
                 </div>
-
                 <div className="grid grid-cols-2 gap-x-2 relative">
                   <div className="flex flex-col gap-y-2">
                     <label className="text-sm">
@@ -364,7 +364,6 @@ export default function PaymentForm() {
                       </span>
                     )}
                 </div>
-
                 {/*  BILLING ADDRESS */}
                 <div className="flex flex-col gap-y-4">
                   <div className="flex flex-row items-center w-full justify-between">
@@ -447,6 +446,12 @@ export default function PaymentForm() {
                             </option>
                           ))}
                         </Field>
+                        {errors.shippingAddress?.state &&
+                          touched.shippingAddress?.state && (
+                            <span className="text-xs text-red-500 ">
+                              {errors.shippingAddress.state}
+                            </span>
+                          )}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-2">
@@ -462,10 +467,15 @@ export default function PaymentForm() {
                             "paymentForm.PaymentLabels.Adress.Neighborhood"
                           )}
                         />
+                        {errors.shippingAddress?.street &&
+                          touched.shippingAddress?.street && (
+                            <span className="text-xs text-red-500 ">
+                              {errors.shippingAddress.street}
+                            </span>
+                          )}
                       </div>
                       <div className="flex flex-col gap-y-2">
                         <label className="text-sm">
-                          {" "}
                           {t("paymentForm.PaymentLabels.Adress.zipcode")}
                         </label>
                         <Field
@@ -491,11 +501,16 @@ export default function PaymentForm() {
                           "paymentForm.PaymentLabels.Adress.DetailedAddress"
                         )}
                       />
+                      {errors.shippingAddress?.address &&
+                        touched.shippingAddress?.address && (
+                          <span className="text-xs text-red-500 ">
+                            {errors.shippingAddress.address}
+                          </span>
+                        )}
                     </div>
                   </div>
                 </div>
                 {/* BILLING ADDRESS END */}
-
                 <div className="flex flex-col gap-y-6 bg-slate-200 rounded-lg px-2 py-8">
                   <h3 className="text-xl font-semibold text-center">
                     {t("paymentForm.PaymentLabels.PaymentPageTitle")}
@@ -567,7 +582,7 @@ export default function PaymentForm() {
                         mask="99"
                         className={`border px-2 text-md placeholder:text-md  ${
                           errors.paymentCard?.expireMonth &&
-                          touched.paymentCard?.cardNumber &&
+                          touched.paymentCard?.expireMonth &&
                           "border-red-600"
                         }`}
                         placeholder={t(
@@ -584,7 +599,7 @@ export default function PaymentForm() {
                         mask="99"
                         className={`border px-2 text-md placeholder:text-md ${
                           errors.paymentCard?.expireYear &&
-                          touched.paymentCard?.cardNumber &&
+                          touched.paymentCard?.expireYear &&
                           "border-red-600"
                         }`}
                         placeholder={t(
@@ -604,7 +619,7 @@ export default function PaymentForm() {
                         mask="999"
                         className={`border px-2 text-md placeholder:text-md ${
                           errors.paymentCard?.cvc &&
-                          touched.paymentCard?.cardNumber &&
+                          touched.paymentCard?.cvc &&
                           "border-red-600"
                         }`}
                         placeholder="CVC"
@@ -619,15 +634,7 @@ export default function PaymentForm() {
                     height={500}
                   />
                 </div>
-                <div className="w-full flex justify-center items-center">
-                  <button
-                    type="submit"
-                    className="bg-secondary font-extrabold text-white rounded-lg py-3 text-lg hover:scale-105 w-full transition duration-300"
-                  >
-                    {t("paymentForm.PaymentLabels.Button")} - {total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}{" "}
-                    TL
-                  </button>
-                </div>
+                q
               </div>
             </Form>
           )}
