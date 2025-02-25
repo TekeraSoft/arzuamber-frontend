@@ -2,9 +2,9 @@
 
 import Button from "@/components/general/Button";
 import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
@@ -16,7 +16,6 @@ import { useLoginValidationSchema } from "@/error/loginSchema";
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
-  const { isLoginModalOpen } = useSelector((state: RootState) => state.modals);
 
   const formik = useFormik({
     initialValues: {
@@ -48,20 +47,8 @@ function LoginForm() {
   };
 
   return (
-    <div
-      onClick={(e) => {
-        // Form dışına tıklanırsa kapanmasını sağlıyoruz
-        if (e.target === e.currentTarget) {
-          dispatch(closeLoginModal());
-        }
-      }}
-      className={`${
-        isLoginModalOpen ? "fixed" : "hidden"
-      }   px-5 md:px-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50   `}
-    >
-      <div
-        className={`w-full md:w-2/4  lg:w-4/12 h-auto   bg-white rounded-2xl  px-6 py-5 shadow-lg relative transform transition-all duration-300 animate__animated  animate__fadeIn `}
-      >
+    <div>
+      <div>
         <h2 className="text-2xl font-semibold my-5 text-center">
           {t("loginForm.welcomeBack")}
         </h2>

@@ -13,7 +13,7 @@
     "login": "Log In",
     "admin": "Admin",
     "logout": "Logout",
-    "myAccount": "My Account"
+    "myAccount": "Account"
   },
 
   "topBar": {
@@ -107,7 +107,8 @@
     "length": "Length",
     "price": "Price",
     "quantity": "Quantity",
-    "KDV": "Our prices include VAT."
+    "KDV": "Our prices include VAT.",
+    "stockCode": "Stok Kodu:"
   },
 
   "blogPage": {
@@ -133,6 +134,7 @@
 
   "paymentForm": {
     "title": "Payment Page",
+    "paymentLoading": "Processing payment...",
     "PaymentLabels": {
       "PaymentPageTitle": "Card Information",
       "cardHolderNameLabel": "Card Holder",

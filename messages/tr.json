@@ -103,7 +103,8 @@
     "length": "Uzunluk",
     "color": "Renk",
     "price": "Fiyat",
-    "quantity": "Adet"
+    "quantity": "Adet",
+    "stockCode": "Stok Kodu:"
   },
 
   "blogPage": {
@@ -129,6 +130,7 @@
 
   "paymentForm": {
     "title": "Ödeme Sayfası",
+    "paymentLoading": "Ödeme alınıyor...",
     "PaymentLabels": {
       "PaymentPageTitle": "Kart Bilgileri",
       "cardHolderNameLabel": "Kart Sahibi",
@@ -469,8 +471,8 @@
   },
 
   "SnackBar": {
-    "coypLinkSuccess": "Paylaşım bağlantısı kopyalandı!",
-    "coypLinkUnsuccess": "Paylaşım bağlantısı kopyalanamadı!"
+    "coypLinkSuccess": "Bağlantısı kopyalandı!",
+    "coypLinkUnsuccess": "Bağlantısı kopyalanamadı!"
   },
 
   "warningText": {

@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[550px]  relative bg-slate-50 shadow-md">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[500px]  relative bg-slate-50 shadow-md">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-[500px] relative"

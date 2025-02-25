@@ -8,6 +8,7 @@ import { IoMdHome } from "react-icons/io";
 import { MdCategory } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
 import { BiSolidDiscount } from "react-icons/bi";
+import { TbSettingsCog } from "react-icons/tb";
 
 const SideBar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -23,6 +24,7 @@ const SideBar = () => {
         { name: "Orders", url: "/admin/orders" },
       ],
     },
+
     {
       name: "Products",
       icon: AiFillProduct,
@@ -34,9 +36,7 @@ const SideBar = () => {
     {
       name: "Categories",
       icon: MdCategory,
-      options: [
-        { name: "Create Category", url: "/admin/category/create" },
-      ],
+      options: [{ name: "Create Category", url: "/admin/category/create" }],
     },
     {
       name: "Blogs",
@@ -53,6 +53,11 @@ const SideBar = () => {
         { name: "All Coupon", url: "/admin/coupon" },
         { name: "Create Coupon", url: "/admin/coupon/create" },
       ],
+    },
+    {
+      name: "Settings",
+      icon: TbSettingsCog,
+      options: [{ name: "Color", url: "/admin/settings/product-colors" }],
     },
   ];
 

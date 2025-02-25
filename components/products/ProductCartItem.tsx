@@ -22,7 +22,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
       {/* Görsel Alanı */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative w-full h-[550px] md:min-h-[400px] bg-center bg-cover"
+        className="relative w-full h-[450px] md:min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

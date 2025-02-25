@@ -4,12 +4,12 @@ import React from "react";
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./navbar/Navbar";
-import RegisterForm from "../auth/RegisterForm";
-import LoginForm from "../auth/LoginForm";
+
 import CartSidebar from "../cartclient/CartSideBar";
 import GradientColorContainer from "../Containers/BackGroundImageContainer";
 import { usePathname } from "@/i18n/routing";
 import { PrimeReactProvider } from "primereact/api";
+import AuthLayout from "../auth/AuthLayout";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -30,8 +30,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
             }`}
           >
             <CartSidebar />
-            <RegisterForm />
-            <LoginForm />
+            <AuthLayout />
             {children}
           </main>
           {path.startsWith("/admin") ? null : <Footer />}
