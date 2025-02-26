@@ -16,13 +16,13 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-2   transition duration-300  relative
-    min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
+      className="group flex flex-col justify-between space-y-2   transition duration-300  relative min-h-[650px]
+    md:min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative w-full h-[450px] md:min-h-[400px] bg-center bg-cover"
+        className="relative w-full h-[550px] md:min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -91,7 +91,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
             {product.name}
           </h2>
 
-          <div className="flex  flex-row justify-between items-center">
+          <div className="flex  flex-row justify-between items-center min-h-10">
             {product.discountPrice > 0 &&
             product.discountPrice !== product.price ? (
               <div className="flex flex-col justify-center items-start">

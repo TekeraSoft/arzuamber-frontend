@@ -18,7 +18,7 @@ const Heading = ({
   hr,
 }: HeadingProps) => {
   return (
-    <div className="  mt-5 flex items-center justify-center flex-col">
+    <div className=" mt-7 mb-4 md:mb-8 flex items-center justify-center flex-col">
       <div
         className={` px-3 md:px-10 
           ${center ? "text-center" : "text-start"} 

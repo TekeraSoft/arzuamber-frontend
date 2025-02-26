@@ -36,155 +36,153 @@ function RegisterForm() {
 
   return (
     <div>
-      <div>
-        <button
-          type={"button"}
-          color="primary"
-          onClick={() => dispatch(closeRegisterModal())}
-          className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
-        >
-          <MdCancel size={28} />
-        </button>
+      <button
+        type={"button"}
+        color="primary"
+        onClick={() => dispatch(closeRegisterModal())}
+        className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
+      >
+        <MdCancel size={28} />
+      </button>
 
-        <h2 className="text-2xl font-semibold my-2 text-center">
-          {t("registerForm.createAccount")}
-        </h2>
+      <h2 className="text-2xl font-semibold my-2 text-center">
+        {t("registerForm.createAccount")}
+      </h2>
 
-        <form
-          onSubmit={formik.handleSubmit}
-          className={"flex flex-col gap-2 w-full"}
-        >
-          <div className="flex gap-x-3 w-full justify-start items-center">
-            <div className="w-full flex gap-y-2 flex-col">
-              <label className={"font-medium text-sm"}>
-                {t("registerForm.firstName")}
-              </label>
-              <InputText
-                id="name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.name && formik.errors.name
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              {formik.touched.name && formik.errors.name && (
-                <small className="text-xs text-red-600 mt-1 ">
-                  {formik.errors.name}
-                </small>
-              )}
-            </div>
-            <span className="w-full relative gap-y-2 flex flex-col">
-              <label className={"font-medium text-sm"}>
-                {t("registerForm.lastName")}
-              </label>
-              <InputText
-                id="surname"
-                value={formik.values.surname}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.surname && formik.errors.surname
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              {formik.touched.surname && formik.errors.surname && (
-                <small className="text-xs text-red-600 mt-1 ">
-                  {formik.errors.surname}
-                </small>
-              )}
-            </span>
-          </div>
-          <span className="w-full relative gap-y-2 flex flex-col">
+      <form
+        onSubmit={formik.handleSubmit}
+        className={"flex flex-col gap-2 w-full"}
+      >
+        <div className="flex gap-x-3 w-full justify-start items-center">
+          <div className="w-full flex gap-y-2 flex-col">
             <label className={"font-medium text-sm"}>
-              {t("registerForm.email")}
+              {t("registerForm.firstName")}
             </label>
             <InputText
-              id="email"
-              value={formik.values.email}
+              id="name"
+              value={formik.values.name}
               onChange={formik.handleChange}
               className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                formik.touched.email && formik.errors.email
+                formik.touched.name && formik.errors.name
                   ? "border-red-500"
                   : ""
               }`}
             />
-            {formik.touched.email && formik.errors.email && (
+            {formik.touched.name && formik.errors.name && (
               <small className="text-xs text-red-600 mt-1 ">
-                {formik.errors.email}
+                {formik.errors.name}
+              </small>
+            )}
+          </div>
+          <span className="w-full relative gap-y-2 flex flex-col">
+            <label className={"font-medium text-sm"}>
+              {t("registerForm.lastName")}
+            </label>
+            <InputText
+              id="surname"
+              value={formik.values.surname}
+              onChange={formik.handleChange}
+              className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.surname && formik.errors.surname
+                  ? "border-red-500"
+                  : ""
+              }`}
+            />
+            {formik.touched.surname && formik.errors.surname && (
+              <small className="text-xs text-red-600 mt-1 ">
+                {formik.errors.surname}
               </small>
             )}
           </span>
+        </div>
+        <span className="w-full relative gap-y-2 flex flex-col">
+          <label className={"font-medium text-sm"}>
+            {t("registerForm.email")}
+          </label>
+          <InputText
+            id="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+              formik.touched.email && formik.errors.email
+                ? "border-red-500"
+                : ""
+            }`}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <small className="text-xs text-red-600 mt-1 ">
+              {formik.errors.email}
+            </small>
+          )}
+        </span>
 
-          <div className="flex  gap-2 justify-between items-center">
-            <span className="w-full relative gap-y-2 flex flex-col">
-              <label className={"font-medium text-sm"}>
-                {t("registerForm.password")}
-              </label>
-              <InputText
-                id="password"
-                type={"password"}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              {formik.touched.password && formik.errors.password && (
-                <small className="text-xs text-red-600 mt-1 ">
-                  {formik.errors.password}
-                </small>
-              )}
-            </span>
-            <span className="w-full relative gap-y-2 flex flex-col">
-              <label className={"font-medium text-sm"}>
-                {t("registerForm.rePassword")}
-              </label>
-              <InputText
-                id="rePassword"
-                type={"password"}
-                value={formik.values.rePassword}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.rePassword && formik.errors.rePassword
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              {formik.touched.rePassword && formik.errors.rePassword && (
-                <small className="text-xs text-red-600 mt-1 ">
-                  {formik.errors.rePassword}
-                </small>
-              )}
-            </span>
-          </div>
-          <div className="flex flex-col space-y-2 w-full justify-center items-center ">
-            <Button
-              text={t("registerForm.registerButton")}
-              type="submit"
-              animation
-              size="center"
-              className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
+        <div className="flex  gap-2 justify-between items-center">
+          <span className="w-full relative gap-y-2 flex flex-col">
+            <label className={"font-medium text-sm"}>
+              {t("registerForm.password")}
+            </label>
+            <InputText
+              id="password"
+              type={"password"}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.password && formik.errors.password
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
-            {/* <Button
+            {formik.touched.password && formik.errors.password && (
+              <small className="text-xs text-red-600 mt-1 ">
+                {formik.errors.password}
+              </small>
+            )}
+          </span>
+          <span className="w-full relative gap-y-2 flex flex-col">
+            <label className={"font-medium text-sm"}>
+              {t("registerForm.rePassword")}
+            </label>
+            <InputText
+              id="rePassword"
+              type={"password"}
+              value={formik.values.rePassword}
+              onChange={formik.handleChange}
+              className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+                formik.touched.rePassword && formik.errors.rePassword
+                  ? "border-red-500"
+                  : ""
+              }`}
+            />
+            {formik.touched.rePassword && formik.errors.rePassword && (
+              <small className="text-xs text-red-600 mt-1 ">
+                {formik.errors.rePassword}
+              </small>
+            )}
+          </span>
+        </div>
+        <div className="flex flex-col space-y-2 w-full justify-center items-center ">
+          <Button
+            text={t("registerForm.registerButton")}
+            type="submit"
+            animation
+            size="center"
+            className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
+          />
+          {/* <Button
               size="small"
               outline
               icon={IoLogoGoogleplus}
               iconSize={23}
               className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-2"
             /> */}
-          </div>
-        </form>
-        <p
-          className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold mt-4"
-          onClick={() => handleChangeModal()}
-        >
-          {t("registerForm.registerLink")}
-        </p>
-      </div>
+        </div>
+      </form>
+      <p
+        className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold mt-4"
+        onClick={() => handleChangeModal()}
+      >
+        {t("registerForm.registerLink")}
+      </p>
     </div>
   );
 }

@@ -13,7 +13,12 @@ export interface ProductProps {
   colors: Color[];
   orders: Order[];
   loading: boolean;
-  page: {size: number; totalElements: number; totalPages: number, number: number};
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
 }
 
 export type Order = {
@@ -56,7 +61,7 @@ export type OrderBasketItem = {
 
 export type Color = {
   name: string;
-}
+};
 
 export type Product = {
   id: string;
@@ -96,3 +101,41 @@ export type ColorSize = {
   stockSize: { id: string; size: string; stock: number }[];
   images: string[];
 };
+
+export interface PaymentFormValues {
+  paymentCard: {
+    cardHolderName: string;
+    cardNumber: string;
+    expireMonth: string;
+    expireYear: string;
+    cvc: string;
+  };
+  buyer: {
+    id: string;
+    name: string;
+    surname: string;
+    gsmNumber: string;
+    email: string;
+    identityNumber: string;
+    ip: string;
+    lastLoginDate: string;
+    registrationDate: string;
+  };
+  shippingAddress: {
+    contactName: string;
+    city: string;
+    state?: string;
+    country: string;
+    address: string;
+    street?: string;
+    zipCode: string;
+  };
+  billingAddress: {
+    contactName: string;
+    city: string;
+    country: string;
+    address: string;
+    zipCode: string;
+    apartment?: string;
+  };
+}
