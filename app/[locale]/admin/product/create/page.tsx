@@ -13,14 +13,19 @@ import {filterData} from "@/data/filterData";
 import {Checkbox} from "primereact/checkbox";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/store/store";
-import {createProductDispatch, getCategoriesDispatch, getProductDispatch} from "@/store/adminSlice";
+import {
+    createProductDispatch,
+    getAllColorsDispatch,
+    getCategoriesDispatch,
+    getProductDispatch
+} from "@/store/adminSlice";
 import Resizer from 'react-image-file-resizer'
 import {useParams} from "next/navigation";
 
 export default function ProductCreatePage() {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
-    const {categories, loading} = useSelector((state:RootState) => state.admin)
+    const {categories, loading, colors} = useSelector((state:RootState) => state.admin)
     const [subCategoriesState,setSubCategoriesState] = useState([])
     const formik = useFormik({
         initialValues: {
@@ -58,6 +63,7 @@ export default function ProductCreatePage() {
     useEffect(() => {
         dispatch(getProductDispatch(params.id))
         dispatch(getCategoriesDispatch())
+        dispatch(getAllColorsDispatch())
     }, [params, dispatch]);
 
     const handleSelectSubCategories = (name) => {
@@ -135,7 +141,7 @@ export default function ProductCreatePage() {
                             </button>
 
                             <div className='flex flex-row gap-x-4'>
-                                {[0, 1, 2].map((imageIndex) => (
+                                {[0, 1, 2,3,4,5].map((imageIndex) => (
                                     <div key={imageIndex} className="flex flex-col items-center space-y-2">
                                         <input
                                             type="file"
@@ -159,7 +165,7 @@ export default function ProductCreatePage() {
                             <div className='flex flex-col w-full gap-y-2 relative'>
                                 <div className='flex flex-col w-full'>
                                     <label>Color</label>
-                                    <Dropdown options={filterData.colors.values}
+                                    <Dropdown options={colors.map(c => c.name)}
                                               value={formik.values.colorSize[index].color}
                                               onChange={(e) => formik.setFieldValue(`colorSize[${index}].color`, e.value)}/>
                                 </div>

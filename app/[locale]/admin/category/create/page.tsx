@@ -100,7 +100,7 @@ function AdminCreateCategory() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h3 className="text-gray-500 font-bold text-xl text-center">
-        Tour Category
+        Product Category
       </h3>
       <Formik
         initialValues={{
@@ -132,7 +132,7 @@ function AdminCreateCategory() {
                     }
                     className="px-4 text-md w-full"
                   />
-                  <label htmlFor="main-category">Tour Main Category</label>
+                  <label htmlFor="main-category">Main Category</label>
                   <TiPlus
                     size={24}
                     onClick={handleAddMainCategory}
@@ -177,7 +177,7 @@ function AdminCreateCategory() {
                     }
                     className="px-4 text-md w-full"
                   />
-                  <label htmlFor="sub-category">Tour Sub Category</label>
+                  <label htmlFor="sub-category">Sub Category</label>
                   <button
                     onClick={handleAddSubCategory}
                     disabled={!selectedCategoryId}

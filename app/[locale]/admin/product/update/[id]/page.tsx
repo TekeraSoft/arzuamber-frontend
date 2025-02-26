@@ -14,7 +14,7 @@ import {Checkbox} from "primereact/checkbox";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/store/store";
 import {
-    createProductDispatch,
+    createProductDispatch, getAllColorsDispatch,
     getCategoriesDispatch,
     getProductDispatch,
     updateProductDispatch
@@ -27,7 +27,7 @@ export default function UpdateProductPage() {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
     const locale = useLocale();
-    const {categories, loading, product} = useSelector((state: RootState) => state.admin);
+    const {categories, loading, product, colors} = useSelector((state: RootState) => state.admin);
     const [subCategoriesState, setSubCategoriesState] = useState([]);
     const formik = useFormik({
         enableReinitialize: true,
@@ -75,7 +75,6 @@ export default function UpdateProductPage() {
             });
 
             try {
-                console.log("Gönderilen formData:", [...formData.entries()]);
                 await dispatch(updateProductDispatch(formData));
             } catch (error) {
                 console.error("Ürün güncelleme hatası:", error);
@@ -86,6 +85,7 @@ export default function UpdateProductPage() {
     useEffect(() => {
         dispatch(getCategoriesDispatch())
         dispatch(getProductDispatch(params.id))
+        dispatch(getAllColorsDispatch())
         handleSelectSubCategories(formik.values.category);
     }, [dispatch, params.id]);
 
@@ -179,7 +179,7 @@ export default function UpdateProductPage() {
                             </button>
 
                             <div className='flex flex-row gap-x-4'>
-                                {[0, 1, 2].map((imageIndex) => (
+                                {[0, 1, 2,3,4,5].map((imageIndex) => (
                                     <div key={imageIndex} className="flex flex-col items-center space-y-2">
                                         <input type="file" id={`file-upload-${index}-${imageIndex}`} className="hidden"
                                                onChange={(e) => handleImageChange(e, index, imageIndex)} />
@@ -199,7 +199,7 @@ export default function UpdateProductPage() {
                             <div className='flex flex-col w-full gap-y-2 relative'>
                                 <div className='flex flex-col w-full'>
                                     <label>Color</label>
-                                    <Dropdown options={filterData.colors.values}
+                                    <Dropdown options={colors.map(c => c.name)}
                                               value={formik.values.colorSize[index].color}
                                               onChange={(e) => formik.setFieldValue(`colorSize[${index}].color`, e.value)}/>
                                 </div>

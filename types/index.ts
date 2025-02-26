@@ -11,8 +11,47 @@ export interface ProductProps {
   products: Product[];
   categories: Category[];
   colors: Color[];
+  orders: Order[];
   loading: boolean;
   page: {size: number; totalElements: number; totalPages: number, number: number};
+}
+
+export type Order = {
+  buyer: Buyer;
+  shippingAddress: ShippingAddress;
+  basketItems: OrderBasketItem[];
+  totalPrice: number;
+  status: string;
+  paymentId: string;
+}
+
+export type Buyer = {
+  name: string;
+  surname: string;
+  gsmNumber: string;
+  email: string;
+  ip: string;
+  identityNumber: string;
+}
+
+export type ShippingAddress = {
+  contactName: string;
+  city: string;
+  state: string;
+  country: string;
+  address: string;
+  street: string;
+  zipCode: string;
+}
+
+export type OrderBasketItem = {
+  name: string;
+  price: string;
+  quantity: number;
+  size: string;
+  color: string;
+  stockSizeId: string,
+  stockCode: string;
 }
 
 export type Color = {

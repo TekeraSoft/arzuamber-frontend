@@ -38,8 +38,6 @@ function AllProductAdminPage() {
         return rowData.colorSize.length > 0;
     };
 
-    console.log(page)
-
   const imageBodyTemplate = (rowData,options) => {
     return (
       <div style={{ display: "flex", gap: "5px" }}>

@@ -15,6 +15,7 @@ const initialState: ProductProps = {
     categories: [],
     page: {},
     colors: [],
+    orders: [],
     loading: false,
 }
 
@@ -28,6 +29,10 @@ export const adminSlice = createSlice({
         },
         getProduct: (state, action) => {
             state.product = action.payload;
+        },
+        getOrders: (state, action) => {
+            state.orders = action.payload._embedded.orderDtoes;
+            state.page = action.payload.page;
         },
         getCategories: (state, action) => {
             state.categories = action.payload;
@@ -157,8 +162,9 @@ export const updatePriceByPercentageDispatch = (updatedValue: Number) => async(d
 
 export const createColorDispatch = (value: object) => async(dispatch) => {
     dispatch(loading(true))
-    postGuardRequest({controller:'admin',action:'create-color'}).then(res=> {
+    postGuardRequest({controller:'admin',action:'create-color'},value).then(res=> {
         dispatch(loading(false))
+        dispatch(getAllColorsDispatch())
         toast.success(res.data.message);
     }).catch(err => {
         dispatch(loading(false))
@@ -177,11 +183,34 @@ export const getAllColorsDispatch = () => async (dispatch) => {
     })
 }
 
+export const deleteColorDispatch = (id: string) => async(dispatch) => {
+    dispatch(loading(true))
+    deleteGuardRequest({controller:'admin',action:'delete-color',params:{id: id}}).then(res=> {
+        dispatch(loading(false))
+        dispatch(getAllColorsDispatch())
+        toast.success(res.data.message);
+    })
+}
+
+export const getAllOrdersDispatch = (page: number, size:number) => async (dispatch) => {
+    dispatch(loading(true))
+    getRequest({controller:'admin',action:'get-all-order',params:{page: page, size: size}}).then(res=> {
+        dispatch(loading(false))
+        dispatch(getOrders(res.data))
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data);
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
 export const {
     loading,
     deleteProduct,
     getProducts,
     getProduct ,
     getCategories,
-    getColors} = adminSlice.actions;
+    getColors,
+    getOrders} = adminSlice.actions;
 export default adminSlice.reducer;

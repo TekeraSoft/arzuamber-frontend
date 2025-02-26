@@ -4,39 +4,38 @@ import { useFormik } from "formik";
 import { OrderList } from "primereact/orderlist";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import * as yup from "yup";
 import { TiMinus } from "react-icons/ti";
 import { useLocale } from "next-intl";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {createColorDispatch, deleteColorDispatch, getAllColorsDispatch} from "@/store/adminSlice";
 
 function ProductColorsEditPage() {
-  const [localColors, setLocalColors] = useState([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const {colors} = useSelector((state:RootState)=> state.admin)
+
+  useEffect(()=> {
+      dispatch(getAllColorsDispatch())
+  },[])
 
   const local = useLocale();
 
   const colorValidationSchema = yup.object().shape({
-    color: yup.string().required("You should enter color name.*"),
+    name: yup.string().required("You should enter color name.*"),
   });
 
   const formik = useFormik({
     initialValues: {
-      color: "",
+      name: "",
     },
     validationSchema: colorValidationSchema,
     onSubmit: (values, { resetForm }) => {
-      const lowerCaseColor = values.color.toLowerCase();
-
-      if (!localColors.includes(lowerCaseColor)) {
-        setLocalColors([...localColors, lowerCaseColor]);
-      }
-
+        dispatch(createColorDispatch({name: values.name, lang: local}))
       resetForm();
     },
   });
-
-  const handleRemoveColor = (colorToRemove) => {
-    setLocalColors(localColors.filter((color) => color !== colorToRemove));
-  };
 
   return (
     <div className="flex flex-col justify-center items-center mt-12 w-full h-full">
@@ -53,19 +52,20 @@ function ProductColorsEditPage() {
         <div className="w-full">
           <InputText
             type="text"
-            name="color"
+            name="name"
             onChange={formik.handleChange}
-            value={formik.values.color}
+            value={formik.values.name}
             className="w-full"
             placeholder="Enter color name"
           />
-          {formik.errors.color && formik.touched.color && (
-            <small className="p-error">{formik.errors.color}</small>
+          {formik.errors.name && formik.touched.name && (
+            <small className="p-error">{formik.errors.name}</small>
           )}
         </div>
         <Button
-          type="submit"
+          type="button"
           label="Add"
+          onClick={()=> formik.handleSubmit()}
           icon="pi pi-plus"
           className="w-full"
         />
@@ -73,14 +73,13 @@ function ProductColorsEditPage() {
 
       <OrderList
         className="mt-6 w-full max-w-md"
-        value={localColors}
-        onChange={(e) => setLocalColors(e.value)}
+        value={colors}
         itemTemplate={(color) => (
-          <div className="flex justify-between items-center p-2 border-b">
-            <span>{color}</span>
+          <div className="flex justify-between items-center p-2">
+            <span>{color.name}</span>
             <TiMinus
               size={20}
-              onClick={() => handleRemoveColor(color)}
+              onClick={() => dispatch(deleteColorDispatch(color.id))}
               className="cursor-pointer text-red-500 ml-4"
             />
           </div>

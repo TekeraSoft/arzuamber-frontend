@@ -9,12 +9,10 @@ import { BasketItem } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
-import { FaLongArrowAltRight, FaUser } from "react-icons/fa";
 import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
@@ -50,6 +48,7 @@ export default function PaymentForm() {
       quantity: cp.quantity,
       size: cp.size,
       stockSizeId: cp.stockSizeId,
+      stockCode: cp.stockCode,
       color: cp.color,
     }));
     setBasketItems(basketItems);
@@ -67,52 +66,66 @@ export default function PaymentForm() {
       setLoading(false);
     }
   }, [threeDsModal]);
-
+  console.log(basketItems)
   const _handleSubmit = async (values) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...values,
-          shippingAddress: {
-            ...values.shippingAddress,
-            contactName: values.buyer.name,
-          },
-          billingAddress: openBillingAddress
-            ? { ...values.billingAddress, contactName: values.buyer.name }
-            : { ...values.shippingAddress, contactName: values.buyer.name },
-          buyer: {
-            ...values.buyer,
-            ip: ip,
-            registrationAddress: values.shippingAddress.address,
-            city: values.shippingAddress.city,
-            country: values.shippingAddress.country,
-          },
-          paymentCard: {
-            ...values.paymentCard,
-            cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
-          },
-          basketItems: basketItems,
-        }),
-      }
-    );
-    const data = await response.json();
-
-    if (data.status === "success") {
-      setThreeDsModal(data.htmlContent);
-    } else {
-      toast.error(data.errorMessage);
-    }
-    //console.log({
-    //  ...values,
-    //  shippingAddress:{...values.shippingAddress,contactName:values.buyer.name},
-    //  billingAddress: openBillingAddress ? {...values.billingAddress, contactName: values.buyer.name} : {...values.shippingAddress, contactName: values.buyer.name},
-    //  buyer:{...values.buyer,ip:ip},
-    //  paymentCard:{...values.paymentCard,cardNumber:values.paymentCard.cardNumber.replace(/\D/g, '')},
-    //  basketItems: basketItems,
-    //});
+    //const response = await fetch(
+    //  `${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`,
+    //  {
+    //    method: "POST",
+    //    headers: { "Content-Type": "application/json" },
+    //    body: JSON.stringify({
+    //      ...values,
+    //      shippingAddress: {
+    //        ...values.shippingAddress,
+    //        contactName: values.buyer.name,
+    //      },
+    //      billingAddress: openBillingAddress
+    //        ? { ...values.billingAddress, contactName: values.buyer.name }
+    //        : { ...values.shippingAddress, contactName: values.buyer.name },
+    //      buyer: {
+    //        ...values.buyer,
+    //        ip: ip,
+    //        registrationAddress: values.shippingAddress.address,
+    //        city: values.shippingAddress.city,
+    //        country: values.shippingAddress.country,
+    //      },
+    //      paymentCard: {
+    //        ...values.paymentCard,
+    //        cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
+    //      },
+    //      basketItems: basketItems,
+    //    }),
+    //  }
+    //);
+    //const data = await response.json();
+//
+    //if (data.status === "success") {
+    //  setThreeDsModal(data.htmlContent);
+    //} else {
+    //  toast.error(data.errorMessage);
+    //}
+    console.log({
+      ...values,
+      shippingAddress: {
+        ...values.shippingAddress,
+        contactName: values.buyer.name,
+      },
+      billingAddress: openBillingAddress
+          ? { ...values.billingAddress, contactName: values.buyer.name }
+          : { ...values.shippingAddress, contactName: values.buyer.name },
+      buyer: {
+        ...values.buyer,
+        ip: ip,
+        registrationAddress: values.shippingAddress.address,
+        city: values.shippingAddress.city,
+        country: values.shippingAddress.country,
+      },
+      paymentCard: {
+        ...values.paymentCard,
+        cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
+      },
+      basketItems: basketItems,
+    })
   };
 
   const validationSchema = useOrderValidationSchema();
@@ -160,6 +173,7 @@ export default function PaymentForm() {
             },
           }}
           onSubmit={_handleSubmit}
+          validationSchema={useOrderValidationSchema()}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>

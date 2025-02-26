@@ -23,7 +23,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
       <PrimeReactProvider>
         <GradientColorContainer>
           {path.startsWith("/admin") ? null : <Navbar />}
-          <ToastContainer position={"bottom-center"} />
+          <ToastContainer position={"bottom-center"} autoClose={800} />
           <main
             className={`${
               path.startsWith("/admin") ? "" : "flex-grow mt-14 md:mt-[65px]"

@@ -67,7 +67,8 @@ const DetailClient = ({ product }: productProps) => {
     quantity: 1,
   });
 
-  console.log(stateProduct)
+  console.log(stockSizeState)
+
   const toggleOpen = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -321,6 +322,7 @@ const DetailClient = ({ product }: productProps) => {
                     image: stockSizeState?.images[0],
                     size: stateProduct.size,
                     stockSizeId: stateProduct?.stockSizeId,
+                    stockCode: stockSizeState?.stockCode,
                     quantity: stateProduct.quantity,
                     price: product.discountPrice !== 0 ? product.discountPrice: product.price,
                   })

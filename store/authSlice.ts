@@ -28,8 +28,7 @@ export const registerUserDispatch = (value: object,resetForm:()=> void, handleCh
       handleChangeModal()
     })
     .catch((err) => {
-      console.log(err);
-      //toast.error(err.response.data);
+      toast.error(err.response.data);
     });
 };
 

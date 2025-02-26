@@ -73,7 +73,6 @@ const authOptions = {
             const now = Math.floor(Date.now() / 1000);
             if (token.exp < now) {
                 try {
-                    console.log(now)
                     const newTokens = await refreshToken(token.refreshToken);
                     const decoded = jwtDecode(newTokens.accessToken);
                     return {
