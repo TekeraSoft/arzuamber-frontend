@@ -8,7 +8,7 @@ export const useOrderValidationSchema = () => {
     cardHolderName: yup.string().required(t("paymentCard.cardHolderName")),
     cardNumber: yup
       .string()
-      .min(16, t("paymentCard.cardNumber"))
+      .length(16, t("paymentCard.cardNumber"))
       .required(t("paymentCard.cardNumber")),
     expireMonth: yup
       .string()
@@ -20,7 +20,7 @@ export const useOrderValidationSchema = () => {
       .min(2)
       .max(2)
       .required(t("paymentCard.expireYear.required")),
-    cvc: yup.string().min(3).max(3).required(t("paymentCard.cvcRequired")),
+    cvc: yup.string().required(t("paymentCard.cvcRequired")),
 
     buyer: yup.object({
       name: yup.string().required(t("buyer.name")),

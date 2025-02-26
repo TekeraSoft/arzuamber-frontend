@@ -71,6 +71,8 @@ export default function PaymentForm() {
   }, [threeDsModal]);
 
   const _handleSubmit = async (values) => {
+    console.log("Gönderilen form:", values);
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`,
       {
@@ -634,7 +636,19 @@ export default function PaymentForm() {
                     height={500}
                   />
                 </div>
-                q
+                <div className="w-full flex justify-center items-center">
+                  <button
+                    type="submit"
+                    className="bg-secondary font-bold text-white rounded-lg py-3 text-base hover:opacity-85 w-full transition duration-300"
+                  >
+                    {t("paymentForm.PaymentLabels.Button")} -{" "}
+                    {total.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}{" "}
+                    TL
+                  </button>
+                </div>
               </div>
             </Form>
           )}

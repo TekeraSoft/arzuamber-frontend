@@ -96,14 +96,14 @@ const DetailClient = ({ product }: productProps) => {
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
         <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6">
-          <div className="w-full md:w-1/6 grid grid-cols-3  md:flex  flex-col  gap-1 ">
+          <div className="w-full md:w-1/6 grid grid-cols-6  md:flex  flex-col  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-32 "
+                className="flex justify-center items-center w-full h-full max-h-34 "
               >
                 <Image
-                  className="cursor-zoom-in w-full h-full object-cover rounded-lg "
+                  className=" w-full h-full object-cover rounded-lg "
                   onClick={() => {
                     setPhotoIndex(0);
                     setIsModalOpen(true);
@@ -190,7 +190,6 @@ const DetailClient = ({ product }: productProps) => {
               )}
             </span>
             <div className="text-xs font-semibold">
-              {" "}
               {t("productDetail.KDV")}
             </div>
           </div>
@@ -359,16 +358,16 @@ const DetailClient = ({ product }: productProps) => {
                 }
               }}
               className={
-                "bg-secondary  p-2 w-64 rounded-lg text-xl text-white font-semibold"
+                "bg-secondary h-12 w-64 rounded-lg text-xl text-white font-semibold"
               }
             >
               {t("productDetail.productAddCart")}
             </button>
-            <div className="flex justify-start items-center w-3/4,  h-full gap-1">
+            <div className="flex justify-start items-center  h-full gap-1">
               {/* Icon butonu */}
               <button
                 onClick={copyToClipboard}
-                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-full !w-16 rounded-lg text-white flex items-center justify-center "
+                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-12 !w-16 rounded-lg text-white flex items-center justify-center "
               >
                 <IoMdShare size={22} />
               </button>
