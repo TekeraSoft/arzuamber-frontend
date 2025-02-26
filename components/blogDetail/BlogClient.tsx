@@ -30,7 +30,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
         {/* Blog Image */}
         <div className="w-full h-[300px] sm:h-[400px] md:h-[550px] relative">
           <Image
-            src={blog.image}
+            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${blog.image}`}
             alt={blog.title}
             priority
             fill
@@ -46,10 +46,6 @@ function BlogClient({ blog }: { blog: BlogProps }) {
           <hr className=" my-2 bg-secondary" />
           {/* Author & Date */}
           <div className="flex items-center text-gray-600 text-sm mb-3">
-            <div className="flex items-center mr-6">
-              <FaCalendar className="mr-2 text-secondary text-md md:text-xl" />
-              <span className="text-gray-800  text-lg">{blog.date}</span>
-            </div>
             <div className="flex items-center ">
               <Button
                 size="icon"
@@ -87,29 +83,10 @@ function BlogClient({ blog }: { blog: BlogProps }) {
             </div>
           )}
 
-          {/* Blog Tags */}
-          {blog.tags && blog.tags.length > 0 && (
-            <div className="mb-4 flex  justify-start items-center gap-1 w-full">
-              <p className="text-md text-primary font-semibold ">
-                {t("blogPage.Tags")}:
-              </p>
-              <ul className="flex flex-wrap gap-2 w-full">
-                {blog.tags.map((tag, index) => (
-                  <li
-                    key={index}
-                    className="text-secondary text-xs bg-gray-200 py-1 px-3 rounded-md"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           <hr className=" my-2 bg-secondary" />
           {/* Description */}
           <p className="text-gray-700 leading-relaxed text-sm md:text-md">
-            {blog.description}
+            {blog.content}
           </p>
         </div>
       </div>

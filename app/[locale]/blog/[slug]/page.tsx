@@ -3,40 +3,34 @@
 import BlogClient from "@/components/blogDetail/BlogClient";
 import Loading from "@/components/utils/Loading";
 import WarningText from "@/components/utils/WarningText";
-import { RootState } from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import { BlogProps } from "@/types/Props";
-// import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getBlogDispatch} from "@/store/blogSlice";
+import {useParams} from "next/navigation";
+import {useTranslations} from "next-intl";
 
-function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
-  const [slug, setSlug] = useState<string | null>(null);
-  const { blogs, loading } = useSelector((state: RootState) => state.blogs);
-  // const t = useTranslations("warningText");
+function BlogPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams();
+  const { blog, loading } = useSelector((state: RootState) => state.blog);
+  const t = useTranslations();
 
   useEffect(() => {
-    const fetchSlug = async () => {
-      const resolvedParams = await params;
-      setSlug(resolvedParams.slug);
-    };
-
-    fetchSlug();
-  }, [params]);
-
-  const blog = blogs.find((blog: BlogProps) => blog.id === slug);
+   dispatch(getBlogDispatch(params.slug))
+  }, [params.slug]);
 
   return (
     <div>
-      {loading || !slug ? (
+      {loading || !params.slug ? (
         <Loading />
       ) : blog ? (
         <BlogClient blog={blog} />
       ) : (
         <WarningText
-          title="Blog Not Found"
-          text="The blog you're looking for could not be found."
-          // title={t("warningText.BlogNotFoundTitle")}
-          // text={t("warningText.BlogNotFoundText")}
+           title={t("warningText.BlogNotFoundTitle")}
+           text={t("warningText.BlogNotFoundText")}
         />
       )}
     </div>

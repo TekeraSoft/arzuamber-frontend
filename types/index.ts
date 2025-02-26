@@ -12,6 +12,7 @@ export interface ProductProps {
   categories: Category[];
   colors: Color[];
   orders: Order[];
+  blogs: Blog[]
   loading: boolean;
   page: {
     size: number;
@@ -101,6 +102,14 @@ export type ColorSize = {
   stockSize: { id: string; size: string; stock: number }[];
   images: string[];
 };
+
+export type Blog = {
+  title: string;
+  category: string;
+  image: string,
+  content: string;
+  createdAt: string;
+}
 
 export interface PaymentFormValues {
   paymentCard: {

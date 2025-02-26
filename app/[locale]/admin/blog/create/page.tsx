@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {useState} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { InputText } from "primereact/inputtext";
@@ -9,25 +9,31 @@ import { FileUpload } from "primereact/fileupload";
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
 import { useLocale } from "next-intl";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
+import {createBlogDispatch} from "@/store/adminSlice";
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Blog name required."),
   category: yup.string().required("Plase choose one category."),
-  image: yup.mixed().required("Image required."),
-  description: yup.string().required("Description required."),
+  content: yup.string().required("Description required."),
 });
 
 const AdminBlogCreate = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [image, setImage] = useState(null)
   const formik = useFormik({
     initialValues: {
       title: "",
       category: "",
-      image: null,
-      description: "",
+      content: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log("Blog Gönderildi:", values);
+    onSubmit: (values, {resetForm}) => {
+      const formData = new FormData();
+      formData.append("values", new Blob([JSON.stringify(values)], { type: "application/json" }))
+      formData.append("image", new File([image], image.name, { type: image.type }))
+      dispatch(createBlogDispatch(formData,resetForm))
     },
   });
 
@@ -100,27 +106,23 @@ const AdminBlogCreate = () => {
             <FileUpload
               mode="basic"
               accept="image/*"
-              maxFileSize={1000000}
-              onSelect={(e) => formik.setFieldValue("image", e.files[0])}
+              onSelect={(e) => setImage(e.files[0])}
             />
-            {formik.errors.image && typeof formik.errors.image === "string" && (
-              <p className="text-red-500  text-sm">{formik.errors.image}</p>
-            )}
           </div>
 
           <div className="grid gap-1">
             <label className="block text-sm font-medium">Açıklama</label>
             <InputTextarea
-              name="description"
-              value={formik.values.description}
+              name="content"
+              value={formik.values.content}
               onChange={formik.handleChange}
               className="w-full"
               rows={4}
             />
 
-            {formik.errors.description && (
+            {formik.errors.content && (
               <p className="text-red-500  text-sm">
-                {formik.errors.description}
+                {formik.errors.content}
               </p>
             )}
           </div>

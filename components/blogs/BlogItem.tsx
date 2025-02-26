@@ -11,11 +11,11 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
 
   return (
     <div className=" shadow-md rounded-lg p-5 flex flex-col justify-center items-center">
-      <Link href={`/blog/${blog.id}`}>
+      <Link href={`/blog/${blog.slug}`}>
         <div className="relative w-full h-56 sm:h-72 lg:h-72">
           <Image
             className="object-cover w-full h-full rounded-lg"
-            src={blog.image}
+            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${blog.image}`}
             alt={blog.title}
             width={400}
             height={300}
@@ -29,14 +29,14 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
       </span>
       <p className="mt-4 text-lg font-semibold ">
         <Link
-          href={`/blog/${blog.id}`}
+          href={`/blog/${blog.slug}`}
           className="text-primary hover:underline line-clamp-1 "
         >
           {blog.title}
         </Link>
       </p>
       <p className="mt-3 text-gray-600 line-clamp-2 text-sm">
-        {blog.description}
+        {blog.content}
       </p>
       <div className="h-0 mt-6 mb-4 border-t-2 border-gray-200 border-dashed"></div>
 
@@ -47,7 +47,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
         </div>
         <p className=" text-sm md:text-md flex justify-end items-center ">
           <Link
-            href={`/blog/${blog.id}`}
+            href={`/blog/${blog.slug}`}
             className="flex items-center text-primary font-semibold transition duration-300 text-xs hover:underline underline-offset-1"
           >
             <span className="mr-2">{t("blogPage.readMore")}</span>

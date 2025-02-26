@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {Product, ProductProps} from "@/types";
+import { ProductProps } from "@/types";
 import {
     deleteGuardRequest,
     getGuardRequest,
@@ -16,6 +16,7 @@ const initialState: ProductProps = {
     page: {},
     colors: [],
     orders: [],
+    blogs: [],
     loading: false,
 }
 
@@ -202,6 +203,18 @@ export const getAllOrdersDispatch = (page: number, size:number) => async (dispat
         toast.error(err.response.data);
     }).finally(()=> {
         dispatch(loading(false))
+    })
+}
+
+export const createBlogDispatch = (value: object,resetForm:()=> void) => async(dispatch) => {
+    dispatch(loading(true))
+    postGuardRequest({controller:'admin',action:'create-blog'},value).then(res=> {
+        dispatch(loading(false))
+        resetForm()
+        toast.success(res.data.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data);
     })
 }
 

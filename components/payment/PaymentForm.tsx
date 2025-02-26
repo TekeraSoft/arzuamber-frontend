@@ -9,16 +9,17 @@ import { BasketItem } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
-import { FaLongArrowAltRight, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
-import { IoIosArrowForward, IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import {Button} from "primereact/button";
+import {toast} from "react-toastify";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
@@ -50,6 +51,7 @@ export default function PaymentForm() {
       quantity: cp.quantity,
       size: cp.size,
       stockSizeId: cp.stockSizeId,
+      stockCode: cp.stockCode,
       color: cp.color,
     }));
     setBasketItems(basketItems);
@@ -69,6 +71,7 @@ export default function PaymentForm() {
   }, [threeDsModal]);
 
   const _handleSubmit = async (values) => {
+    setLoading(true);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`,
       {
@@ -101,21 +104,36 @@ export default function PaymentForm() {
     const data = await response.json();
 
     if (data.status === "success") {
+      setLoading(false)
       setThreeDsModal(data.htmlContent);
     } else {
+      setLoading(false)
       toast.error(data.errorMessage);
     }
     //console.log({
     //  ...values,
-    //  shippingAddress:{...values.shippingAddress,contactName:values.buyer.name},
-    //  billingAddress: openBillingAddress ? {...values.billingAddress, contactName: values.buyer.name} : {...values.shippingAddress, contactName: values.buyer.name},
-    //  buyer:{...values.buyer,ip:ip},
-    //  paymentCard:{...values.paymentCard,cardNumber:values.paymentCard.cardNumber.replace(/\D/g, '')},
+    //  shippingAddress: {
+    //    ...values.shippingAddress,
+    //    contactName: values.buyer.name,
+    //  },
+    //  billingAddress: openBillingAddress ?
+    //      {...values.billingAddress, contactName: values.buyer.name }: {...values.shippingAddress,contactName: values.buyer.name},
+    //  buyer: {
+    //    ...values.buyer,
+    //    ip: ip,
+    //    registrationAddress: values.shippingAddress.address,
+    //    city: values.shippingAddress.city,
+    //    country: values.shippingAddress.country,
+    //  },
+    //  paymentCard: {
+    //    ...values.paymentCard,
+    //    cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
+    //  },
     //  basketItems: basketItems,
     //});
   };
 
-  const validationSchema = useOrderValidationSchema();
+  const validationSchema = useOrderValidationSchema(openBillingAddress);
   return (
     <div className="flex flex-col  gap-2 py-3 ">
       {loading ? (
@@ -142,7 +160,6 @@ export default function PaymentForm() {
               registrationDate: "2024-03-25 20:28:29",
             },
             shippingAddress: {
-              contactName: "",
               city: "",
               state: "",
               country: "Turkey",
@@ -151,15 +168,16 @@ export default function PaymentForm() {
               zipCode: "",
             },
             billingAddress: {
-              contactName: "",
               city: "",
+              state: "",
               country: "Turkey",
               address: "",
+              street: "",
               zipCode: "",
-              apartment: "",
             },
           }}
           onSubmit={_handleSubmit}
+          validationSchema={validationSchema}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
@@ -456,12 +474,18 @@ export default function PaymentForm() {
                           <span className="text-red-500">*</span>
                         </label>
                         <Field
-                          name="billingAddress.apartment"
+                          name="billingAddress.street"
                           className="w-full border text-sm py-2 px-2 placeholder:text-sm rounded"
                           placeholder={t(
                             "paymentForm.PaymentLabels.Adress.Neighborhood"
                           )}
                         />
+                        {errors.billingAddress?.street &&
+                            touched.billingAddress?.street && (
+                                <span className="text-xs text-red-500 ">
+                              {errors.billingAddress.street}
+                            </span>
+                            )}
                       </div>
                       <div className="flex flex-col gap-y-2">
                         <label className="text-sm">
@@ -491,6 +515,12 @@ export default function PaymentForm() {
                           "paymentForm.PaymentLabels.Adress.DetailedAddress"
                         )}
                       />
+                      {errors.billingAddress?.address &&
+                          touched.billingAddress?.address && (
+                              <span className="text-xs text-red-500 ">
+                              {errors.billingAddress.address}
+                            </span>
+                          )}
                     </div>
                   </div>
                 </div>
@@ -620,13 +650,14 @@ export default function PaymentForm() {
                   />
                 </div>
                 <div className="w-full flex justify-center items-center">
-                  <button
+                  <Button
+                      loading={loading}
                     type="submit"
-                    className="bg-secondary font-extrabold text-white rounded-lg py-3 text-lg hover:scale-105 w-full transition duration-300"
+                    className="bg-secondary !font-extrabold flex justify-center text-white rounded-lg py-3 text-lg hover:scale-105 w-full transition duration-300"
                   >
                     {t("paymentForm.PaymentLabels.Button")} - {total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}{" "}
                     TL
-                  </button>
+                  </Button>
                 </div>
               </div>
             </Form>

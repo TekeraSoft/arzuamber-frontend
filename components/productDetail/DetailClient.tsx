@@ -259,25 +259,29 @@ const DetailClient = ({ product }: productProps) => {
               </h4>
               <div className={"flex flex-row flex-wrap gap-x-4 "}>
                 {stockSizeState?.stockSize.map((item, index) => (
-                  <button
-                    onClick={() => {
-                      setStateProduct({
-                        ...stateProduct,
-                        stockSizeId: item.id,
-                        totalStock: item.stock,
-                        size: item.size,
-                      });
-                      setErrorState({ ...errorState, sizeError: false });
-                    }}
-                    key={index}
-                    className={`${
-                      stateProduct.size === item.size
-                        ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
-                        : "bg-mywhite text-secondary border border-secondary"
-                    }  rounded-lg px-2 py-1 `}
-                  >
-                    {item.size}
-                  </button>
+                  item.stock === 0 ?(
+                      <button className={'bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 px-2 py-1'} disabled={item.stock === 0}>{item.size}</button>
+                  ): (
+                      <button
+                          onClick={() => {
+                            setStateProduct({
+                              ...stateProduct,
+                              stockSizeId: item.id,
+                              totalStock: item.stock,
+                              size: item.size,
+                            });
+                            setErrorState({ ...errorState, sizeError: false });
+                          }}
+                          key={index}
+                          className={`${
+                              stateProduct.size === item.size
+                                  ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
+                                  : "bg-mywhite text-secondary border border-secondary"
+                          }  rounded-lg px-2 py-1 `}
+                      >
+                        {item.size}
+                      </button>
+                  )
                 ))}
               </div>
             </div>
@@ -347,6 +351,7 @@ const DetailClient = ({ product }: productProps) => {
                       image: stockSizeState?.images[0],
                       size: stateProduct.size,
                       stockSizeId: stateProduct?.stockSizeId,
+                      stockCode: stockSizeState?.stockCode,
                       quantity: stateProduct.quantity,
                       price:
                         product.discountPrice !== 0 && product.discountPrice
