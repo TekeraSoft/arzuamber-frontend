@@ -164,7 +164,19 @@ export default function PaymentForm() {
             },
           }}
           validationSchema={validationSchema}
-          onSubmit={_handleSubmit}
+          onSubmit={(values) => {
+            // shippingAddress.contactName'yi buyer.name ile eşitlei
+
+            const updatedValues = {
+              ...values,
+              shippingAddress: {
+                ...values.shippingAddress,
+                contactName: values.buyer.name, // contactName'i buyer.name ile doldur
+              },
+            };
+            console.log("submit buton calısıyor");
+            _handleSubmit(updatedValues); // Güncellenmiş değerlerle submit edilir
+          }}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
@@ -385,6 +397,26 @@ export default function PaymentForm() {
                       openBillingAddress ? "flex" : "hidden"
                     } flex flex-col gap-y-4`}
                   >
+                    <div className="flex flex-col gap-y-2 relative">
+                      <label className="text-sm">
+                        {t("paymentForm.PaymentLabels.BuyerInfo.contactName")}
+                        <span className="text-red-500">*</span>
+                      </label>
+                      <Field
+                        name="BuyerInfo.contactName"
+                        className="w-full text-sm border py-2 px-2 placeholder:text-sm rounded"
+                        placeholder={t(
+                          "paymentForm.PaymentLabels.BuyerInfo.contactName"
+                        )}
+                      />
+                      {errors.billingAddress?.contactName &&
+                        touched.billingAddress?.contactName && (
+                          <span className="text-xs text-red-500 ">
+                            {errors.billingAddress?.contactName}
+                          </span>
+                        )}
+                    </div>
+
                     <div className="grid grid-cols-2 gap-x-2">
                       <div className="flex flex-col gap-y-2 relative">
                         <label className="text-sm">

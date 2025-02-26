@@ -11,11 +11,10 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { useLocale } from "next-intl";
 
 const validationSchema = yup.object().shape({
-  title: yup.string().required("Blog ismi gereklidir."),
-  category: yup.string().required("Kategori seçilmelidir."),
-  tags: yup.array().min(1, "En az bir etiket ekleyin."),
-  image: yup.mixed().required("Resim yüklemek zorunludur."),
-  description: yup.string().required("Açıklama gereklidir."),
+  title: yup.string().required("Blog name required."),
+  category: yup.string().required("Plase choose one category."),
+  image: yup.mixed().required("Image required."),
+  description: yup.string().required("Description required."),
 });
 
 const AdminBlogCreate = () => {
@@ -64,13 +63,13 @@ const AdminBlogCreate = () => {
   return (
     <div className="w-full min-h-[700px] flex justify-center items-center ">
       <div className="p-6 w-full max-w-3xl mx-auto bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">Yeni Blog Oluştur</h2>
+        <h2 className="text-2xl font-bold mb-4">Create New Blog</h2>
         <form
           onSubmit={formik.handleSubmit}
           className=" flex flex-col  space-y-4"
         >
           <div className="grid gap-1">
-            <label className="block text-sm font-medium">Blog İsmi</label>
+            <label className="block text-sm font-medium">Blog Name</label>
             <InputText
               name="title"
               value={formik.values.title}
@@ -78,12 +77,12 @@ const AdminBlogCreate = () => {
               className="w-full"
             />
             {formik.errors.title && (
-              <p className="text-red-500">{formik.errors.title}</p>
+              <p className="text-red-500  text-sm">{formik.errors.title}</p>
             )}
           </div>
 
           <div className="grid gap-1">
-            <label className="block text-sm font-medium">Kategori</label>
+            <label className="block text-sm font-medium">Category</label>
             <Dropdown
               name="category"
               value={formik.values.category}
@@ -92,12 +91,12 @@ const AdminBlogCreate = () => {
               className="w-full"
             />
             {formik.errors.category && (
-              <p className="text-red-500">{formik.errors.category}</p>
+              <p className="text-red-500 text-sm">{formik.errors.category}</p>
             )}
           </div>
 
           <div className="grid gap-1">
-            <label className="block text-sm font-medium">Resim Yükle</label>
+            <label className="block text-sm font-medium">Upload Image</label>
             <FileUpload
               mode="basic"
               accept="image/*"
@@ -105,7 +104,7 @@ const AdminBlogCreate = () => {
               onSelect={(e) => formik.setFieldValue("image", e.files[0])}
             />
             {formik.errors.image && typeof formik.errors.image === "string" && (
-              <p className="text-red-500">{formik.errors.image}</p>
+              <p className="text-red-500  text-sm">{formik.errors.image}</p>
             )}
           </div>
 
@@ -120,7 +119,9 @@ const AdminBlogCreate = () => {
             />
 
             {formik.errors.description && (
-              <p className="text-red-500">{formik.errors.description}</p>
+              <p className="text-red-500  text-sm">
+                {formik.errors.description}
+              </p>
             )}
           </div>
 

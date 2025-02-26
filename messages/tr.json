@@ -148,7 +148,8 @@
         "name": "İsim",
         "surname": "Soy isim",
         "phone": "Telefon",
-        "email": "E-posta"
+        "email": "E-posta",
+        "contactName": "İletişim adı"
       },
       "Adress": {
         "zipcode": "Posta Kodu",
@@ -207,7 +208,6 @@
       "addressMin": "Adres en az 10 karakter olmalı",
       "addressMax": "Adres en fazla 200 karakter olabilir",
       "city": "Şehir gerekli",
-
       "country": "Ülke gerekli",
       "zipCodeMin": "Posta kodu en az 5 haneli olmalıdır",
       "zipCodeMax": "Posta kodu en fazla 5 haneli olabilir",
