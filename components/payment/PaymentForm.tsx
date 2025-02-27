@@ -109,7 +109,6 @@ export default function PaymentForm() {
     if (data.status === "success") {
       setLoading(false)
       setThreeDsModal(data.htmlContent);
-      dispatch(clearCart())
     } else {
       setLoading(false)
       toast.error(data.errorMessage);
