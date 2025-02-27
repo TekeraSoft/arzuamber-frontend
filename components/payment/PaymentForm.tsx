@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
 import il from "@/data/il.json";
 import ice from "@/data/ilce.json";
 import { Field, Form, Formik } from "formik";
@@ -20,9 +20,11 @@ import { useOrderValidationSchema } from "@/error/orderSchema";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import {Button} from "primereact/button";
 import {toast} from "react-toastify";
+import {clearCart} from "@/store/cartSlice";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch<AppDispatch>();
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
@@ -105,6 +107,7 @@ export default function PaymentForm() {
 
     if (data.status === "success") {
       setLoading(false)
+      dispatch(clearCart())
       setThreeDsModal(data.htmlContent);
     } else {
       setLoading(false)

@@ -150,10 +150,10 @@ export default function ProductCreatePage() {
                                             onChange={(e) => handleImageChange(e, index, imageIndex)}
                                         />
                                         <label htmlFor={`file-upload-${index}-${imageIndex}`}
-                                               className="w-24 h-48 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                                               className="w-16 h-32 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
                                             {item.images?.[imageIndex] instanceof File ? (
                                                 <img src={URL.createObjectURL(item.images[imageIndex])} alt="Preview"
-                                                     className="w-24 h-48 object-cover rounded-lg"/>
+                                                     className="w-16 h-32 object-cover rounded-lg"/>
                                             ) : (
                                                 <FiUpload className="text-2xl"/>
                                             )}

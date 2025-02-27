@@ -168,7 +168,6 @@ const DetailClient = ({ product }: productProps) => {
                     style: "currency",
                     currency: "TRY",
                   })}{" "}
-                  ₺
                 </p>
               )}
               {product.discountPrice !== 0 ? (
@@ -177,7 +176,6 @@ const DetailClient = ({ product }: productProps) => {
                     style: "currency",
                     currency: "TRY",
                   })}{" "}
-                  ₺
                 </p>
               ) : (
                 <p className={"text-xl font-semibold text-green-600"}>
@@ -185,7 +183,6 @@ const DetailClient = ({ product }: productProps) => {
                     style: "currency",
                     currency: "TRY",
                   })}{" "}
-                  ₺
                 </p>
               )}
             </span>
