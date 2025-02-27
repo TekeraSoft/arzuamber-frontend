@@ -1,81 +1,100 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 import { RiFilePaper2Line } from "react-icons/ri";
 import { useTranslations } from "next-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useSession } from "next-auth/react";
+import { getUserOrders } from "@/store/userSlice";
+import { AppDispatch } from "@/store/store";
 
 // Sample order data
-const orders = [
-  {
-    id: "1",
-    status: "Shipped",
-    orderDate: "2023-07-06T06:08.330672",
-    totalPrice: 2297,
-    products: [
-      {
-        id: "5",
-        name: "Blue T-Shirt",
-        color: "Blue",
-        size: "42",
-        price: 799,
-        imageUrl: "/images/product/product5-3.JPG",
-        quantity: 2,
-      },
-      {
-        id: "6",
-        name: "Red Sneakers",
-        color: "Red",
-        size: "43",
-        price: 1500,
-        imageUrl: "/images/product/product6-1.JPG",
-        quantity: 1,
-      },
-    ],
-  },
-  {
-    id: "2",
-    status: "Delivered",
-    orderDate: "2023-07-12T09:15.212748",
-    totalPrice: 3500,
-    products: [
-      {
-        id: "6",
-        name: "Red Sneakers",
-        color: "Red",
-        size: "43",
-        price: 1500,
-        imageUrl: "/images/product/product6-1.JPG",
-        quantity: 1,
-      },
-    ],
-  },
-  {
-    id: "3",
-    status: "Pending",
-    orderDate: "2023-08-03T12:20.832123",
-    totalPrice: 1599,
-    products: [
-      {
-        id: "7",
-        name: "Black Hoodie",
-        color: "Black",
-        size: "L",
-        price: 1599,
-        imageUrl: "/images/product/product7-2.JPG",
-        quantity: 1,
-        reviews: [],
-      },
-    ],
-  },
-];
+// const orders = [
+//   {
+//     id: "1",
+//     status: "Shipped",
+//     orderDate: "2023-07-06T06:08.330672",
+//     totalPrice: 2297,
+//     products: [
+//       {
+//         id: "5",
+//         name: "Blue T-Shirt",
+//         color: "Blue",
+//         size: "42",
+//         price: 799,
+//         imageUrl: "/images/product/product5-3.JPG",
+//         quantity: 2,
+//       },
+//       {
+//         id: "6",
+//         name: "Red Sneakers",
+//         color: "Red",
+//         size: "43",
+//         price: 1500,
+//         imageUrl: "/images/product/product6-1.JPG",
+//         quantity: 1,
+//       },
+//     ],
+//   },
+//   {
+//     id: "2",
+//     status: "Delivered",
+//     orderDate: "2023-07-12T09:15.212748",
+//     totalPrice: 3500,
+//     products: [
+//       {
+//         id: "6",
+//         name: "Red Sneakers",
+//         color: "Red",
+//         size: "43",
+//         price: 1500,
+//         imageUrl: "/images/product/product6-1.JPG",
+//         quantity: 1,
+//       },
+//     ],
+//   },
+//   {
+//     id: "3",
+//     status: "Pending",
+//     orderDate: "2023-08-03T12:20.832123",
+//     totalPrice: 1599,
+//     products: [
+//       {
+//         id: "7",
+//         name: "Black Hoodie",
+//         color: "Black",
+//         size: "L",
+//         price: 1599,
+//         imageUrl: "/images/product/product7-2.JPG",
+//         quantity: 1,
+//         reviews: [],
+//       },
+//     ],
+//   },
+// ];
 
 function OrderPage() {
+  const { data: session } = useSession();
   const t = useTranslations();
+  const dispatch = useDispatch<AppDispatch>();
+
   const [currentPage, setCurrentPage] = useState(0);
   const ordersPerPage = 2;
+  const { orders, loading } = useSelector((state: RootState) => state.user);
+
+  console.log(loading);
+  console.log(orders);
+
+  // orders dispatch
+  useEffect(() => {
+    if (session?.user?.email) {
+      dispatch(getUserOrders({ email: session.user.email }));
+    }
+  }, [dispatch, session?.user?.email]);
 
   // Calculate the orders to show on the current page
   const pageCount = Math.ceil(orders.length / ordersPerPage);

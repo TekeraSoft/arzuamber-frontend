@@ -10,7 +10,6 @@ import { getAllProductsDispatch } from "@/store/productSlice";
 import Loading from "@/components/utils/Loading";
 import { useTranslations } from "next-intl";
 import { Paginator } from "primereact/paginator";
-import NotFoundPage from "../not-found";
 import NotFoundProduct from "@/components/error/notFoundProduct";
 
 function Products() {
