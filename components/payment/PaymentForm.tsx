@@ -61,14 +61,15 @@ export default function PaymentForm() {
 
   useEffect(() => {
     if (threeDsModal) {
-      setLoading(true);
-      const form = document.getElementById(
-        "iyzico-3ds-form"
-      ) as HTMLFormElement;
+      const form = document.forms["returnform"]; // Formun id'si
+      console.log(form);
       if (form) {
-        form.submit();
+        setTimeout(() => {
+          form.submit(); // Formu gönder
+        }, 100); // 100ms gecikme
+      } else {
+        console.error("Form bulunamadı!"); // Hata mesajı
       }
-      setLoading(false);
     }
   }, [threeDsModal]);
 
@@ -107,7 +108,6 @@ export default function PaymentForm() {
 
     if (data.status === "success") {
       setLoading(false)
-      dispatch(clearCart())
       setThreeDsModal(data.htmlContent);
     } else {
       setLoading(false)
