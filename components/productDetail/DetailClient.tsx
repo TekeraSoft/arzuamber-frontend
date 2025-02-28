@@ -95,8 +95,13 @@ const DetailClient = ({ product }: productProps) => {
     <PageContainer>
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
+
+        <h3 className=" md:hidden text-center text-3xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full my-4">
+          {product.name}
+        </h3>
+
         <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 h-[520px] md:h-full ">
-          <div className="w-full md:w-1/6 grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
+          <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
@@ -149,9 +154,54 @@ const DetailClient = ({ product }: productProps) => {
             ))}
           </Carousel>
         </div>
+
+        <div
+          className={
+            "md:hidden flex  flex-col justify-center items-start gap-2  mb-3 w-full "
+          }
+        >
+          <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
+            {t("productDetail.color")}
+          </h4>
+          <div className={"flex flex-row flex-wrap gap-4 w-full"}>
+            {product.colorSize.map((item, index) => (
+              <button
+                onClick={() => {
+                  setStockSizeState(item);
+                  setStateProduct({
+                    size: "",
+                    color: item.color,
+                    totalStock: 0,
+                    stockSizeId: "",
+                    price: 0,
+                    quantity: 1,
+                  });
+                }}
+                key={index}
+                className={`  ${
+                  stockSizeState?.color === item.color
+                    ? "border-2 border-secondary  rounded"
+                    : " border border-secondary "
+                } flex flex-col items-center  justify-center p-0.5  w-16 `}
+              >
+                <p className=" w-full text-[10px] first-letter:uppercase text-center text-white bg-secondary mb-1 px-1  ">
+                  {item.color}
+                </p>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
+                  width={56}
+                  height={15}
+                  alt={item.images[0]}
+                  className="border border-gray-400  "
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg min-h-[800px] ">
           <div className="w-full flex flex-col  justify-between items-start  gap-2">
-            <h3 className=" text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full">
+            <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full">
               {product.name}
             </h3>
             <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 py-1 rounded-md  w-1/2">
@@ -212,7 +262,7 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className={"flex flex-col gap-2 "}>
+          <div className={"hidden  md:flex flex-col gap-2 "}>
             <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
               {t("productDetail.color")}
             </h4>

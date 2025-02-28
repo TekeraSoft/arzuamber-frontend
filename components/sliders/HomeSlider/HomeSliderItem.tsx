@@ -28,7 +28,7 @@ function HomeSliderItem({ image }: ImageProps) {
       width={1920}
       height={600}
       priority
-      className="object-cover  bg-center bg-cover"
+      className="object-contain  "
     />
   );
 }

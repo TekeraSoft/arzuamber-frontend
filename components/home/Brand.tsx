@@ -43,7 +43,7 @@ function Brand({
   };
 
   return (
-    <div className="w-full h-[500px] relative mt-3 md:mt-5">
+    <div className=" md:container md:mx-auto w-full h-[200px] md:h-[500px] relative mt-3 md:mt-5">
       <Image
         className="object-cover bg-center"
         src={imageUrl} // Dinamik resim (mobil veya desktop)
@@ -53,16 +53,12 @@ function Brand({
       <div
         className={`absolute inset-0 flex flex-col items-center justify-center p-7 md:p-5 rounded-lg  ${colorClasses[color]}`}
       >
-        <h2 className="text-lg md:text-4xl font-bold mb-2">{title}</h2>
-        <p className="text-sm md:text-lg text-center mb-4">{description}</p>
+        <h2 className="text-sm md:text-4xl font-bold mb-2">{title}</h2>
+        <p className="text-xs md:text-lg text-center mb-4">{description}</p>
         <Link href={link || `/products`}>
-          <Button
-            text={buttonText || t("brand.buttonText")}
-            animation
-            color="secondary"
-            size="large"
-            className="px-7 "
-          />
+          <button className="bg-secondary text-xs md:text-base text-white rounded-lg px-4 py-1">
+            {buttonText || t("brand.buttonText")}
+          </button>
         </Link>
       </div>
     </div>

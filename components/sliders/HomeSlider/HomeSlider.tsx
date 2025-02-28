@@ -54,7 +54,7 @@ const CustomButtonGroup = ({
   previous: () => void;
 }) => {
   return (
-    <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-5">
+    <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-1">
       <Button
         color="secondary"
         onClick={previous}
@@ -89,7 +89,7 @@ function HomeSlider() {
   }, []);
 
   return (
-    <div className="homepage-slider-div relative w-full mx-auto h-full">
+    <div className=" md:mt-[80px] md:container md:mx-auto  homepage-slider-div relative w-full mx-auto h-full">
       {loading ? (
         <Loading />
       ) : (
@@ -108,8 +108,8 @@ function HomeSlider() {
           renderDotsOutside={false}
           customTransition="all 1s"
           transitionDuration={2000}
-          containerClass="carousel-container"
-          itemClass="flex justify-center items-center bg-center bg-cover"
+          containerClass="carousel-container h-[180px] md:h-full"
+          itemClass="flex justify-center items-center bg-center bg-contain"
           renderButtonGroupOutside={isMobile}
           customButtonGroup={
             isMobile ? (
