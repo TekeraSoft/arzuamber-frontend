@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { InputText } from "primereact/inputtext";
@@ -9,9 +9,9 @@ import { FileUpload } from "primereact/fileupload";
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
 import { useLocale } from "next-intl";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/store/store";
-import {createBlogDispatch} from "@/store/adminSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { createBlogDispatch } from "@/store/adminSlice";
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Blog name required."),
@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
 
 const AdminBlogCreate = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -29,11 +29,17 @@ const AdminBlogCreate = () => {
       content: "",
     },
     validationSchema,
-    onSubmit: (values, {resetForm}) => {
+    onSubmit: (values, { resetForm }) => {
       const formData = new FormData();
-      formData.append("values", new Blob([JSON.stringify(values)], { type: "application/json" }))
-      formData.append("image", new File([image], image.name, { type: image.type }))
-      dispatch(createBlogDispatch(formData,resetForm))
+      formData.append(
+        "values",
+        new Blob([JSON.stringify(values)], { type: "application/json" })
+      );
+      formData.append(
+        "image",
+        new File([image], image.name, { type: image.type })
+      );
+      dispatch(createBlogDispatch(formData, resetForm));
     },
   });
 
@@ -75,7 +81,7 @@ const AdminBlogCreate = () => {
           className=" flex flex-col  space-y-4"
         >
           <div className="grid gap-1">
-            <label className="block text-sm font-medium">Blog Name</label>
+            <label className="block text-sm font-medium">Blog Title</label>
             <InputText
               name="title"
               value={formik.values.title}
@@ -88,7 +94,7 @@ const AdminBlogCreate = () => {
           </div>
 
           <div className="grid gap-1">
-            <label className="block text-sm font-medium">Category</label>
+            <label className="block text-sm font-medium">Blog Category</label>
             <Dropdown
               name="category"
               value={formik.values.category}
@@ -121,9 +127,7 @@ const AdminBlogCreate = () => {
             />
 
             {formik.errors.content && (
-              <p className="text-red-500  text-sm">
-                {formik.errors.content}
-              </p>
+              <p className="text-red-500  text-sm">{formik.errors.content}</p>
             )}
           </div>
 
