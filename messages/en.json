@@ -220,6 +220,13 @@
     }
   },
 
+  "paymentSuccess": {
+    "title": "Payment Successful!",
+    "message": "Your payment has been successfully completed.",
+    "returnHome": "Return to Home",
+    "cargoMessage": "Your order will be shipped as soon as possible."
+  },
+
   "CartPage": {
     "heading": "Your Cart",
     "product": "Product",

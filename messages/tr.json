@@ -215,6 +215,13 @@
     }
   },
 
+  "paymentSuccess": {
+    "title": "Ödeme Başarılı!",
+    "message": "Ödemeniz başarıyla tamamlandı.",
+    "returnHome": "Ana Sayfaya Dön",
+    "cargoMessage": "Siparişiniz en kısa sürede kargoya verilecektir."
+  },
+
   "CartPage": {
     "heading": "Sepetiniz",
     "product": "Ürün",

@@ -26,7 +26,7 @@ const PaymentPage = () => {
       <div className="  flex flex-col-reverse md:flex-row w-full items-start justify-center gap-2 bg-mywhite rounded-lg px-4 py-2">
         {/* Sol taraftaki içerik */}
 
-        <div className="w-full md:w-1/2 relative bg-white py-6 border border-gray-200 px-4 my-2 rounded-lg">
+        <div className="w-full md:w-1/2 relative bg-white py-1  border border-gray-200 px-4 my-2 rounded-lg">
           {cartProducts.map((item, index) => (
             <div
               key={index}
@@ -69,7 +69,7 @@ const PaymentPage = () => {
           ))}
 
           {/* Sipariş Özeti */}
-          <div className="flex flex-col justify-center items-center w-full gap-3 my-3 text-gray-800">
+          <div className="flex flex-col justify-center items-center w-full gap-2 my-3 text-gray-800">
             <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
               <p className="text-gray-700">
                 {t("PaymentSummaryProductDetail.Subtotal")} •{" "}

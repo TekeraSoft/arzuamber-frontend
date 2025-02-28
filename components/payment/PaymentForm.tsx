@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import il from "@/data/il.json";
 import ice from "@/data/ilce.json";
 import { Field, Form, Formik } from "formik";
-import { BasketItem } from "@/types";
+import { BasketItem, PaymentFormValues } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
@@ -18,17 +18,19 @@ import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import {Button} from "primereact/button";
-import {toast} from "react-toastify";
-import {clearCart} from "@/store/cartSlice";
+import { Button } from "primereact/button";
+import { toast } from "react-toastify";
+// import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
-  const [billingStates, setBillingStates] = useState<{ id: string; il_id: string; name: string }[]>([]);
+  const [billingStates, setBillingStates] = useState<
+    { id: string; il_id: string; name: string }[]
+  >([]);
   const [openBillingAddress, setOpenBillingAddress] = useState<boolean>(false);
   const [ip, setIp] = useState();
   const [threeDsModal, setThreeDsModal] = useState(false);
@@ -107,10 +109,10 @@ export default function PaymentForm() {
     const data = await response.json();
 
     if (data.status === "success") {
-      setLoading(false)
+      setLoading(false);
       setThreeDsModal(data.htmlContent);
     } else {
-      setLoading(false)
+      setLoading(false);
       toast.error(data.errorMessage);
     }
     //console.log({
@@ -142,7 +144,7 @@ export default function PaymentForm() {
       {loading ? (
         <Loading />
       ) : (
-        <Formik
+        <Formik<PaymentFormValues>
           initialValues={{
             paymentCard: {
               cardHolderName: "",
@@ -484,11 +486,11 @@ export default function PaymentForm() {
                           )}
                         />
                         {errors.billingAddress?.street &&
-                            touched.billingAddress?.street && (
-                                <span className="text-xs text-red-500 ">
+                          touched.billingAddress?.street && (
+                            <span className="text-xs text-red-500 ">
                               {errors.billingAddress.street}
                             </span>
-                            )}
+                          )}
                       </div>
                       <div className="flex flex-col gap-y-2">
                         <label className="text-sm">
@@ -519,11 +521,11 @@ export default function PaymentForm() {
                         )}
                       />
                       {errors.billingAddress?.address &&
-                          touched.billingAddress?.address && (
-                              <span className="text-xs text-red-500 ">
-                              {errors.billingAddress.address}
-                            </span>
-                          )}
+                        touched.billingAddress?.address && (
+                          <span className="text-xs text-red-500 ">
+                            {errors.billingAddress.address}
+                          </span>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -654,11 +656,15 @@ export default function PaymentForm() {
                 </div>
                 <div className="w-full flex justify-center items-center">
                   <Button
-                      loading={loading}
+                    loading={loading}
                     type="submit"
                     className="bg-secondary !font-extrabold flex justify-center text-white rounded-lg py-3 text-lg hover:scale-105 w-full transition duration-300"
                   >
-                    {t("paymentForm.PaymentLabels.Button")} - {total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}{" "}
+                    {t("paymentForm.PaymentLabels.Button")} -{" "}
+                    {total.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}{" "}
                     TL
                   </Button>
                 </div>

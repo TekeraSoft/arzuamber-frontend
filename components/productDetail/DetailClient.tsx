@@ -95,12 +95,12 @@ const DetailClient = ({ product }: productProps) => {
     <PageContainer>
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6">
-          <div className="w-full md:w-1/6 grid grid-cols-6  md:flex  flex-col  gap-1 ">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 h-[520px] md:h-full ">
+          <div className="w-full md:w-1/6 grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-full max-h-34 "
+                className="flex justify-center items-center w-full h-full  "
               >
                 <Image
                   className=" w-full h-full object-cover rounded-lg "
@@ -126,12 +126,12 @@ const DetailClient = ({ product }: productProps) => {
             transitionDuration={500}
             customLeftArrow={<CustomLeftArrow />}
             customRightArrow={<CustomRightArrow />}
-            className="w-full"
+            className="w-full rounded-lg"
           >
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-[800px]"
+                className="flex justify-center items-center w-full h-full rounded-lg"
               >
                 <Image
                   className="cursor-zoom-in w-full h-full object-cover rounded-lg"
@@ -149,20 +149,23 @@ const DetailClient = ({ product }: productProps) => {
             ))}
           </Carousel>
         </div>
-        <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-3  border-secondary h-full px-1 rounded-lg min-h-[800px]">
-          <div className=" w-full flex flex-col lg:flex-row justify-between items-start lg:items-center   ">
-            <h3 className={"text-2xl font-semibold text-secondaryDark"}>
+        <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg min-h-[800px] ">
+          <div className="w-full flex flex-col  justify-between items-start  gap-2">
+            <h3 className=" text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full">
               {product.name}
             </h3>
-            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 rounded-md">
+            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 py-1 rounded-md  w-1/2">
               {t("productDetail.stockCode")} {stockSizeState.stockCode}
             </p>
           </div>
-          <div className="w-full flex  justify-between gap-x-1">
+
+          <div className="w-full flex  items-start justify-between gap-x-1">
             <span className={"flex flex-col gap-x-4 "}>
               {product.discountPrice !== 0 && (
                 <p
-                  className={"text-xl text-red-600 line-through font-semibold"}
+                  className={
+                    "  md:text-xl text-red-600 line-through font-semibold"
+                  }
                 >
                   {product.price.toLocaleString("tr-TR", {
                     style: "currency",
@@ -171,14 +174,14 @@ const DetailClient = ({ product }: productProps) => {
                 </p>
               )}
               {product.discountPrice !== 0 ? (
-                <p className={"text-xl font-semibold text-green-600"}>
+                <p className={"  md:text-xl font-semibold text-green-600"}>
                   {product.discountPrice.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",
                   })}{" "}
                 </p>
               ) : (
-                <p className={"text-xl font-semibold text-green-600"}>
+                <p className={"md:text-xl font-semibold text-green-600"}>
                   {product.price.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",
@@ -186,26 +189,26 @@ const DetailClient = ({ product }: productProps) => {
                 </p>
               )}
             </span>
-            <div className="text-xs font-semibold">
+            <div className="text-xs font-bold underline underline-offset-1">
               {t("productDetail.KDV")}
             </div>
           </div>
 
-          <div className="w-full flex flex-col justify-center items-start gap-1 py-1">
-            <div className="w-full grid grid-cols-3 gap-2 md:gap-4 items-center">
-              {product.newSeason && (
-                <p className="text-sm text-mywhite bg-secondary text-center rounded-lg font-medium py-1">
-                  {t("productDetail.newSeason")}
-                </p>
-              )}
-
-              <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-1">
+          <div className="w-full flex flex-col justify-center items-start gap-3 py-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
                 {t("productDetail.productCategory")}: {product.category}
               </div>
 
-              <div className="text-center text-sm font-semibold text-mywhite bg-secondary rounded-lg py-1">
+              <div className="text-center text-sm font-semibold text-mywhite bg-secondary rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
                 {t("productDetail.length")}: {product.length}
               </div>
+
+              {product.newSeason && (
+                <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
+                  {t("productDetail.newSeason")}
+                </div>
+              )}
             </div>
           </div>
 
@@ -230,19 +233,19 @@ const DetailClient = ({ product }: productProps) => {
                   key={index}
                   className={`  ${
                     stockSizeState?.color === item.color
-                      ? "border-2 border-secondary p-0.5 rounded"
-                      : "rounded"
-                  }`}
+                      ? "border-2 border-secondary  rounded"
+                      : " border border-secondary "
+                  } flex flex-col items-center  justify-center p-0.5  w-16 `}
                 >
-                  <p className="text-xs first-letter:uppercase text-center text-white bg-secondary ">
+                  <p className=" w-full text-[10px] first-letter:uppercase text-center text-white bg-secondary mb-1 px-1  ">
                     {item.color}
                   </p>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
-                    width={40}
-                    height={60}
+                    width={56}
+                    height={15}
                     alt={item.images[0]}
-                    className="border border-gray-400"
+                    className="border border-gray-400  "
                   />
                 </button>
               ))}
@@ -255,31 +258,38 @@ const DetailClient = ({ product }: productProps) => {
                 {t("productDetail.size")}:
               </h4>
               <div className={"flex flex-row flex-wrap gap-x-4 "}>
-                {stockSizeState?.stockSize.map((item, index) => (
-                  item.stock === 0 ?(
-                      <button className={'bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 px-2 py-1'} disabled={item.stock === 0}>{item.size}</button>
-                  ): (
-                      <button
-                          onClick={() => {
-                            setStateProduct({
-                              ...stateProduct,
-                              stockSizeId: item.id,
-                              totalStock: item.stock,
-                              size: item.size,
-                            });
-                            setErrorState({ ...errorState, sizeError: false });
-                          }}
-                          key={index}
-                          className={`${
-                              stateProduct.size === item.size
-                                  ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
-                                  : "bg-mywhite text-secondary border border-secondary"
-                          }  rounded-lg px-2 py-1 `}
-                      >
-                        {item.size}
-                      </button>
+                {stockSizeState?.stockSize.map((item, index) =>
+                  item.stock === 0 ? (
+                    <button
+                      className={
+                        "bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 min-w-6 h-7  px-2"
+                      }
+                      disabled={item.stock === 0}
+                    >
+                      {item.size}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setStateProduct({
+                          ...stateProduct,
+                          stockSizeId: item.id,
+                          totalStock: item.stock,
+                          size: item.size,
+                        });
+                        setErrorState({ ...errorState, sizeError: false });
+                      }}
+                      key={index}
+                      className={`${
+                        stateProduct.size === item.size
+                          ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
+                          : "bg-mywhite text-secondary border border-secondary"
+                      }  rounded-md min-w-6 h-7  px-2`}
+                    >
+                      {item.size}
+                    </button>
                   )
-                ))}
+                )}
               </div>
             </div>
             <small
@@ -295,33 +305,35 @@ const DetailClient = ({ product }: productProps) => {
             {t("productDetail.quantity")}:
           </p>
           <span className="py-3 px-4 flex w-64 gap-x-8 flex-row items-center justify-between border border-secondary rounded">
-            {stateProduct?.quantity <= 1 ? (
-              <FaMinus
-                className={`${
-                  stateProduct.quantity <= 1 &&
-                  "text-gray-300 cursor-not-allowed"
-                }`}
-              />
-            ) : (
-              <FaMinus
-                className="cursor-pointer"
-                onClick={() =>
+            {/* Azaltma butonu */}
+            <FaMinus
+              className={`${
+                stateProduct?.quantity <= 1
+                  ? "text-gray-300 cursor-not-allowed"
+                  : "cursor-pointer hover:scale-110 transition-all duration-300"
+              }`}
+              onClick={() => {
+                if (stateProduct?.quantity > 1) {
                   setStateProduct({
                     ...stateProduct,
                     quantity: stateProduct.quantity - 1,
-                  })
+                  });
                 }
-              />
-            )}
-            <p className={"text-xl font-semibold"}>{stateProduct.quantity}</p>
+              }}
+            />
+
+            {/* Miktar */}
+            <p className="text-xl font-semibold">{stateProduct?.quantity}</p>
+
+            {/* Arttırma butonu */}
             <FaPlus
               className={`${
-                stateProduct?.totalStock <= 1
+                stateProduct?.quantity >= stateProduct?.totalStock
                   ? "text-gray-300 cursor-not-allowed"
-                  : "cursor-pointer"
-              }`}
+                  : "cursor-pointer hover:scale-110 transition-all duration-300"
+              } `}
               onClick={() => {
-                if (stateProduct.quantity < stateProduct.totalStock) {
+                if (stateProduct?.quantity < stateProduct?.totalStock) {
                   setStateProduct({
                     ...stateProduct,
                     quantity: stateProduct.quantity + 1,
@@ -331,7 +343,7 @@ const DetailClient = ({ product }: productProps) => {
             />
           </span>
 
-          <div className="flex justify-start items-center gap-1 h-12">
+          <div className="flex justify-start items-center gap-2 h-12">
             <button
               onClick={() => {
                 if (!stateProduct.size) {
@@ -360,7 +372,7 @@ const DetailClient = ({ product }: productProps) => {
                 }
               }}
               className={
-                "bg-secondary h-12 w-64 rounded-lg text-xl text-white font-semibold"
+                "bg-secondary h-12 w-3/4 rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
               }
             >
               {t("productDetail.productAddCart")}

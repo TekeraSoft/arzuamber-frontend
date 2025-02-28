@@ -16,13 +16,13 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-2   transition duration-300  relative min-h-[650px]
+      className="group flex flex-col justify-between space-y-2   transition duration-300  relative min-h-[500px]
     md:min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative w-full h-[550px] md:min-h-[400px] bg-center bg-cover"
+        className="relative w-full h-[400px] md:min-h-[400px] bg-center bg-cover"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -48,7 +48,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
         <div className="   absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
           {product?.discountPrice > 0 && product?.price > 0 && (
-            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px]  shadow-md ">
               %
               {Math.round(
                 ((product.price - product.discountPrice) / product.price) * 100
@@ -57,13 +57,13 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           )}
 
           {product.newSeason == true && (
-            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px]  shadow-md ">
               {t("productDetail.newSeason")}
             </div>
           )}
 
           {product.populate == true && (
-            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px]  shadow-md ">
               {t("productDetail.populate")}
             </div>
           )}

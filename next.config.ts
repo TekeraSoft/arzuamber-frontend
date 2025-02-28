@@ -14,7 +14,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "arzuamber.com",
-        pathname: '/minio/**',
+        pathname: "/minio/**",
       },
     ],
     //remotePatterns: [

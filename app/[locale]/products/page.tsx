@@ -52,7 +52,7 @@ function Products() {
               </div>
 
               <Paginator
-                className={"my-12 bg"}
+                className={"my-12 "}
                 first={pageable.currentPage}
                 rows={pageable.size}
                 totalRecords={page.totalElements}

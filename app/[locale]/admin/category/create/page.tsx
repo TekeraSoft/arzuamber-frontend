@@ -145,9 +145,11 @@ function AdminCreateCategory() {
                   onChange={(e) => setLocalCategories(e.value)}
                   dataKey="id"
                   itemTemplate={(item) => (
-                    <div className="flex justify-between items-center">
+                    <div
+                      className="flex justify-between items-center"
+                      onClick={() => handleSelectMainCategory(item)}
+                    >
                       <span
-                        onClick={() => handleSelectMainCategory(item)}
                         className={`cursor-pointer ${
                           selectedCategoryId === item.id ? "font-bold" : ""
                         }`}
