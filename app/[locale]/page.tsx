@@ -8,6 +8,7 @@ import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
 import PopulateProductSlider from "@/components/sliders/productSlider/PopulateProductSlider";
+import PageContainer from "@/components/Containers/PageContainer";
 
 export default function Home() {
   const t = useTranslations();
@@ -15,11 +16,12 @@ export default function Home() {
   return (
     <>
       <HomeSlider />
+
       <GradientColorContainer>
         <HomeContainer>
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}
-            textSize="3xl"
+            textSize="xl"
             center={true}
           />
           <ProductSlider />
@@ -40,10 +42,11 @@ export default function Home() {
           <Heading
             text={t("HomePage.sliderPopulateTitle")}
             center
-            textSize="3xl"
+            textSize="xl"
           />
           <PopulateProductSlider />
         </HomeContainer>
+
         <Brand
           title={t("brand.title")}
           description={t("brand.description")}

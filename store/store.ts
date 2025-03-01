@@ -9,6 +9,7 @@ import authReducer from "./authSlice";
 import adminSlice from "@/store/adminSlice";
 import modalsSlice from "@/store/modalsSlice";
 import blogsReducer from "@/store/blogSlice";
+import userReducer from "@/store/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     category: categoryReducer,
     general: generalReducer,
     blog: blogsReducer,
+    user: userReducer,
     auth: authReducer,
     admin: adminSlice,
     footer: footerReducer,

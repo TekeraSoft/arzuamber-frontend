@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import {getNewSeasonProductsDispatch, getPopulateProductsDispatch} from "@/store/productSlice";
+import {
+  getNewSeasonProductsDispatch,
+  getPopulateProductsDispatch,
+} from "@/store/productSlice";
 import { Product } from "@/types";
 
 function ProductSlider() {
@@ -26,11 +29,11 @@ function ProductSlider() {
     },
     smallTablet: {
       breakpoint: { max: 768, min: 464 }, // Küçük tabletler için
-      items: 1,
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 }, // Küçük mobil için
-      items: 1,
+      items: 2,
     },
   };
 
@@ -45,7 +48,7 @@ function ProductSlider() {
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-1 md:p-3  hover:opacity-100"
         onClick={onClick}
       >
         <BiLeftArrow className="text-white" size={24} />
@@ -56,7 +59,7 @@ function ProductSlider() {
   function CustomRightArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-1 md:p-3 hover:opacity-100"
         onClick={onClick}
       >
         <BiRightArrow className="text-white" size={24} />
@@ -85,7 +88,7 @@ function ProductSlider() {
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center py-1 "
+          itemClass="flex justify-center items-center py-2 gap-2   "
         >
           {newSeasonProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

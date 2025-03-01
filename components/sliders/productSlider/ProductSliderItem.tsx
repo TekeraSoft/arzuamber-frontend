@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-full md:w-[270px] h-[650px] md:h-[500px]  relative bg-slate-50 shadow-md">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[160px] md:w-[270px] h-[300px] md:h-[500px]  relative bg-slate-50 border-2 border-secondary  shadow-xl  ">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-full  relative"
@@ -24,7 +24,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <Image
-          className={`absolute object-cover rounded-t transition-opacity duration-700 ${
+          className={`absolute object-cover  transition-opacity duration-700 rounded-t ${
             isHovered ? "opacity-0" : "opacity-100 z-20"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0]?.images[0]}`}
@@ -34,7 +34,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
         {product.colorSize[0]?.images[1] && (
           <Image
-            className={`object-cover rounded-t transition-opacity duration-700 ${
+            className={`object-cover border  transition-opacity duration-700 rounded-t ${
               isHovered ? "opacity-100" : "opacity-0"
             }`}
             src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0]?.images[1]}`}
@@ -44,7 +44,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         )}
         <div className="absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
           {product?.discountPrice > 0 && product?.price > 0 && (
-            <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="  w-10 h-4 md:w-16 md:h-6  flex justify-center items-center bg-red-600 text-mywhite rounded  text-[7px] md:text-[10px] md:text-xs shadow-md ">
               %
               {Math.round(
                 ((product.price - product.discountPrice) / product.price) * 100
@@ -53,13 +53,13 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           )}
 
           {product.newSeason == true && (
-            <div className="flex w-16 h-6 justify-center items-center bg-secondary text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="flex w-10 md:w-16  h-4  md:h-6 justify-center items-center bg-secondary text-mywhite rounded text-[7px] md:text-[10px] md:text-xs shadow-md ">
               {t("productDetail.newSeason")}
             </div>
           )}
 
           {product.populate == true && (
-            <div className="flex  w-16 h-6  justify-center items-center bg-teal-700 text-mywhite rounded text-[10px] md:text-xs shadow-md ">
+            <div className="flex w-10 md:w-16 h-4  md:h-6   justify-center items-center bg-teal-700 text-mywhite rounded  text-[7px] md:text-[10px] md:text-xs shadow-md ">
               {t("productDetail.populate")}
             </div>
           )}
@@ -75,7 +75,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
               className="object-cover rounded "
               src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${color.images[0]}`}
               alt={product?.name}
-              width={30}
+              width={20}
               height={30}
             />
           ))}
@@ -83,7 +83,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
         <div className="flex flex-col justify-start items-start  w-full">
           <div className="flex justify-start items-center w-full h-8 mb-1 ">
-            <h2 className="text-start text-secondary font-semibold text-sm w-full">
+            <h2 className="text-start text-secondary  font-semibold text-[9px] md:text-sm w-full">
               {product.name}
             </h2>
           </div>
@@ -92,15 +92,15 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
             <div className="flex justify-center items-center gap-2">
               {product.discountPrice > 0 ? (
                 <>
-                  <span className="text-red-700 text-sm line-through">
+                  <span className="text-red-700 text-xs md:text-sm line-through">
                     {product.price}₺
                   </span>
-                  <p className="text-secondary text-base font-semibold">
+                  <p className="text-xs text-secondary md:text-base font-semibold">
                     {product.discountPrice}₺
                   </p>
                 </>
               ) : (
-                <p className="text-secondary text-base font-semibold">
+                <p className="text-xs text-secondary md:text-base font-semibold">
                   {product.price} ₺
                 </p>
               )}
@@ -109,7 +109,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
               className="flex items-center justify-center "
               href={`/product/${product.slug}`}
             >
-              <p className="text-mywhite  bg-secondary px-4 py-1 rounded text-sm transition-all hover:scale-105 duration-300">
+              <p className="text-mywhite  px-2 py-0.5 bg-secondary md:px-4 md:py-1 rounded text-[9px] md:text-sm transition-all hover:scale-105 duration-300">
                 {t("productDetail.detail")}
               </p>
             </Link>

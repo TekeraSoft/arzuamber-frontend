@@ -4,7 +4,7 @@ import { ArrowProps } from "react-multi-carousel";
 export function CustomLeftArrow({ onClick }: ArrowProps) {
   return (
     <button
-      className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+      className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-2 md:p-3 hover:opacity-100"
       onClick={onClick}
     >
       <BiLeftArrow className="text-white" size={24} />
@@ -15,7 +15,7 @@ export function CustomLeftArrow({ onClick }: ArrowProps) {
 export function CustomRightArrow({ onClick }: ArrowProps) {
   return (
     <button
-      className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+      className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-2 md:p-3 hover:opacity-100"
       onClick={onClick}
     >
       <BiRightArrow className="text-white" size={24} />

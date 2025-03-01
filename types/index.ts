@@ -12,7 +12,7 @@ export interface ProductProps {
   categories: Category[];
   colors: Color[];
   orders: Order[];
-  blogs: Blog[]
+  blogs: Blog[];
   loading: boolean;
   page: {
     size: number;
@@ -29,7 +29,7 @@ export type Order = {
   totalPrice: number;
   status: string;
   paymentId: string;
-}
+};
 
 export type Buyer = {
   name: string;
@@ -38,7 +38,7 @@ export type Buyer = {
   email: string;
   ip: string;
   identityNumber: string;
-}
+};
 
 export type ShippingAddress = {
   contactName: string;
@@ -48,7 +48,7 @@ export type ShippingAddress = {
   address: string;
   street: string;
   zipCode: string;
-}
+};
 
 export type OrderBasketItem = {
   name: string;
@@ -56,9 +56,9 @@ export type OrderBasketItem = {
   quantity: number;
   size: string;
   color: string;
-  stockSizeId: string,
+  stockSizeId: string;
   stockCode: string;
-}
+};
 
 export type Color = {
   name: string;
@@ -106,10 +106,10 @@ export type ColorSize = {
 export type Blog = {
   title: string;
   category: string;
-  image: string,
+  image: string;
   content: string;
   createdAt: string;
-}
+};
 
 export interface PaymentFormValues {
   paymentCard: {
@@ -131,7 +131,7 @@ export interface PaymentFormValues {
     registrationDate: string;
   };
   shippingAddress: {
-    contactName: string;
+    contactName?: string;
     city: string;
     state?: string;
     country: string;
@@ -140,11 +140,13 @@ export interface PaymentFormValues {
     zipCode: string;
   };
   billingAddress: {
-    contactName: string;
+    contactName?: string;
     city: string;
     country: string;
+    state?: string;
     address: string;
     zipCode: string;
+    street?: string;
     apartment?: string;
   };
 }
