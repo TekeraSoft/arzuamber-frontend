@@ -68,7 +68,6 @@ const DetailClient = ({ product }: productProps) => {
     quantity: 1,
   });
 
-  console.log(stateProduct);
   const toggleOpen = () => {
     setIsModalOpen(!isModalOpen);
   };

@@ -29,7 +29,6 @@ function ProductList() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handleDelete = (productId: string) => {
-    console.log(productId, "silindi.");
 
     try {
       toast.success("Ürün başarıyla silindi!");

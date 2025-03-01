@@ -80,7 +80,6 @@ function CategoryCreateForm() {
 
     try {
       const formData = { ...data, image, subcategories };
-      console.log("Category Data", formData);
       toast.success("Category Created Successfully!");
     } catch (error) {
       console.error(error);

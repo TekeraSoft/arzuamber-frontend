@@ -22,10 +22,6 @@ function Products() {
     (state: RootState) => state.products
   );
 
-  useEffect(() => {
-    dispatch(getAllProductsDispatch(pageable.currentPage, pageable.size));
-  }, [dispatch, pageable.currentPage, pageable.size]);
-
   const onPageChange = (event) => {
     setPageable({ size: event.rows, currentPage: event.page });
   };
@@ -33,7 +29,7 @@ function Products() {
   return (
     <main className="mx-auto container mt-20">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
-        <Filter />
+        <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
         <div className="w-full mb-3 h-full">
           <h2 className="text-center mb-5 text-3xl pb-2 font-semibold ">
@@ -45,7 +41,7 @@ function Products() {
           ) : filterProducts.length > 0 || products.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-start">
-                {(filterProducts.length > 0 ? filterProducts : products).map(
+                {(filterProducts.length > 0 ? filterProducts:products).map(
                   (product, i) => (
                     <ProductCartItem product={product} key={i} />
                   )

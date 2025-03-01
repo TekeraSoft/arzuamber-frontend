@@ -30,7 +30,6 @@ function AllProductAdminPage() {
   }, [pageable.currentPage,pageable.size]);
 
     const onPageChange = (event) => {
-        console.log(event)
         setPageable({size: event.rows, currentPage: event.page});
     }
 

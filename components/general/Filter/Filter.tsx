@@ -5,19 +5,21 @@ import { filterData } from "../../../constans/Filter";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { filterProductDispatch } from "@/store/productSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {filterProductDispatch, getAllProductsDispatch} from "@/store/productSlice";
+import {getCategoriesDispatch} from "@/store/categorySlice";
 
-function Filter() {
+function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}) {
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
+  const { categories } = useSelector((state:RootState)=> state.category)
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
   const [selectedFilters, setSelectedFilters] = useState({
-    sizes: "",
-    colors: "",
-    categories: "",
-    lengths: "",
+    sizes: null,
+    colors: null,
+    categories: null,
+    lengths: null,
   });
 
   const [openState, setOpenState] = React.useState({
@@ -47,9 +49,14 @@ function Filter() {
           color: selectedFilters.colors,
           category: selectedFilters.categories,
           length: selectedFilters.lengths,
+          page: currnetPage,
+          pageSize: pageSize
         })
       );
+    } else {
+      dispatch(getAllProductsDispatch(currnetPage, pageSize))
     }
+    dispatch(getCategoriesDispatch())
   }, [
     selectedFilters.sizes, // Boyut değiştiğinde
     selectedFilters.colors, // Renk değiştiğinde
@@ -234,7 +241,7 @@ function Filter() {
                 openState.category ? "max-h-[500px]" : "max-h-0"
               } flex flex-col`}
             >
-              {filterData.categories.values.map((category, index) => (
+              {categories.map((category, index) => (
                 <li
                   key={index}
                   className={"flex flex-row justify-start items-center gap-x-2"}
@@ -242,7 +249,7 @@ function Filter() {
                   <input
                     type="radio"
                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.categories === category}
+                    checked={selectedFilters.categories === category.name}
                     value={category}
                     onChange={(e) =>
                       setSelectedFilters({
@@ -254,12 +261,12 @@ function Filter() {
 
                   <label
                     className={`font-medium transition-all duration-300 text-base ${
-                      selectedFilters.categories === category
+                      selectedFilters.categories === category.name
                         ? "text-primary font-bold"
                         : "text-gray-500 font-thin"
                     }`}
                   >
-                    {category}
+                    {category.name}
                   </label>
                 </li>
               ))}
@@ -456,13 +463,13 @@ function Filter() {
               openState.category ? "max-h-[500px]" : "max-h-0"
             } flex flex-col`}
           >
-            {filterData.categories.values.map((category, index) => (
+            {categories.map((category, index) => (
               <li key={index} className={"flex flex-row gap-x-3"}>
                 <input
                   type="radio"
                   className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                  checked={selectedFilters.categories === category}
-                  value={category}
+                  checked={selectedFilters.categories === category.name}
+                  value={category.name}
                   onChange={(e) =>
                     setSelectedFilters({
                       ...selectedFilters,
@@ -473,12 +480,12 @@ function Filter() {
 
                 <label
                   className={`font-medium transition-all duration-300 text-sm ${
-                    selectedFilters.categories === category
+                    selectedFilters.categories === category.name
                       ? "text-primary font-bold"
                       : "text-gray-500 font-thin"
                   }`}
                 >
-                  {category}
+                  {category.name}
                 </label>
               </li>
             ))}

@@ -62,7 +62,6 @@ export default function PaymentForm() {
   useEffect(() => {
     if (threeDsModal) {
       const form = document.forms["returnform"]; // Formun id'si
-      console.log(form);
       if (form) {
         setTimeout(() => {
           form.submit(); // Formu gönder

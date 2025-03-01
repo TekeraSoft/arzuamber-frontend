@@ -183,13 +183,13 @@ export default function UpdateProductPage() {
                                     <div key={imageIndex} className="flex flex-col items-center space-y-2">
                                         <input type="file" id={`file-upload-${index}-${imageIndex}`} className="hidden"
                                                onChange={(e) => handleImageChange(e, index, imageIndex)} />
-                                        <label htmlFor={`file-upload-${index}-${imageIndex}`} className="w-24 h-48 flex items-center justify-center border cursor-pointer">
+                                        <label htmlFor={`file-upload-${index}-${imageIndex}`} className="w-16 h-32 flex items-center justify-center border cursor-pointer">
                                             {formik.values.colorSize[index]?.images?.[imageIndex] ? (
                                                 <img src={
                                                     formik.values.colorSize[index].images[imageIndex] instanceof File
                                                         ? URL.createObjectURL(formik.values.colorSize[index].images[imageIndex])
                                                         : `${process.env.NEXT_PUBLIC_RESOURCE_API}${formik.values.colorSize[index].images[imageIndex]}`
-                                                } alt="Preview" className="w-24 h-48 object-cover" />
+                                                } alt="Preview" className="w-16 h-32 object-cover" />
                                             ) : <FiUpload className="text-2xl" />}
                                         </label>
                                     </div>

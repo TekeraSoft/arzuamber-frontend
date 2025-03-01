@@ -1,10 +1,9 @@
 import { categoryList } from "@/constans/Categories";
-import { Category } from "@/types/Props";
 
 import { createSlice } from "@reduxjs/toolkit";
-import {putGuardRequest} from "@/services/requestservice";
+import {getGuardRequest, putGuardRequest} from "@/services/requestservice";
 import {toast} from "react-toastify";
-import loading = toast.loading;
+import {Category} from "@/types";
 
 export interface CartState {
   categories: Category[];
@@ -12,7 +11,7 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  categories: categoryList,
+  categories: [],
   loading: false,
 };
 
@@ -29,7 +28,20 @@ export const categorySlice = createSlice({
   },
 });
 
+export const getCategoriesDispatch = () => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({controller: 'category',action:'get-categories'}).then(res=> {
+    dispatch(getCategories(res.data));
+    dispatch(loading(false))
+  }).catch(err => {
+    dispatch(loading(false))
+    toast.error(err.response.data);
+  }).finally(()=> {
+    dispatch(loading(false))
+  })
+}
 
-export const {} = categorySlice.actions
+
+export const {getCategories, loading} = categorySlice.actions
 
 export default categorySlice.reducer;

@@ -42,7 +42,8 @@ export const productSlice = createSlice({
       state.product = action.payload;
     },
     getFilterProducts: (state, action) => {
-      state.filterProducts = action.payload;
+      state.filterProducts = action.payload._embedded.productDtoes;
+      state.page = action.payload.page;
     },
     loading: (state,action) => {
       state.loading = action.payload;
@@ -92,7 +93,13 @@ export const getProductBySlugDispatch = (slug: string) => async(dispatch) => {
 
 export const filterProductDispatch = (params: object) => async(dispatch) => {
   dispatch(loading(true))
-  getGuardRequest({controller:'product', action:'filter-product',params: {size: params.size, color: params.color, category: params.category, length: params.length }}).then(res=> {
+  getGuardRequest({controller:'product', action:'filter-product',params: {
+    size: params.size,
+      color: params.color,
+      category: params.category,
+      length: params.length,
+      page:params.page,
+      pageSize: params.pageSize }}).then(res=> {
     dispatch(getFilterProducts(res.data))
     dispatch(loading(false))
   }).finally(()=> {
