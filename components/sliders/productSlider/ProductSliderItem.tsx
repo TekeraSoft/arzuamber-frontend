@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[160px] md:w-[270px] h-[300px] md:h-[500px]  relative bg-slate-50 border-2 border-secondary  shadow-xl  ">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[210px] md:w-[270px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-full  relative"
@@ -82,8 +82,8 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         </div>
 
         <div className="flex flex-col justify-start items-start  w-full">
-          <div className="flex justify-start items-center w-full h-8 mb-1 ">
-            <h2 className="text-start text-secondary  font-semibold text-[9px] md:text-sm w-full">
+          <div className="flex justify-start items-center w-full h-8 my-2 ">
+            <h2 className="text-start text-secondary  font-bold text-[12px] md:text-base w-full">
               {product.name}
             </h2>
           </div>
@@ -93,15 +93,15 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
               {product.discountPrice > 0 ? (
                 <>
                   <span className="text-red-700 text-xs md:text-sm line-through">
-                    {product.price}₺
+                    {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                   </span>
-                  <p className="text-xs text-secondary md:text-base font-semibold">
-                    {product.discountPrice}₺
+                  <p className="text-xs text-secondary md:text-base font-bold">
+                    {product.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                   </p>
                 </>
               ) : (
-                <p className="text-xs text-secondary md:text-base font-semibold">
-                  {product.price} ₺
+                <p className="text-xs text-secondary md:text-base font-bold">
+                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                 </p>
               )}
             </div>

@@ -9,73 +9,8 @@ import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useSession } from "next-auth/react";
-import { getUserOrders } from "@/store/userSlice";
 import { AppDispatch } from "@/store/store";
-
-// Sample order data
-// const orders = [
-//   {
-//     id: "1",
-//     status: "Shipped",
-//     orderDate: "2023-07-06T06:08.330672",
-//     totalPrice: 2297,
-//     products: [
-//       {
-//         id: "5",
-//         name: "Blue T-Shirt",
-//         color: "Blue",
-//         size: "42",
-//         price: 799,
-//         imageUrl: "/images/product/product5-3.JPG",
-//         quantity: 2,
-//       },
-//       {
-//         id: "6",
-//         name: "Red Sneakers",
-//         color: "Red",
-//         size: "43",
-//         price: 1500,
-//         imageUrl: "/images/product/product6-1.JPG",
-//         quantity: 1,
-//       },
-//     ],
-//   },
-//   {
-//     id: "2",
-//     status: "Delivered",
-//     orderDate: "2023-07-12T09:15.212748",
-//     totalPrice: 3500,
-//     products: [
-//       {
-//         id: "6",
-//         name: "Red Sneakers",
-//         color: "Red",
-//         size: "43",
-//         price: 1500,
-//         imageUrl: "/images/product/product6-1.JPG",
-//         quantity: 1,
-//       },
-//     ],
-//   },
-//   {
-//     id: "3",
-//     status: "Pending",
-//     orderDate: "2023-08-03T12:20.832123",
-//     totalPrice: 1599,
-//     products: [
-//       {
-//         id: "7",
-//         name: "Black Hoodie",
-//         color: "Black",
-//         size: "L",
-//         price: 1599,
-//         imageUrl: "/images/product/product7-2.JPG",
-//         quantity: 1,
-//         reviews: [],
-//       },
-//     ],
-//   },
-// ];
+import {getUserOrdersDispatch} from "@/store/userSlice";
 
 function OrderPage() {
   const { data: session } = useSession();
@@ -86,15 +21,10 @@ function OrderPage() {
   const ordersPerPage = 2;
   const { orders, loading } = useSelector((state: RootState) => state.user);
 
-  console.log(loading);
-  console.log(orders);
-
   // orders dispatch
   useEffect(() => {
-    if (session?.user?.email) {
-      dispatch(getUserOrders({ email: session.user.email }));
-    }
-  }, [dispatch, session?.user?.email]);
+      dispatch(getUserOrdersDispatch('bdurak3@gmail.com'));
+  }, []);
 
   // Calculate the orders to show on the current page
   const pageCount = Math.ceil(orders.length / ordersPerPage);
@@ -117,7 +47,7 @@ function OrderPage() {
       ) : (
         <>
           {/* Orders List */}
-          {currentOrders.map((order) => (
+          {orders.map((order) => (
             <div key={order.id} className="mb-8 border-b  w-full">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-base md:text-lg font-semibold">
@@ -133,23 +63,16 @@ function OrderPage() {
                   {new Date(order.orderDate).toLocaleDateString()}
                 </div>
                 <div className="text-sm md:text-sm font-semibold mb-4">
-                  {t("ordersPage.totalPrice")}: ₺{order.totalPrice / 100}
+                  {t("ordersPage.totalPrice")}: ₺{order.totalPrice}
                 </div>
               </div>
               {/* Products in the order */}
               <div className="flex flex-wrap justify-between items-center">
-                {order.products.map((product) => (
+                {order.basketItems.map((product,index) => (
                   <div
-                    key={product.id}
+                    key={index}
                     className="flex gap-3 mb-6 p-4 bg-gray-100 rounded-lg w-full "
                   >
-                    <Image
-                      src={product.imageUrl}
-                      alt={`${product.imageUrl}`}
-                      width={50}
-                      height={50}
-                      className="object-contain"
-                    />
                     <div className="flex justify-between items-center gap-2 w-full ">
                       <p className="text-xs md:text-base font-semibold">
                         {product.name}
@@ -164,7 +87,7 @@ function OrderPage() {
                         {t("ordersPage.size")}: {product.quantity}
                       </div>
                       <div className="text-gray-600 text-xs md:text-sm">
-                        {t("ordersPage.price")}: ₺{product.price / 100}
+                        {t("ordersPage.price")}: ₺{product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                       </div>
                     </div>
                   </div>

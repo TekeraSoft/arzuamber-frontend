@@ -103,19 +103,19 @@ function HomeSlider() {
           ssr={true}
           infinite={true}
           autoPlay={true}
-          autoPlaySpeed={5000}
+          autoPlaySpeed={7000}
           keyBoardControl={true}
           renderDotsOutside={false}
-          customTransition="all 1s"
+          customTransition="all 300ms"
           transitionDuration={2000}
-          containerClass="carousel-container h-[180px] md:h-full"
-          itemClass="flex justify-center items-center bg-center bg-contain"
+          containerClass="carousel-container md:h-full"
+          itemClass="flex justify-center items-center bg-center bg-cover"
           renderButtonGroupOutside={isMobile}
-          customButtonGroup={
-            isMobile ? (
-              <CustomButtonGroup next={() => {}} previous={() => {}} />
-            ) : undefined
-          }
+          //customButtonGroup={
+          //  isMobile ? (
+          //    <CustomButtonGroup next={() => {}} previous={() => {}} />
+          //  ) : undefined
+          //}
           dotListClass="flex justify-center items-center gap-2  my-12 z-10 "
         >
           {images?.map((image: CarouselType) => (

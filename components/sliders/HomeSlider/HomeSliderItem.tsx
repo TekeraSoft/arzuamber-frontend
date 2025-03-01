@@ -26,9 +26,9 @@ function HomeSliderItem({ image }: ImageProps) {
       src={isMobile ? image.urlDesktop : image.urlMobile}
       alt={image.description ? image.description : "Slider Description"}
       width={1920}
-      height={600}
+      height={840}
       priority
-      className="object-contain  "
+      className="object-cover"
     />
   );
 }

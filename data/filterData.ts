@@ -16,7 +16,7 @@ export const filterData: Filter = {
     sizes: {
         id: 1,
         name: "Bedenler",
-        values: ["S", "M", "L", "XL", "XXL", "Standard", "36", "38", "40", "42","38/40", "40/42"],
+        values: ["S", "M", "L", "XL", "XXL", "Standard", "36", "38", "40", "42", "38/40", "40/42"],
     },
     colors: {
         id: 2,

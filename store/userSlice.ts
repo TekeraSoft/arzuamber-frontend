@@ -1,28 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postGuardRequest } from "./../services/requestservice";
+import {getGuardRequest, postGuardRequest} from "./../services/requestservice";
 import { toast } from "react-toastify";
-
-// Kullanıcı siparişlerini almak için async thunk oluştur
-export const getUserOrders = createAsyncThunk(
-  "user/getUserOrders",
-  async (value: { email: string }, { rejectWithValue }) => {
-    try {
-      const res = await postGuardRequest(
-        { controller: "admin", action: "user-orders" },
-        value
-      );
-      toast.success(res.data.message);
-      return res.data;
-    } catch (err) {
-      toast.error(err.response?.data || "Bir hata oluştu");
-      return rejectWithValue(err.response?.data);
-    }
-  }
-);
 
 // Başlangıç state
 const initialState = {
-  orders: {},
+  orders: [],
   loading: false,
 };
 
@@ -30,21 +12,27 @@ const initialState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(getUserOrders.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getUserOrders.fulfilled, (state, action) => {
-        state.orders = action.payload;
-        state.loading = false;
-      })
-      .addCase(getUserOrders.rejected, (state) => {
-        state.loading = false;
-      });
+  reducers: {
+    getOrders: (state, action) => {
+      state.orders = action.payload;
+    },
+      loading: (state, action) => {
+        state.loading = action.payload;
+      }
   },
 });
 
-// Reducer'ı dışa aktarma
+export const getUserOrdersDispatch = (email: string) => async(dispatch) => {
+   dispatch(loading(true))
+    getGuardRequest({controller: 'order',action: 'get-user-orders',params: {email:email}}).then(res=> {
+      dispatch(loading(false))
+        console.log(res.data)
+      dispatch(getOrders(res.data))
+    }).catch(err=> {
+      dispatch(loading(false))
+      toast.error(err.response.data);
+    })
+}
+
+export const {getOrders, loading} = userSlice.actions
 export default userSlice.reducer;

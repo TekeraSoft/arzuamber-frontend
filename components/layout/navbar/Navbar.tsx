@@ -47,8 +47,6 @@ function Navbar() {
     dispatch(openCartModal());
   };
 
-  console.log(pathname);
-
   return (
     <header className="text-mywhite z-50 fixed w-full ">
       {/* <TopBar /> */}

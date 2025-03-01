@@ -95,7 +95,7 @@ const DetailClient = ({ product }: productProps) => {
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <h3 className=" md:hidden text-center text-3xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full my-4">
+        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full my-4">
           {product.name}
         </h3>
 
@@ -230,7 +230,7 @@ const DetailClient = ({ product }: productProps) => {
                   })}{" "}
                 </p>
               ) : (
-                <p className={"md:text-xl font-semibold text-green-600"}>
+                <p className={"md:text-xl font-semibold text-secondaryDark"}>
                   {product.price.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { filterData } from "../../../constans/Filter";
+import { filterData } from "@/constans/Filter";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
@@ -355,8 +355,8 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
           </div>
           <ul
             className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-              openState.size ? "max-h-[300px]" : "max-h-0"
-            } flex flex-col`}
+              openState.size ? "max-h-full" : "max-h-0"
+            } flex flex-col h-full`}
           >
             {filterData.sizes.values.map((size, index) => (
               <li key={index} className={"flex flex-row gap-x-3"}>

@@ -63,7 +63,8 @@ export default function PaymentForm() {
 
   useEffect(() => {
     if (threeDsModal) {
-      const form = document.forms["returnform"]; // Formun id'si
+      //const form = document.forms["returnform"]; // Formun id'si
+      const form = document.forms["iyzico-3ds-form"]
       if (form) {
         setTimeout(() => {
           form.submit(); // Formu gönder
