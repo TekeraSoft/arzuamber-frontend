@@ -315,29 +315,36 @@ function Navbar() {
         {/* Mobile Menu */}
       </nav>
       <div
-        className={` md:hidden bg-mywhite  flex flex-col items-start justify-start border-r ${
-          openMenu
-            ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
-            : "max-h-0 overflow-hidden -translate-x-full "
-        }`}
+        className="bg-black bg-opacity-40"
+        onClick={() => setOpenMenu(false)}
       >
-        <ul
-          className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2  border-b   `}
+        <div
+          className={` md:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
+            openMenu
+              ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
+              : "max-h-0 overflow-hidden -translate-x-full "
+          }`}
         >
-          {navLinks.map((link) => (
-            <li
-              key={link.url}
-              onClick={() => setOpenMenu(false)}
-              className={`flex flex-col text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start items-start p-1 w-full rounded-lg ${
-                pathname.startsWith(link.url) ? "bg-secondary text-mywhite" : ""
+          <ul
+            className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.url}
+                href={link.url}
+                className="block text-center w-full"
+              >
+                <li
+                  onClick={() => setOpenMenu(false)}
+                  className={`flex flex-col text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start items-start p-1 w-full rounded-lg 
               }`}
-            >
-              <Link href={link.url} className="block text-center">
-                {link.name}
+                >
+                  {link.name}
+                </li>
               </Link>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </ul>
+        </div>
       </div>
     </header>
   );
