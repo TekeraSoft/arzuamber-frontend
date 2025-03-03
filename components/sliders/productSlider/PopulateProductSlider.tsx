@@ -48,10 +48,10 @@ function PopulateProductSlider() {
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full left-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        className="absolute rounded-full opacity-70 bg-white p-1 md:p-3  hover:opacity-100"
         onClick={onClick}
       >
-        <BiLeftArrow className="text-white" size={24} />
+        <BiLeftArrow className="text-secondary" size={24} />
       </button>
     );
   }
@@ -59,10 +59,10 @@ function PopulateProductSlider() {
   function CustomRightArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full right-0 z-5 opacity-70 bg-secondary p-3 hover:opacity-100"
+        className="absolute rounded-full right-0 z-5 opacity-70 bg-white p-1 md:p-3 hover:opacity-100"
         onClick={onClick}
       >
-        <BiRightArrow className="text-white" size={24} />
+        <BiRightArrow className="text-secondary" size={24} />
       </button>
     );
   }

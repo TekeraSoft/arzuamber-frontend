@@ -5,21 +5,31 @@ import { filterData } from "@/constans/Filter";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store/store";
-import {filterProductDispatch, getAllProductsDispatch} from "@/store/productSlice";
-import {getCategoriesDispatch} from "@/store/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import {
+  filterProductDispatch,
+  getAllProductsDispatch,
+} from "@/store/productSlice";
+import { getCategoriesDispatch } from "@/store/categorySlice";
 
-function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}) {
+function Filter({
+  currnetPage,
+  pageSize,
+}: {
+  currnetPage: number;
+  pageSize: number;
+}) {
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
-  const { categories } = useSelector((state:RootState)=> state.category)
+  const { categories } = useSelector((state: RootState) => state.category);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
     colors: null,
     categories: null,
     lengths: null,
+    subCategories: null,
   });
 
   const [openState, setOpenState] = React.useState({
@@ -39,6 +49,7 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
       selectedFilters.sizes ||
       selectedFilters.colors ||
       selectedFilters.categories ||
+      selectedFilters.subCategories ||
       selectedFilters.lengths;
 
     if (hasFilterChanged) {
@@ -50,19 +61,22 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
           category: selectedFilters.categories,
           length: selectedFilters.lengths,
           page: currnetPage,
-          pageSize: pageSize
+          pageSize: pageSize,
         })
       );
     } else {
-      dispatch(getAllProductsDispatch(currnetPage, pageSize))
+      dispatch(getAllProductsDispatch(currnetPage, pageSize));
     }
-    dispatch(getCategoriesDispatch())
+    dispatch(getCategoriesDispatch());
   }, [
-    selectedFilters.sizes, // Boyut değiştiğinde
-    selectedFilters.colors, // Renk değiştiğinde
-    selectedFilters.categories, // Kategori değiştiğinde
-    selectedFilters.lengths, // Uzunluk değiştiğinde
-    dispatch, // Dispatch fonksiyonu da bağımlılık olarak eklenmeli
+    selectedFilters.sizes,
+    selectedFilters.colors,
+    selectedFilters.categories,
+    selectedFilters.lengths,
+    selectedFilters.subCategories,
+    dispatch,
+    currnetPage,
+    pageSize,
   ]);
 
   // Menü açma / kapama işlemi
@@ -77,7 +91,7 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
         onClick={toggleMenu}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-20 right-4  md:hidden p-1 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  `}
+        }   top-28 right-4  md:hidden p-1 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  `}
       >
         <MdFilterListAlt size={24} />
       </button>
@@ -95,7 +109,7 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
           className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col justify-center items-end  mt-12 w-full">
+          <div className="flex flex-col justify-center items-end  mt-24 w-full">
             <button
               onClick={toggleMenu}
               className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
@@ -218,60 +232,95 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
           </div>
 
           {/* Kategoriler */}
-          <div className={"flex flex-col"}>
+          <div className="flex flex-col">
             <div
+              className="flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
               onClick={() =>
                 setOpenState({ ...openState, category: !openState.category })
               }
-              className={
-                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
-              }
             >
-              <h3 className={"text-lg font-semibold"}>
+              <h3 className="text-lg font-semibold">
                 {t("Filter.categories")}
               </h3>
               {openState.category ? (
-                <FaMinus className={" font-semibold"} />
+                <FaMinus className="font-semibold" />
               ) : (
-                <FaPlus className={"font-semibold"} />
+                <FaPlus className="font-semibold" />
               )}
             </div>
+
             <ul
-              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+              className={`transition-all duration-500 ease-in-out overflow-hidden gap-1 ${
                 openState.category ? "max-h-[500px]" : "max-h-0"
               } flex flex-col`}
             >
               {categories.map((category, index) => (
-                <li
-                  key={index}
-                  className={"flex flex-row justify-start items-center gap-x-2"}
-                >
-                  <input
-                    type="radio"
-                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.categories === category.name}
-                    value={category}
-                    onChange={(e) =>
-                      setSelectedFilters({
-                        ...selectedFilters,
-                        categories: e.target.value,
-                      })
-                    }
-                  />
+                <li key={index} className="flex flex-col gap-y-2">
+                  <div className="flex items-center gap-x-3">
+                    <input
+                      type="radio"
+                      className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                      checked={selectedFilters.categories === category.name}
+                      value={category.name}
+                      onChange={(e) =>
+                        setSelectedFilters({
+                          ...selectedFilters,
+                          categories: e.target.value,
+                          subCategories: null,
+                        })
+                      }
+                    />
+                    <label
+                      className={`font-medium text-sm ${
+                        selectedFilters.categories === category.name
+                          ? "text-primary font-bold"
+                          : "text-gray-500 font-thin"
+                      }`}
+                    >
+                      {category.name}
+                    </label>
+                  </div>
 
-                  <label
-                    className={`font-medium transition-all duration-300 text-base ${
-                      selectedFilters.categories === category.name
-                        ? "text-primary font-bold"
-                        : "text-gray-500 font-thin"
-                    }`}
-                  >
-                    {category.name}
-                  </label>
+                  {/* Alt Kategoriler */}
+                  {selectedFilters.categories === category.name && (
+                    <div className="ml-6 flex flex-col gap-1">
+                      {category.subCategories.map((subcategory, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-start gap-2"
+                        >
+                          <input
+                            type="radio"
+                            className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                            checked={
+                              selectedFilters.subCategories === subcategory
+                            }
+                            value={subcategory}
+                            onChange={(e) =>
+                              setSelectedFilters({
+                                ...selectedFilters,
+                                subCategories: e.target.value,
+                              })
+                            }
+                          />
+                          <label
+                            className={`font-medium text-sm ${
+                              selectedFilters.subCategories === subcategory
+                                ? "text-primary font-bold"
+                                : "text-gray-500 font-thin"
+                            }`}
+                          >
+                            {subcategory}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
-            <hr className={"bg-secondaryDark mt-1"} />
+
+            <hr className="bg-secondaryDark mt-2" />
           </div>
 
           {/* Uzunluk */}
@@ -440,57 +489,93 @@ function Filter({currnetPage, pageSize}: {currnetPage: number, pageSize: number}
         </div>
 
         {/* Kategoriler */}
-        <div className={"flex flex-col"}>
+        <div className="flex flex-col">
           <div
-            className={
-              "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
-            }
+            className="flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
             onClick={() =>
               setOpenState({ ...openState, category: !openState.category })
             }
           >
-            <h3 className={"text-lg font-semibold"}>
-              {t("Filter.categories")}
-            </h3>
+            <h3 className="text-lg font-semibold">{t("Filter.categories")}</h3>
             {openState.category ? (
-              <FaMinus className={" font-semibold"} />
+              <FaMinus className="font-semibold" />
             ) : (
-              <FaPlus className={" font-semibold"} />
+              <FaPlus className="font-semibold" />
             )}
           </div>
+
           <ul
-            className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+            className={`transition-all duration-500 ease-in-out overflow-hidden gap-1 ${
               openState.category ? "max-h-[500px]" : "max-h-0"
             } flex flex-col`}
           >
             {categories.map((category, index) => (
-              <li key={index} className={"flex flex-row gap-x-3"}>
-                <input
-                  type="radio"
-                  className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                  checked={selectedFilters.categories === category.name}
-                  value={category.name}
-                  onChange={(e) =>
-                    setSelectedFilters({
-                      ...selectedFilters,
-                      categories: e.target.value,
-                    })
-                  }
-                />
+              <li key={index} className="flex flex-col gap-y-2">
+                <div className="flex items-center gap-x-3">
+                  <input
+                    type="radio"
+                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                    checked={selectedFilters.categories === category.name}
+                    value={category.name}
+                    onChange={(e) =>
+                      setSelectedFilters({
+                        ...selectedFilters,
+                        categories: e.target.value,
+                        subCategories: null,
+                      })
+                    }
+                  />
+                  <label
+                    className={`font-medium text-sm ${
+                      selectedFilters.categories === category.name
+                        ? "text-primary font-bold"
+                        : "text-gray-500 font-thin"
+                    }`}
+                  >
+                    {category.name}
+                  </label>
+                </div>
 
-                <label
-                  className={`font-medium transition-all duration-300 text-sm ${
-                    selectedFilters.categories === category.name
-                      ? "text-primary font-bold"
-                      : "text-gray-500 font-thin"
-                  }`}
-                >
-                  {category.name}
-                </label>
+                {/* Alt Kategoriler */}
+                {selectedFilters.categories === category.name && (
+                  <div className="ml-6 flex flex-col gap-1">
+                    {category.subCategories.map((subcategory, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-start gap-2"
+                      >
+                        <input
+                          type="radio"
+                          className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                          checked={
+                            selectedFilters.subCategories === subcategory
+                          }
+                          value={subcategory}
+                          onChange={(e) =>
+                            setSelectedFilters({
+                              ...selectedFilters,
+                              subCategories: e.target.value,
+                            })
+                          }
+                        />
+                        <label
+                          className={`font-medium text-xs break-words ${
+                            selectedFilters.subCategories === subcategory
+                              ? "text-primary font-bold"
+                              : "text-gray-500 font-thin"
+                          }`}
+                        >
+                          {subcategory}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </li>
             ))}
           </ul>
-          <hr className={"bg-secondaryDark mt-1"} />
+
+          <hr className="bg-secondaryDark mt-2" />
         </div>
 
         {/* Uzunluk */}

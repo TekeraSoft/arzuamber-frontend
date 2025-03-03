@@ -89,7 +89,7 @@ function HomeSlider() {
   }, []);
 
   return (
-    <div className=" md:mt-[80px] md:container md:mx-auto  homepage-slider-div relative w-full mx-auto h-full">
+    <div className=" md:container md:mx-auto  homepage-slider-div relative w-full mx-auto h-full">
       {loading ? (
         <Loading />
       ) : (

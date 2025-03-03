@@ -31,6 +31,10 @@
     "buttonText": "Ürünleri Görüntüle"
   },
 
+  "SearchBar": {
+    "placeHolder": "Ürün adı giriniz..."
+  },
+
   "loginForm": {
     "welcomeBack": "Tekrar Hoş Geldiniz!",
     "email": "E-posta",
@@ -389,7 +393,7 @@
   },
 
   "footer": {
-    "aboutUs": "Hakkımızda",
+    "aboutUs": "Markamız",
     "customerService": "Müşteri Hizmetleri",
     "aboutDescription": "Kadın modasında modern ve şık tasarımlar sunan bir markayız. Moda tutkunlarına hitap eden ürünlerle her zaman yanınızdayız.",
     "newsletter": "Bülten",

@@ -95,7 +95,7 @@ const DetailClient = ({ product }: productProps) => {
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full my-4">
+        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full ">
           {product.name}
         </h3>
 
@@ -156,12 +156,18 @@ const DetailClient = ({ product }: productProps) => {
 
         <div
           className={
-            "md:hidden flex  flex-col justify-center items-start gap-2  mb-3 w-full "
+            "md:hidden flex  flex-col justify-center items-start gap-2  my-3 w-full "
           }
         >
-          <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
-            {t("productDetail.color")}
-          </h4>
+          <div className="flex justify-center items-center gap-2">
+            <h4 className="text-lg text-secondaryDark font-semibold my-1 after:content-[':']">
+              {t("productDetail.color")}
+            </h4>
+            <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
+              {stockSizeState.color}
+            </span>
+          </div>
+
           <div className={"flex flex-row flex-wrap gap-4 w-full"}>
             {product.colorSize.map((item, index) => (
               <button
@@ -183,9 +189,6 @@ const DetailClient = ({ product }: productProps) => {
                     : " border border-secondary "
                 } flex flex-col items-center  justify-center p-0.5  w-16 `}
               >
-                <p className=" w-full text-[10px] first-letter:uppercase text-center text-white bg-secondary mb-1 px-1  ">
-                  {item.color}
-                </p>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
                   width={56}
@@ -249,9 +252,11 @@ const DetailClient = ({ product }: productProps) => {
                 {t("productDetail.productCategory")}: {product.category}
               </div>
 
-              <div className="text-center text-sm font-semibold text-mywhite bg-secondary rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                {t("productDetail.length")}: {product.length}
-              </div>
+              {product.length && (
+                <div className="text-center text-sm font-semibold text-mywhite bg-secondary rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
+                  {t("productDetail.length")}: {product.length}
+                </div>
+              )}
 
               {product.newSeason && (
                 <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
@@ -261,10 +266,20 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className={"hidden  md:flex flex-col gap-2 "}>
-            <h4 className={"text-lg text-secondaryDark font-semibold mb1"}>
-              {t("productDetail.color")}
-            </h4>
+          <div
+            className={
+              "hidden  md:flex flex-col justify-center items-start gap-2 "
+            }
+          >
+            <div className="flex justify-center items-center gap-2">
+              <h4 className="text-lg text-secondaryDark font-semibold my-1 after:content-[':']">
+                {t("productDetail.color")}
+              </h4>
+              <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
+                {stockSizeState.color}
+              </span>
+            </div>
+
             <div className={"flex flex-row flex-wrap gap-4 w-full"}>
               {product.colorSize.map((item, index) => (
                 <button
@@ -286,9 +301,6 @@ const DetailClient = ({ product }: productProps) => {
                       : " border border-secondary "
                   } flex flex-col items-center  justify-center p-0.5  w-16 `}
                 >
-                  <p className=" w-full text-[10px] first-letter:uppercase text-center text-white bg-secondary mb-1 px-1  ">
-                    {item.color}
-                  </p>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
                     width={56}
@@ -310,6 +322,7 @@ const DetailClient = ({ product }: productProps) => {
                 {stockSizeState?.stockSize.map((item, index) =>
                   item.stock === 0 ? (
                     <button
+                      key={index}
                       className={
                         "bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 min-w-6 h-7  px-2"
                       }

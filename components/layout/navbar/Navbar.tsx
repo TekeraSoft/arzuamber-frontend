@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { FaUserShield } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -52,8 +53,8 @@ function Navbar() {
       {/* <TopBar /> */}
 
       {/* Navbar */}
-      <nav className="bg-white  w-full border-b  md:border-none ">
-        <div className="container mx-auto flex items-center justify-between px-4 py-3">
+      <nav className="bg-white  w-full  flex  ">
+        <div className="container mx-auto flex  items-center justify-between px-4 py-3">
           {/* Logo */}
           <Logo setOpenMenu={setOpenMenu} openMenu={openMenu} />
 
@@ -124,7 +125,7 @@ function Navbar() {
               ) : session?.user.role[0] === "ADMIN" ? (
                 <button
                   className={
-                    " flex flex-row  justify-center items-center px-4 py-1  gap-1 border border-primary rounded-full text-sm relative"
+                    " flex flex-row  justify-center items-center w-8 h-8   border border-primary rounded-full text-sm relative"
                   }
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
@@ -132,8 +133,7 @@ function Navbar() {
                   onMouseEnter={() => setOpenUserDropdown(true)}
                   onMouseLeave={() => setOpenUserDropdown(false)}
                 >
-                  <FaUser />
-                  {t("menuItems.myAccount")}
+                  <FaUser size={15} />
                 </button>
               ) : (
                 <button
@@ -143,9 +143,7 @@ function Navbar() {
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
                   }}
-                >
-                  {t("menuItems.myAccount")}
-                </button>
+                ></button>
               )}
               <span
                 className={`${
@@ -158,7 +156,9 @@ function Navbar() {
                   onClick={() => {
                     setOpenMenu(false);
                   }}
-                  className={"hover:bg-gray-200 px-2 py-1 text-sm text-center"}
+                  className={
+                    "hover:bg-gray-200 px-2 py-1 text-xs md:text-sm text-center"
+                  }
                   href={
                     session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
                   }
@@ -168,7 +168,9 @@ function Navbar() {
                     : t("menuItems.profile")}
                 </Link>
                 <button
-                  className={"hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"}
+                  className={
+                    "hover:bg-gray-200 px-2 pb-2 text-red-600 text-xs md:text-sm"
+                  }
                   onClick={() => {
                     signOut();
                     setOpenMenu(false);
@@ -180,22 +182,12 @@ function Navbar() {
             </li>
           </div>
 
-          {/* Links (Desktop) */}
-          <ul
-            className={`hidden lg:flex gap-8 text-base font-semibold transition-all duration-300`}
-          >
-            {navLinks.map((link) => (
-              <li key={link.url} className="relative group">
-                <Link
-                  href={link.url}
-                  className=" text-md text-secondary hover:text-secondary transition-all duration-300"
-                >
-                  {link.name}
-                </Link>
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-secondary transition-all duration-500 group-hover:w-full"></span>
-              </li>
-            ))}
-          </ul>
+          {/* Search (Desktop) */}
+          {
+            <div className=" hidden  lg:flex w-1/2">
+              <SearchBar />
+            </div>
+          }
 
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-x-6">
@@ -312,37 +304,45 @@ function Navbar() {
 
         {/* Mobile Menu */}
       </nav>
-      <div
-        className="bg-black bg-opacity-40"
-        onClick={() => setOpenMenu(false)}
-      >
+      <div className="flex flex-col justify-center items-center w-full border-t">
         <div
-          className={` md:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
-            openMenu
-              ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
-              : "max-h-0 overflow-hidden -translate-x-full "
-          }`}
+          className="bg-black bg-opacity-40 w-full"
+          onClick={() => setOpenMenu(false)}
         >
-          <ul
-            className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
+          <div
+            className={` lg:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
+              openMenu
+                ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
+                : "max-h-0 overflow-hidden -translate-x-full "
+            }`}
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.url}
-                href={link.url}
-                className="block text-center w-full"
-              >
-                <li
-                  onClick={() => setOpenMenu(false)}
-                  className={`flex flex-col text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start items-start p-1 w-full rounded-lg 
-              }`}
+            <ul
+              className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
+            >
+              {navLinks.map((link) => (
+                <Link
+                  key={link.url}
+                  href={link.url}
+                  className="block text-center w-full"
                 >
-                  {link.name}
-                </li>
-              </Link>
-            ))}
-          </ul>
+                  <li
+                    onClick={() => setOpenMenu(false)}
+                    className={`flex flex-col text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start items-start p-1 w-full rounded-lg 
+              }`}
+                  >
+                    {link.name}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
         </div>
+
+        {!openMenu && (
+          <div className="w-full flex lg:hidden border-b ">
+            <SearchBar />
+          </div>
+        )}
       </div>
     </header>
   );
