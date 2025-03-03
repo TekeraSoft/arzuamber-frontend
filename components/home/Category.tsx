@@ -18,8 +18,6 @@ function Category() {
     (state: RootState) => state.category
   );
 
-  console.log(categories);
-
   return (
     <div className="container mx-auto mt-28 mb-2">
       {loading ? (
