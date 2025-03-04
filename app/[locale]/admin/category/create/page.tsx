@@ -13,6 +13,7 @@ import { useLocale } from "next-intl";
 import { Category } from "@/types";
 import { Formik } from "formik";
 import { TiMinus, TiPlus } from "react-icons/ti";
+import {FiUpload} from "react-icons/fi";
 
 function AdminCreateCategory() {
   const locale = useLocale();
@@ -97,6 +98,18 @@ function AdminCreateCategory() {
     (cat) => cat.id === selectedCategoryId
   );
 
+  const handleCategoryImageChange = (categoryId: string, file: File) => {
+    setLocalCategories((prev) =>
+        prev.map((category) =>
+            category.id === categoryId
+                ? { ...category, image: file } // Resmi kategoriye ekle
+                : category
+        )
+    );
+  };
+
+  console.log(localCategories);
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h3 className="text-gray-500 font-bold text-xl text-center">
@@ -105,19 +118,32 @@ function AdminCreateCategory() {
       <Formik
         initialValues={{
           categoryName: "",
+          image: null,
           subCategories: [{ subCategoryName: "" }],
         }}
         onSubmit={() => {
-          const changeCat = localCategories.map((lc) => ({
-            id: lc.id,
-            name: lc.name,
-            lang: locale,
-            subCategories: lc.subCategories,
-          }));
-          dispatch(createCategoryDispatch(changeCat));
+          const categoryData = localCategories.map((category) => {
+            return {
+              id: category.id,
+              name: category.name,
+              lang: locale,
+              subCategories: category.subCategories
+            };
+          });
+
+          const formData = new FormData();
+          formData.append("categories", JSON.stringify(categoryData));
+
+          localCategories.forEach((category) => {
+              formData.append("images", category.image);
+          });
+          for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+          }
+          dispatch(createCategoryDispatch(formData));
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, setFieldValue, values }) => (
           <>
             <div className="grid grid-cols-2 mt-12 gap-x-24">
               <div className="flex flex-col">
@@ -145,23 +171,48 @@ function AdminCreateCategory() {
                   onChange={(e) => setLocalCategories(e.value)}
                   dataKey="id"
                   itemTemplate={(item) => (
-                    <div
-                      className="flex justify-between items-center"
-                      onClick={() => handleSelectMainCategory(item)}
-                    >
-                      <span
-                        className={`cursor-pointer ${
-                          selectedCategoryId === item.id ? "font-bold" : ""
-                        }`}
+                      <div
+                          className="flex justify-between items-center"
+                          onClick={() => handleSelectMainCategory(item)}
                       >
+                        <div className="flex flex-col items-center space-y-2">
+                          <label htmlFor={`file-upload-${item.id}`}
+                                 className="w-10 h-10 flex items-center justify-center rounded-full border cursor-pointer transition duration-200 overflow-hidden">
+                            <input
+                                type="file"
+                                id={`file-upload-${item.id}`}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  if (e.target.files?.[0]) {
+                                    handleCategoryImageChange(item.id, e.target.files[0]);
+                                  }
+                                }}
+                            />
+                            {item.image instanceof File ? (
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
+                                    alt="Preview"
+                                    className="w-16 h-16 object-cover rounded-lg"
+                                />
+                            ) : (
+                                <FiUpload className="text-2xl"/>
+                            )}
+                          </label>
+                        </div>
+                        <span
+                            className={`cursor-pointer ${
+                                selectedCategoryId === item.id ? "font-bold" : ""
+                            }`}
+                        >
                         {item.name}
                       </span>
-                      <TiMinus
-                        size={20}
-                        onClick={() => handleRemoveMainCategory(item.id)}
-                        className="cursor-pointer text-red-500 ml-4"
-                      />
-                    </div>
+                        <TiMinus
+                            size={20}
+                            onClick={() => handleRemoveMainCategory(item.id)}
+                            className="cursor-pointer text-red-500 ml-4"
+                        />
+                      </div>
                   )}
                   header="Main Category"
                 />
@@ -170,19 +221,19 @@ function AdminCreateCategory() {
               <div className="flex flex-col">
                 <span className="p-float-label">
                   <InputText
-                    value={categoryInput.subCategoryName}
-                    onChange={(e) =>
-                      setCategoryInput({
-                        ...categoryInput,
-                        subCategoryName: e.target.value,
-                      })
-                    }
-                    className="px-4 text-md w-full"
+                      value={categoryInput.subCategoryName}
+                      onChange={(e) =>
+                          setCategoryInput({
+                            ...categoryInput,
+                            subCategoryName: e.target.value,
+                          })
+                      }
+                      className="px-4 text-md w-full"
                   />
                   <label htmlFor="sub-category">Sub Category</label>
                   <button
-                    onClick={handleAddSubCategory}
-                    disabled={!selectedCategoryId}
+                      onClick={handleAddSubCategory}
+                      disabled={!selectedCategoryId}
                   >
                     <TiPlus
                       size={24}

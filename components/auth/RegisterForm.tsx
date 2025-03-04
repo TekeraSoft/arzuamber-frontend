@@ -1,9 +1,9 @@
 "use client";
 
 import Button from "@/components/general/Button";
-import { registerUserDispatch } from "@/store/authSlice";
-import { AppDispatch } from "@/store/store";
-import { useDispatch } from "react-redux";
+import {registerUserDispatch, setErrorState} from "@/store/authSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
 import {
   closeRegisterModal,
   openDynamicModal,
@@ -15,10 +15,13 @@ import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
 import DynamicModal from "../utils/DynamicModal";
+import {Messages} from "primereact/messages";
+import {Message} from "primereact/message";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
+  const {errorState} = useSelector((state: RootState) => state.auth);
 
   const handleChangeModal = () => {
     dispatch(closeRegisterModal());
@@ -57,7 +60,14 @@ function RegisterForm() {
       <h2 className="text-2xl font-semibold my-2 text-center">
         {t("registerForm.createAccount")}
       </h2>
-
+      {
+        errorState && (
+            <span className={'relative'}>
+              <Message severity="error" text={errorState} className={'w-full my-2'} />
+              <MdCancel onClick={()=> dispatch(setErrorState(''))} className={'text-red-600 absolute right-0 top-0 cursor-pointer'} size={24} />
+            </span>
+          )
+      }
       <form
         onSubmit={formik.handleSubmit}
         className={"flex flex-col gap-2 w-full"}
@@ -171,7 +181,6 @@ function RegisterForm() {
         </div>
 
         <div>
-          <input type="checkbox" />
 
           <DynamicModal />
         </div>

@@ -1,11 +1,11 @@
-import { postGuardRequest } from "./../services/requestservice";
+import { postGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { user } from "@/constans/User";
 
 const initialState = {
-  // user: {},
+  errorState: '',
   user: user,
   loading: false,
 };
@@ -16,11 +16,14 @@ export const authSlice = createSlice({
   reducers: {
     getUser: (state, action) => {
       state.user = action.payload;
+    },
+    setErrorState: (state, action) => {
+      state.errorState = action.payload;
     }
   },
 });
 
-export const registerUserDispatch = (value: object,resetForm:()=> void, handleChangeModal: any) => async () => {
+export const registerUserDispatch = (value: object,resetForm:()=> void, handleChangeModal: any) => async (dispatch) => {
   postGuardRequest({ controller: "auth", action: "register" }, value)
     .then((res) => {
       toast.success(res.data.message);
@@ -28,11 +31,11 @@ export const registerUserDispatch = (value: object,resetForm:()=> void, handleCh
       handleChangeModal()
     })
     .catch((err) => {
-      toast.error(err.response.data);
+      dispatch(setErrorState(err.response.data))
     });
 };
 
 // Reducer'ları dışa aktarma
-export const {} = authSlice.actions;
+export const {setErrorState} = authSlice.actions;
 
 export default authSlice.reducer;

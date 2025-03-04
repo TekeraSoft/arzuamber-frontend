@@ -7,6 +7,7 @@ import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 import "animate.css";
+import Script from "next/script";
 
 export const metadata = {
   title: "Arzu Amber",
@@ -46,6 +47,22 @@ export default async function RootLayout({
           <meta name="twitter:card" content="summary_large_image"/>
           <meta name="twitter:title" content="ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler"/>
           <meta name="twitter:description" content="Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!"/>
+          <Script
+              strategy="afterInteractive"
+              src="https://www.googletagmanager.com/gtag/js?id=AW-16907587292"
+          />
+          <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                  __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-16907587292');
+            `,
+              }}
+          />
       </head>
       <body className={`antialiased`}>
       <NextIntlClientProvider messages={messages}>

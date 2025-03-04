@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import SideBar from "@/components/admin/AdminSideBar";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
 import { BiLogOut } from "react-icons/bi";
 import { signOut } from "next-auth/react";
 import { useLocale } from "next-intl";

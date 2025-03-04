@@ -48,10 +48,10 @@ function Products() {
 
               <Paginator
                 className={"my-12 "}
-                first={pageable.currentPage}
+                first={pageable.currentPage * pageable.size}
                 rows={pageable.size}
                 totalRecords={page.totalElements}
-                rowsPerPageOptions={[10, 20, 30]}
+                rowsPerPageOptions={[9, 20, 30]}
                 onPageChange={onPageChange}
               />
             </>

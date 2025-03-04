@@ -89,7 +89,7 @@ export const updateActiveDispatch = (id,active) => async(dispatch) => {
 export const getAllProductDispatch = (page: number, size: number) => async(dispatch) => {
     dispatch(loading(true))
     getGuardRequest({controller:'admin',action:'get-all-product', params:{page: page, size: size}}).then(res=>{
-        dispatch(getProducts(res.data))
+        dispatch(getProducts(res?.data))
         dispatch(loading(false))
     }).finally(()=> {
         dispatch(loading(false))
@@ -166,10 +166,10 @@ export const createColorDispatch = (value: object) => async(dispatch) => {
     postGuardRequest({controller:'admin',action:'create-color'},value).then(res=> {
         dispatch(loading(false))
         dispatch(getAllColorsDispatch())
-        toast.success(res.data.message);
+        toast.success(res.data?.message);
     }).catch(err => {
         dispatch(loading(false))
-        toast.error(err.response.data);
+        toast.error(err.response?.data);
     })
 }
 
@@ -177,7 +177,7 @@ export const getAllColorsDispatch = () => async (dispatch) => {
     dispatch(loading(true))
     getGuardRequest({controller:'admin',action:'get-all-colors'}).then(res=> {
         dispatch(loading(false))
-        dispatch(getColors(res.data))
+        dispatch(getColors(res?.data))
     }).catch(err => {
         dispatch(loading(false))
         toast.error(err.response.data);
@@ -189,7 +189,7 @@ export const deleteColorDispatch = (id: string) => async(dispatch) => {
     deleteGuardRequest({controller:'admin',action:'delete-color',params:{id: id}}).then(res=> {
         dispatch(loading(false))
         dispatch(getAllColorsDispatch())
-        toast.success(res.data.message);
+        toast.success(res.data?.message);
     })
 }
 
@@ -197,10 +197,10 @@ export const getAllOrdersDispatch = (page: number, size:number) => async (dispat
     dispatch(loading(true))
     getRequest({controller:'admin',action:'get-all-order',params:{page: page, size: size}}).then(res=> {
         dispatch(loading(false))
-        dispatch(getOrders(res.data))
+        dispatch(getOrders(res?.data))
     }).catch(err => {
         dispatch(loading(false))
-        toast.error(err.response.data);
+        toast.error(err.response?.data);
     }).finally(()=> {
         dispatch(loading(false))
     })
@@ -211,10 +211,10 @@ export const createBlogDispatch = (value: object,resetForm:()=> void) => async(d
     postGuardRequest({controller:'admin',action:'create-blog'},value).then(res=> {
         dispatch(loading(false))
         resetForm()
-        toast.success(res.data.message);
+        toast.success(res.data?.message);
     }).catch(err => {
         dispatch(loading(false))
-        toast.error(err.response.data);
+        toast.error(err.response?.data);
     })
 }
 
