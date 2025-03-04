@@ -1,43 +1,62 @@
 "use client";
 
-import { RootState } from "@/store/store";
-import React from "react";
-import { useSelector } from "react-redux";
-import Image from "next/image";
+import { AppDispatch, RootState } from "@/store/store";
+import React, { useEffect } from "react";
 import Loading from "../utils/Loading";
+import { getCategoriesDispatch } from "@/store/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 function Category() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getCategoriesDispatch());
+  }, [dispatch]);
+
   const { categories, loading } = useSelector(
-    (state: RootState) => state.categories
+    (state: RootState) => state.category
   );
 
   return (
-    <div className="category-container p-4 md:p-8 space-y-3">
+    <div className="container mx-auto mt-28 mb-2">
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 mx-auto container">
+        <div
+          className="flex items-center justify-start overflow-x-auto space-x-5 p-1"
+          style={{
+            scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
+            msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için
+          }}
+        >
           {categories.map((category) => (
             <div
               key={category.id}
-              className="relative flex flex-col items-center justify-start cursor-pointer text-white bg-gradient-to-r from-secondary to-primary hover:scale-105 shadow-lg overflow-hidden transform transition-all duration-300 rounded-lg h-[200px] md:h-full"
+              //! Kategorilere göre arama için event
+              onClick={() => {
+                console.log(category.name);
+              }}
+              className="flex flex-col items-center justify-center transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
             >
-              {/* Kategori Resmi */}
-              <div className="relative w-full h-[400px]">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="transition-all duration-500 hover:opacity-80 object-cover object-center"
-                />
-              </div>
+              {/* Kategori Resmi ve İsim */}
+              <div className="flex flex-col items-center">
+                {/* Kategori Resmi */}
+                <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg">
+                  <Image
+                    src={`/images/product/siyah diğer.jpg`} //! Kategoriye ait dinamik resim
+                    alt={category.name}
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                </div>
 
-              {/* Kategori Adı */}
-              <span className="absolute mt-5 font-semibold text-sm md:text-2xl  bg-black bg-opacity-50  w-[150px] md:w-3/4  h-8 md:h-12 flex items-center justify-center rounded-lg shadow-lg capitalize">
-                {category.name}
-              </span>
+                {/* Kategori İsmi */}
+                <h3 className="text-center text-xs md:text-sm max-w-[5rem] truncate">
+                  {category.name}
+                </h3>
+              </div>
             </div>
           ))}
         </div>

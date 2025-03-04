@@ -1,15 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ModalState {
   isRegisterModalOpen: boolean;
   isLoginModalOpen: boolean;
   isCartModalOpen: boolean;
+  activeModal: { isOpen: boolean; title: string; content: string };
 }
 
 const initialState: ModalState = {
   isRegisterModalOpen: false,
   isLoginModalOpen: false,
   isCartModalOpen: false,
+  activeModal: { isOpen: false, title: "", content: "" },
 };
 
 export const modalsSlice = createSlice({
@@ -34,6 +36,23 @@ export const modalsSlice = createSlice({
     closeCartModal(state) {
       state.isCartModalOpen = false;
     },
+    openDynamicModal(
+      state,
+      action: PayloadAction<{ title: string; content: string }>
+    ) {
+      state.activeModal = {
+        isOpen: true,
+        title: action.payload.title,
+        content: action.payload.content,
+      };
+    },
+    closeDynamicModal(state) {
+      state.activeModal.isOpen = false;
+      state.activeModal.title = "";
+      state.activeModal.content = "";
+    },
+
+    // Checkbox'ları toggle et
   },
 });
 
@@ -44,6 +63,8 @@ export const {
   closeLoginModal,
   openCartModal,
   closeCartModal,
+  openDynamicModal,
+  closeDynamicModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

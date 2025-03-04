@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useSession } from "next-auth/react";
 import { AppDispatch } from "@/store/store";
-import {getUserOrdersDispatch} from "@/store/userSlice";
+import { getUserOrdersDispatch } from "@/store/userSlice";
 
 function OrderPage() {
   const { data: session } = useSession();
@@ -23,7 +23,7 @@ function OrderPage() {
 
   // orders dispatch
   useEffect(() => {
-      dispatch(getUserOrdersDispatch('bdurak3@gmail.com'));
+    dispatch(getUserOrdersDispatch("bdurak3@gmail.com"));
   }, []);
 
   // Calculate the orders to show on the current page
@@ -68,7 +68,7 @@ function OrderPage() {
               </div>
               {/* Products in the order */}
               <div className="flex flex-wrap justify-between items-center">
-                {order.basketItems.map((product,index) => (
+                {order.basketItems.map((product, index) => (
                   <div
                     key={index}
                     className="flex gap-3 mb-6 p-4 bg-gray-100 rounded-lg w-full "
@@ -87,7 +87,11 @@ function OrderPage() {
                         {t("ordersPage.size")}: {product.quantity}
                       </div>
                       <div className="text-gray-600 text-xs md:text-sm">
-                        {t("ordersPage.price")}: ₺{product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
+                        {t("ordersPage.price")}: ₺
+                        {product.price.toLocaleString("tr-TR", {
+                          style: "currency",
+                          currency: "TRY",
+                        })}
                       </div>
                     </div>
                   </div>

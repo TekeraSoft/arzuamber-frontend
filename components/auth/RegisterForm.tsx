@@ -4,12 +4,17 @@ import Button from "@/components/general/Button";
 import { registerUserDispatch } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
-import { closeRegisterModal, openLoginModal } from "@/store/modalsSlice";
+import {
+  closeRegisterModal,
+  openDynamicModal,
+  openLoginModal,
+} from "@/store/modalsSlice";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
+import DynamicModal from "../utils/DynamicModal";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +38,10 @@ function RegisterForm() {
       dispatch(registerUserDispatch(values, resetForm, handleChangeModal));
     },
   });
+
+  const handleOpenModal = (title: string, content: string) => {
+    dispatch(openDynamicModal({ title, content }));
+  };
 
   return (
     <div>
@@ -160,6 +169,13 @@ function RegisterForm() {
             )}
           </span>
         </div>
+
+        <div>
+          <input type="checkbox" />
+
+          <DynamicModal />
+        </div>
+
         <div className="flex flex-col space-y-2 w-full justify-center items-center ">
           <Button
             text={t("registerForm.registerButton")}
@@ -168,6 +184,7 @@ function RegisterForm() {
             size="center"
             className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
           />
+
           {/* <Button
               size="small"
               outline

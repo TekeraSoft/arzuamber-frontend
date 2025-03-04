@@ -3,10 +3,9 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import Filter from "@/components/general/Filter/Filter";
 import ProductCartItem from "@/components/products/ProductCartItem";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { getAllProductsDispatch } from "@/store/productSlice";
 import Loading from "@/components/utils/Loading";
 import { useTranslations } from "next-intl";
 import { Paginator } from "primereact/paginator";
@@ -26,7 +25,7 @@ function Products() {
   };
 
   return (
-    <main className="mx-auto container mt-20">
+    <main className="mx-auto container mt-28">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
@@ -40,7 +39,7 @@ function Products() {
           ) : filterProducts.length > 0 || products.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-start">
-                {(filterProducts.length > 0 ? filterProducts:products).map(
+                {(filterProducts.length > 0 ? filterProducts : products).map(
                   (product, i) => (
                     <ProductCartItem product={product} key={i} />
                   )

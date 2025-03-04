@@ -1,6 +1,6 @@
 "use client";
 
-import GradientColorContainer from "@/components/Containers/BackGroundImageContainer";
+import BackGroundImageContainer from "@/components/Containers/BackGroundImageContainer";
 import HomeContainer from "@/components/Containers/HomeContainer";
 import Heading from "@/components/general/Heading";
 import Brand from "@/components/home/Brand";
@@ -8,16 +8,17 @@ import HomeSlider from "@/components/sliders/HomeSlider/HomeSlider";
 import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
 import PopulateProductSlider from "@/components/sliders/productSlider/PopulateProductSlider";
-import PageContainer from "@/components/Containers/PageContainer";
+import Category from "@/components/home/Category";
 
 export default function Home() {
   const t = useTranslations();
 
   return (
     <>
+      <Category />
       <HomeSlider />
 
-      <GradientColorContainer>
+      <BackGroundImageContainer>
         <HomeContainer>
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}
@@ -56,7 +57,7 @@ export default function Home() {
           color="standart"
           link="/products"
         />
-      </GradientColorContainer>
+      </BackGroundImageContainer>
     </>
   );
 }
