@@ -86,7 +86,7 @@ const DetailClient = ({ product }: productProps) => {
     // URL'yi kopyalama
     navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true);
-      toast.success(t("SnackBar.coypLinkSuccess"));
+      toast.success('Link Kopyalandı');
     });
   };
 

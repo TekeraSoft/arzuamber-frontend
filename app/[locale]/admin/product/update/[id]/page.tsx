@@ -49,6 +49,7 @@ export default function UpdateProductPage() {
             price: product?.price || 0,
             purchasePrice: product?.purchasePrice || 0,
             discountPrice: product?.discountPrice || 0,
+            deletedImages: []
         },
         onSubmit: async (values) => {
             const formData = new FormData();
@@ -58,7 +59,7 @@ export default function UpdateProductPage() {
                 ...values,
                 colorSize: values.colorSize.map((colorItem) => ({
                     ...colorItem,
-                    images: colorItem.images.filter(image => typeof image === "string"), // ✅ Sadece string URL'leri tut
+                    images: colorItem.images.filter(image => typeof image === "string") , // ✅ Sadece string URL'leri tut
                 })),
             };
 
@@ -73,12 +74,15 @@ export default function UpdateProductPage() {
                         formData.append("images", new File([image], fileName, { type: image.type }));
                     });
             });
-
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
             try {
                 await dispatch(updateProductDispatch(formData));
             } catch (error) {
                 console.error("Ürün güncelleme hatası:", error);
             }
+            console.log(cleanedValues);
         }
     });
 
@@ -171,8 +175,10 @@ export default function UpdateProductPage() {
                             <button
                                 type={'button'}
                                 onClick={() => {
+                                    const selectDeletedImages = formik.values.colorSize[index].images
                                     const newColorSizeState = formik.values.colorSize.filter((_, i) => i !== index);
                                     formik.setFieldValue('colorSize', newColorSizeState);
+                                    formik.setFieldValue('deletedImages', selectDeletedImages)
                                 }}
                                 className={`${index === 0 ? 'hidden' : 'block'} absolute right-2 top-2 text-red-600`}>
                                 <MdCancel size={20}/>
@@ -180,17 +186,42 @@ export default function UpdateProductPage() {
 
                             <div className='flex flex-row gap-x-4'>
                                 {[0, 1, 2,3,4,5].map((imageIndex) => (
-                                    <div key={imageIndex} className="flex flex-col items-center space-y-2">
+                                    <div key={imageIndex} className="flex flex-col items-center space-y-2 relative">
+
                                         <input type="file" id={`file-upload-${index}-${imageIndex}`} className="hidden"
                                                onChange={(e) => handleImageChange(e, index, imageIndex)} />
                                         <label htmlFor={`file-upload-${index}-${imageIndex}`} className="w-16 h-32 flex items-center justify-center border cursor-pointer">
                                             {formik.values.colorSize[index]?.images?.[imageIndex] ? (
-                                                <img src={
-                                                    formik.values.colorSize[index].images[imageIndex] instanceof File
-                                                        ? URL.createObjectURL(formik.values.colorSize[index].images[imageIndex])
-                                                        : `${process.env.NEXT_PUBLIC_RESOURCE_API}${formik.values.colorSize[index].images[imageIndex]}`
-                                                } alt="Preview" className="w-16 h-32 object-cover" />
-                                            ) : <FiUpload className="text-2xl" />}
+                                                <div>
+                                                    <MdCancel
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            const updatedColorSize = formik.values.colorSize.map((item, i) => {
+                                                                if (i === index) {
+                                                                    const removedImage = item.images[imageIndex]; // 🚨 Silinen resmi al
+                                                                    if (typeof removedImage === "string") { // Sadece eski resimler için
+                                                                        formik.setFieldValue("deletedImages", [...formik.values.deletedImages, removedImage]);
+                                                                    }
+                                                                    return {
+                                                                        ...item,
+                                                                        images: item.images.filter((_, i) => i !== imageIndex), // ❌ Resmi kaldır
+                                                                    };
+                                                                }
+                                                                return item;
+                                                            });
+                                                            formik.setFieldValue("colorSize", updatedColorSize);
+                                                        }}
+                                                        className="text-red-600 z-40 absolute right-6 -top-4 cursor-pointer"
+                                                        size={16}
+                                                    />
+                                                    <img src={
+                                                        formik.values.colorSize[index].images[imageIndex] instanceof File
+                                                            ? URL.createObjectURL(formik.values.colorSize[index].images[imageIndex])
+                                                            : `${process.env.NEXT_PUBLIC_RESOURCE_API}${formik.values.colorSize[index].images[imageIndex]}`
+                                                    } alt="Preview" className="w-16 h-32 object-cover"/>
+                                                </div>
+                                            ) : <FiUpload className="text-2xl"/>}
                                         </label>
                                     </div>
                                 ))}
