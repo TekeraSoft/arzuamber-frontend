@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "@/components/general/Button";
 import { registerUserDispatch } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
@@ -15,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
 import DynamicModal from "../utils/DynamicModal";
+import { useState } from "react";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +35,8 @@ function RegisterForm() {
     },
     validationSchema: useRegisterValidationSchema(),
     onSubmit: (values, { resetForm }) => {
+      console.log("form gönderildi.");
+
       dispatch(registerUserDispatch(values, resetForm, handleChangeModal));
     },
   });
@@ -42,6 +44,28 @@ function RegisterForm() {
   const handleOpenModal = (title: string, content: string) => {
     dispatch(openDynamicModal({ title, content }));
   };
+
+  const [checkboxes, setCheckboxes] = useState({
+    KVKK: false,
+    ElectronicMessage: false,
+    MembershipAgreement: false,
+  });
+
+  // Checkbox'ların durumunu değiştiren fonksiyon
+  const handleCheckboxChange = (name) => {
+    setCheckboxes((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled =
+    !checkboxes.KVKK ||
+    !checkboxes.ElectronicMessage ||
+    !checkboxes.MembershipAgreement;
+
+  console.log(isButtonDisabled);
 
   return (
     <div>
@@ -170,28 +194,95 @@ function RegisterForm() {
           </span>
         </div>
 
-        <div>
-          <input type="checkbox" />
+        <div className="w-full flex flex-col items-center justify-center gap-2 mt-1">
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.KVKK}
+              onChange={() => handleCheckboxChange("KVKK")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t("registerForm.registerFormCheckBox.KVKK.title"),
+                  t("registerForm.registerFormCheckBox.KVKK.content")
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.KVKK.title")}
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.ElectronicMessage}
+              onChange={() => handleCheckboxChange("ElectronicMessage")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.title"
+                  ),
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.content"
+                  )
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.ElectronicMessage.title")}
+            </div>
+          </div>
+
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.MembershipAgreement}
+              onChange={() => handleCheckboxChange("MembershipAgreement")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t(
+                    "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                  ),
+                  t(
+                    "registerForm.registerFormCheckBox.MembershipAgreement.content"
+                  )
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.MembershipAgreement.title")}
+            </div>
+          </div>
 
           <DynamicModal />
         </div>
 
-        <div className="flex flex-col space-y-2 w-full justify-center items-center ">
-          <Button
-            text={t("registerForm.registerButton")}
-            type="submit"
-            animation
-            size="center"
-            className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
-          />
+        {isButtonDisabled && (
+          <div className="text-xs text-red-600">
+            {t("registerForm.acceptAgreementError")}
+          </div>
+        )}
 
-          {/* <Button
-              size="small"
-              outline
-              icon={IoLogoGoogleplus}
-              iconSize={23}
-              className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-2"
-            /> */}
+        <div className="flex flex-col space-y-2 w-full justify-center items-center ">
+          <button
+            disabled={isButtonDisabled}
+            type="submit"
+            className={`  w-full transition duration-300 bg-primary  text-mywhite py-2 rounded-lg mt-2 ${
+              isButtonDisabled
+                ? "cursor-not-allowed bg-primary opacity-45"
+                : " hover:bg-primaryDark"
+            }   `}
+          >
+            {t("registerForm.registerButton")}
+          </button>
         </div>
       </form>
       <p

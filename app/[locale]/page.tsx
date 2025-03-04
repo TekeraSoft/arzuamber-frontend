@@ -54,7 +54,7 @@ export default function Home() {
           buttonText={t("brand.buttonText")}
           desktopImageUrl="/images/Brand/brand2.jpg"
           mobileImageUrl="/images/Brand/brand2.jpg"
-          color="standart"
+          color="black"
           link="/products"
         />
       </BackGroundImageContainer>

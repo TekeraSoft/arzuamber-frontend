@@ -51,8 +51,6 @@ export const modalsSlice = createSlice({
       state.activeModal.title = "";
       state.activeModal.content = "";
     },
-
-    // Checkbox'ları toggle et
   },
 });
 

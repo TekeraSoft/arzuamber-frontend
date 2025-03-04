@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {Product} from "@/types";
-import {getGuardRequest} from "@/services/requestservice";
-
+import { Product } from "@/types";
+import { getGuardRequest } from "@/services/requestservice";
+import { toast } from "react-toastify";
 
 // Sepet Tipi
 export interface CartState {
@@ -9,9 +9,10 @@ export interface CartState {
   newSeasonProducts: Product[];
   populateProducts: Product[];
   filterProducts: Product[];
-  product: Product |null;
-  page: {}
+  product: Product | null;
+  page: {};
   loading: boolean;
+  colors: [];
 }
 
 const initialState: CartState = {
@@ -21,17 +22,18 @@ const initialState: CartState = {
   filterProducts: [],
   page: {},
   product: null,
-  loading: false
-}
+  loading: false,
+  colors: [],
+};
 
 export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    getNewSeasonProducts: (state,action) => {
+    getNewSeasonProducts: (state, action) => {
       state.newSeasonProducts = action.payload;
     },
-    getPopulateProducts: (state,action) => {
+    getPopulateProducts: (state, action) => {
       state.populateProducts = action.payload;
     },
     getProducts: (state, action) => {
@@ -45,67 +47,117 @@ export const productSlice = createSlice({
       state.filterProducts = action.payload._embedded.productDtoes;
       state.page = action.payload.page;
     },
-    loading: (state,action) => {
+    getColors: (state, action) => {
+      state.colors = action.payload;
+    },
+    loading: (state, action) => {
       state.loading = action.payload;
-    }
+    },
   },
 });
 
-export const getNewSeasonProductsDispatch = (page: number, size: number) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'product',action: 'get-all-new-season',params: {page:page, size:size}}).then(res=> {
-    dispatch(getNewSeasonProducts(res.data))
-    dispatch(loading(false))
-  }).finally(()=> {
-    dispatch(loading(false))
-  })
-}
+export const getNewSeasonProductsDispatch =
+  (page: number, size: number) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "product",
+      action: "get-all-new-season",
+      params: { page: page, size: size },
+    })
+      .then((res) => {
+        dispatch(getNewSeasonProducts(res.data));
+        dispatch(loading(false));
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
-export const getPopulateProductsDispatch = (page: number, size: number) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'product',action: 'get-all-populate',params: {page:page, size:size}}).then(res=> {
-    dispatch(getPopulateProducts(res.data))
-    dispatch(loading(false))
-  }).finally(()=> {
-    dispatch(loading(false))
-  })
-}
+export const getPopulateProductsDispatch =
+  (page: number, size: number) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "product",
+      action: "get-all-populate",
+      params: { page: page, size: size },
+    })
+      .then((res) => {
+        dispatch(getPopulateProducts(res.data));
+        dispatch(loading(false));
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
-export const getAllProductsDispatch = (page: number, size: number) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'product', action: 'products',params:{page:page, size:size}}).then(res=> {
-    dispatch(getProducts(res.data))
-    dispatch(loading(false))
-  }).finally(()=> {
-    dispatch(loading(false))
-  })
-}
+export const getAllProductsDispatch =
+  (page: number, size: number) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "product",
+      action: "products",
+      params: { page: page, size: size },
+    })
+      .then((res) => {
+        dispatch(getProducts(res.data));
+        dispatch(loading(false));
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
-export const getProductBySlugDispatch = (slug: string) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'product',action: 'get-product',params: {slug: slug}}).then(res=> {
-    dispatch(getProduct(res.data))
-    dispatch(loading(false))
-  }).finally(()=> {
-    dispatch(loading(false))
+export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({
+    controller: "product",
+    action: "get-product",
+    params: { slug: slug },
   })
-}
+    .then((res) => {
+      dispatch(getProduct(res.data));
+      dispatch(loading(false));
+    })
+    .finally(() => {
+      dispatch(loading(false));
+    });
+};
 
-export const filterProductDispatch = (params: object) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'product', action:'filter-product',params: {
-    size: params.size,
+export const filterProductDispatch = (params: object) => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({
+    controller: "product",
+    action: "filter-product",
+    params: {
+      size: params.size,
       color: params.color,
       category: params.category,
       length: params.length,
-      page:params.page,
-      pageSize: params.pageSize }}).then(res=> {
-    dispatch(getFilterProducts(res.data))
-    dispatch(loading(false))
-  }).finally(()=> {
-    dispatch(loading(false))
+      page: params.page,
+      pageSize: params.pageSize,
+    },
   })
-}
+    .then((res) => {
+      dispatch(getFilterProducts(res.data));
+      dispatch(loading(false));
+    })
+    .finally(() => {
+      dispatch(loading(false));
+    });
+};
+
+export const getAllColorsDispatch = () => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({ controller: "product", action: "get-all-colors" })
+    .then((res) => {
+      dispatch(loading(false));
+      dispatch(getColors(res.data));
+    })
+    .catch((err) => {
+      dispatch(loading(false));
+      toast.error(err.response.data);
+    });
+};
 
 // Reducer'ları dışa aktarma
 export const {
@@ -114,6 +166,8 @@ export const {
   getNewSeasonProducts,
   getProduct,
   getFilterProducts,
-  getPopulateProducts} = productSlice.actions;
+  getColors,
+  getPopulateProducts,
+} = productSlice.actions;
 
 export default productSlice.reducer;

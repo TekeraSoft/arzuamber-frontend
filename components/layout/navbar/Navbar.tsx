@@ -107,7 +107,7 @@ function Navbar() {
 
             <li
               className={
-                "  text-primary relative flex justify-center items-center   "
+                "  text-secondary relative flex justify-center items-center   "
               }
             >
               {!session ? (
@@ -118,7 +118,7 @@ function Navbar() {
                   }}
                   className="flex justify-center items-center w-full  text-center   "
                 >
-                  <span className="gap-1 border border-primary rounded-full text-sm  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
+                  <span className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
                     {t("menuItems.login")}
                   </span>
                 </button>
@@ -138,12 +138,14 @@ function Navbar() {
               ) : (
                 <button
                   className={
-                    " flex flex-row  justify-center items-center px-4   border border-primary rounded-full  relative w-full"
+                    " flex flex-row  justify-center items-center  p-1  border border-secondary rounded-full  relative w-full"
                   }
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
                   }}
-                ></button>
+                >
+                  <FaUser size={18} />
+                </button>
               )}
               <span
                 className={`${

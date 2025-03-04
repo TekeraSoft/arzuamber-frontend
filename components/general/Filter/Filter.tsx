@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
   filterProductDispatch,
+  getAllColorsDispatch,
   getAllProductsDispatch,
 } from "@/store/productSlice";
 import { getCategoriesDispatch } from "@/store/categorySlice";
@@ -23,6 +24,7 @@ function Filter({
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
   const { categories } = useSelector((state: RootState) => state.category);
+  const { colors } = useSelector((state: RootState) => state.products);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
@@ -68,6 +70,7 @@ function Filter({
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
     }
     dispatch(getCategoriesDispatch());
+    dispatch(getAllColorsDispatch());
   }, [
     selectedFilters.sizes,
     selectedFilters.colors,
@@ -198,7 +201,7 @@ function Filter({
                 openState.color ? "max-h-[500px]" : "max-h-0"
               } flex flex-col`}
             >
-              {filterData.colors.values.map((color, index) => (
+              {colors.map((color, index) => (
                 <li
                   key={index}
                   className={"flex flex-row justify-start items-center gap-x-2"}
@@ -207,7 +210,7 @@ function Filter({
                     type="radio"
                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                     checked={selectedFilters.colors === color}
-                    value={color}
+                    value={color.name}
                     onChange={(e) =>
                       setSelectedFilters({
                         ...selectedFilters,
@@ -223,7 +226,7 @@ function Filter({
                         : "text-gray-500 font-thin"
                     }`}
                   >
-                    {t(`Filter.${color}`)}
+                    {color.name}
                   </label>
                 </li>
               ))}

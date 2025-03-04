@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Button from "../general/Button";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
