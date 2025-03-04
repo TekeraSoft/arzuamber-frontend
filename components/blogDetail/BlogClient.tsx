@@ -2,12 +2,13 @@
 
 import { BlogProps } from "@/types/Props";
 import React, { useState } from "react";
-import { FaCalendar, FaShareAlt } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa";
 import PageContainer from "../Containers/PageContainer";
 import Image from "next/image";
 import { Snackbar, SnackbarContent } from "@mui/material";
 import Button from "../general/Button";
 import { useTranslations } from "next-intl";
+import NextSeoHead from "../utils/NextSeoHead";
 
 function BlogClient({ blog }: { blog: BlogProps }) {
   const t = useTranslations();
@@ -26,6 +27,12 @@ function BlogClient({ blog }: { blog: BlogProps }) {
 
   return (
     <PageContainer>
+      <NextSeoHead
+        name={blog.title}
+        description={blog.content}
+        image={blog.image}
+      />
+
       <div className=" shadow-lg rounded-lg h-full py-5 mb-5 ">
         {/* Blog Image */}
         <div className="w-full h-[300px] sm:h-[400px] md:h-[550px] relative">
