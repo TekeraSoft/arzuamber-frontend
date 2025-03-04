@@ -48,6 +48,7 @@ function Brand({
         src={imageUrl} // Dinamik resim (mobil veya desktop)
         alt={title}
         fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
       <div
         className={`absolute inset-0 flex flex-col items-center justify-center p-7 md:p-5 rounded-lg  ${colorClasses[color]}`}

@@ -34,6 +34,7 @@ const Footer = () => {
                 height={40}
                 alt="footer logo"
                 priority
+                className="w-auto h-auto"
               />
               <p className="mt-2 font-semibold text-xs">
                 ARZUAMBER TEKSTİL SAN. TİC. LTD. ŞTİ
@@ -139,7 +140,7 @@ const Footer = () => {
                 alt="Iyzico Image"
                 width={170}
                 height={50}
-                className="object-contain"
+                className="object-contain w-auto h-auto"
                 priority
               />
             </div>

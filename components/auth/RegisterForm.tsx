@@ -35,8 +35,6 @@ function RegisterForm() {
     },
     validationSchema: useRegisterValidationSchema(),
     onSubmit: (values, { resetForm }) => {
-      console.log("form gönderildi.");
-
       dispatch(registerUserDispatch(values, resetForm, handleChangeModal));
     },
   });
@@ -136,7 +134,7 @@ function RegisterForm() {
             id="email"
             value={formik.values.email}
             onChange={formik.handleChange}
-            className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+            className={`w-full h-10 !rounded !border px-2 !outline-secondary !ring-secondary ${
               formik.touched.email && formik.errors.email
                 ? "border-red-500"
                 : ""

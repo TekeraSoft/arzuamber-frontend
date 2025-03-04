@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import { IoMdShare } from "react-icons/io";
+import NextSeoHead from "../utils/NextSeoHead";
 
 const responsive = {
   superLargeDesktop: {
@@ -86,16 +87,22 @@ const DetailClient = ({ product }: productProps) => {
     // URL'yi kopyalama
     navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true);
-      toast.success('Link Kopyalandı');
+      toast.success(t("SnackBar.coypLinkSuccess"));
     });
   };
 
   return (
     <PageContainer>
+      <NextSeoHead
+        name={product.name}
+        description={product.description}
+        image={product.colorSize[0].images[0]}
+      />
+
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full ">
+        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full mt-7 mb-5 ">
           {product.name}
         </h3>
 
@@ -130,7 +137,7 @@ const DetailClient = ({ product }: productProps) => {
             transitionDuration={500}
             customLeftArrow={<CustomLeftArrow />}
             customRightArrow={<CustomRightArrow />}
-            className="w-full rounded-lg"
+            className="w-full rounded-lg h-full"
           >
             {stockSizeState?.images?.map((img, index) => (
               <div
