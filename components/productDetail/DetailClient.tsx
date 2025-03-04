@@ -142,7 +142,7 @@ const DetailClient = ({ product }: productProps) => {
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-full rounded-lg"
+                className="flex justify-center items-center w-full h-full rounded-lg mb-5"
               >
                 <Image
                   className="cursor-zoom-in w-full h-full object-cover rounded-lg"
