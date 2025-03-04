@@ -5,7 +5,6 @@ export interface ModalState {
   isLoginModalOpen: boolean;
   isCartModalOpen: boolean;
   activeModal: { isOpen: boolean; title: string; content: string };
-  checkedItems: { [key: string]: boolean }; // checkbox item'larının durumu
 }
 
 const initialState: ModalState = {
@@ -13,12 +12,6 @@ const initialState: ModalState = {
   isLoginModalOpen: false,
   isCartModalOpen: false,
   activeModal: { isOpen: false, title: "", content: "" },
-  checkedItems: {
-    "KVKK Onayı": false,
-    "Gizlilik Politikası": false,
-    "Kullanım Koşulları": false,
-    "Hizmet Şartları": false,
-  },
 };
 
 export const modalsSlice = createSlice({
@@ -60,16 +53,6 @@ export const modalsSlice = createSlice({
     },
 
     // Checkbox'ları toggle et
-    toggleCheckbox(state, action: PayloadAction<string>) {
-      const { title } = action.payload;
-      state.checkedItems[title] = !state.checkedItems[title];
-    },
-    // Tüm checkbox'ları sıfırla
-    resetCheckboxes(state) {
-      for (const key in state.checkedItems) {
-        state.checkedItems[key] = false;
-      }
-    },
   },
 });
 
@@ -82,8 +65,6 @@ export const {
   closeCartModal,
   openDynamicModal,
   closeDynamicModal,
-  toggleCheckbox,
-  resetCheckboxes,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

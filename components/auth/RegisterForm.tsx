@@ -14,7 +14,6 @@ import { InputText } from "primereact/inputtext";
 import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
-import ModalCheckbox from "./ModalCheckbox";
 import DynamicModal from "../utils/DynamicModal";
 
 function RegisterForm() {
@@ -172,7 +171,8 @@ function RegisterForm() {
         </div>
 
         <div>
-          <ModalCheckbox />
+          <input type="checkbox" />
+
           <DynamicModal />
         </div>
 
