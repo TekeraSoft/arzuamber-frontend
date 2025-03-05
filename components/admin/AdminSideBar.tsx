@@ -9,6 +9,7 @@ import { MdCategory } from "react-icons/md";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
 import { BiSolidDiscount } from "react-icons/bi";
 import { TbSettingsCog } from "react-icons/tb";
+import { MdOutlineSlideshow } from "react-icons/md";
 
 const SideBar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -57,7 +58,15 @@ const SideBar = () => {
     {
       name: "Settings",
       icon: TbSettingsCog,
-      options: [{ name: "Color", url: "/admin/settings/product-colors" }],
+      options: [
+        { name: "Color", url: "/admin/settings/product-colors" },
+        { name: "Home Slider", url: "/admin/settings/home-slider" },
+      ],
+    },
+    {
+      name: "Sliders",
+      icon: MdOutlineSlideshow,
+      options: [{ name: "Home Slider", url: "/admin/sliders/home-slider" }],
     },
   ];
 

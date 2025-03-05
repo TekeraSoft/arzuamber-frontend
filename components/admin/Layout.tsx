@@ -22,7 +22,7 @@ function Layout({ children }) {
           className={"sticky w-full top-0 z-50 !rounded-none"}
           style={{ paddingRight: 35 }}
           start={() => (
-            <span className={"text-base font-mono"}>
+            <span className={"text-base font-mono line-clamp-2"}>
               {path
                 .replace(/^\/admin\//, "")
                 .split("/")
