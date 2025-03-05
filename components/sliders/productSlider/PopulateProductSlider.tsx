@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import {
-  getNewSeasonProductsDispatch,
-  getPopulateProductsDispatch,
-} from "@/store/productSlice";
+import { getPopulateProductsDispatch } from "@/store/productSlice";
 import { Product } from "@/types";
 
 function PopulateProductSlider() {
@@ -16,23 +13,23 @@ function PopulateProductSlider() {
 
   const responsive = {
     superLargeDesktop: {
-      breakpoint: { max: 4000, min: 1400 }, // 1400px üstü büyük ekran
+      breakpoint: { max: 4000, min: 1400 },
       items: 4,
     },
     desktop: {
-      breakpoint: { max: 1400, min: 1024 }, // Standart masaüstü
+      breakpoint: { max: 1400, min: 1024 },
       items: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 768 }, // Tablet ekranı için düzeltme
+      breakpoint: { max: 1024, min: 768 },
       items: 2,
     },
     smallTablet: {
-      breakpoint: { max: 768, min: 464 }, // Küçük tabletler için
+      breakpoint: { max: 768, min: 464 },
       items: 2,
     },
     mobile: {
-      breakpoint: { max: 464, min: 0 }, // Küçük mobil için
+      breakpoint: { max: 464, min: 0 },
       items: 2,
     },
   };

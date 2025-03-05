@@ -125,7 +125,7 @@ function Navbar() {
               ) : session?.user.role[0] === "ADMIN" ? (
                 <button
                   className={
-                    " flex flex-row  justify-center items-center w-8 h-8   border border-primary rounded-full text-sm relative"
+                    " flex flex-row  justify-center items-center   text-sm relative"
                   }
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
@@ -133,18 +133,18 @@ function Navbar() {
                   onMouseEnter={() => setOpenUserDropdown(true)}
                   onMouseLeave={() => setOpenUserDropdown(false)}
                 >
-                  <FaUser size={15} />
+                  <FaUserShield size={25} />
                 </button>
               ) : (
                 <button
                   className={
-                    " flex flex-row  justify-center items-center  p-1  border border-secondary rounded-full  relative w-full"
+                    " flex flex-row  justify-center items-center  relative w-full"
                   }
                   onClick={() => {
                     setOpenUserDropdown(!openUserDropdown);
                   }}
                 >
-                  <FaUser size={18} />
+                  <FaUser size={23} />
                 </button>
               )}
               <span

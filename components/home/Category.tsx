@@ -22,7 +22,7 @@ function Category() {
   );
 
   return (
-    <div className="container mx-auto md:mt-32 lg:mt-28 mb-2">
+    <div className="container mx-auto mt-32 lg:mt-28 mb-2">
       {loading ? (
         <Loading />
       ) : (
@@ -48,6 +48,7 @@ function Category() {
                   fill
                   priority
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
 
@@ -77,6 +78,7 @@ function Category() {
                     fill
                     priority
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
 

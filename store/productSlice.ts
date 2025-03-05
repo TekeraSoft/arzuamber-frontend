@@ -37,14 +37,14 @@ export const productSlice = createSlice({
       state.populateProducts = action.payload;
     },
     getProducts: (state, action) => {
-      state.products = action.payload._embedded.productDtoes;
+      state.products = action.payload._embedded?.productDtoes;
       state.page = action.payload.page;
     },
     getProduct: (state, action) => {
       state.product = action.payload;
     },
     getFilterProducts: (state, action) => {
-      state.filterProducts = action.payload._embedded.productDtoes;
+      state.filterProducts = action.payload._embedded?.productDtoes;
       state.page = action.payload.page;
     },
     getColors: (state, action) => {
@@ -132,6 +132,7 @@ export const filterProductDispatch = (params: object) => async (dispatch) => {
       size: params.size,
       color: params.color,
       category: params.category,
+      subcategory: params.subcategory,
       length: params.length,
       page: params.page,
       pageSize: params.pageSize,

@@ -14,8 +14,8 @@ import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
-import { IoMdShare } from "react-icons/io";
 import NextSeoHead from "../utils/NextSeoHead";
+import ShareButtons from "../utils/ShareButtons";
 
 const responsive = {
   superLargeDesktop: {
@@ -79,16 +79,6 @@ const DetailClient = ({ product }: productProps) => {
 
   const toggleClamp = () => {
     setLineClamp(!lineClamp);
-  };
-
-  const [copied, setCopied] = useState(false);
-
-  const copyToClipboard = () => {
-    // URL'yi kopyalama
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      setCopied(true);
-      toast.success(t("SnackBar.coypLinkSuccess"));
-    });
   };
 
   return (
@@ -446,15 +436,15 @@ const DetailClient = ({ product }: productProps) => {
             >
               {t("productDetail.productAddCart")}
             </button>
-            <div className="flex justify-start items-center  h-full gap-1">
-              {/* Icon butonu */}
-              <button
-                onClick={copyToClipboard}
-                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-12 !w-16 rounded-lg text-white flex items-center justify-center "
-              >
-                <IoMdShare size={22} />
-              </button>
-            </div>
+          </div>
+
+          <div className="w-full flex  justify-center items-center">
+            <ShareButtons
+              shareUrl={`product/` + product.slug}
+              title={product.name}
+              imageUrl={product.colorSize[0].images[0]}
+              description={product.description}
+            />
           </div>
 
           <div className="mt-2">

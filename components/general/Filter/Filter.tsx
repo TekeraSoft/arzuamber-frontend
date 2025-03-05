@@ -209,7 +209,7 @@ function Filter({
                   <input
                     type="radio"
                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.colors === color}
+                    checked={selectedFilters.colors === color.name}
                     value={color.name}
                     onChange={(e) =>
                       setSelectedFilters({
@@ -221,7 +221,7 @@ function Filter({
 
                   <label
                     className={`font-medium transition-all duration-300 text-base ${
-                      selectedFilters.colors === color
+                      selectedFilters.colors === color.name
                         ? "text-primary font-bold"
                         : "text-gray-500 font-thin"
                     }`}
@@ -451,23 +451,26 @@ function Filter({
           >
             <h3 className={"text-lg font-semibold"}>{t("Filter.colors")}</h3>
             {openState.color ? (
-              <FaMinus className={" font-semibold"} />
+              <FaMinus className={"font-semibold"} />
             ) : (
               <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
             className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-              openState.color ? "max-h-[300px]" : "max-h-0"
+              openState.color ? "max-h-[500px]" : "max-h-0"
             } flex flex-col`}
           >
-            {filterData.colors.values.map((color, index) => (
-              <li key={index} className={"flex flex-row gap-x-3"}>
+            {colors.map((color, index) => (
+              <li
+                key={index}
+                className={"flex flex-row justify-start items-center gap-x-2"}
+              >
                 <input
                   type="radio"
                   className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                  checked={selectedFilters.colors === color}
-                  value={color}
+                  checked={selectedFilters.colors === color.name}
+                  value={color.name}
                   onChange={(e) =>
                     setSelectedFilters({
                       ...selectedFilters,
@@ -477,13 +480,13 @@ function Filter({
                 />
 
                 <label
-                  className={`font-medium transition-all duration-300 text-sm ${
-                    selectedFilters.colors === color
+                  className={`font-medium transition-all duration-300 text-base ${
+                    selectedFilters.colors === color.name
                       ? "text-primary font-bold"
                       : "text-gray-500 font-thin"
                   }`}
                 >
-                  {t(`Filter.${color}`)}
+                  {color.name}
                 </label>
               </li>
             ))}
