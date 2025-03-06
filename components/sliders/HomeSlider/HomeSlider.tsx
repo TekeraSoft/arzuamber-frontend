@@ -38,7 +38,7 @@ const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
   return (
     <li
       onClick={onClick}
-      className={` flex justify-center items-center w-8 h-2 rounded-lg cursor-pointer transition-all duration-300  my-12  ${
+      className={` flex justify-center items-center w-8 h-2 rounded-lg cursor-pointer transition-all duration-300  my-10  ${
         active ? "bg-primary scale-125" : "bg-secondary"
       }`}
     ></li>
@@ -89,7 +89,7 @@ function HomeSlider() {
   }, []);
 
   return (
-    <div className="homepage-slider-div relative w-full h-full mt-14 md:mt-[65px]">
+    <div className="homepage-slider-div    relative w-full flex justify-center items-center h-full md:container md:mx-auto ">
       {loading ? (
         <Loading />
       ) : (
@@ -108,7 +108,7 @@ function HomeSlider() {
           renderDotsOutside={false}
           customTransition="all 300ms"
           transitionDuration={2000}
-          containerClass="carousel-container md:h-full"
+          containerClass="carousel-container  w-full  h-full"
           itemClass="flex justify-center items-center bg-center bg-cover"
           renderButtonGroupOutside={isMobile}
           //customButtonGroup={
@@ -118,8 +118,8 @@ function HomeSlider() {
           //}
           dotListClass="flex justify-center items-center gap-2  z-10 "
         >
-          {images?.map((image: CarouselType) => (
-            <HomeSliderItem image={image} key={image.id} />
+          {images?.map((image: CarouselType, index) => (
+            <HomeSliderItem image={image} key={index} />
           ))}
         </Carousel>
       )}

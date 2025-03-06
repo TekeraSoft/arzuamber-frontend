@@ -23,7 +23,7 @@ function HomeSliderItem({ image }: ImageProps) {
 
   return (
     <Image
-      src={isMobile ? image.urlDesktop : image.urlMobile}
+      src={image.url}
       alt={image.description ? image.description : "Slider Description"}
       width={1920}
       height={840}

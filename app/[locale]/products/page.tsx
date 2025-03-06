@@ -4,15 +4,14 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import Filter from "@/components/general/Filter/Filter";
 import ProductCartItem from "@/components/products/ProductCartItem";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import Loading from "@/components/utils/Loading";
 import { useTranslations } from "next-intl";
 import { Paginator } from "primereact/paginator";
 import NotFoundProduct from "@/components/error/notFoundProduct";
 
 function Products() {
-  const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
   const [pageable, setPageable] = useState({ currentPage: 0, size: 9 });
 

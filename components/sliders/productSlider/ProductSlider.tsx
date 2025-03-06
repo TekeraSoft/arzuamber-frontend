@@ -65,7 +65,7 @@ function ProductSlider() {
   }
 
   return (
-    <div className="homepage-slider-div relative z-5 ">
+    <div className="homepage-slider-div w-full h-full  z-5 ">
       {loading ? (
         <Loading />
       ) : (
@@ -84,7 +84,7 @@ function ProductSlider() {
           customRightArrow={<CustomRightArrow />}
           customTransition="all .7s"
           transitionDuration={1000}
-          containerClass="carousel-container"
+          containerClass="w-full h-full"
           itemClass="flex justify-center items-center py-2 gap-2"
         >
           {newSeasonProducts?.map((product: Product) => (

@@ -27,26 +27,28 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <Image
-          className={`absolute object-cover rounded-t  transition-opacity duration-700  ${
+          className={`absolute object-cover rounded-t  transition-opacity duration-700 h-auto w-auto  ${
             isHovered ? "opacity-0" : "opacity-100 z-30"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[0]}`}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
 
         <Image
-          className={` object-cover  rounded-t transition-opacity duration-700  ${
+          className={` object-cover  rounded-t transition-opacity duration-700 h-full w-full  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
           alt={product.name}
           fill
+          priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
-        <div className="   absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
+        <div className=" absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
           {product?.discountPrice > 0 && product?.price > 0 && (
             <div className="  w-16 h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px]  shadow-md ">
               %
@@ -92,19 +94,32 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           </h2>
 
           <div className="flex  flex-row justify-between items-center min-h-10">
-            {product.discountPrice > 0 &&
-            product.discountPrice !== product.price ? (
-              <div className="flex flex-col justify-center items-start">
-                <p className="text-xs line-through text-red-600 ">
-                  {product.price}₺
+            <div className="flex justify-center items-center gap-2">
+              {product.discountPrice > 0 &&
+              product.discountPrice !== product.price ? (
+                <>
+                  <span className="text-red-700 text-xs md:text-sm line-through">
+                    {product.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}
+                  </span>
+                  <p className="text-xs text-secondary md:text-sm font-extrabold">
+                    {product.discountPrice.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}
+                  </p>
+                </>
+              ) : (
+                <p className="text-xs text-secondary md:text-sm font-extrabold">
+                  {product.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}
                 </p>
-                <p className="text-green-600 font-medium">
-                  {product.discountPrice}₺
-                </p>
-              </div>
-            ) : (
-              <p className="text-green-600 font-medium">{product.price}₺</p>
-            )}
+              )}
+            </div>
 
             <Link
               className="flex items-center justify-center "

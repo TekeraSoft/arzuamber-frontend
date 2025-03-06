@@ -210,24 +210,25 @@ const DetailClient = ({ product }: productProps) => {
 
           <div className="w-full flex  items-start justify-between gap-x-1">
             <span className={"flex flex-col gap-x-4 "}>
-              {product.discountPrice !== 0 && (
-                <p
-                  className={
-                    "  md:text-xl text-red-600 line-through font-semibold"
-                  }
-                >
-                  {product.price.toLocaleString("tr-TR", {
-                    style: "currency",
-                    currency: "TRY",
-                  })}{" "}
-                </p>
-              )}
+              {product.discountPrice !== 0 &&
+                product.discountPrice !== product.price && (
+                  <p
+                    className={
+                      "  md:text-xl text-red-600 line-through font-semibold"
+                    }
+                  >
+                    {product.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}{" "}
+                  </p>
+                )}
               {product.discountPrice !== 0 ? (
                 <p className={"  md:text-xl font-semibold text-green-600"}>
                   {product.discountPrice.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",
-                  })}{" "}
+                  })}
                 </p>
               ) : (
                 <p className={"md:text-xl font-semibold text-secondaryDark"}>
@@ -335,6 +336,7 @@ const DetailClient = ({ product }: productProps) => {
                           stockSizeId: item.id,
                           totalStock: item.stock,
                           size: item.size,
+                          quantity: 1,
                         });
                         setErrorState({ ...errorState, sizeError: false });
                       }}
@@ -353,7 +355,9 @@ const DetailClient = ({ product }: productProps) => {
             </div>
             <small
               className={`${
-                errorState.sizeError ? "text-red-600 font-semibold" : "hidden"
+                errorState.sizeError
+                  ? "text-xs text-red-600 font-semibold"
+                  : "hidden"
               } `}
             >
               {t("productDetail.sizeError")}*
