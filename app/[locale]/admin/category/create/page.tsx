@@ -131,16 +131,7 @@ function AdminCreateCategory() {
             };
           });
 
-          const formData = new FormData();
-          formData.append("categories", JSON.stringify(categoryData));
-
-          localCategories.forEach((category) => {
-              formData.append("images", category.image);
-          });
-          for (const pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-          }
-          dispatch(createCategoryDispatch(formData));
+          dispatch(createCategoryDispatch(categoryData));
         }}
       >
         {({ handleSubmit, setFieldValue, values }) => (
@@ -175,31 +166,31 @@ function AdminCreateCategory() {
                           className="flex justify-between items-center"
                           onClick={() => handleSelectMainCategory(item)}
                       >
-                        <div className="flex flex-col items-center space-y-2">
-                          <label htmlFor={`file-upload-${item.id}`}
-                                 className="w-10 h-10 flex items-center justify-center rounded-full border cursor-pointer transition duration-200 overflow-hidden">
-                            <input
-                                type="file"
-                                id={`file-upload-${item.id}`}
-                                className="hidden"
-                                accept="image/*"
-                                onChange={(e) => {
-                                  if (e.target.files?.[0]) {
-                                    handleCategoryImageChange(item.id, e.target.files[0]);
-                                  }
-                                }}
-                            />
-                            {item.image instanceof File ? (
-                                <img
-                                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
-                                    alt="Preview"
-                                    className="w-16 h-16 object-cover rounded-lg"
-                                />
-                            ) : (
-                                <FiUpload className="text-2xl"/>
-                            )}
-                          </label>
-                        </div>
+                        {/* <div className="flex flex-col items-center space-y-2">*/}
+                        {/*  <label htmlFor={`file-upload-${item.id}`}*/}
+                        {/*         className="w-10 h-10 flex items-center justify-center rounded-full border cursor-pointer transition duration-200 overflow-hidden">*/}
+                        {/*    <input*/}
+                        {/*        type="file"*/}
+                        {/*        id={`file-upload-${item.id}`}*/}
+                        {/*        className="hidden"*/}
+                        {/*        accept="image/*"*/}
+                        {/*        onChange={(e) => {*/}
+                        {/*          if (e.target.files?.[0]) {*/}
+                        {/*            handleCategoryImageChange(item.id, e.target.files[0]);*/}
+                        {/*          }*/}
+                        {/*        }}*/}
+                        {/*    />*/}
+                        {/*    {item.image instanceof File ? (*/}
+                        {/*        <img*/}
+                        {/*            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}*/}
+                        {/*            alt="Preview"*/}
+                        {/*            className="w-16 h-16 object-cover rounded-lg"*/}
+                        {/*        />*/}
+                        {/*    ) : (*/}
+                        {/*        <FiUpload className="text-2xl"/>*/}
+                        {/*    )}*/}
+                        {/*  </label>*/}
+                        {/*</div>*/}
                         <span
                             className={`cursor-pointer ${
                                 selectedCategoryId === item.id ? "font-bold" : ""

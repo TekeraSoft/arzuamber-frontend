@@ -29,10 +29,6 @@ function AllProductAdminPage() {
     dispatch(getAllProductDispatch(pageable.currentPage, pageable.size));
   }, [pageable.currentPage,pageable.size]);
 
-    const onPageChange = (event) => {
-        setPageable({size: event.rows, currentPage: event.page});
-    }
-
     const allowExpansion = (rowData) => {
         return rowData.colorSize.length > 0;
     };
@@ -93,6 +89,10 @@ function AllProductAdminPage() {
       )
   }
 
+    const onPageChange = (event) => {
+        setPageable({size: event.rows, currentPage: event.page});
+    }
+
   return (
     <DataTable
       size={"small"}
@@ -101,11 +101,11 @@ function AllProductAdminPage() {
       dataKey="id"
       tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
       paginator
+      first={pageable.currentPage * pageable.size}
       rows={pageable.size}
-      first={pageable.currentPage}
       totalRecords={page.totalElements}
+      rowsPerPageOptions={[15, 30, 50]}
       onPage={onPageChange}
-      rowsPerPageOptions={[15, 25, 100]}
       loading={loading}
       rowExpansionTemplate={rowExpansionTemplate}
       expandedRows={expandedRows}
