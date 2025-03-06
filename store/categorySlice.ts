@@ -30,7 +30,6 @@ export const getCategoriesDispatch = () => async (dispatch) => {
   dispatch(loading(true));
   getGuardRequest({ controller: "category", action: "get-categories" })
     .then((res) => {
-      console.log(res.data);
       dispatch(getCategories(res.data));
       dispatch(loading(false));
     })

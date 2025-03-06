@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[210px] md:w-[270px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[190px] md:w-[270px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-full  relative"
@@ -30,6 +30,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0]?.images[0]}`}
           alt={product?.name}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
         {product.colorSize[0]?.images[1] && (
@@ -40,6 +41,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
             src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0]?.images[1]}`}
             alt={product?.name}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
         <div className="absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
@@ -93,15 +95,24 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
               {product.discountPrice > 0 ? (
                 <>
                   <span className="text-red-700 text-xs md:text-sm line-through">
-                    {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
+                    {product.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}
                   </span>
                   <p className="text-xs text-secondary md:text-base font-bold">
-                    {product.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
+                    {product.discountPrice.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}
                   </p>
                 </>
               ) : (
                 <p className="text-xs text-secondary md:text-base font-bold">
-                  {product.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
+                  {product.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}
                 </p>
               )}
             </div>

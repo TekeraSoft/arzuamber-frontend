@@ -3,7 +3,8 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { FaBars, FaUser, FaBoxOpen, FaCogs } from "react-icons/fa"; // React Icons
+import { FaBars, FaUser, FaBoxOpen, FaCogs } from "react-icons/fa";
+import "animate.css";
 
 export default function ProfileLayout({
   children,
@@ -17,7 +18,7 @@ export default function ProfileLayout({
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
-    <div className="container mt-24">
+    <div className="container mt-28">
       <div className="flex flex-col gap-x-12 md:flex-row h-full">
         {/* Sidebar for larger screens, Topbar for mobile */}
         <div className="h-full  md:w-1/4 rounded-lg bg-secondary text-white p-6 md:block hidden">
@@ -66,7 +67,7 @@ export default function ProfileLayout({
 
         {/* Mobile Menu (Appears when isMenuOpen is true) */}
         {isMenuOpen && (
-          <div className="md:hidden bg-secondary text-white p-3 border-t">
+          <div className="  md:hidden bg-secondary text-white p-3 border-t">
             <ul className="space-y-4">
               <li>
                 <Link

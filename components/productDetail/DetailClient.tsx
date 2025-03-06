@@ -14,7 +14,8 @@ import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
-import { IoMdShare } from "react-icons/io";
+import NextSeoHead from "../utils/NextSeoHead";
+import ShareButtons from "../utils/ShareButtons";
 
 const responsive = {
   superLargeDesktop: {
@@ -80,22 +81,18 @@ const DetailClient = ({ product }: productProps) => {
     setLineClamp(!lineClamp);
   };
 
-  const [copied, setCopied] = useState(false);
-
-  const copyToClipboard = () => {
-    // URL'yi kopyalama
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      setCopied(true);
-      toast.success('Link Kopyalandı');
-    });
-  };
-
   return (
     <PageContainer>
+      <NextSeoHead
+        name={product.name}
+        description={product.description}
+        image={product.colorSize[0].images[0]}
+      />
+
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full ">
+        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full mt-7 mb-5 ">
           {product.name}
         </h3>
 
@@ -130,12 +127,12 @@ const DetailClient = ({ product }: productProps) => {
             transitionDuration={500}
             customLeftArrow={<CustomLeftArrow />}
             customRightArrow={<CustomRightArrow />}
-            className="w-full rounded-lg"
+            className="w-full rounded-lg h-full"
           >
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-full rounded-lg"
+                className="flex justify-center items-center w-full h-full rounded-lg mb-5"
               >
                 <Image
                   className="cursor-zoom-in w-full h-full object-cover rounded-lg"
@@ -439,15 +436,15 @@ const DetailClient = ({ product }: productProps) => {
             >
               {t("productDetail.productAddCart")}
             </button>
-            <div className="flex justify-start items-center  h-full gap-1">
-              {/* Icon butonu */}
-              <button
-                onClick={copyToClipboard}
-                className="bg-secondary  hover:scale-105 transition-all duration-300  !h-12 !w-16 rounded-lg text-white flex items-center justify-center "
-              >
-                <IoMdShare size={22} />
-              </button>
-            </div>
+          </div>
+
+          <div className="w-full flex  justify-center items-center">
+            <ShareButtons
+              shareUrl={`product/` + product.slug}
+              title={product.name}
+              imageUrl={product.colorSize[0].images[0]}
+              description={product.description}
+            />
           </div>
 
           <div className="mt-2">

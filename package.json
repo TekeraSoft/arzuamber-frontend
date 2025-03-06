@@ -38,6 +38,7 @@
     "react-multi-carousel": "^2.8.5",
     "react-paginate": "^8.2.0",
     "react-redux": "^9.2.0",
+    "react-share": "^5.2.2",
     "react-toastify": "^11.0.3",
     "yet-another-react-lightbox": "^3.21.7",
     "yup": "^1.6.1"

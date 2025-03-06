@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
   filterProductDispatch,
+  getAllColorsDispatch,
   getAllProductsDispatch,
 } from "@/store/productSlice";
 import { getCategoriesDispatch } from "@/store/categorySlice";
@@ -23,6 +24,7 @@ function Filter({
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
   const { categories } = useSelector((state: RootState) => state.category);
+  const { colors } = useSelector((state: RootState) => state.products);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
@@ -68,6 +70,7 @@ function Filter({
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
     }
     dispatch(getCategoriesDispatch());
+    dispatch(getAllColorsDispatch());
   }, [
     selectedFilters.sizes,
     selectedFilters.colors,
@@ -198,7 +201,7 @@ function Filter({
                 openState.color ? "max-h-[500px]" : "max-h-0"
               } flex flex-col`}
             >
-              {filterData.colors.values.map((color, index) => (
+              {colors.map((color, index) => (
                 <li
                   key={index}
                   className={"flex flex-row justify-start items-center gap-x-2"}
@@ -206,8 +209,8 @@ function Filter({
                   <input
                     type="radio"
                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.colors === color}
-                    value={color}
+                    checked={selectedFilters.colors === color.name}
+                    value={color.name}
                     onChange={(e) =>
                       setSelectedFilters({
                         ...selectedFilters,
@@ -218,12 +221,12 @@ function Filter({
 
                   <label
                     className={`font-medium transition-all duration-300 text-base ${
-                      selectedFilters.colors === color
+                      selectedFilters.colors === color.name
                         ? "text-primary font-bold"
                         : "text-gray-500 font-thin"
                     }`}
                   >
-                    {t(`Filter.${color}`)}
+                    {color.name}
                   </label>
                 </li>
               ))}
@@ -448,23 +451,26 @@ function Filter({
           >
             <h3 className={"text-lg font-semibold"}>{t("Filter.colors")}</h3>
             {openState.color ? (
-              <FaMinus className={" font-semibold"} />
+              <FaMinus className={"font-semibold"} />
             ) : (
               <FaPlus className={" font-semibold"} />
             )}
           </div>
           <ul
             className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-              openState.color ? "max-h-[300px]" : "max-h-0"
+              openState.color ? "max-h-[500px]" : "max-h-0"
             } flex flex-col`}
           >
-            {filterData.colors.values.map((color, index) => (
-              <li key={index} className={"flex flex-row gap-x-3"}>
+            {colors.map((color, index) => (
+              <li
+                key={index}
+                className={"flex flex-row justify-start items-center gap-x-2"}
+              >
                 <input
                   type="radio"
                   className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                  checked={selectedFilters.colors === color}
-                  value={color}
+                  checked={selectedFilters.colors === color.name}
+                  value={color.name}
                   onChange={(e) =>
                     setSelectedFilters({
                       ...selectedFilters,
@@ -474,13 +480,13 @@ function Filter({
                 />
 
                 <label
-                  className={`font-medium transition-all duration-300 text-sm ${
-                    selectedFilters.colors === color
+                  className={`font-medium transition-all duration-300 text-base ${
+                    selectedFilters.colors === color.name
                       ? "text-primary font-bold"
                       : "text-gray-500 font-thin"
                   }`}
                 >
-                  {t(`Filter.${color}`)}
+                  {color.name}
                 </label>
               </li>
             ))}

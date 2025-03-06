@@ -38,7 +38,7 @@ const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
   return (
     <li
       onClick={onClick}
-      className={`w-8 h-2 rounded-lg cursor-pointer transition-all duration-300  ${
+      className={` flex justify-center items-center w-8 h-2 rounded-lg cursor-pointer transition-all duration-300  my-12  ${
         active ? "bg-primary scale-125" : "bg-secondary"
       }`}
     ></li>
@@ -116,7 +116,7 @@ function HomeSlider() {
           //    <CustomButtonGroup next={() => {}} previous={() => {}} />
           //  ) : undefined
           //}
-          dotListClass="flex justify-center items-center gap-2  my-12 z-10 "
+          dotListClass="flex justify-center items-center gap-2  z-10 "
         >
           {images?.map((image: CarouselType) => (
             <HomeSliderItem image={image} key={image.id} />

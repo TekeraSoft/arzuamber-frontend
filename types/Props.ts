@@ -92,10 +92,9 @@ export interface BlogProps {
   id: string;
   category: string;
   title: string;
-  description: string;
+  content: string;
   image: string;
   date: string;
-  tags: string[];
 }
 
 //! Cart Page Props

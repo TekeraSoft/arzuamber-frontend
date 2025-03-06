@@ -35,9 +35,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
           {blog.title}
         </Link>
       </p>
-      <p className="mt-3 text-gray-600 line-clamp-2 text-sm">
-        {blog.content}
-      </p>
+      <p className="mt-3 text-gray-600 line-clamp-2 text-sm">{blog.content}</p>
       <div className="h-0 mt-6 mb-4 border-t-2 border-gray-200 border-dashed"></div>
 
       <div className="flex items-center justify-between gap-2 text-xs font-bold tracking-widest text-gray-500 uppercase w-full">

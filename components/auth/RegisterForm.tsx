@@ -1,9 +1,8 @@
 "use client";
 
-import Button from "@/components/general/Button";
-import {registerUserDispatch, setErrorState} from "@/store/authSlice";
-import {AppDispatch, RootState} from "@/store/store";
-import {useDispatch, useSelector} from "react-redux";
+import { registerUserDispatch } from "@/store/authSlice";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
 import {
   closeRegisterModal,
   openDynamicModal,
@@ -15,13 +14,11 @@ import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
 import DynamicModal from "../utils/DynamicModal";
-import {Messages} from "primereact/messages";
-import {Message} from "primereact/message";
+import { useState } from "react";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
-  const {errorState} = useSelector((state: RootState) => state.auth);
 
   const handleChangeModal = () => {
     dispatch(closeRegisterModal());
@@ -46,6 +43,28 @@ function RegisterForm() {
     dispatch(openDynamicModal({ title, content }));
   };
 
+  const [checkboxes, setCheckboxes] = useState({
+    KVKK: false,
+    ElectronicMessage: false,
+    MembershipAgreement: false,
+  });
+
+  // Checkbox'ların durumunu değiştiren fonksiyon
+  const handleCheckboxChange = (name) => {
+    setCheckboxes((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled =
+    !checkboxes.KVKK ||
+    !checkboxes.ElectronicMessage ||
+    !checkboxes.MembershipAgreement;
+
+  console.log(isButtonDisabled);
+
   return (
     <div>
       <button
@@ -60,14 +79,7 @@ function RegisterForm() {
       <h2 className="text-2xl font-semibold my-2 text-center">
         {t("registerForm.createAccount")}
       </h2>
-      {
-        errorState && (
-            <span className={'relative'}>
-              <Message severity="error" text={errorState} className={'w-full my-2'} />
-              <MdCancel onClick={()=> dispatch(setErrorState(''))} className={'text-red-600 absolute right-0 top-0 cursor-pointer'} size={24} />
-            </span>
-          )
-      }
+
       <form
         onSubmit={formik.handleSubmit}
         className={"flex flex-col gap-2 w-full"}
@@ -122,7 +134,7 @@ function RegisterForm() {
             id="email"
             value={formik.values.email}
             onChange={formik.handleChange}
-            className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
+            className={`w-full h-10 !rounded !border px-2 !outline-secondary !ring-secondary ${
               formik.touched.email && formik.errors.email
                 ? "border-red-500"
                 : ""
@@ -180,27 +192,95 @@ function RegisterForm() {
           </span>
         </div>
 
-        <div>
+        <div className="w-full flex flex-col items-center justify-center gap-2 mt-1">
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.KVKK}
+              onChange={() => handleCheckboxChange("KVKK")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t("registerForm.registerFormCheckBox.KVKK.title"),
+                  t("registerForm.registerFormCheckBox.KVKK.content")
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.KVKK.title")}
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.ElectronicMessage}
+              onChange={() => handleCheckboxChange("ElectronicMessage")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.title"
+                  ),
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.content"
+                  )
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.ElectronicMessage.title")}
+            </div>
+          </div>
+
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.MembershipAgreement}
+              onChange={() => handleCheckboxChange("MembershipAgreement")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t(
+                    "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                  ),
+                  t(
+                    "registerForm.registerFormCheckBox.MembershipAgreement.content"
+                  )
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.MembershipAgreement.title")}
+            </div>
+          </div>
 
           <DynamicModal />
         </div>
 
-        <div className="flex flex-col space-y-2 w-full justify-center items-center ">
-          <Button
-            text={t("registerForm.registerButton")}
-            type="submit"
-            animation
-            size="center"
-            className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg mt-2"
-          />
+        {isButtonDisabled && (
+          <div className="text-xs text-red-600">
+            {t("registerForm.acceptAgreementError")}
+          </div>
+        )}
 
-          {/* <Button
-              size="small"
-              outline
-              icon={IoLogoGoogleplus}
-              iconSize={23}
-              className="w-full bg-transparent hover:bg-primaryLight border border-primary text-primary hover:text-mywhite rounded-lg py-2"
-            /> */}
+        <div className="flex flex-col space-y-2 w-full justify-center items-center ">
+          <button
+            disabled={isButtonDisabled}
+            type="submit"
+            className={`  w-full transition duration-300 bg-primary  text-mywhite py-2 rounded-lg mt-2 ${
+              isButtonDisabled
+                ? "cursor-not-allowed bg-primary opacity-45"
+                : " hover:bg-primaryDark"
+            }   `}
+          >
+            {t("registerForm.registerButton")}
+          </button>
         </div>
       </form>
       <p

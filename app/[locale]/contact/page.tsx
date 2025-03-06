@@ -50,30 +50,32 @@ function ContactPage() {
               <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-3">
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
                   <FaPhoneAlt className="w-10 h-10 text-secondary" />
-                  <p className="mt-6 text-base font-medium text-gray-900">
-                    +90-534-260-8385
+                  <p className="mt-3 text-sm font-medium text-gray-900">
+                    +90 (534) 260 8385
                   </p>
                 </div>
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
                   <FaEnvelope className="w-10 h-10 text-secondary" />
-                  <p className="mt-6 text-base font-medium text-gray-900">
+                  <p className="mt-3  text-sm font-medium text-gray-900">
                     arzuambermoda@gmail.com
                   </p>
                 </div>
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
                   <FaMapMarkerAlt className="w-10 h-10 text-secondary" />
-                  <p className="mt-6 text-sm font-medium text-gray-900">
-                    <span>{t("ContactPage.address.street")}, </span>
-                    <span>{t("ContactPage.address.building")}, </span>
-                    <span>
-                      {t("ContactPage.address.number")},
-                      {t("ContactPage.address.floor")}
-                    </span>
-                    <span>
-                      {t("ContactPage.address.city")},
-                      {t("ContactPage.address.district")},
-                      {t("ContactPage.address.country")}
-                    </span>
+                  <p className="mt-3 font-medium text-gray-900">
+                    <div className="grid text-xs ">
+                      <span>{t("ContactPage.address.street")}, </span>
+                      <span>{t("ContactPage.address.building")}, </span>
+                      <span>
+                        {t("ContactPage.address.number")},
+                        {t("ContactPage.address.floor")}
+                      </span>
+                      <span>
+                        {t("ContactPage.address.city")},
+                        {t("ContactPage.address.district")},
+                        {t("ContactPage.address.country")}
+                      </span>
+                    </div>
                   </p>
                 </div>
               </div>
@@ -100,7 +102,7 @@ function ContactPage() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         className={classNames(
-                          "w-full border px-2 py-2 h-10 rounded-lg outline-secondary text-sm",
+                          "w-full border px-2 py-2 h-10 rounded-lg  outline-secondary text-sm",
                           {
                             "p-invalid":
                               formik.touched.firstName &&
@@ -203,7 +205,7 @@ function ContactPage() {
                     <Button
                       label={t("ContactPage.form.submitButton")}
                       type="submit"
-                      className="!bg-secondary  !shadow-sm  !w-1/2 !text-center  text-mywhite !rounded-lg hover:scale-105 !transition !duration-300 !border-none"
+                      className="!bg-secondary  !shadow-sm !py-1  !w-1/2 !text-center  text-mywhite !rounded-lg hover:scale-105 !transition !duration-300 !border-none"
                     />
                   </div>
                 </div>

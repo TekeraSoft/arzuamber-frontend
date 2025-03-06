@@ -36,14 +36,17 @@ function Products() {
 
           {loading ? (
             <Loading />
-          ) : filterProducts.length > 0 || products.length > 0 ? (
+          ) : // Ürünler var mı? Ve undefined/null değilse.
+          (filterProducts && filterProducts.length > 0) ||
+            (products && products.length > 0) ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-start">
-                {(filterProducts.length > 0 ? filterProducts : products).map(
-                  (product, i) => (
-                    <ProductCartItem product={product} key={i} />
-                  )
-                )}
+                {(filterProducts && filterProducts.length > 0
+                  ? filterProducts
+                  : products
+                ).map((product, i) => (
+                  <ProductCartItem product={product} key={i} />
+                ))}
               </div>
 
               <Paginator
