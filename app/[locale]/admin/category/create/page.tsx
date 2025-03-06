@@ -11,9 +11,11 @@ import {
 } from "@/store/adminSlice";
 import { useLocale } from "next-intl";
 import { Category } from "@/types";
-import { Formik } from "formik";
+import Resizer from 'react-image-file-resizer'
 import { TiMinus, TiPlus } from "react-icons/ti";
 import {FiUpload} from "react-icons/fi";
+import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
+import image = mockSession.user.image;
 
 function AdminCreateCategory() {
   const locale = useLocale();
@@ -24,6 +26,7 @@ function AdminCreateCategory() {
 
   const [localCategories, setLocalCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [images, setImages] = useState([]);
   const [categoryInput, setCategoryInput] = useState({
     name: "",
     subCategoryName: "",
@@ -98,43 +101,49 @@ function AdminCreateCategory() {
     (cat) => cat.id === selectedCategoryId
   );
 
-  const handleCategoryImageChange = (categoryId: string, file: File) => {
-    setLocalCategories((prev) =>
-        prev.map((category) =>
-            category.id === categoryId
-                ? { ...category, image: file } // Resmi kategoriye ekle
-                : category
-        )
-    );
+  const handleCategoryImageChange = async (categoryName: string, file: File) => {
+      const resizeImage = (file) => {
+          return new Promise((resolve) => {
+              Resizer.imageFileResizer(
+                  file,
+                  920, // ✅ Genişlik
+                  1840, // ✅ Yükseklik
+                  "WEBP", // ✅ Format (PNG, WEBP de olabilir)
+                  100, // ✅ Kalite (0-100 arasında)
+                  0, // ✅ Rotasyon
+                  (resizedFile) => {
+                      resolve(new File([resizedFile], `${categoryName}_${file.name}`, { type: file.type }));
+                  },
+                  "file" // ✅ Çıktıyı doğrudan File olarak al
+              );
+          });
+      };
+        const image = await resizeImage(file);
+        setImages(prev => [...prev, image]);
   };
 
-  console.log(localCategories);
+  const _handleSubmit = () => {
+    const formData = new FormData();
+    const categoryData = localCategories.map((category) => {
+      return {
+        id: category.id,
+        name: category.name,
+        lang: locale,
+        subCategories: category.subCategories
+      };
+    });
+    formData.append("categoriesJson", new Blob([JSON.stringify(categoryData)], { type: "application/json" }));
+    images.forEach(image => {
+        formData.append("images", image);
+    })
+    dispatch(createCategoryDispatch(categoryData));
+  }
 
   return (
     <div className="flex flex-col items-center justify-center">
       <h3 className="text-gray-500 font-bold text-xl text-center">
         Product Category
       </h3>
-      <Formik
-        initialValues={{
-          categoryName: "",
-          image: null,
-          subCategories: [{ subCategoryName: "" }],
-        }}
-        onSubmit={() => {
-          const categoryData = localCategories.map((category) => {
-            return {
-              id: category.id,
-              name: category.name,
-              lang: locale,
-              subCategories: category.subCategories
-            };
-          });
-
-          dispatch(createCategoryDispatch(categoryData));
-        }}
-      >
-        {({ handleSubmit, setFieldValue, values }) => (
           <>
             <div className="grid grid-cols-2 mt-12 gap-x-24">
               <div className="flex flex-col">
@@ -166,31 +175,37 @@ function AdminCreateCategory() {
                           className="flex justify-between items-center"
                           onClick={() => handleSelectMainCategory(item)}
                       >
-                        {/* <div className="flex flex-col items-center space-y-2">*/}
-                        {/*  <label htmlFor={`file-upload-${item.id}`}*/}
-                        {/*         className="w-10 h-10 flex items-center justify-center rounded-full border cursor-pointer transition duration-200 overflow-hidden">*/}
-                        {/*    <input*/}
-                        {/*        type="file"*/}
-                        {/*        id={`file-upload-${item.id}`}*/}
-                        {/*        className="hidden"*/}
-                        {/*        accept="image/*"*/}
-                        {/*        onChange={(e) => {*/}
-                        {/*          if (e.target.files?.[0]) {*/}
-                        {/*            handleCategoryImageChange(item.id, e.target.files[0]);*/}
-                        {/*          }*/}
-                        {/*        }}*/}
-                        {/*    />*/}
-                        {/*    {item.image instanceof File ? (*/}
-                        {/*        <img*/}
-                        {/*            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}*/}
-                        {/*            alt="Preview"*/}
-                        {/*            className="w-16 h-16 object-cover rounded-lg"*/}
-                        {/*        />*/}
-                        {/*    ) : (*/}
-                        {/*        <FiUpload className="text-2xl"/>*/}
-                        {/*    )}*/}
-                        {/*  </label>*/}
-                        {/*</div>*/}
+                         <div className="flex flex-col items-center space-y-2">
+                          <label htmlFor={`file-upload-${item.id}`}
+                                 className="w-10 h-10 flex items-center justify-center rounded-full border cursor-pointer transition duration-200 overflow-hidden">
+                            <input
+                                type="file"
+                                id={`file-upload-${item.id}`}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  if (e.target.files?.[0]) {
+                                    handleCategoryImageChange(item.name, e.target.files[0]);
+                                  }
+                                }}
+                            />
+                              {(() => {
+                                  const file = images.find(i => i.name.split("_")[0] === item.name);
+                                  return (item.image instanceof File || (images.length > 0 && file)) ? (
+                                      <img
+                                          src={item.image
+                                              ? `${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`
+                                              : file ? URL.createObjectURL(file) : ""
+                                          }
+                                          alt="Preview"
+                                          className="w-16 h-16 object-cover rounded-lg"
+                                      />
+                                  ) : (
+                                      <FiUpload className="text-2xl"/>
+                                  );
+                              })()}
+                          </label>
+                        </div>
                         <span
                             className={`cursor-pointer ${
                                 selectedCategoryId === item.id ? "font-bold" : ""
@@ -264,16 +279,14 @@ function AdminCreateCategory() {
             <div className="flex items-center w-full justify-center">
               <Button
                 loading={loading}
-                type="submit"
+                type="button"
                 className="w-44 bg-primary text-white flex justify-content-center rounded-lg p-2 font-bold"
-                onClick={() => handleSubmit()}
+                onClick={() => _handleSubmit()}
               >
                 Güncelle
               </Button>
             </div>
           </>
-        )}
-      </Formik>
     </div>
   );
 }

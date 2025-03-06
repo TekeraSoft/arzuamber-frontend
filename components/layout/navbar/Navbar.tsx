@@ -56,127 +56,129 @@ function Navbar() {
       <nav className="bg-white  w-full  flex  ">
         <div className="container mx-auto flex  items-center justify-between px-4 py-3">
           {/* Logo */}
-          <Logo setOpenMenu={setOpenMenu} openMenu={openMenu} />
+          <Logo setOpenMenu={setOpenMenu} openMenu={openMenu}/>
 
           {/* Hamburger Menu (Mobile) */}
           <div className="lg:hidden flex items-center justify-center gap-4 ">
             <li
-              className="flex  justify-center items-center relative z-50"
-              onMouseLeave={() => setIsLangDropdownOpen(false)}
+                className="flex  justify-center items-center relative z-50"
+                onMouseLeave={() => setIsLangDropdownOpen(false)}
             >
               <button
-                className="w-8 h-7 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
-                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                onMouseLeave={() => setIsLangDropdownOpen(false)}
-                onMouseEnter={() => setIsLangDropdownOpen(true)}
+                  className="w-8 h-7 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
+                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                  onMouseLeave={() => setIsLangDropdownOpen(false)}
+                  onMouseEnter={() => setIsLangDropdownOpen(true)}
               >
                 {locale}
               </button>
               {isLangDropdownOpen && (
-                <ul
-                  className=" absolute  top-7 w-8 bg-white border   shadow-md text-sm rounded"
-                  onMouseEnter={() => setIsLangDropdownOpen(true)}
-                >
-                  {supportedLocales.map((lang) => (
-                    <li
-                      key={lang}
-                      className="transition-all duration-200 hover:scale-105"
-                    >
-                      <button
-                        onClick={() => changeLanguage(lang)}
-                        className="block  w-full  py-1.5 text-center text-xs text-secondary rounded 
+                  <ul
+                      className=" absolute  top-7 w-8 bg-white border   shadow-md text-sm rounded"
+                      onMouseEnter={() => setIsLangDropdownOpen(true)}
+                  >
+                    {supportedLocales.map((lang) => (
+                        <li
+                            key={lang}
+                            className="transition-all duration-200 hover:scale-105"
+                        >
+                          <button
+                              onClick={() => changeLanguage(lang)}
+                              className="block  w-full  py-1.5 text-center text-xs text-secondary rounded
                                 hover:bg-secondary hover:text-white  transition-all duration-300"
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                          >
+                            {lang.toUpperCase()}
+                          </button>
+                        </li>
+                    ))}
+                  </ul>
               )}
             </li>
 
             <button
-              className="flex justify-center items-center relative"
-              onClick={openCart}
+                className="flex justify-center items-center relative"
+                onClick={openCart}
             >
-              <BsCart2 size={26} className="cursor-pointer text-secondary" />
-              <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
+              <BsCart2 size={26} className="cursor-pointer text-secondary"/>
+              <span
+                  className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
                 {cartProducts.length}
               </span>
             </button>
 
             <li
-              className={
-                "  text-secondary relative flex justify-center items-center   "
-              }
+                className={
+                  "  text-secondary relative flex justify-center items-center   "
+                }
             >
               {!session ? (
-                <button
-                  onClick={() => {
-                    dispatch(openLoginModal());
-                    setOpenMenu(false);
-                  }}
-                  className="flex justify-center items-center w-full  text-center   "
-                >
-                  <span className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
+                  <button
+                      onClick={() => {
+                        dispatch(openLoginModal());
+                        setOpenMenu(false);
+                      }}
+                      className="flex justify-center items-center w-full  text-center   "
+                  >
+                  <span
+                      className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
                     {t("menuItems.login")}
                   </span>
-                </button>
+                  </button>
               ) : session?.user.role[0] === "ADMIN" ? (
-                <button
-                  className={
-                    " flex flex-row  justify-center items-center   text-sm relative"
-                  }
-                  onClick={() => {
-                    setOpenUserDropdown(!openUserDropdown);
-                  }}
-                  onMouseEnter={() => setOpenUserDropdown(true)}
-                  onMouseLeave={() => setOpenUserDropdown(false)}
-                >
-                  <FaUserShield size={25} />
-                </button>
+                  <button
+                      className={
+                        " flex flex-row  justify-center items-center   text-sm relative"
+                      }
+                      onClick={() => {
+                        setOpenUserDropdown(!openUserDropdown);
+                      }}
+                      onMouseEnter={() => setOpenUserDropdown(true)}
+                      onMouseLeave={() => setOpenUserDropdown(false)}
+                  >
+                    <FaUserShield size={25}/>
+                  </button>
               ) : (
-                <button
-                  className={
-                    " flex flex-row  justify-center items-center  relative w-full"
-                  }
-                  onClick={() => {
-                    setOpenUserDropdown(!openUserDropdown);
-                  }}
-                >
-                  <FaUser size={23} />
-                </button>
+                  <button
+                      className={
+                        " flex flex-row  justify-center items-center  relative w-full"
+                      }
+                      onClick={() => {
+                        setOpenUserDropdown(!openUserDropdown);
+                      }}
+                  >
+                    <FaUser size={23}/>
+                  </button>
               )}
               <span
-                className={`${
-                  openUserDropdown ? "block" : "hidden"
-                } flex flex-col border rounded absolute  top-6  w-20  bg-white`}
-                onMouseEnter={() => setOpenUserDropdown(true)}
-                onMouseLeave={() => setOpenUserDropdown(false)}
+                  className={`${
+                      openUserDropdown ? "block" : "hidden"
+                  } flex flex-col border rounded absolute  top-6  w-20  bg-white`}
+                  onMouseEnter={() => setOpenUserDropdown(true)}
+                  onMouseLeave={() => setOpenUserDropdown(false)}
               >
                 <Link
-                  onClick={() => {
-                    setOpenMenu(false);
-                  }}
-                  className={
-                    "hover:bg-gray-200 px-2 py-1 text-xs md:text-sm text-center"
-                  }
-                  href={
-                    session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
-                  }
+                    onClick={() => {
+                      setOpenMenu(false);
+                    }}
+                    className={
+                      "hover:bg-gray-200 px-2 py-1 text-xs md:text-sm text-center"
+                    }
+                    href={
+                      session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
+                    }
                 >
                   {session?.user.role[0] === "ADMIN"
-                    ? "Admin"
-                    : t("menuItems.profile")}
+                      ? "Admin"
+                      : t("menuItems.profile")}
                 </Link>
                 <button
-                  className={
-                    "hover:bg-gray-200 px-2 pb-2 text-red-600 text-xs md:text-sm"
-                  }
-                  onClick={() => {
-                    signOut();
-                    setOpenMenu(false);
-                  }}
+                    className={
+                      "hover:bg-gray-200 px-2 pb-2 text-red-600 text-xs md:text-sm"
+                    }
+                    onClick={() => {
+                      signOut();
+                      setOpenMenu(false);
+                    }}
                 >
                   {t("menuItems.logout")}
                 </button>
@@ -184,53 +186,74 @@ function Navbar() {
             </li>
           </div>
 
+          <ul
+              className={`hidden text-md font-bold md:flex flex-row w-1/2 items-start gap-1 px-2 py-2`}
+          >
+            {navLinks.map((link) => (
+                <Link
+                    key={link.url}
+                    href={link.url}
+                    className="block text-center w-full"
+                >
+                  <li
+                      onClick={() => setOpenMenu(false)}
+                      className={`flex hover:underline flex-col text-primary transition-all duration-300 justify-start items-start p-1 w-full rounded-lg 
+              }`}
+                  >
+                    {link.name}
+                  </li>
+                </Link>
+            ))}
+          </ul>
+
           {/* Search (Desktop) */}
-          {
-            <div className=" hidden  lg:flex w-1/2">
-              <SearchBar />
-            </div>
-          }
+          {/*{*/}
+          {/*  <div className=" hidden  lg:flex w-1/2">*/}
+          {/*    <SearchBar />*/}
+          {/*  </div>*/}
+          {/*}*/}
 
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-x-6">
             <li
-              className="relative z-50"
-              onMouseLeave={() => setIsLangDropdownOpen(false)}
+                className="relative z-50"
+                onMouseLeave={() => setIsLangDropdownOpen(false)}
             >
               <button
-                className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
-                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                onMouseLeave={() => setIsLangDropdownOpen(false)}
-                onMouseEnter={() => setIsLangDropdownOpen(true)}
+                  className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
+                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                  onMouseLeave={() => setIsLangDropdownOpen(false)}
+                  onMouseEnter={() => setIsLangDropdownOpen(true)}
               >
                 {locale}
               </button>
               {isLangDropdownOpen && (
-                <ul
-                  className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"
-                  onMouseEnter={() => setIsLangDropdownOpen(true)}
-                >
-                  {supportedLocales.map((lang) => (
-                    <li key={lang}>
-                      <button
-                        onClick={() => changeLanguage(lang)}
-                        className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"
-                      >
-                        {lang === "tr" ? "TR" : "EN"}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                  <ul
+                      className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"
+                      onMouseEnter={() => setIsLangDropdownOpen(true)}
+                  >
+                    {supportedLocales.map((lang) => (
+                        <li key={lang}>
+                          <button
+                              onClick={() => changeLanguage(lang)}
+                              className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"
+                          >
+                            {lang === "tr" ? "TR" : "EN"}
+                          </button>
+                        </li>
+                    ))}
+                  </ul>
               )}
             </li>
 
             <li className="relative">
               <button
-                className="flex justify-center items-center"
-                onClick={openCart}
+                  className="flex justify-center items-center"
+                  onClick={openCart}
               >
-                <BsCart2 size={30} className="cursor-pointer text-secondary" />
-                <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <BsCart2 size={30} className="cursor-pointer text-secondary"/>
+                <span
+                    className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartProducts.length}
                 </span>
               </button>
@@ -239,62 +262,62 @@ function Navbar() {
             <ul className="hidden lg:flex gap-x-4 items-center text-base font-semibold relative">
               <li className={"text-secondaryDark relative"}>
                 {!session ? (
-                  <button
-                    onClick={() => {
-                      dispatch(openLoginModal());
-                    }}
-                    className="flex items-center text-base hover:underline transition-all duration-300"
-                  >
-                    {t("menuItems.login")}
-                  </button>
+                    <button
+                        onClick={() => {
+                          dispatch(openLoginModal());
+                        }}
+                        className="flex items-center text-base hover:underline transition-all duration-300"
+                    >
+                      {t("menuItems.login")}
+                    </button>
                 ) : session?.user.role[0] === "ADMIN" ? (
-                  <button
-                    className={"text-xl flex flex-row items-center gap-x-1"}
-                    onClick={() => setOpenUserDropdown(!openUserDropdown)}
-                    onMouseEnter={() => setOpenUserDropdown(true)}
-                    onMouseLeave={() => setOpenUserDropdown(false)}
-                  >
-                    <FaUserShield size={32} />
-                  </button>
+                    <button
+                        className={"text-xl flex flex-row items-center gap-x-1"}
+                        onClick={() => setOpenUserDropdown(!openUserDropdown)}
+                        onMouseEnter={() => setOpenUserDropdown(true)}
+                        onMouseLeave={() => setOpenUserDropdown(false)}
+                    >
+                      <FaUserShield size={32}/>
+                    </button>
                 ) : (
-                  <button
-                    className="flex justify-center items-center"
-                    onClick={() => setOpenUserDropdown(!openUserDropdown)}
-                    onMouseEnter={() => setOpenUserDropdown(true)}
-                    onMouseLeave={() => setOpenUserDropdown(false)}
-                  >
-                    <FaUser size={26} />
-                  </button>
+                    <button
+                        className="flex justify-center items-center"
+                        onClick={() => setOpenUserDropdown(!openUserDropdown)}
+                        onMouseEnter={() => setOpenUserDropdown(true)}
+                        onMouseLeave={() => setOpenUserDropdown(false)}
+                    >
+                      <FaUser size={26}/>
+                    </button>
                 )}
                 <span
-                  className={`${
-                    openUserDropdown ? "block" : "hidden"
-                  } flex flex-col border rounded absolute   left-0  w-20 bg-white z-50`}
-                  onMouseEnter={() => setOpenUserDropdown(true)}
-                  onMouseLeave={() => setOpenUserDropdown(false)}
+                    className={`${
+                        openUserDropdown ? "block" : "hidden"
+                    } flex flex-col border rounded absolute   left-0  w-20 bg-white z-50`}
+                    onMouseEnter={() => setOpenUserDropdown(true)}
+                    onMouseLeave={() => setOpenUserDropdown(false)}
                 >
                   <Link
-                    onClick={() => {
-                      setOpenMenu(false);
-                    }}
-                    className="hover:bg-gray-200 px-2 py-1 text-sm flex justify-center items-center"
-                    href={
-                      session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
-                    }
+                      onClick={() => {
+                        setOpenMenu(false);
+                      }}
+                      className="hover:bg-gray-200 px-2 py-1 text-sm flex justify-center items-center"
+                      href={
+                        session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
+                      }
                   >
                     {session?.user.role[0] === "ADMIN"
-                      ? "Admin"
-                      : t("menuItems.myAccount")}
+                        ? "Admin"
+                        : t("menuItems.myAccount")}
                   </Link>
 
                   <button
-                    className={
-                      "hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"
-                    }
-                    onClick={() => {
-                      signOut();
-                      setOpenMenu(false);
-                    }}
+                      className={
+                        "hover:bg-gray-200 px-2 pb-2 text-red-600 text-sm"
+                      }
+                      onClick={() => {
+                        signOut();
+                        setOpenMenu(false);
+                      }}
                   >
                     {t("menuItems.logout")}
                   </button>
@@ -308,20 +331,20 @@ function Navbar() {
       </nav>
       <div className="flex flex-col justify-center items-center w-full border-t">
         <div
-          className="bg-black bg-opacity-40 w-full"
-          onClick={() => setOpenMenu(false)}
+            className="bg-black bg-opacity-40 w-full"
+            onClick={() => setOpenMenu(false)}
         >
           <div
-            className={` lg:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
-              openMenu
-                ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
-                : "max-h-0 overflow-hidden -translate-x-full "
-            }`}
+              className={` lg:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
+                  openMenu
+                      ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
+                      : "max-h-0 overflow-hidden -translate-x-full "
+              }`}
           >
             <ul
-              className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
+                className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
             >
-              {navLinks.map((link) => (
+            {navLinks.map((link) => (
                 <Link
                   key={link.url}
                   href={link.url}
@@ -340,11 +363,11 @@ function Navbar() {
           </div>
         </div>
 
-        {!openMenu && (
-          <div className="w-full flex lg:hidden border-b ">
-            <SearchBar />
-          </div>
-        )}
+        {/*{!openMenu && (*/}
+        {/*  <div className="w-full flex lg:hidden border-b ">*/}
+        {/*    <SearchBar />*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </div>
     </header>
   );

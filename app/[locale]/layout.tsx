@@ -68,7 +68,7 @@ export default async function RootLayout({
           content="Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!"
         />
       </head>
-      <body className={`antialiased`}>
+      <body className={`antialiased`} suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <LayoutProvider>{children}</LayoutProvider>
