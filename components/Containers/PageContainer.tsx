@@ -2,7 +2,7 @@ import React from "react";
 
 function PageContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container mx-auto w-full h-full mb-12 md:mb-20 mt-24  md:mt-32">
+    <div className="container mx-auto w-full h-full mb-12 md:mb-20 mt-28  md:mt-32">
       {children}
     </div>
   );

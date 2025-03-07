@@ -16,7 +16,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-2   transition duration-300  relative min-h-[500px]
+      className="group flex flex-col justify-between space-y-2 min-w-64   transition duration-300  relative min-h-[500px]
     md:min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}

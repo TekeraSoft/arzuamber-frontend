@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-// import { filterProductDispatch } from "@/store/productSlice";
-// import { useRouter } from "next/navigation";
 
 function Category() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,9 +20,6 @@ function Category() {
   const { categories, loading } = useSelector(
     (state: RootState) => state.category
   );
-
-  // const pageable = { currentPage: 0, size: 9 };
-  // const router = useRouter();
 
   return (
     <div className="md:container mx-2 md:mx-auto mt-32 lg:mt-28 my-2">
@@ -65,22 +60,8 @@ function Category() {
 
           {categories.map((category, index) => (
             <Link
-              href={`/products`}
+              href={`/category/${category.name}`}
               key={index}
-              // onClick={() => {
-              //   dispatch(
-              //     filterProductDispatch({
-              //       size: null,
-              //       color: null,
-              //       category: category.name,
-              //       length: null,
-              //       page: pageable.currentPage,
-              //       pageSize: pageable.size,
-              //     })
-              //   );
-
-              //   router.push("/products");
-              // }}
               className="flex flex-col items-center justify-center  cursor-pointer"
             >
               {/* Kategori Resmi ve İsim */}
@@ -88,7 +69,7 @@ function Category() {
                 {/* Kategori Resmi */}
                 <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105  hover:border-red-600">
                   <Image
-                    src={category.image} //! Kategoriye ait dinamik resim
+                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
                     alt={category.name}
                     fill
                     priority

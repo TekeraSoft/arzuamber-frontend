@@ -1,8 +1,4 @@
-export interface CarouselType {
-  id: string;
-  url: string; // Mobil için resim
-  description?: string;
-}
+import { CarouselType } from "@/types";
 
 export const carouselList: CarouselType[] = [
   {

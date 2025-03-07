@@ -341,7 +341,7 @@ function Navbar() {
         </div>
 
         {!openMenu && (
-          <div className="w-full flex lg:hidden border-b ">
+          <div className="w-full flex lg:hidden ">
             <SearchBar />
           </div>
         )}

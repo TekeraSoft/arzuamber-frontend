@@ -17,19 +17,22 @@ import { getCategoriesDispatch } from "@/store/categorySlice";
 function Filter({
   currnetPage,
   pageSize,
+  slug,
 }: {
   currnetPage: number;
   pageSize: number;
+  slug?: string;
 }) {
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
   const { categories } = useSelector((state: RootState) => state.category);
   const { colors } = useSelector((state: RootState) => state.products);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
+
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
     colors: null,
-    categories: null,
+    categories: slug || null,
     lengths: null,
     // subCategories: null,
   });
@@ -46,6 +49,8 @@ function Filter({
 
   // Filtre seçimlerini güncelleme işlevi
   useEffect(() => {
+    const activeCategory = selectedFilters.categories || slug || null;
+
     // Eğer herhangi bir filtre değiştiyse
     const hasFilterChanged =
       selectedFilters.sizes ||
@@ -60,7 +65,7 @@ function Filter({
         filterProductDispatch({
           size: selectedFilters.sizes,
           color: selectedFilters.colors,
-          category: selectedFilters.categories,
+          category: activeCategory,
           length: selectedFilters.lengths,
           page: currnetPage,
           pageSize: pageSize,
@@ -91,6 +96,7 @@ function Filter({
     dispatch,
     currnetPage,
     pageSize,
+    slug,
   ]);
 
   // Menü açma / kapama işlemi

@@ -528,7 +528,12 @@
     "notFoundProduct": {
       "title": "Product Not Found",
       "message": "The product you are looking for is not available at the moment.",
-      "returnHome": "Go Back to Home"
+      "browseMore": "Browse other products"
+    },
+    "notFoundFilteredProduct": {
+      "title": "No products found in this category.",
+      "message": "The products you are looking for in this category are currently unavailable.",
+      "browseMore": "Browse other products"
     }
   }
 }

@@ -1,21 +1,20 @@
 import { Link } from "@/i18n/routing";
 import { WarningTextProps } from "@/types/Props";
-import { useTranslations } from "next-intl";
 import { PiSmileySad } from "react-icons/pi";
 
-function WarningText({ title, text }: WarningTextProps) {
-  const t = useTranslations();
-
+function WarningText({ title, text, href, buttonText }: WarningTextProps) {
   return (
-    <div className="w-full  h-screen container mx-auto my-5 flex flex-col justify-center items-center bg-secondary shadow-xl  gap-1 ">
-      <PiSmileySad size={120} className="text-mywhite" />
-      <h1 className="text-3xl font-extrabold text-mywhite my-4  ">{title}</h1>
-      <p className="text-lg text-mywhite mb-3 ">{text}</p>
+    <div className="w-full  min-h-[70vh] container mx-auto    flex flex-col justify-center items-center bg-secondary shadow-lg  gap-1 ">
+      <PiSmileySad size={110} className="text-mywhite " />
+      <h1 className="  md:text-3xl font-extrabold text-mywhite my-4  ">
+        {title}
+      </h1>
+      <p className=" text-sm md:text-lg text-mywhite mb-3 ">{text}</p>
       <Link
-        className="bg-mywhite text-secondary font-semibold py-2 px-7 rounded-lg shadow-md transition duration-300 hover:scale-105 "
-        href={`/`}
+        className="bg-mywhite text-secondary font-semibold py-2 px-7 rounded-lg shadow-md transition duration-300 hover:scale-105 text-sm md:text-base "
+        href={`${href ? `${href}` : "/"}`}
       >
-        {t("warningText.ButtonText")}
+        {buttonText}
       </Link>
     </div>
   );

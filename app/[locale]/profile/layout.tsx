@@ -18,7 +18,7 @@ export default function ProfileLayout({
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
-    <div className="container mt-28">
+    <div className="container mt-32">
       <div className="flex flex-col gap-x-12 md:flex-row h-full">
         {/* Sidebar for larger screens, Topbar for mobile */}
         <div className="h-full  md:w-1/4 rounded-lg bg-secondary text-white p-6 md:block hidden">
@@ -57,7 +57,7 @@ export default function ProfileLayout({
         </div>
 
         {/* Topbar for mobile */}
-        <div className="md:hidden flex justify-between items-center p-5 bg-secondary text-white">
+        <div className="md:hidden flex justify-between items-center p-5 bg-secondary text-white rounded-t">
           <h3 className="text-lg font-semibold"> {t("profile.menuTitle")}</h3>
           <button onClick={toggleMenu} className="text-white">
             {/* Hamburger icon for mobile menu */}

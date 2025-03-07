@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import NextSeoHead from "../utils/NextSeoHead";
 import ShareButtons from "../utils/ShareButtons";
+import { openCartModal } from "@/store/modalsSlice";
 
 const responsive = {
   superLargeDesktop: {
@@ -79,6 +80,10 @@ const DetailClient = ({ product }: productProps) => {
 
   const toggleClamp = () => {
     setLineClamp(!lineClamp);
+  };
+
+  const openCart = () => {
+    dispatch(openCartModal());
   };
 
   return (
@@ -432,6 +437,7 @@ const DetailClient = ({ product }: productProps) => {
                     })
                   );
                   toast.success(t("productDetail.productAddedCartSuccess"));
+                  openCart();
                 }
               }}
               className={
