@@ -311,12 +311,20 @@
     "startShopping": "Start shopping now to place your first order!",
     "order": "Order",
     "status": "Status",
+    "statuses": {
+      "PAID": "Paid",
+      "PENDING": "Pending",
+      "FAILED": "Failed",
+      "CANCELED": "Canceled",
+      "OTHER": "Unknown Status"
+    },
     "orderDate": "Order Date",
     "totalPrice": "Total Price",
     "color": "Color",
     "size": "Size",
     "quantity": "Quantity",
-    "price": "Price"
+    "price": "Price",
+    "stockCode": "Stock Code"
   },
 
   "FavPage": {
@@ -502,7 +510,9 @@
     "freeReturn": "15 Days Free Return",
     "fastDelivery": "Super Fast Delivery",
     "securePayment": "Secure and Easy Payment",
-    "carefulPackaging": "Careful Packaging"
+    "carefulPackaging": "Careful Packaging",
+    "companyName": "ARZUAMBER TEXTILE IND. & TRADE LTD",
+    "phone": "Phone"
   },
 
   "SnackBar": {

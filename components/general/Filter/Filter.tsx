@@ -29,10 +29,12 @@ function Filter({
   const { colors } = useSelector((state: RootState) => state.products);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
 
+  const [initialCategory] = useState(slug || null);
+
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
     colors: null,
-    categories: slug || null,
+    categories: initialCategory,
     lengths: null,
     // subCategories: null,
   });
@@ -49,7 +51,7 @@ function Filter({
 
   // Filtre seçimlerini güncelleme işlevi
   useEffect(() => {
-    const activeCategory = selectedFilters.categories || slug || null;
+    const activeCategory = selectedFilters.categories;
 
     // Eğer herhangi bir filtre değiştiyse
     const hasFilterChanged =
@@ -129,7 +131,7 @@ function Filter({
           className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col justify-center items-end  mt-24 w-full">
+          <div className="flex flex-col justify-center items-end  mt-20 w-full">
             <button
               onClick={toggleMenu}
               className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "

@@ -25,7 +25,7 @@ export const filterData: Filter = {
       "XXL",
       "XXXL",
       "XXXXL",
-      "Standart",
+      "Standard",
       "32",
       "34",
       "36",
@@ -41,7 +41,7 @@ export const filterData: Filter = {
       "56",
       "58",
       "38/40",
-      "40/42"
+      "40/42",
     ],
   },
   colors: {

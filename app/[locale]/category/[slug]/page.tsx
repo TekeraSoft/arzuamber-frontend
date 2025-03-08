@@ -33,7 +33,7 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="mx-auto container mt-28">
+    <main className="md:mx-auto md:container mt-24">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter
           slug={slug}
@@ -51,7 +51,7 @@ function CategoryFilteredProducts() {
           ) : // Ürünler var mı? Ve undefined/null değilse.
           filterProducts && filterProducts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-start">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 items-start justify-center">
                 {filterProducts.map((product, i) => (
                   <ProductCartItem product={product} key={i} />
                 ))}
