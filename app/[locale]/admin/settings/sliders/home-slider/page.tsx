@@ -1,167 +1,102 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
-import { InputText } from "primereact/inputtext";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Toast } from "primereact/toast";
-import { FileUpload } from "primereact/fileupload";
-import Image from "next/image";
-import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
+import React, {useState, useRef, useEffect} from "react";
+import {FiUpload} from "react-icons/fi";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store/store";
+import Resizer from "react-image-file-resizer";
+import {MdCancel} from "react-icons/md";
+import {Button} from "primereact/button";
+import {createSliderDispatch, getAllSliderImageDispatch} from "@/store/adminSlice";
 
 export default function HomeSliderPage() {
-  const [sliders, setSliders] = useState<
-    { id: string; title: string; image: string }[]
-  >([]);
-  const [visible, setVisible] = useState(false);
-  const [sliderData, setSliderData] = useState({
-    title: "",
-    image: "",
-  });
-  const [editMode, setEditMode] = useState(false);
-  const toast = useRef<Toast>(null);
 
-  // Slider ekleme veya güncelleme
-  const handleAdd = () => {
-    if (editMode) {
-      toast.current?.show({
-        severity: "success",
-        summary: "Başarı",
-        detail: "Slider güncellendi",
-      });
-    } else {
-      toast.current?.show({
-        severity: "success",
-        summary: "Başarı",
-        detail: "Slider eklendi",
-      });
-    }
-    setVisible(false);
-    setSliderData({ title: "", image: "" });
-    setEditMode(false);
-  };
+    const dispatch = useDispatch();
+    const {sliders,loading} = useSelector((state:RootState) => state.admin);
+    const [selectedImages, setSelectedImages] = useState([]);
 
-  // Slider düzenleme
-  const handleEdit = (rowData: {
-    id: string;
-    title: string;
-    image: string;
-  }) => {
-    setSliderData(rowData);
-    setEditMode(true);
-    setVisible(true);
-  };
+    useEffect(() => {
+        dispatch(getAllSliderImageDispatch())
+    }, []);
 
-  // Slider silme
-  const handleDelete = () => {
-    toast.current?.show({
-      severity: "warn",
-      summary: "Silindi",
-      detail: "Slider kaldırıldı",
-    });
-  };
+  const handleCreateImage = async (e) => {
+      const resizeImage = (file) => {
+          return new Promise((resolve) => {
+              Resizer.imageFileResizer(
+                  file,
+                  1900, // ✅ Genişlik
+                  800, // ✅ Yükseklik
+                  "WEBP", // ✅ Format (PNG, WEBP de olabilir)
+                  100, // ✅ Kalite (0-100 arasında)
+                  0, // ✅ Rotasyon
+                  (resizedFile) => {
+                      resolve(new File([resizedFile], file.name, { type: file.type }));
+                  },
+                  "file" // ✅ Çıktıyı doğrudan File olarak al
+              );
+          });
+      };
+      const resizedImage = await resizeImage(e.target.files[0]);
+      setSelectedImages(prev => [...prev, resizedImage]);
+  }
 
-  // Resim yükleme
-  const handleFileUpload = (e: any) => {
-    const file = e.files[0];
-    console.log(file);
-  };
+  const handleSubmitImages = () => {
+      const formData = new FormData();
+      selectedImages.forEach((image) => {
+          formData.append("images",image)
+      })
+      dispatch(createSliderDispatch(formData))
+  }
+
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <Toast ref={toast} />
-      <div className="bg-white p-6 shadow-md rounded-lg">
-        <h2 className="text-xl font-semibold text-primary text-center">
-          Create New Slider
-        </h2>
-        <Button
-          label="Add New Slider"
-          icon={<FaPlus />}
-          className="p-button-success my-3"
-          onClick={() => setVisible(true)}
-        />
-        <DataTable value={sliders} className="mt-4">
-          <Column field="title" header="Title" />
-          <Column
-            field="image"
-            header="Image"
-            body={(rowData) => (
-              <Image
-                src={rowData.image}
-                alt="slider"
-                width={64}
-                height={64}
-                className="object-cover rounded"
-                unoptimized
-              />
-            )}
-          />
-          <Column
-            header="Events"
-            body={(rowData) => (
-              <>
-                <Button
-                  icon={<FaEdit />}
-                  className="p-button-warning mr-2"
-                  onClick={() => handleEdit(rowData)}
+    <div className="p-6">
+        <div className={'flex items-center flex-wrap border rounded p-6 flex-row gap-x-6 gap-y-6'}>
+            {
+                sliders.map((slider,index) => (
+                    <div key={index} className="flex flex-col items-center">
+                        <label htmlFor={`file-upload}`}
+                               className="w-48 h-24 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                            <img src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${slider.url}`} alt="Preview"
+                                 className="w-48 h-24 object-cover rounded-lg"/>
+
+                        </label>
+                    </div>
+                ))
+            }
+            {
+                selectedImages.map((slider,index) => (
+                    <div key={index} className="flex flex-col items-center">
+                        <label htmlFor={`file-upload}`}
+                               className="w-48 h-24 relative flex items-center justify-center border cursor-pointer transition duration-200 overflow-hidden">
+                            <MdCancel className={'text-red-600 absolute right-0 top-0'} onClick={() => {
+                                const newImageState = selectedImages.filter((_,i) => i !== index);
+                                setSelectedImages(newImageState);
+                            }} size={24} />
+                            <img src={URL.createObjectURL(slider)} alt="Preview"
+                                 className="w-48 h-24 object-cover"/>
+
+                        </label>
+                    </div>
+                ))
+            }
+            <div className="flex flex-col items-center">
+                <input
+                    type="file"
+                    id={`file-upload`}
+                    className="hidden"
+                    onChange={(e) => handleCreateImage(e)}
                 />
-                <Button
-                  icon={<FaTrash />}
-                  className="p-button-danger"
-                  onClick={() => handleDelete(rowData.id)}
-                />
-              </>
-            )}
-          />
-        </DataTable>
-      </div>
-
-      {/* Modal Dialog */}
-      <Dialog
-        header="Slider Bilgileri"
-        visible={visible}
-        onHide={() => setVisible(false)}
-      >
-        <div className="p-fluid">
-          <div className="flex flex-col justify-center items-start gap-2 min-w-96">
-            <label>Title</label>
-            <InputText
-              value={sliderData.title}
-              onChange={(e) =>
-                setSliderData({ ...sliderData, title: e.target.value })
-              }
-            />
-
-            <label className="mt-3">Upload Image</label>
-            <FileUpload
-              mode="basic"
-              accept="image/*"
-              maxFileSize={1000000}
-              customUpload
-              uploadHandler={handleFileUpload}
-            />
-
-            {sliderData.image && (
-              <Image
-                src={sliderData.image}
-                alt="Preview"
-                width={96}
-                height={96}
-                className="mt-2 object-cover rounded"
-                unoptimized
-              />
-            )}
-
-            <Button
-              label={editMode ? "Edit" : "Add"}
-              className="mt-4 p-button-primary"
-              onClick={handleAdd}
-            />
-          </div>
+                <label htmlFor={`file-upload`}
+                       className="w-48 h-24 flex items-center justify-center border cursor-pointer transition duration-200 overflow-hidden">
+                        <FiUpload className="text-2xl"/>
+                </label>
+            </div>
         </div>
-      </Dialog>
+        <div className={'flex flex-row justify-end w-full'}>
+            <Button onClick={handleSubmitImages} label={'Upload'} className={'mt-12'} icon={<FiUpload className={'mr-2'}/>} loading={loading} />
+        </div>
+
     </div>
   );
 }

@@ -13,6 +13,7 @@ const initialState: ProductProps = {
     products: [],
     product: null,
     categories: [],
+    sliders: [],
     page: {},
     colors: [],
     orders: [],
@@ -43,6 +44,9 @@ export const adminSlice = createSlice({
         },
         getColors: (state, action) => {
             state.colors = action.payload;
+        },
+        getSliders: (state, action) => {
+            state.sliders = action.payload;
         },
         loading: (state, action) => {
             state.loading = action.payload;
@@ -240,6 +244,17 @@ export const deleteSliderDispatch = (id: string) => async(dispatch) => {
     })
 }
 
+export const getAllSliderImageDispatch = () => async (dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'admin',action:'get-all-slider'}).then(res=> {
+        dispatch(loading(false))
+        dispatch(getSliders(res?.data))
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response?.data);
+    })
+}
+
 export const {
     loading,
     deleteProduct,
@@ -247,5 +262,6 @@ export const {
     getProduct ,
     getCategories,
     getColors,
-    getOrders} = adminSlice.actions;
+    getOrders,
+    getSliders} = adminSlice.actions;
 export default adminSlice.reducer;

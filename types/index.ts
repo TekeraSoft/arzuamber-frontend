@@ -13,6 +13,7 @@ export interface ProductProps {
   colors: Color[];
   orders: Order[];
   blogs: Blog[];
+  sliders: Slider[];
   loading: boolean;
   page: {
     size: number;
@@ -20,6 +21,13 @@ export interface ProductProps {
     totalPages: number;
     number: number;
   };
+}
+
+export type Slider = {
+  id: string;
+  url: string;
+  lang: string;
+  isActive: boolean;
 }
 
 export type Order = {
