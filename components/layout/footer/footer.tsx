@@ -37,9 +37,9 @@ const Footer = () => {
                 className="w-auto h-auto"
               />
               <p className="mt-2 font-semibold text-xs">
-                ARZUAMBER TEKSTİL SAN. TİC. LTD. ŞTİ
+                {t("footer.companyName")}
               </p>
-              <p className="text-xs">Telefon : +90-534-260-8385</p>
+              <p className="text-xs">{t("footer.phone")} : +90-534-260-8385</p>
             </div>
 
             {/* About Us */}
