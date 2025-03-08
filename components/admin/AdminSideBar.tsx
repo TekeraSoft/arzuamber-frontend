@@ -60,14 +60,9 @@ const SideBar = () => {
       icon: TbSettingsCog,
       options: [
         { name: "Color", url: "/admin/settings/product-colors" },
-        { name: "Home Slider", url: "/admin/settings/home-slider" },
+        { name: "Home Slider", url: "/admin/settings/sliders/home-slider" },
       ],
-    },
-    {
-      name: "Sliders",
-      icon: MdOutlineSlideshow,
-      options: [{ name: "Home Slider", url: "/admin/sliders/home-slider" }],
-    },
+    }
   ];
 
   const toggleMenu = (menuName: string) => {

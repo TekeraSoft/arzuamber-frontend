@@ -95,6 +95,22 @@ export const postGuardRequest = async (
   });
 };
 
+export const postGuardRequestMultipart = async (
+    requestParameter = RequestParameter,
+    body: object
+) => {
+  const locale = getCookie("NEXT_LOCALE");
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
+      requestParameter.controller
+  }${requestParameter.action ? `/${requestParameter.action}` : ""}${
+      requestParameter.id ? `/${requestParameter.id}` : ""
+  }`;
+  return await axios.post(url, body, {
+    params: { ...requestParameter.params, lang: locale },
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+};
+
 const RequestParameter: RequestOptions = {
   id: "",
   controller: "",

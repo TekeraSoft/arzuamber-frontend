@@ -16,7 +16,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className="group flex flex-col justify-between space-y-2   transition duration-300  relative min-h-[500px]
+      className="group flex flex-col justify-between space-y-2 transition duration-300  relative min-h-[500px]
     md:min-h-[500px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
@@ -37,7 +37,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         />
 
         <Image
-          className={` object-cover  rounded-t transition-opacity duration-700  ${
+          className={`object-cover  rounded-t transition-opacity duration-700  ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.colorSize[0].images[1]}`}
@@ -107,7 +107,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
             )}
 
             <Link
-              className="flex items-center justify-center "
+              className="flex items-center justify-center"
               href={`/product/${product.slug}`}
             >
               <p className="text-mywhite  bg-secondary px-4 py-1 rounded text-sm transition-all hover:scale-105 duration-300">

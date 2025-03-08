@@ -4,7 +4,7 @@ import {
     deleteGuardRequest,
     getGuardRequest,
     getRequest, patchRequest,
-    postGuardRequest,
+    postGuardRequest, postGuardRequestMultipart,
     putGuardRequest
 } from "@/services/requestservice";
 import {toast} from "react-toastify";
@@ -124,7 +124,7 @@ export const deleteProductDispatch = (id:string) => async(dispatch) => {
 
 export const createCategoryDispatch = (value: object) => async(dispatch) => {
     dispatch(loading(true))
-    postGuardRequest({controller:'admin',action: 'create-category'}, value).then((res)=> {
+    postGuardRequestMultipart({controller:'admin',action: 'create-category'}, value).then((res)=> {
         dispatch(loading(false))
        toast.success(res.data.message);
     }).catch(err => {
@@ -211,6 +211,28 @@ export const createBlogDispatch = (value: object,resetForm:()=> void) => async(d
     postGuardRequest({controller:'admin',action:'create-blog'},value).then(res=> {
         dispatch(loading(false))
         resetForm()
+        toast.success(res.data?.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response?.data);
+    })
+}
+
+export const createSliderDispatch = (formData) => async(dispatch) => {
+    dispatch(loading(true))
+    postGuardRequest({controller:'admin',action:'create-slider'},formData).then(res=> {
+        dispatch(loading(false))
+        toast.success(res.data?.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response?.data);
+    })
+}
+
+export const deleteSliderDispatch = (id: string) => async(dispatch) => {
+    dispatch(loading(true))
+    deleteGuardRequest({controller:'admin',action:'delete-slider', params:{id:id}}).then(res=> {
+        dispatch(loading(false))
         toast.success(res.data?.message);
     }).catch(err => {
         dispatch(loading(false))

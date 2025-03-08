@@ -36,16 +36,13 @@ function AllProductAdminPage() {
   const imageBodyTemplate = (rowData,options) => {
     return (
       <div style={{ display: "flex", gap: "5px" }}>
-        {rowData.colorSize.map((img, index) => (
           <Image
-            key={index}
-            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img.images[0]}`}
-            alt={img}
+            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${rowData.colorSize[0].images[0]}`}
+            alt={rowData.colorSize[0].images[0]}
             width={35}
             height={35}
             className={"rounded"}
           />
-        ))}
       </div>
     );
   };
@@ -98,13 +95,10 @@ function AllProductAdminPage() {
       size={"small"}
       value={products}
       className={'rounded-lg'}
-      dataKey="id"
       tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
       paginator
-      first={pageable.currentPage * pageable.size}
       rows={pageable.size}
-      totalRecords={page.totalElements}
-      rowsPerPageOptions={[15, 30, 50]}
+      rowsPerPageOptions={[15, 30, 50, 70, page.totalElements]}
       onPage={onPageChange}
       loading={loading}
       rowExpansionTemplate={rowExpansionTemplate}
@@ -131,12 +125,17 @@ function AllProductAdminPage() {
               />
               <button
                 onClick={() => {
-                  dispatch(
-                    updatePriceByPercentageDispatch(
-                      parseFloat(parseFloat(String(percentageValue)).toFixed(1))
-                    )
-                  );
-                  setPercentageValue(0);
+                    const isConfirm = confirm("Are you sure you want to apply to all prices?")
+                    if (isConfirm) {
+                        dispatch(
+                            updatePriceByPercentageDispatch(
+                                parseFloat(parseFloat(String(percentageValue)).toFixed(1))
+                            )
+                        );
+                        setPercentageValue(0);
+                    } else {
+                        setPercentageValue(0);
+                    }
                 }}
                 className={"bg-blue-600 rounded-full p-2 text-white"}
               >

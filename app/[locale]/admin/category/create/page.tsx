@@ -6,16 +6,14 @@ import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
-  createCategoryDispatch,
-  getCategoriesDispatch,
+    createCategoryDispatch, createProductDispatch,
+    getCategoriesDispatch,
 } from "@/store/adminSlice";
 import { useLocale } from "next-intl";
 import { Category } from "@/types";
 import Resizer from 'react-image-file-resizer'
 import { TiMinus, TiPlus } from "react-icons/ti";
 import {FiUpload} from "react-icons/fi";
-import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
-import image = mockSession.user.image;
 
 function AdminCreateCategory() {
   const locale = useLocale();
@@ -122,22 +120,28 @@ function AdminCreateCategory() {
         setImages(prev => [...prev, image]);
   };
 
-  const _handleSubmit = () => {
-    const formData = new FormData();
-    const categoryData = localCategories.map((category) => {
-      return {
-        id: category.id,
-        name: category.name,
-        lang: locale,
-        subCategories: category.subCategories
-      };
-    });
-    formData.append("categoriesJson", new Blob([JSON.stringify(categoryData)], { type: "application/json" }));
-    images.forEach(image => {
-        formData.append("images", image);
-    })
-    dispatch(createCategoryDispatch(categoryData));
-  }
+    const _handleSubmit = () => {
+        const formData = new FormData();
+
+        const categoryData = localCategories.map(category => ({
+            id: category.id,
+            name: category.name,
+            lang: locale,
+            image: category.image,
+            subCategories: category.subCategories
+        }));
+
+        // ✅ JSON'u doğru isimle ekle
+        formData.append("categoriesJson", new Blob([JSON.stringify(categoryData)], { type: "application/json" }));
+
+        images.forEach(image => {
+            formData.append("images", image);
+        });
+
+        dispatch(createCategoryDispatch(formData)); // ✅ Doğru fonksiyonu çağır!
+    };
+
+    console.log(localCategories);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -191,7 +195,7 @@ function AdminCreateCategory() {
                             />
                               {(() => {
                                   const file = images.find(i => i.name.split("_")[0] === item.name);
-                                  return (item.image instanceof File || (images.length > 0 && file)) ? (
+                                  return (item.image || (images.length > 0 && file)) ? (
                                       <img
                                           src={item.image
                                               ? `${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`
@@ -280,7 +284,7 @@ function AdminCreateCategory() {
               <Button
                 loading={loading}
                 type="button"
-                className="w-44 bg-primary text-white flex justify-content-center rounded-lg p-2 font-bold"
+                className="w-44 mt-12 bg-primary text-white flex justify-content-center rounded-lg p-2 font-bold"
                 onClick={() => _handleSubmit()}
               >
                 Güncelle

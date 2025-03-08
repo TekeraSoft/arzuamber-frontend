@@ -63,15 +63,37 @@ export default function PaymentForm() {
 
   useEffect(() => {
     if (threeDsModal) {
-      const form = document.forms["returnform"]; // Formun id'si
-      //const form = document.forms["iyzico-3ds-form"]
-      if (form) {
-        setTimeout(() => {
-          form.submit(); // Formu gönder
-        }, 100); // 100ms gecikme
-      } else {
-        console.error("Form bulunamadı!"); // Hata mesajı
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = String(threeDsModal);
+      const form = tempDiv.querySelector("form"); // Formu bul
+      if (!form) {
+        console.error("❌ İyzico formu bulunamadı!");
+        return;
       }
+
+      const actionUrl = form.getAttribute("action"); // Formun yönlendirileceği URL
+      if (!actionUrl) {
+        console.error("❌ Form action URL bulunamadı!");
+        return;
+      }
+      const formData = new FormData(form);
+      // Tarayıcıyı 3D Secure sayfasına yönlendir
+      const newForm = document.createElement("form");
+      newForm.method = "POST";
+      newForm.action = actionUrl;
+
+      for (const [name, value] of formData.entries()) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        if (typeof value === "string") {
+          input.value = value;
+        }
+        newForm.appendChild(input);
+      }
+
+      document.body.appendChild(newForm);
+      newForm.submit(); // Yönlendirmeyi başlat
     }
   }, [threeDsModal]);
 
@@ -672,17 +694,6 @@ export default function PaymentForm() {
             </Form>
           )}
         </Formik>
-      )}
-      {/* 3D Form */}
-      {threeDsModal && (
-        <div>
-          <h3>3D Secure Doğrulama</h3>
-          <div
-            id="3ds-form-container"
-            dangerouslySetInnerHTML={{ __html: threeDsModal }} // html içeriği burada
-          />
-          {/* Otomatik gönderim için formun doğru şekilde render edilmesini bekle */}
-        </div>
       )}
     </div>
   );
