@@ -41,7 +41,7 @@ const Heading = ({
       </div>
       {hr ? (
         <hr
-          className={`text-center w-3/4 md:w-full
+          className={`  text-center w-3/4 md:w-full
             ${color === "black" ? "bg-myblack" : "bg-mywhite"}
             sm:w-2/3 md:w-3/4 lg:w-full`} // Responsive hr genişliği
         />

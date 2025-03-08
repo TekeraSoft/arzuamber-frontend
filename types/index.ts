@@ -85,6 +85,7 @@ export type Category = {
   name: string;
   subCategories: string[];
   lang: string;
+  image: string;
 };
 
 export type BasketItem = {
@@ -149,4 +150,10 @@ export interface PaymentFormValues {
     street?: string;
     apartment?: string;
   };
+}
+
+export interface CarouselType {
+  id: string;
+  url: string;
+  description?: string;
 }

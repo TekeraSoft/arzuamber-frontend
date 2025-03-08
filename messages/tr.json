@@ -522,7 +522,12 @@
     "notFoundProduct": {
       "title": "Ürün Bulunamadı",
       "message": "Aradığınız ürün şu anda mevcut değil.",
-      "returnHome": "Ana Sayfaya Dön"
+      "browseMore": "Diğer ürünleri incele"
+    },
+    "notFoundFilteredProduct": {
+      "title": "Bu kategoriye ait ürün bulunmamakta.",
+      "message": "Aradığınız kategoriye ait ürünler şu anda mevcut değil.",
+      "browseMore": "Diğer ürünleri incele"
     }
   }
 }

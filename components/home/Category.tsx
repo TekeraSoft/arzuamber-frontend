@@ -22,12 +22,12 @@ function Category() {
   );
 
   return (
-    <div className="container mx-auto mt-32 lg:mt-28 mb-2">
+    <div className="md:container mx-2 md:mx-auto mt-32 lg:mt-28 my-2">
       {loading ? (
         <Loading />
       ) : (
         <div
-          className="flex items-center justify-start overflow-x-auto space-x-5 "
+          className="flex items-center justify-evenly overflow-x-auto space-x-5 p-0.5 "
           style={{
             scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
             msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için
@@ -35,7 +35,6 @@ function Category() {
         >
           <Link
             href={"/products"}
-            onClick={() => {}}
             className="flex flex-col items-center justify-center  cursor-pointer"
           >
             {/* Kategori Resmi ve İsim */}
@@ -59,13 +58,10 @@ function Category() {
             </div>
           </Link>
 
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              //! Kategorilere göre arama için event
-              onClick={() => {
-                console.log(category.name);
-              }}
+          {categories.map((category, index) => (
+            <Link
+              href={`/category/${category.name}`}
+              key={index}
               className="flex flex-col items-center justify-center  cursor-pointer"
             >
               {/* Kategori Resmi ve İsim */}
@@ -73,7 +69,7 @@ function Category() {
                 {/* Kategori Resmi */}
                 <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105  hover:border-red-600">
                   <Image
-                    src={`/images/product/siyah diğer.jpg`} //! Kategoriye ait dinamik resim
+                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
                     alt={category.name}
                     fill
                     priority
@@ -87,7 +83,7 @@ function Category() {
                   {category.name}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

@@ -11,7 +11,7 @@ export default function ProfilePage() {
   const { data: session } = useSession();
 
   return (
-    <div className="w-full px-4 md:px-8 py-6 space-y-8 h-full bg-white  rounded-lg  ">
+    <div className="w-full px-4 md:px-8 py-6 space-y-8 h-full bg-white rounded-b  md:rounded-lg  ">
       {/* Personal Information Section */}
       <div className="space-y-6">
         <h3 className="text-xl  md:text-2xl font-semibold text-primary">

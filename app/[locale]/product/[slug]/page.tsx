@@ -30,8 +30,10 @@ function ShopDetailPage() {
         <DetailClient product={product} />
       ) : (
         <WarningText
-          title={t("warningText.ProductNotFoundTitle")}
-          text={t("warningText.ProductNotFoundText")}
+          title={t("warningText.notFoundProduct.title")}
+          text={t("warningText.notFoundProduct.message")}
+          href="/products"
+          buttonText={t("warningText.notFoundProduct.browseMore")}
         />
       )}
     </div>

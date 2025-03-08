@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Jost';
-  src: url('/fonts/Jost-Regular.ttf') format('truetype');
+  font-family: "Jost";
+  src: url("/fonts/Jost-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-family: 'Jost', sans-serif; /* Veya istediğiniz başka bir stil */
+  font-family: "Jost", sans-serif; /* Veya istediğiniz başka bir stil */
 }
 
 /* fornumber inputs button */
@@ -27,4 +27,30 @@ input[type="number"] {
 
 .p-inputnumber-input {
   width: 10px !important;
+}
+
+body {
+  --sb-track-color: #d6d4d4;
+  --sb-thumb-color: #8174a0;
+  --sb-size: 14px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 4px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }

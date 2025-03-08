@@ -16,7 +16,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[190px] md:w-[270px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
+    <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500  w-[190px] md:w-[290px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
       <Link
         href={`/product/${product?.slug}`}
         className=" w-full h-full  relative"
@@ -92,7 +92,8 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex justify-center items-center gap-2">
-              {product.discountPrice > 0 ? (
+              {product.discountPrice > 0 &&
+              product.discountPrice !== product.price ? (
                 <>
                   <span className="text-red-700 text-xs md:text-sm line-through">
                     {product.price.toLocaleString("tr-TR", {
@@ -100,7 +101,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
                       currency: "TRY",
                     })}
                   </span>
-                  <p className="text-xs text-secondary md:text-base font-bold">
+                  <p className="text-xs text-secondary md:text-base font-extrabold">
                     {product.discountPrice.toLocaleString("tr-TR", {
                       style: "currency",
                       currency: "TRY",
@@ -108,7 +109,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
                   </p>
                 </>
               ) : (
-                <p className="text-xs text-secondary md:text-base font-bold">
+                <p className="text-xs text-secondary md:text-base font-extrabold">
                   {product.price.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",

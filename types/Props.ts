@@ -124,4 +124,6 @@ export interface ArrowProps {
 export interface WarningTextProps {
   title: string;
   text: string;
+  href?: string;
+  buttonText: string;
 }

@@ -63,8 +63,6 @@ function RegisterForm() {
     !checkboxes.ElectronicMessage ||
     !checkboxes.MembershipAgreement;
 
-  console.log(isButtonDisabled);
-
   return (
     <div>
       <button

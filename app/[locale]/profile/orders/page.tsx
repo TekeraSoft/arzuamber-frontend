@@ -128,22 +128,23 @@ function OrderPage() {
             </div>
           ))}
 
-          {/* Pagination */}
-          <div className="flex justify-center">
-            <ReactPaginate
-              previousLabel={<FaChevronLeft className="text-gray-600" />}
-              nextLabel={<FaChevronRight className="text-gray-600" />}
-              pageCount={pageCount}
-              onPageChange={handlePageClick}
-              containerClassName="flex items-center space-x-4"
-              pageClassName="px-4 py-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-black cursor-pointer"
-              activeClassName="bg-secondary text-white"
-              breakClassName="px-4 py-2 text-gray-500"
-              pageLinkClassName="cursor-pointer"
-              breakLinkClassName="cursor-pointer"
-              disabledClassName="cursor-not-allowed text-gray-400"
-            />
-          </div>
+          {orders.length > 5 && (
+            <div className="flex justify-center">
+              <ReactPaginate
+                previousLabel={<FaChevronLeft className="text-gray-600" />}
+                nextLabel={<FaChevronRight className="text-gray-600" />}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName="flex items-center space-x-4"
+                pageClassName="px-4 py-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-black cursor-pointer"
+                activeClassName="bg-secondary text-white"
+                breakClassName="px-4 py-2 text-gray-500"
+                pageLinkClassName="cursor-pointer"
+                breakLinkClassName="cursor-pointer"
+                disabledClassName="cursor-not-allowed text-gray-400"
+              />
+            </div>
+          )}
         </>
       )}
     </div>
