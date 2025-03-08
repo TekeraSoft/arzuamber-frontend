@@ -29,7 +29,7 @@ function Products() {
   };
 
   return (
-    <main className="mx-auto container mt-28">
+    <main className="md:mx-auto md:container mt-24">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
