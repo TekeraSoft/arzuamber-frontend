@@ -45,14 +45,14 @@ export default function ProfileLayout({
                 <FaBoxOpen className="mr-3" /> {t("profile.orders")}
               </Link>
             </li>
-            <li>
-              <Link
-                href="/profile/update"
-                className="text-white hover:text-primary transition duration-300 flex items-center"
-              >
-                <FaCogs className="mr-3" /> {t("profile.update")}
-              </Link>
-            </li>
+            {/*<li>*/}
+            {/*  <Link*/}
+            {/*    href="/profile/update"*/}
+            {/*    className="text-white hover:text-primary transition duration-300 flex items-center"*/}
+            {/*  >*/}
+            {/*    <FaCogs className="mr-3" /> {t("profile.update")}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
           </ul>
         </div>
 

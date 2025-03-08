@@ -58,7 +58,7 @@ function OrderPage() {
                   {t("ordersPage.order")} #{order.paymentId}
                 </h3>
                 <span
-                  className={`font-semibold text-sm md:text-base ${
+                  className={`font-semibold text-sm md:text-sm ${
                     order.status === "PAID"
                       ? "bg-green-500 text-mywhite"
                       : order.status === "PENDING"
@@ -68,9 +68,9 @@ function OrderPage() {
                       : order.status === "CANCELED"
                       ? "bg-gray-500 text-mywhite"
                       : "bg-blue-500 text-mywhite"
-                  } p-2 rounded-md`}
+                  }  px-2 rounded-md`}
                 >
-                  {t("ordersPage.status")}:
+                  {t("ordersPage.status")}: {' '}
                   {t(`ordersPage.statuses.${order.status}`) ||
                     t("ordersPage.statuses.OTHER")}
                 </span>

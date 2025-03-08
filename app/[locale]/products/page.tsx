@@ -29,7 +29,7 @@ function Products() {
   };
 
   return (
-    <main className="md:mx-auto md:container mt-24">
+    <main className="mx-2 md:container md:mx-auto mt-24">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
@@ -44,7 +44,7 @@ function Products() {
           (filterProducts && filterProducts.length > 0) ||
             (products && products.length > 0) ? (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 items-start">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-2 items-start">
                 {(filterProducts && filterProducts.length > 0
                   ? filterProducts
                   : products
