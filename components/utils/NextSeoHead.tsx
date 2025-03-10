@@ -1,6 +1,8 @@
 import Head from "next/head";
 
 export default function NextSeoHead({ name, description, image }) {
+  console.log(process.env.NEXT_PUBLIC_RESOURCE_API);
+
   return (
     <Head>
       {/* Sayfa Başlığı */}

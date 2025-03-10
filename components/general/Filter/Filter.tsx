@@ -38,6 +38,8 @@ function Filter({
     categories: initialCategory,
     lengths: null,
     // subCategories: null,
+    lowToHigh: null,
+    highToLow: null,
   });
 
   // Menü görünürlüğünü kontrol etmek için
@@ -81,7 +83,6 @@ function Filter({
           pageSize: pageSize,
         })
       );
-      console.log("if çalıstı");
     } else {
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
       dispatch(
@@ -94,7 +95,6 @@ function Filter({
           pageSize: pageSize,
         })
       );
-      console.log("else calıstı");
     }
 
     dispatch(getCategoriesDispatch());
@@ -112,6 +112,15 @@ function Filter({
     selectedFilters,
     shortCategory,
   ]);
+
+  // Handle price order changes (Low to High or High to Low)
+  // const handlePriceOrderChange = (filter: string) => {
+  //   setSelectedFilters((prevFilters) => ({
+  //     ...prevFilters,
+  //     lowToHigh: filter === "lowToHigh" ? !prevFilters.lowToHigh : false,
+  //     highToLow: filter === "highToLow" ? !prevFilters.highToLow : false,
+  //   }));
+  // };
 
   // Menü açma / kapama işlemi
   const toggleMenu = () => {
@@ -156,7 +165,6 @@ function Filter({
           </div>
 
           {/* Mobil sabit filtreler */}
-
           {/* Kategoriler */}
           <div className="flex flex-col">
             <div
@@ -727,6 +735,50 @@ function Filter({
 
           <hr className={"bg-secondaryDark mt-1"} />
         </div>
+
+        {/*  Price Boxes */}
+        {/*
+        <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex gap-2 justify-start items-center">
+            <input
+              type="checkbox"
+              className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+              checked={selectedFilters.lowToHigh}
+              onChange={() => handlePriceOrderChange("lowToHigh")}
+            />
+            <label
+              className={`text-sm transition-all duration-300  ${
+                selectedFilters.lowToHigh
+                  ? "text-primary font-semibold"
+                  : "text-gray-500 font-normal"
+              }`}
+            >
+              Low to High Price
+            </label>
+          </div>
+
+    
+          <div className="w-full flex gap-2 justify-start items-center">
+            <input
+              type="checkbox"
+              className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+              checked={selectedFilters.highToLow}
+              onChange={() => handlePriceOrderChange("highToLow")}
+            />
+            <label
+              className={`text-sm transition-all duration-300 ${
+                selectedFilters.highToLow
+                  ? "text-primary font-semibold"
+                  : "text-gray-500 font-normal"
+              }`}
+            >
+              High to Low Price
+            </label>
+          </div>
+       
+          <hr className="bg-secondaryDark mt-1" />
+        </div>
+   */}
       </div>
     </div>
   );

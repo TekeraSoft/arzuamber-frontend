@@ -45,7 +45,9 @@
     "noAccount": "Hesabınız yok mu? Kayıt olun",
     "errors": {
       "email": "Geçerli bir e-posta adresi giriniz",
-      "emailRequired": "E-posta zorunludur"
+      "emailRequired": "E-posta zorunludur",
+      "passwordMin": "Şifre en az 6 karakter olmalıdır",
+      "passwordRequired": "Şifre zorunludur"
     }
   },
 

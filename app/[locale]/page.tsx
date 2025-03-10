@@ -9,13 +9,14 @@ import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
 import PopulateProductSlider from "@/components/sliders/productSlider/PopulateProductSlider";
 import Category from "@/components/home/Category";
+import CategoryBrand from "@/components/home/CategoryBrand";
 
 export default function Home() {
   const t = useTranslations();
 
   return (
     <>
-      <Category isFilterPage={false} />
+      <Category />
       <HomeSlider />
 
       <BackGroundImageContainer>
@@ -57,6 +58,8 @@ export default function Home() {
           color="black"
           link="/products"
         />
+
+        <CategoryBrand />
       </BackGroundImageContainer>
     </>
   );
