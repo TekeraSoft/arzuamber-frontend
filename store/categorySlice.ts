@@ -6,11 +6,13 @@ import { Category } from "@/types";
 export interface CartState {
   categories: Category[];
   loading: boolean;
+  shortCategory: string;
 }
 
 const initialState: CartState = {
   categories: [],
   loading: false,
+  shortCategory: "",
 };
 
 export const categorySlice = createSlice({
@@ -22,6 +24,9 @@ export const categorySlice = createSlice({
     },
     loading: (state, action) => {
       state.loading = action.payload;
+    },
+    setShortCategory: (state, action) => {
+      state.shortCategory = action.payload;
     },
   },
 });
@@ -42,6 +47,7 @@ export const getCategoriesDispatch = () => async (dispatch) => {
     });
 };
 
-export const { getCategories, loading } = categorySlice.actions;
+export const { getCategories, loading, setShortCategory } =
+  categorySlice.actions;
 
 export default categorySlice.reducer;

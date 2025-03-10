@@ -15,10 +15,12 @@ import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
 import DynamicModal from "../utils/DynamicModal";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
+  const router = useRouter();
 
   const handleChangeModal = () => {
     dispatch(closeRegisterModal());
@@ -35,7 +37,9 @@ function RegisterForm() {
     },
     validationSchema: useRegisterValidationSchema(),
     onSubmit: (values, { resetForm }) => {
-      dispatch(registerUserDispatch(values, resetForm, handleChangeModal));
+      dispatch(
+        registerUserDispatch(values, resetForm, handleChangeModal, router)
+      );
     },
   });
 
@@ -58,10 +62,7 @@ function RegisterForm() {
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled =
-    !checkboxes.KVKK ||
-    !checkboxes.ElectronicMessage ||
-    !checkboxes.MembershipAgreement;
+  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement;
 
   return (
     <div>
@@ -90,6 +91,7 @@ function RegisterForm() {
             <InputText
               id="name"
               value={formik.values.name}
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                 formik.touched.name && formik.errors.name
@@ -110,6 +112,7 @@ function RegisterForm() {
             <InputText
               id="surname"
               value={formik.values.surname}
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                 formik.touched.surname && formik.errors.surname
@@ -130,6 +133,7 @@ function RegisterForm() {
           </label>
           <InputText
             id="email"
+            onBlur={formik.handleBlur}
             value={formik.values.email}
             onChange={formik.handleChange}
             className={`w-full h-10 !rounded !border px-2 !outline-secondary !ring-secondary ${
@@ -154,6 +158,7 @@ function RegisterForm() {
               id="password"
               type={"password"}
               value={formik.values.password}
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
                 formik.touched.password && formik.errors.password
@@ -174,6 +179,7 @@ function RegisterForm() {
             <InputText
               id="rePassword"
               type={"password"}
+              onBlur={formik.handleBlur}
               value={formik.values.rePassword}
               onChange={formik.handleChange}
               className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
@@ -207,30 +213,8 @@ function RegisterForm() {
                 )
               }
             >
-              {t("registerForm.registerFormCheckBox.KVKK.title")}
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-start gap-2">
-            <input
-              type="checkbox"
-              checked={checkboxes.ElectronicMessage}
-              onChange={() => handleCheckboxChange("ElectronicMessage")}
-              className="accent-primary cursor-pointer"
-            />
-            <div
-              className="text-xs font-semibold underline cursor-pointer"
-              onClick={() =>
-                handleOpenModal(
-                  t(
-                    "registerForm.registerFormCheckBox.ElectronicMessage.title"
-                  ),
-                  t(
-                    "registerForm.registerFormCheckBox.ElectronicMessage.content"
-                  )
-                )
-              }
-            >
-              {t("registerForm.registerFormCheckBox.ElectronicMessage.title")}
+              <span className="text-red-600">*</span>{" "}
+              {t("registerForm.registerFormCheckBox.KVKK.title")}{" "}
             </div>
           </div>
 
@@ -254,7 +238,32 @@ function RegisterForm() {
                 )
               }
             >
+              <span className="text-red-600">*</span>{" "}
               {t("registerForm.registerFormCheckBox.MembershipAgreement.title")}
+            </div>
+          </div>
+
+          <div className="w-full flex items-center justify-start gap-2">
+            <input
+              type="checkbox"
+              checked={checkboxes.ElectronicMessage}
+              onChange={() => handleCheckboxChange("ElectronicMessage")}
+              className="accent-primary cursor-pointer"
+            />
+            <div
+              className="text-xs font-semibold underline cursor-pointer"
+              onClick={() =>
+                handleOpenModal(
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.title"
+                  ),
+                  t(
+                    "registerForm.registerFormCheckBox.ElectronicMessage.content"
+                  )
+                )
+              }
+            >
+              {t("registerForm.registerFormCheckBox.ElectronicMessage.title")}
             </div>
           </div>
 

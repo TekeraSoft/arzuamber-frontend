@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { filterData } from "@/constans/Filter";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
-import { MdFilterListAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -12,7 +11,7 @@ import {
   getAllColorsDispatch,
   getAllProductsDispatch,
 } from "@/store/productSlice";
-import { getCategoriesDispatch } from "@/store/categorySlice";
+import { getCategoriesDispatch, setShortCategory } from "@/store/categorySlice";
 
 function Filter({
   currnetPage,
@@ -25,7 +24,9 @@ function Filter({
 }) {
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
-  const { categories } = useSelector((state: RootState) => state.category);
+  const { categories, shortCategory } = useSelector(
+    (state: RootState) => state.category
+  );
   const { colors } = useSelector((state: RootState) => state.products);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
 
@@ -39,6 +40,9 @@ function Filter({
     // subCategories: null,
   });
 
+  // Menü görünürlüğünü kontrol etmek için
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [openState, setOpenState] = useState({
     size: false,
     color: false,
@@ -46,12 +50,15 @@ function Filter({
     length: false,
   });
 
-  // Menü görünürlüğünü kontrol etmek için
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   // Filtre seçimlerini güncelleme işlevi
   useEffect(() => {
-    const activeCategory = selectedFilters.categories;
+    const activeCategory = shortCategory
+      ? shortCategory
+      : selectedFilters.categories;
+
+    if (activeCategory == shortCategory) {
+      selectedFilters.categories = shortCategory;
+    }
 
     // Eğer herhangi bir filtre değiştiyse
     const hasFilterChanged =
@@ -63,6 +70,7 @@ function Filter({
 
     if (hasFilterChanged) {
       // Burada eski ve yeni filtreleri karşılaştırabiliriz
+
       dispatch(
         filterProductDispatch({
           size: selectedFilters.sizes,
@@ -73,6 +81,7 @@ function Filter({
           pageSize: pageSize,
         })
       );
+      console.log("if çalıstı");
     } else {
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
       dispatch(
@@ -85,6 +94,7 @@ function Filter({
           pageSize: pageSize,
         })
       );
+      console.log("else calıstı");
     }
 
     dispatch(getCategoriesDispatch());
@@ -99,6 +109,8 @@ function Filter({
     currnetPage,
     pageSize,
     slug,
+    selectedFilters,
+    shortCategory,
   ]);
 
   // Menü açma / kapama işlemi
@@ -113,9 +125,9 @@ function Filter({
         onClick={toggleMenu}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-28 right-4  md:hidden p-1 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  `}
+        }   top-24 right-4  md:hidden px-3 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
       >
-        <MdFilterListAlt size={24} />
+        {t("Filter.title")}
       </button>
 
       {/* Açılır Menü */}
@@ -170,7 +182,10 @@ function Filter({
             >
               {categories.map((category, index) => (
                 <li key={index} className="flex flex-col gap-y-2">
-                  <div className="flex items-center gap-x-3">
+                  <div
+                    className="flex items-center gap-x-3"
+                    onClick={() => dispatch(setShortCategory(""))}
+                  >
                     <input
                       type="checkbox" // checkbox olarak kullanıyoruz
                       className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
@@ -179,6 +194,7 @@ function Filter({
                       onChange={(e) => {
                         if (selectedFilters.categories === category.name) {
                           // Eğer bu kategori zaten seçiliyse, seçili kategoriyi kaldır
+
                           setSelectedFilters({
                             ...selectedFilters,
                             categories: null, // Kategoriyi kaldır
@@ -455,7 +471,10 @@ function Filter({
           >
             {categories.map((category, index) => (
               <li key={index} className="flex flex-col gap-y-2">
-                <div className="flex items-center gap-x-3">
+                <div
+                  className="flex items-center gap-x-3"
+                  onClick={() => dispatch(setShortCategory(""))}
+                >
                   <input
                     type="checkbox" // checkbox olarak kullanıyoruz
                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"

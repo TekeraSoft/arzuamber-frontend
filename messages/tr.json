@@ -45,9 +45,7 @@
     "noAccount": "Hesabınız yok mu? Kayıt olun",
     "errors": {
       "email": "Geçerli bir e-posta adresi giriniz",
-      "emailRequired": "E-posta zorunludur",
-      "passwordMin": "Şifre en az 6 karakter olmalıdır",
-      "passwordRequired": "Şifre zorunludur"
+      "emailRequired": "E-posta zorunludur"
     }
   },
 
@@ -67,12 +65,16 @@
       "surnameMin": "Soyisim en az 2 karakter olmalıdır",
       "surnameMax": "Soyisim en fazla 50 karakter olmalıdır",
       "surnameRequired": "Soyisim zorunludur",
-      "email": "Geçerli bir e-posta adresi giriniz",
+      "email": "Geçerli bir e-posta adresi giriniz(@gmail.com,@outlook.com,@hotmail.com)",
       "emailRequired": "E-posta zorunludur",
+      "passwordMatch": "Şifreler eşleşmiyor",
+      "rePasswordRequired": "Şifre tekrar alanı zorunludur",
       "passwordMin": "Şifre en az 6 karakter olmalıdır",
       "passwordRequired": "Şifre zorunludur",
-      "passwordMatch": "Şifreler eşleşmiyor",
-      "rePasswordRequired": "Şifre tekrar alanı zorunludur"
+      "passwordUpperCase": "Şifre en az bir büyük harf içermelidir.",
+      "passwordLowerCase": "Şifre en az bir küçük harf içermelidir.",
+      "passwordNumber": "Şifre en az bir rakam içermelidir.",
+      "passwordSpecialChar": "Şifre en az bir özel karakter içermelidir."
     },
     "registerFormCheckBox": {
       "KVKK": {
@@ -435,7 +437,7 @@
     "securePayment": "Güvenli ve Kolay Ödeme",
     "carefulPackaging": "Özenli Paketleme",
     "phone": "Telefon",
-    "companyName": "ARZUAMBER TEKSTİL SAN. TİC. LTD. ŞTİ"
+    "companyName": "ARZUAMBER MODA SAN. & TİC. LTD. ŞTİ"
   },
 
   "DistanceSellingContract": {

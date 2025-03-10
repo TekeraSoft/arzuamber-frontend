@@ -37,7 +37,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="w-full flex justify-start lg:justify-end items-center">
+    <div className="w-full flex justify-start lg:justify-end items-center ">
       {SearchOpen ? (
         <motion.div
           initial="hidden"
@@ -68,7 +68,7 @@ function SearchBar() {
         </motion.div>
       ) : (
         <button
-          className=" w-9 h-9  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 lg:rounded-full rounded-br"
+          className=" w-9 h-9  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 lg:rounded-full rounded-br border-r border-b border-slate-300"
           onClick={() => setSearchOpen(true)}
         >
           <BiSearch size={16} />

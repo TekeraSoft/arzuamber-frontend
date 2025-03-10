@@ -49,7 +49,11 @@
       "email": "Enter a valid email address",
       "emailRequired": "Email is required",
       "passwordMin": "Password must be at least 6 characters",
-      "passwordRequired": "Password is required"
+      "passwordRequired": "Password is required",
+      "passwordUpperCase": "Password must contain at least one uppercase letter.",
+      "passwordLowerCase": "Password must contain at least one lowercase letter.",
+      "passwordNumber": "Password must contain at least one number.",
+      "passwordSpecialChar": "Password must contain at least one special character."
     }
   },
   "registerForm": {
@@ -75,7 +79,11 @@
       "passwordMin": "Password must be at least 6 characters",
       "passwordRequired": "Password is required",
       "passwordMatch": "Passwords do not match",
-      "rePasswordRequired": "Confirm password is required"
+      "rePasswordRequired": "Confirm password is required",
+      "passwordUpperCase": "Password must contain at least one uppercase letter.",
+      "passwordLowerCase": "Password must contain at least one lowercase letter.",
+      "passwordNumber": "Password must contain at least one number.",
+      "passwordSpecialChar": "Password must contain at least one special character."
     },
     "registerFormCheckBox": {
       "KVKK": {
@@ -511,7 +519,7 @@
     "fastDelivery": "Super Fast Delivery",
     "securePayment": "Secure and Easy Payment",
     "carefulPackaging": "Careful Packaging",
-    "companyName": "ARZUAMBER TEXTILE IND. & TRADE LTD",
+    "companyName": "ARZUAMBER FASHION IND. & TRADE LTD",
     "phone": "Phone"
   },
 
