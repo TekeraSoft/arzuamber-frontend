@@ -17,7 +17,6 @@ import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { FaUserShield } from "react-icons/fa";
 import SearchBar from "./SearchBar";
-import { IoLogInOutline } from "react-icons/io5";
 import { BiSearch } from "react-icons/bi";
 
 function Navbar() {
@@ -124,25 +123,29 @@ function Navbar() {
 
             <li
               className={
-                "  text-secondary relative flex justify-center items-center   "
+                "  text-secondary  flex justify-center items-center   "
               }
             >
               {!session ? (
                 <button
                   onClick={() => {
-                    setOpenMenu(false);
                     SetLoginRegisterMenu(!loginRegisterMenu);
                   }}
                   onMouseLeave={() => {
-                    SetLoginRegisterMenu(!loginRegisterMenu);
+                    SetLoginRegisterMenu(false);
                   }}
                   className="flex justify-center items-center w-full  text-center   "
                 >
-                  <div className=" relative  gap-1 border border-primary rounded-full  p-1   transition-all duration-300">
+                  <div
+                    className="  relative  gap-1 border border-primary rounded-full  p-1   transition-all duration-300"
+                    onMouseLeave={() => {
+                      SetLoginRegisterMenu(false);
+                    }}
+                  >
                     <FaUser size={16} />
 
-                    {loginRegisterMenu && (
-                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-5 -right-4 px-0.5  py-1">
+                    {loginRegisterMenu == true && (
+                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-full -right-4 px-0.5  py-1">
                         <span
                           className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
                           onClick={() => {
@@ -290,15 +293,20 @@ function Navbar() {
                       SetLoginRegisterMenu(!loginRegisterMenu);
                     }}
                     onMouseLeave={() => {
-                      SetLoginRegisterMenu(!loginRegisterMenu);
+                      SetLoginRegisterMenu(false);
                     }}
                     className="flex justify-center items-center w-full  text-center   "
                   >
-                    <div className=" relative  gap-1   p-1   transition-all duration-300">
+                    <div
+                      className=" relative  gap-1   p-1   transition-all duration-300"
+                      onMouseLeave={() => {
+                        SetLoginRegisterMenu(false);
+                      }}
+                    >
                       <FaUser size={26} />
 
                       {loginRegisterMenu && (
-                        <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-8 -right-4 px-0.5  py-1">
+                        <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-24 border rounded-md top-8 -right-8 px-0.5  py-1">
                           <span
                             className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
                             onClick={() => {
