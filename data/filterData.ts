@@ -70,4 +70,6 @@ export const filterData: Filter = {
         name: "Uzunluklar",
         values: ["Mini", "Midi", "Maxi"],
     },
+    shippingPrice: 90,
+    maxShippingPrice: 2000
 };

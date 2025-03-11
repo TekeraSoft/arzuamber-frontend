@@ -33,18 +33,23 @@ function AllProductAdminPage() {
         return rowData.colorSize.length > 0;
     };
 
-  const imageBodyTemplate = (rowData,options) => {
-    return (
-      <div style={{ display: "flex", gap: "5px" }}>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${rowData.colorSize[0].images[0]}`}
-            alt={rowData.colorSize[0].images[0]}
-            width={35}
-            height={35}
-            className={"rounded"}
-          />
-      </div>
-    );
+  const imageBodyTemplate = (rowData) => {
+      return (
+          <div style={{ display: "flex", gap: "5px" }}>
+              {
+                  rowData.colorSize.map((item,index)=> (
+                      <Image
+                          key={index}
+                          src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.images[0]}`}
+                          alt={item.images[0]}
+                          width={35}
+                          height={35}
+                          className={"rounded"}
+                      />
+                  ))
+              }
+          </div>
+      );
   };
 
   const rowExpansionTemplate = (data) => {
@@ -97,8 +102,13 @@ function AllProductAdminPage() {
       className={'rounded-lg'}
       tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
       paginator
+      lazy={true}
+      first={pageable.currentPage * pageable.size}
       rows={pageable.size}
-      rowsPerPageOptions={[15, 30, 50, 70, page.totalElements]}
+      rowsPerPageOptions={[15, 30, 50, 70]}
+      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      currentPageReportTemplate="{first} to {last} of {totalRecords}"
+      totalRecords={page.totalElements}
       onPage={onPageChange}
       loading={loading}
       rowExpansionTemplate={rowExpansionTemplate}
@@ -107,11 +117,10 @@ function AllProductAdminPage() {
     >
         <Column expander={allowExpansion} style={{ width: '5rem' }} />
       <Column header={"Resimler"} body={imageBodyTemplate} />
-      <Column field="name" header="Ürün Adı" sortable />
-      <Column field="category" header="Kategori" sortable />
+      <Column field="name" header="Ürün Adı" />
+      <Column field="category" header="Kategori" />
       <Column
         field="price"
-        sortable
         bodyStyle={{ fontWeight: "bold" }}
         body={(row)=> row.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
         header={() => (
@@ -145,9 +154,9 @@ function AllProductAdminPage() {
           </span>
         )}
       />
-      <Column field={"purchasePrice"} header={"Satın Alım"} sortable body={(row) =>
+      <Column field={"purchasePrice"} header={"Satın Alım"} body={(row) =>
           row.purchasePrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} />
-        <Column field={"purchasePrice"} header={"İndirimli Fiyat"} sortable body={(row) =>
+        <Column field={"purchasePrice"} header={"İndirimli Fiyat"} body={(row) =>
             row.discountPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})} />
       <Column
         field={"populate"}

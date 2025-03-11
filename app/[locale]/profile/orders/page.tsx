@@ -11,6 +11,7 @@ import { getUserOrdersDispatch } from "@/store/userSlice";
 import Loading from "@/components/utils/Loading";
 import { Paginator } from "primereact/paginator";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
+import Image from "next/image";
 
 function OrderPage() {
   const { data: session } = useSession();
@@ -35,6 +36,8 @@ function OrderPage() {
     setFirst(event.first);
     setRows(event.rows);
   };
+
+  console.log(orders)
 
   // Sayfalama için gösterilecek siparişleri belirle
   const displayedOrders = orders.slice(first, first + rows);
@@ -104,6 +107,9 @@ function OrderPage() {
                   >
                     <div className="flex justify-between items-center flex-wrap gap-2 w-full ">
                       <div className="flex gap-2 justify-center items-center">
+                        <Image src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.image}`} alt={product.image} width={45} height={45} className={'rounded'} />
+                      </div>
+                      <div className="flex gap-2 justify-center items-center">
                         <p className="text-xs md:text-base font-semibold break-words">
                           {product.name}
                         </p>
@@ -149,15 +155,15 @@ function OrderPage() {
             </div>
           ))}
           {orders.length > rows && (
-            <div className="card">
-              <Paginator
-                first={first}
-                rows={rows}
-                totalRecords={orders.length}
-                rowsPerPageOptions={[10, 20, 30]}
-                onPageChange={onPageChange}
-              />
-            </div>
+              <div className="card">
+                <Paginator
+                    first={first}
+                    rows={rows}
+                    totalRecords={orders.length}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                />
+              </div>
           )}
         </>
       )}

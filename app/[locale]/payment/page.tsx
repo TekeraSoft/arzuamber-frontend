@@ -9,6 +9,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import PaymentForm from "@/components/payment/PaymentForm";
+import {filterData} from "@/data/filterData";
+import {Button} from "primereact/button";
 
 const PaymentPage = () => {
   // const t = useTranslations();
@@ -21,12 +23,17 @@ const PaymentPage = () => {
   }, [cartProducts, navigation]);
 
   return (
-    <div className="md:container md:mx-auto rounded-lg my-20">
+    <div className="md:mx-32 mx-4 rounded-lg my-20">
       {/* İçerikler için container */}
-      <div className="  flex flex-col-reverse md:flex-row w-full items-start justify-center gap-2 bg-mywhite rounded-lg px-4 py-2">
+      <div className="  flex flex-col-reverse md:flex-row w-full md:gap-x-4 items-start justify-center rounded-lg">
         {/* Sol taraftaki içerik */}
 
-        <div className="w-full md:w-1/2 relative bg-white py-1  border border-gray-200 px-4 my-2 rounded-lg">
+        {/* Sağ taraftaki içerik */}
+        <div className="md:w-2/3 w-full  border rounded-lg animate__animated animate__backInDown md:mt-0 mt-6 bg-white px-3">
+          <PaymentForm />
+        </div>
+
+        <div className="w-full md:w-1/3 relative bg-white py-1 border border-gray-200 px-4 rounded-lg animate__animated animate__backInDown">
           {cartProducts.map((item, index) => (
             <div
               key={index}
@@ -53,7 +60,7 @@ const PaymentPage = () => {
                     <span className="mr-1">
                       {t("PaymentSummaryProductDetail.Price")}:
                     </span>
-                    ₺{item.price}
+                    {item.price.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                   </p>
                 </div>
                 <div className="text-xs text-gray-600 mt-1">
@@ -77,14 +84,16 @@ const PaymentPage = () => {
                 {t("PaymentSummaryProductDetail.Product")}
               </p>
               <p className="font-semibold text-lg text-secondary">
-                ₺{total.toFixed(2)}
+                {total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
               </p>
             </div>
 
-            <div className="flex flex-row justify-between items-center text-sm font-medium w-full">
+            <div className="flex flex-row justify-between items-center my-4 font-medium w-full">
               <p>{t("PaymentSummaryProductDetail.Shipping")}</p>
               <p className="font-semibold text-gray-600">
-                {t("PaymentSummaryProductDetail.ShippingText")}
+                {
+                   total >= filterData.maxShippingPrice ? t("PaymentSummaryProductDetail.ShippingText") : filterData.shippingPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})
+                }
               </p>
             </div>
 
@@ -92,16 +101,14 @@ const PaymentPage = () => {
               <p>{t("PaymentSummaryProductDetail.KDV")}</p>
             </div>
 
-            <div className="flex flex-row justify-between items-center text-xl font-semibold w-full border-t pt-2">
-              <p>{t("PaymentSummaryProductDetail.Total")}</p>
-              <p className="text-primary">₺{total.toFixed(2)}</p>
+            <div className="flex bg-gray-50 p-4 flex-row justify-between items-center text-xl font-semibold w-full rounded-lg pt-2">
+              <p className={'text-primary text-2xl'}>Toplam</p>
+              <p className="text-primary">{((total >= filterData.maxShippingPrice) ? total : (total + filterData.shippingPrice)).toLocaleString('tr-TR', {
+                style: 'currency',
+                currency: 'TRY'
+              })}</p>
             </div>
           </div>
-        </div>
-
-        {/* Sağ taraftaki içerik */}
-        <div className="md:w-1/2 w-full border my-2 rounded-lg px-3">
-          <PaymentForm />
         </div>
       </div>
     </div>

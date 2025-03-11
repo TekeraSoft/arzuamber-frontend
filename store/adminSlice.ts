@@ -36,6 +36,9 @@ export const adminSlice = createSlice({
             state.orders = action.payload._embedded.orderDtoes;
             state.page = action.payload.page;
         },
+        reduceOrders: (state, action) => {
+            state.orders = state.orders.filter(order => order.id !== action.payload)
+        },
         getCategories: (state, action) => {
             state.categories = action.payload;
         },
@@ -210,6 +213,18 @@ export const getAllOrdersDispatch = (page: number, size:number) => async (dispat
     })
 }
 
+export const deleteOrderDispatch = (id: string) => async(dispatch) => {
+    dispatch(loading(false))
+    deleteGuardRequest({controller:'admin',action:'delete-order',params:{id: id}}).then(res=> {
+        dispatch(loading(false))
+        dispatch(reduceOrders(id))
+        toast.success(res.data.message);
+    }).catch(err => {
+        dispatch(loading(false))
+        toast.error(err.response.data);
+    })
+}
+
 export const createBlogDispatch = (value: object,resetForm:()=> void) => async(dispatch) => {
     dispatch(loading(true))
     postGuardRequest({controller:'admin',action:'create-blog'},value).then(res=> {
@@ -263,5 +278,6 @@ export const {
     getCategories,
     getColors,
     getOrders,
-    getSliders} = adminSlice.actions;
+    getSliders,
+    reduceOrders} = adminSlice.actions;
 export default adminSlice.reducer;

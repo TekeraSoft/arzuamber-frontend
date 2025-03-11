@@ -1,11 +1,24 @@
+"use client"
 import PageContainer from "@/components/Containers/PageContainer";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaTruckFast } from "react-icons/fa6";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {useEffect} from "react";
+import {clearCart} from "@/store/cartSlice";
 
 const SuccessPage = () => {
   const t = useTranslations();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const {cartProducts} = useSelector((state:RootState)=> state.cart)
+  useEffect(() => {
+    if(cartProducts.length > 0) {
+      dispatch(clearCart())
+    }
+  }, []);
 
   return (
     <PageContainer>

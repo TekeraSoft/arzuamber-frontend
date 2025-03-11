@@ -8,8 +8,8 @@ import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
 import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -17,6 +17,7 @@ import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import NextSeoHead from "../utils/NextSeoHead";
 import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
+import {Button} from "primereact/button";
 
 const responsive = {
   superLargeDesktop: {
@@ -46,6 +47,7 @@ const DetailClient = ({ product }: productProps) => {
   const t = useTranslations();
 
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0]);
+  const {loading} = useSelector((state: RootState) => state.cart);
   const [errorState, setErrorState] = useState({
     sizeError: false,
     colorError: false,
@@ -412,7 +414,8 @@ const DetailClient = ({ product }: productProps) => {
           </span>
 
           <div className="flex justify-start items-center gap-2 h-12">
-            <button
+            <Button
+                loading={loading}
               onClick={() => {
                 if (!stateProduct.size) {
                   setErrorState({ ...errorState, sizeError: true });
@@ -441,11 +444,11 @@ const DetailClient = ({ product }: productProps) => {
                 }
               }}
               className={
-                "bg-secondary h-12 w-3/4 rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
+                "bg-secondary h-12 w-3/4 !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
               }
             >
               {t("productDetail.productAddCart")}
-            </button>
+            </Button>
           </div>
 
           <div className="w-full flex  justify-center items-center">

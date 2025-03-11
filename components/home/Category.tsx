@@ -22,12 +22,12 @@ function Category() {
   );
 
   return (
-    <div className="md:container mx-2 md:mx-auto mt-24 lg:mt-28 my-2">
+    <div className="md:container md:mx-auto mt-20 md:mt-24 mb-8 my-2">
       {loading ? (
         <Loading />
       ) : (
         <div
-          className="flex items-center justify-between overflow-x-auto space-x-5 p-0.5 md:py-0.5 "
+          className="flex items-center justify-between overflow-x-auto gap-x-4 md:py-0.5 "
           style={{
             scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
             msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için

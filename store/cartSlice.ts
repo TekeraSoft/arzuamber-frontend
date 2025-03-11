@@ -17,6 +17,7 @@ const getInitialState = () => {
     return {
       cartProducts: [],
       total: 0,
+      loading: false
     };
   }
 
@@ -42,25 +43,34 @@ export const cartSlice = createSlice({
   reducers: {
     // Sepete ürün ekleme işlemi
     addToCart: (state, action) => {
-      const { size, color, name, id, image, price, quantity } = action.payload;
+      state.loading = true
+      const { size, color, id, quantity } = action.payload;
       const existingProduct = state.cartProducts.find(
         (p) => p.id === id && p.color === color && p.size === size
       );
       if (existingProduct) {
-        state.total = price * quantity;
-        existingProduct.quantity = quantity;
+        existingProduct.quantity = quantity
+        state.total = state.cartProducts.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+        );
       } else {
         state.cartProducts.push(action.payload);
-        state.total += price * action.payload.quantity;
+        state.total = state.cartProducts.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+        );
       }
       localStorage.setItem(
         "cart",
         JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
       );
+      state.loading = false;
     },
 
     //Sepetten ürün silme işlemi
     removeFromCart: (state, action) => {
+      state.loading = true;
       state.cartProducts = state.cartProducts.filter(
         (item) =>
           !(
@@ -75,17 +85,22 @@ export const cartSlice = createSlice({
         "cart",
         JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
       );
+      state.loading = false;
     },
     clearCart: (state) => {
+      state.loading = false;
       state.cartProducts = [];
       state.total = 0;
       localStorage.removeItem("cart");
-      // toast.warning(t("productDetail.productsClearedCart"));
-    },
+      state.loading = false;
+    }
   },
 });
 
 // Reducer'ları dışa aktarma
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

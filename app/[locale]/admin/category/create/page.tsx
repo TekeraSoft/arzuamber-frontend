@@ -141,8 +141,6 @@ function AdminCreateCategory() {
         dispatch(createCategoryDispatch(formData)); // ✅ Doğru fonksiyonu çağır!
     };
 
-    console.log(localCategories);
-
   return (
     <div className="flex flex-col items-center justify-center">
       <h3 className="text-gray-500 font-bold text-xl text-center">
@@ -197,9 +195,9 @@ function AdminCreateCategory() {
                                   const file = images.find(i => i.name.split("_")[0] === item.name);
                                   return (item.image || (images.length > 0 && file)) ? (
                                       <img
-                                          src={item.image
-                                              ? `${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`
-                                              : file ? URL.createObjectURL(file) : ""
+                                          src={file
+                                              ? URL.createObjectURL(file)
+                                              :  `${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`
                                           }
                                           alt="Preview"
                                           className="w-16 h-16 object-cover rounded-lg"

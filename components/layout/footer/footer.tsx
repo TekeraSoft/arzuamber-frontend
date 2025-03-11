@@ -19,7 +19,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full h-full mt-5">
+    <footer className="w-full h-full">
       {/* İcons */}
       <FooterIcons />
 

@@ -18,7 +18,7 @@ import EmptyCart from "./EmptyCart";
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { cartProducts, total } = useSelector((state: RootState) => state.cart);
+  const { cartProducts, total, loading } = useSelector((state: RootState) => state.cart);
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -68,6 +68,9 @@ function CartSidebar() {
             ref={modalRef}
             className={`w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
+            {
+                loading && <div className={'absolute bg-opacity-100 bg-secondary w-full h-screen'}><Loading /></div>
+            }
             <div className="absolute top-3 right-3">
               <Button
                 icon={MdClose}

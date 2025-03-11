@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-      {/*<Category />*/}
+      <Category />
       <HomeSlider />
 
       <BackGroundImageContainer>
