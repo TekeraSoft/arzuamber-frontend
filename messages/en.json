@@ -198,7 +198,14 @@
         "BillingAddress": "Billing Address"
       },
       "Button": "PAYMENT",
-      "choose": "Select"
+      "choose": "Select",
+      "DescPayment": "Payment Information",
+      "paymentDetailAdress": "Address",
+      "PaymentDetailBillingAddress": "Billing Address",
+      "ShoppingDetail": "Shopping Detail",
+      "Back": "Back",
+      "Missingİnformation": "Please fill in the missing fields",
+      "EditInformation": "Edit Information"
     },
 
     "paymentCard": {
@@ -319,6 +326,13 @@
     "noOrders": "You have no orders yet.",
     "startShopping": "Start shopping now to place your first order!",
     "order": "Order",
+    "shippingAddress": "Shipping Address",
+    "contactName": "Contact Name",
+    "DetailAdres": "Detail Address",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
     "status": "Status",
     "statuses": {
       "PAID": "Paid",

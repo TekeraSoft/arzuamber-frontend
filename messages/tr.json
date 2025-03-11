@@ -172,6 +172,7 @@
         "expireYearLabel": "Yıl"
       },
       "BuyerInfo": {
+        "title": "Müşteri Bilgileri",
         "name": "İsim",
         "surname": "Soy isim",
         "phone": "Telefon",
@@ -189,7 +190,19 @@
         "BillingAddress": "Fatura Adresi"
       },
       "choose": "Seçiniz",
-      "Button": "ÖDEME YAP"
+      "Button": "ÖDEME YAP",
+      "DescPayment": "Ödeme Bilgileri",
+      "paymentDetailAdress": "Adres",
+      "PaymentDetailBillingAddress": "Fatura Adresi",
+      "ShoppingDetail": "Alışveriş Detayı",
+      "Back": "Geri",
+      "Missingİnformation": "Lütfen eksik alanları doldurunuz",
+      "EditInformation": "Bilgileri Düzenle",
+      "BuyerInfoTitle": "Buyer İnformati",
+      "name": "İsim",
+      "surname": "Soy isim",
+      "phone": "Telefon",
+      "email": "E-posta"
     },
 
     "paymentCard": {
@@ -338,6 +351,13 @@
     "startShopping": "İlk siparişinizi vermek için şimdi alışveriş yapmaya başlayın!",
     "order": "Siparişler",
     "status": "Durum",
+    "shippingAddress": "Teslimat Adresi",
+    "contactName": "İletişim Adı",
+    "DetailAdres": "Detaylı Adres",
+    "street": "Sokak",
+    "city": "Şehir",
+    "state": "Eyalet",
+    "country": "Ülke",
     "statuses": {
       "PAID": "Ödendi",
       "PENDING": "Beklemede",
