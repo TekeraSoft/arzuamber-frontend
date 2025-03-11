@@ -133,6 +133,9 @@ function Navbar() {
                     setOpenMenu(false);
                     SetLoginRegisterMenu(!loginRegisterMenu);
                   }}
+                  onMouseLeave={() => {
+                    SetLoginRegisterMenu(!loginRegisterMenu);
+                  }}
                   className="flex justify-center items-center w-full  text-center   "
                 >
                   <div className=" relative  gap-1 border border-primary rounded-full  p-1   transition-all duration-300">
@@ -284,6 +287,9 @@ function Navbar() {
                   <button
                     onClick={() => {
                       setOpenMenu(false);
+                      SetLoginRegisterMenu(!loginRegisterMenu);
+                    }}
+                    onMouseLeave={() => {
                       SetLoginRegisterMenu(!loginRegisterMenu);
                     }}
                     className="flex justify-center items-center w-full  text-center   "

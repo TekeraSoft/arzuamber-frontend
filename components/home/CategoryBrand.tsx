@@ -22,9 +22,9 @@ export default function CategoryBrand() {
 
   return (
     <div className="container mx-auto mt-16 lg:mt-20 px-4">
-      <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10 uppercase tracking-widest">
+      {/* <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10 uppercase tracking-widest">
         Kategoriler
-      </h2>
+      </h2> */}
 
       {loading ? (
         <Loading />
