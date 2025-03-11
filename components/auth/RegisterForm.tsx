@@ -132,16 +132,10 @@ function RegisterForm() {
           </div>
         </div>
         <div className="w-full relative gap-y-1 flex flex-col">
-          <div className="flex  items-center justify-between gap-1">
-            <label className={"font-medium text-sm"}>
-              {t("registerForm.email")}
-            </label>
-            {formik.touched.email && formik.errors.email && (
-              <small className="text-[10px] text-red-600  ">
-                {formik.errors.email}
-              </small>
-            )}
-          </div>
+          <label className={"font-medium text-sm"}>
+            {t("registerForm.email")}
+          </label>
+
           <InputText
             id="email"
             onBlur={formik.handleBlur}
@@ -153,20 +147,19 @@ function RegisterForm() {
                 : ""
             }`}
           />
+          {formik.touched.email && formik.errors.email && (
+            <small className="text-[10px] text-red-600  ">
+              {formik.errors.email}
+            </small>
+          )}
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex  gap-2 justify-between items-center">
             <div className="w-full relative gap-y-1 flex flex-col">
-              <div className="flex  items-center justify-between gap-1">
-                <label className={"font-medium text-sm"}>
-                  {t("registerForm.password")}
-                </label>
-                {formik.touched.password && formik.errors.password && (
-                  <small className="text-[10px] text-red-600 ">
-                    {formik.errors.password}
-                  </small>
-                )}
-              </div>
+              <label className={"font-medium text-sm"}>
+                {t("registerForm.password")}
+              </label>
+
               <InputText
                 id="password"
                 type={"password"}
@@ -179,19 +172,19 @@ function RegisterForm() {
                     : ""
                 }`}
               />
+
+              {formik.touched.password && formik.errors.password && (
+                <small className="text-[10px] text-red-600 ">
+                  {formik.errors.password}
+                </small>
+              )}
             </div>
 
             <div className="w-full relative gap-y-1 flex flex-col">
-              <div className="flex  items-center justify-between gap-1">
-                <label className={"font-medium text-sm"}>
-                  {t("registerForm.rePassword")}
-                </label>
-                {formik.touched.rePassword && formik.errors.rePassword && (
-                  <small className="text-[10px] text-red-600  ">
-                    {formik.errors.rePassword}
-                  </small>
-                )}
-              </div>
+              <label className={"font-medium text-sm"}>
+                {t("registerForm.rePassword")}
+              </label>
+
               <InputText
                 id="rePassword"
                 type={"password"}
@@ -204,6 +197,11 @@ function RegisterForm() {
                     : ""
                 }`}
               />
+              {formik.touched.rePassword && formik.errors.rePassword && (
+                <small className="text-[10px] text-red-600  ">
+                  {formik.errors.rePassword}
+                </small>
+              )}
             </div>
           </div>
           <div className="text-[10px] font-bold text-primary">
