@@ -89,7 +89,7 @@ const DetailClient = ({ product }: productProps) => {
   };
 
   return (
-    <PageContainer>
+    <div className="container mx-auto md:mt-24 ">
       <NextSeoHead
         name={product.name}
         description={product.description}
@@ -108,7 +108,7 @@ const DetailClient = ({ product }: productProps) => {
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-full  "
+                className="flex justify-center items-center w-full h-full"
               >
                 <Image
                   className=" w-full h-full object-cover rounded-lg "
@@ -176,6 +176,7 @@ const DetailClient = ({ product }: productProps) => {
             {product.colorSize.map((item, index) => (
               <button
                 onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                   setStockSizeState(item);
                   setStateProduct({
                     size: "",
@@ -503,7 +504,7 @@ const DetailClient = ({ product }: productProps) => {
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         />
       </div>
-    </PageContainer>
+    </div>
   );
 };
 
