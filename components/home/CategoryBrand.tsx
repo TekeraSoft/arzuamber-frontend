@@ -7,18 +7,13 @@ import { getCategoriesDispatch } from "@/store/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-// import { useTranslations } from "next-intl";
-import { motion } from "framer-motion"; // Framer Motion'ı dahil ettik
-import AOS from "aos"; // AOS kütüphanesini dahil ettik
-import "aos/dist/aos.css"; // AOS CSS'i dahil ettik
+import { motion } from "framer-motion"; // Animasyonlar için
 
 export default function CategoryBrand() {
   const dispatch = useDispatch<AppDispatch>();
-  // const t = useTranslations();
 
   useEffect(() => {
     dispatch(getCategoriesDispatch());
-    AOS.init(); // AOS animasyonlarını başlatıyoruz
   }, [dispatch]);
 
   const { categories, loading } = useSelector(
@@ -26,41 +21,36 @@ export default function CategoryBrand() {
   );
 
   return (
-    <div className="md:container mx-2 md:mx-auto mt-24 lg:mt-28 my-2">
+    <div className="container mx-auto mt-16 lg:mt-20 px-4">
+      <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10 uppercase tracking-widest">
+        Kategoriler
+      </h2>
+
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           {categories.map((category, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-center justify-center cursor-pointer"
-              initial={{ opacity: 0, scale: 0.8 }} // Başlangıç animasyonu
-              animate={{ opacity: 1, scale: 1 }} // Hedef animasyonu
-              transition={{ duration: 0.5 }} // Geçiş süresi
-              data-aos="fade-up" // AOS animasyonu
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative group overflow-hidden rounded-lg shadow-lg"
             >
-              <Link
-                href={`/category/${category.name}`}
-                className="relative w-full"
-              >
-                {/* Kategori Resmi */}
-                <div className="relative w-full h-64 mb-2 overflow-hidden rounded-xl shadow-lg">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
-                    alt={category.name}
-                    layout="fill"
-                    objectFit="cover"
-                    priority
-                    className="transition-transform transform hover:scale-110" // Hover efekti
-                  />
+              <Link href={`/category/${category.name}`} className="block">
+                {/* Kategori Görseli */}
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
+                  alt={category.name}
+                  width={600}
+                  height={400}
+                  className="w-full h-[220px] object-cover transition-transform duration-300 group-hover:scale-105"
+                />
 
-                  {/* Kategori İsmi */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-md transition-opacity duration-300 hover:bg-opacity-60">
-                    <h3 className="text-white text-xl md:text-2xl font-bold">
-                      {category.name}
-                    </h3>
-                  </div>
+                {/* Kategori İsmi */}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-lg font-medium uppercase tracking-wider opacity-100 transition-opacity duration-300">
+                  {category.name}
                 </div>
               </Link>
             </motion.div>

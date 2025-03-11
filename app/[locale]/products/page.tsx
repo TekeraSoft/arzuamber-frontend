@@ -39,13 +39,13 @@ function Products() {
   const { categories } = useSelector((state: RootState) => state.category);
 
   return (
-    <main className="md:mx-auto md:container mt-24  overflow-hidden">
+    <main className="md:mx-auto md:container   overflow-hidden">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
         <div className="w-full mb-3 h-full">
           <div
-            className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 "
+            className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 mb-2 "
             style={{
               scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
               msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için

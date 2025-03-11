@@ -22,7 +22,7 @@ function Category() {
   );
 
   return (
-    <div className="md:container mx-2 md:mx-auto mt-24 lg:mt-28 my-2">
+    <div className="md:container mx-2 md:mx-auto mt-20 my-2">
       {loading ? (
         <Loading />
       ) : (

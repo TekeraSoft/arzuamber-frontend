@@ -13,6 +13,8 @@ import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { FaUserShield } from "react-icons/fa";
 import SearchBar from "./SearchBar";
+import { IoLogInOutline } from "react-icons/io5";
+import { BiSearch } from "react-icons/bi";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -44,6 +46,8 @@ function Navbar() {
     { name: t("navLinks.contact"), url: "/contact" },
   ];
 
+  const [SearchOpen, setSearchOpen] = useState(false);
+
   const openCart = () => {
     dispatch(openCartModal());
   };
@@ -60,6 +64,15 @@ function Navbar() {
 
           {/* Hamburger Menu (Mobile) */}
           <div className="lg:hidden flex items-center justify-center gap-4 ">
+            {!SearchOpen && (
+              <button
+                className="lg:hidden w-7 h-7  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 rounded-full "
+                onClick={() => setSearchOpen(!SearchOpen)}
+              >
+                <BiSearch size={14} />
+              </button>
+            )}
+
             <li
               className="flex  justify-center items-center relative z-50"
               onMouseLeave={() => setIsLangDropdownOpen(false)}
@@ -118,9 +131,11 @@ function Navbar() {
                   }}
                   className="flex justify-center items-center w-full  text-center   "
                 >
-                  <span className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
+                  {/* <span className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
                     {t("menuItems.login")}
-                  </span>
+                  </span> */}
+
+                  <IoLogInOutline size={29} />
                 </button>
               ) : session?.user.role[0] === "ADMIN" ? (
                 <button
@@ -187,12 +202,15 @@ function Navbar() {
           {/* Search (Desktop) */}
           {
             <div className=" hidden  lg:flex w-1/2">
-              <SearchBar />
+              <SearchBar
+                SearchOpen={SearchOpen}
+                setSearchOpen={setSearchOpen}
+              />
             </div>
           }
 
           {/* Icons */}
-          <ul className="hidden lg:flex items-center justify-center gap-x-6">
+          <ul className="hidden lg:flex items-center justify-center gap-x-6  max-w-48">
             <li
               className="relative z-50"
               onMouseLeave={() => setIsLangDropdownOpen(false)}
@@ -236,16 +254,17 @@ function Navbar() {
               </button>
             </li>
 
-            <ul className="hidden lg:flex gap-x-4 items-center text-base font-semibold relative">
+            <ul className="hidden lg:flex justify-center items-center gap-x-4  text-base font-semibold relative">
               <li className={"text-secondaryDark relative"}>
                 {!session ? (
                   <button
                     onClick={() => {
                       dispatch(openLoginModal());
                     }}
-                    className="flex items-center text-base hover:underline transition-all duration-300"
+                    className="flex items-center  justify-center "
                   >
-                    {t("menuItems.login")}
+                    {/* {t("menuItems.login")} */}
+                    <IoLogInOutline size={32} />
                   </button>
                 ) : session?.user.role[0] === "ADMIN" ? (
                   <button
@@ -342,7 +361,7 @@ function Navbar() {
 
         {!openMenu && (
           <div className="w-full flex lg:hidden ">
-            <SearchBar />
+            <SearchBar SearchOpen={SearchOpen} setSearchOpen={setSearchOpen} />
           </div>
         )}
       </div>

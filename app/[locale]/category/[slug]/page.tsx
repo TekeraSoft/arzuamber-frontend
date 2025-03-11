@@ -38,7 +38,7 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="md:mx-auto md:container mt-24">
+    <main className="md:mx-auto md:container m md:mt-24">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter
           slug={slug}
@@ -46,9 +46,9 @@ function CategoryFilteredProducts() {
           pageSize={pageable.size}
         />
 
-        <div className="w-full mb-3 h-full">
+        <div className="w-full mb-3 h-full overflow-x-hidden">
           <div
-            className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 "
+            className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 p-0.5 "
             style={{
               scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
               msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için

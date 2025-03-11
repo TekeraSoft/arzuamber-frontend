@@ -134,7 +134,7 @@ function Filter({
         onClick={toggleMenu}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-24 right-4  md:hidden px-3 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
+        }   top-[60px] right-3  md:hidden px-6 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
       >
         {t("Filter.title")}
       </button>
@@ -447,6 +447,50 @@ function Filter({
 
             <hr className={"bg-secondaryDark mt-1"} />
           </div>
+
+          {/*  Price Boxes */}
+          {/*
+        <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex gap-2 justify-start items-center">
+            <input
+              type="checkbox"
+              className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+              checked={selectedFilters.lowToHigh}
+              onChange={() => handlePriceOrderChange("lowToHigh")}
+            />
+            <label
+              className={`text-sm transition-all duration-300  ${
+                selectedFilters.lowToHigh
+                  ? "text-primary font-semibold"
+                  : "text-gray-500 font-normal"
+              }`}
+            >
+              Low to High Price
+            </label>
+          </div>
+
+    
+          <div className="w-full flex gap-2 justify-start items-center">
+            <input
+              type="checkbox"
+              className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+              checked={selectedFilters.highToLow}
+              onChange={() => handlePriceOrderChange("highToLow")}
+            />
+            <label
+              className={`text-sm transition-all duration-300 ${
+                selectedFilters.highToLow
+                  ? "text-primary font-semibold"
+                  : "text-gray-500 font-normal"
+              }`}
+            >
+              High to Low Price
+            </label>
+          </div>
+       
+          <hr className="bg-secondaryDark mt-1" />
+        </div>
+   */}
         </div>
       </div>
 

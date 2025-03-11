@@ -9,10 +9,16 @@ import ProductSlider from "@/components/sliders/productSlider/ProductSlider";
 import { useTranslations } from "next-intl";
 import PopulateProductSlider from "@/components/sliders/productSlider/PopulateProductSlider";
 import Category from "@/components/home/Category";
-import CategoryBrand from "@/components/home/CategoryBrand";
+
+import dynamic from "next/dynamic";
 
 export default function Home() {
   const t = useTranslations();
+
+  const CategoryBrand = dynamic(
+    () => import("@/components/home/CategoryBrand"),
+    { ssr: false }
+  );
 
   return (
     <>
@@ -58,7 +64,6 @@ export default function Home() {
           color="black"
           link="/products"
         />
-
         <CategoryBrand />
       </BackGroundImageContainer>
     </>

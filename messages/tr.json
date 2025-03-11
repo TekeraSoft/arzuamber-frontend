@@ -76,7 +76,8 @@
       "passwordUpperCase": "Şifre en az bir büyük harf içermelidir.",
       "passwordLowerCase": "Şifre en az bir küçük harf içermelidir.",
       "passwordNumber": "Şifre en az bir rakam içermelidir.",
-      "passwordSpecialChar": "Şifre en az bir özel karakter içermelidir."
+      "passwordSpecialChar": "Şifre en az bir özel karakter içermelidir.",
+      "passwordSpecials": "Lütfen şifrenizde en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter bulundurun."
     },
     "registerFormCheckBox": {
       "KVKK": {
