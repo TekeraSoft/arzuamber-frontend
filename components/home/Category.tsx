@@ -40,7 +40,7 @@ function Category() {
             {/* Kategori Resmi ve İsim */}
             <div className="flex flex-col items-center">
               {/* Kategori Resmi */}
-              <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-red-600 transition-all duration-300 ease-in-out transform hover:scale-105">
+              <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-green-400 transition-all duration-300 ease-in-out transform hover:scale-105">
                 <Image
                   src={`/images/brand/brand2.jpg`}
                   alt={"brandDescription"}
@@ -67,7 +67,7 @@ function Category() {
               {/* Kategori Resmi ve İsim */}
               <div className="flex flex-col items-center">
                 {/* Kategori Resmi */}
-                <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105  hover:border-red-600">
+                <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105  hover:border-green-400">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
                     alt={category.name}
