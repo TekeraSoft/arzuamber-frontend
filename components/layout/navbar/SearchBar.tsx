@@ -5,9 +5,18 @@ import { BiSearch } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 function SearchBar({ SearchOpen, setSearchOpen }) {
   const t = useTranslations();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 1024);
+    }
+  }, []);
 
   // Animasyon ayarları
   const searchVariants = {
@@ -35,18 +44,16 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   };
 
   return (
-    <div className="w-full flex justify-start lg:justify-end items-center ">
+    <div className="w-full flex justify-start lg:justify-end items-center">
       <motion.div
         initial="hidden"
         animate="visible"
         exit="hidden"
-        variants={
-          window.innerWidth < 1024 ? searchVariants : desktopSearchVariants
-        } // Mobil & Desktop farkı
-        className="  hidden  lg:flex justify-between items-center bg-mywhite text-black px-5 py-1 border-b md:border-none min-w-full gap-1"
+        variants={isMobile ? searchVariants : desktopSearchVariants} // Mobil & Desktop farkı
+        className="hidden lg:flex justify-between items-center bg-mywhite text-black px-5 py-1 border-b md:border-none min-w-full gap-1"
       >
         <div
-          className=" lg:hidden  flex justify-center items-center bg-secondary text-mywhite w-7 h-7  md:w-8 md:h-8 rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
+          className="lg:hidden flex justify-center items-center bg-secondary text-mywhite w-7 h-7 md:w-8 md:h-8 rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
           onClick={() => setSearchOpen(false)}
         >
           <IoMdClose className="text-sm" />
@@ -69,15 +76,13 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
           initial="hidden"
           animate="visible"
           exit="hidden"
-          variants={
-            window.innerWidth < 1024 ? searchVariants : desktopSearchVariants
-          } // Mobil & Desktop farkı
-          className={` ${
+          variants={isMobile ? searchVariants : desktopSearchVariants} // Mobil & Desktop farkı
+          className={`${
             SearchOpen ? "flex" : "hidden"
-          }  justify-between items-center bg-mywhite text-black px-5 py-1 border-b md:border-none min-w-full gap-1`}
+          } justify-between items-center bg-mywhite text-black px-5 py-1 border-b md:border-none min-w-full gap-1`}
         >
           <div
-            className=" lg:hidden  flex justify-center items-center bg-secondary text-mywhite w-7 h-7  md:w-8 md:h-8 rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
+            className="lg:hidden flex justify-center items-center bg-secondary text-mywhite w-7 h-7 md:w-8 md:h-8 rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
             onClick={() => setSearchOpen(false)}
           >
             <IoMdClose className="text-sm" />
