@@ -528,6 +528,8 @@
     "ProductNotFoundText": "Aradığınız ürün bulunamadı.",
     "BlogNotFoundTitle": "Blog Bulunamadı",
     "BlogNotFoundText": "Aradığınız blog bulunamadı.",
+    "BlogsNotFoundTitle": "Hiç Blog Bulunamadı",
+    "BlogsNotFoundText": "Şu anda hiç blog bulunmamaktadır. Lütfen daha sonra tekrar kontrol edin.",
     "requiredText": "Bu alan zorunlu !",
     "ButtonText": "Ana sayfaya git",
     "somethingWentWrong": "Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin.",

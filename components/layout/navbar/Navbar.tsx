@@ -6,7 +6,11 @@ import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
 // import TopBar from "./TopBar";
 import { useDispatch, useSelector } from "react-redux";
-import { openCartModal, openLoginModal } from "@/store/modalsSlice";
+import {
+  openCartModal,
+  openLoginModal,
+  openRegisterModal,
+} from "@/store/modalsSlice";
 import { useLocale } from "next-intl";
 import { AppDispatch, RootState } from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
@@ -20,6 +24,8 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [openUserDropdown, setOpenUserDropdown] = useState(false);
+  const [SearchOpen, setSearchOpen] = useState(false);
+  const [loginRegisterMenu, SetLoginRegisterMenu] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
@@ -45,8 +51,6 @@ function Navbar() {
     { name: t("navLinks.about"), url: "/about" },
     { name: t("navLinks.contact"), url: "/contact" },
   ];
-
-  const [SearchOpen, setSearchOpen] = useState(false);
 
   const openCart = () => {
     dispatch(openCartModal());
@@ -126,16 +130,36 @@ function Navbar() {
               {!session ? (
                 <button
                   onClick={() => {
-                    dispatch(openLoginModal());
                     setOpenMenu(false);
+                    SetLoginRegisterMenu(!loginRegisterMenu);
                   }}
                   className="flex justify-center items-center w-full  text-center   "
                 >
-                  {/* <span className="gap-1 border border-primary rounded-full text-xs  px-2 py-1 hover:bg-secondary hover:text-mywhite hover:border-slate-200 transition-all duration-300">
-                    {t("menuItems.login")}
-                  </span> */}
+                  <div className=" relative  gap-1 border border-primary rounded-full  p-1   transition-all duration-300">
+                    <FaUser size={16} />
 
-                  <IoLogInOutline size={29} />
+                    {loginRegisterMenu && (
+                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-5 -right-4 px-0.5  py-1">
+                        <span
+                          className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
+                          onClick={() => {
+                            dispatch(openRegisterModal());
+                          }}
+                        >
+                          {t("menuItems.signup")}
+                        </span>
+                        <hr className="w-full" />
+                        <span
+                          className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md"
+                          onClick={() => {
+                            dispatch(openLoginModal());
+                          }}
+                        >
+                          {t("menuItems.login")}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </button>
               ) : session?.user.role[0] === "ADMIN" ? (
                 <button
@@ -259,12 +283,36 @@ function Navbar() {
                 {!session ? (
                   <button
                     onClick={() => {
-                      dispatch(openLoginModal());
+                      setOpenMenu(false);
+                      SetLoginRegisterMenu(!loginRegisterMenu);
                     }}
-                    className="flex items-center  justify-center "
+                    className="flex justify-center items-center w-full  text-center   "
                   >
-                    {/* {t("menuItems.login")} */}
-                    <IoLogInOutline size={32} />
+                    <div className=" relative  gap-1   p-1   transition-all duration-300">
+                      <FaUser size={26} />
+
+                      {loginRegisterMenu && (
+                        <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-8 -right-4 px-0.5  py-1">
+                          <span
+                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
+                            onClick={() => {
+                              dispatch(openRegisterModal());
+                            }}
+                          >
+                            {t("menuItems.signup")}
+                          </span>
+                          <hr className="w-full" />
+                          <span
+                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md"
+                            onClick={() => {
+                              dispatch(openLoginModal());
+                            }}
+                          >
+                            {t("menuItems.login")}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </button>
                 ) : session?.user.role[0] === "ADMIN" ? (
                   <button

@@ -538,6 +538,8 @@
     "ProductNotFoundText": "The product you're looking for could not be found.",
     "BlogNotFoundTitle": "Blog Not Found",
     "BlogNotFoundText": "The blog you're looking for could not be found.",
+    "BlogsNotFoundTitle": "No Blogs Available",
+    "BlogsNotFoundText": "There are no blogs available at the moment. Please check back later.",
     "requiredText": "This field is required !",
     "ButtonText": "Go To Home Page ",
     "somethingWentWrong": "Something went wrong. Please try again later.",
