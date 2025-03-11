@@ -1,11 +1,10 @@
 import { postGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
-
 import { createSlice } from "@reduxjs/toolkit";
 import { user } from "@/constans/User";
 
 const initialState = {
-  errorState: '',
+  errorState: "",
   user: user,
   loading: false,
 };
@@ -20,27 +19,24 @@ export const authSlice = createSlice({
     setErrorState: (state, action) => {
       state.errorState = action.payload;
     },
-    removeErrorState: (state, action) => {
-      state.errorState = action.payload;
-    }
   },
 });
 
-export const registerUserDispatch = (value: object,resetForm:()=> void, handleChangeModal: any) => async (dispatch) => {
-  postGuardRequest({ controller: "auth", action: "register" }, value)
-    .then((res) => {
-      toast.success(res.data.message);
-      resetForm()
-      handleChangeModal()
-    })
-    .catch((err) => {
-      dispatch(setErrorState(err.response.data))
-    }).finally(()=> {
-      null
-  })
-};
+export const registerUserDispatch =
+  (value: object, resetForm: () => void, handleChangeModal: any, router) =>
+  async (dispatch) => {
+    postGuardRequest({ controller: "auth", action: "register" }, value)
+      .then((res) => {
+        toast.success(res.data.message);
+        resetForm();
+        handleChangeModal();
+        router.push("/");
+      })
+      .catch((err) => {
+        dispatch(setErrorState(err.response.data));
+      });
+  };
 
 // Reducer'ları dışa aktarma
-export const {setErrorState,removeErrorState} = authSlice.actions;
-
+export const { setErrorState } = authSlice.actions;
 export default authSlice.reducer;

@@ -66,7 +66,7 @@ function CartSidebar() {
         <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start ">
           <div
             ref={modalRef}
-            className={`w-full sm:w-96 md:w-2/4 lg:w-1/4 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
+            className={`w-96  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
             {
                 loading && <div className={'absolute bg-opacity-100 bg-secondary w-full h-screen'}><Loading /></div>
@@ -136,7 +136,7 @@ function CartSidebar() {
                                 removeItemFromCart({
                                   id: cart.id,
                                   color: cart.color,
-                                  size: cart.size
+                                  size: cart.size,
                                 })
                               }
                               icon={MdOutlineDeleteOutline}

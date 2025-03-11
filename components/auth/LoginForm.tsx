@@ -3,7 +3,7 @@
 import Button from "@/components/general/Button";
 import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
 import { AppDispatch } from "@/store/store";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -12,13 +12,14 @@ import { signIn } from "next-auth/react";
 import { MdCancel } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useLoginValidationSchema } from "@/error/loginSchema";
-import {Message} from "primereact/message";
-import {setErrorState} from "@/store/authSlice";
+import { Message } from "primereact/message";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const [errorState, setErrorState] = useState('')
+  const [errorState, setErrorState] = useState("");
   const t = useTranslations();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -36,12 +37,14 @@ function LoginForm() {
           if (res.status === 200) {
             toast.success("Login successfully");
             dispatch(closeLoginModal());
-          }else {
-           if(res.status === 401){
-             setErrorState('Email or password is incorrect');
-           }
+            router.push("/");
+          } else {
+            if (res.status === 401) {
+              setErrorState("Email or password is incorrect");
+            }
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log(err);
           setErrorState(err.response.data.message);
         });
@@ -58,14 +61,20 @@ function LoginForm() {
       <h2 className="text-2xl font-semibold my-5 text-center">
         {t("loginForm.welcomeBack")}
       </h2>
-      {
-          errorState && (
-              <span className={'relative'}>
-              <Message severity="error" text={errorState} className={'w-full my-2'} />
-              <MdCancel onClick={()=> setErrorState('')} className={'text-red-600 absolute right-0 top-0 cursor-pointer'} size={24} />
-            </span>
-          )
-      }
+      {errorState && (
+        <span className={"relative"}>
+          <Message
+            severity="error"
+            text={errorState}
+            className={"w-full my-2"}
+          />
+          <MdCancel
+            onClick={() => setErrorState("")}
+            className={"text-red-600 absolute right-0 top-0 cursor-pointer"}
+            size={24}
+          />
+        </span>
+      )}
       <form
         onSubmit={formik.handleSubmit}
         className=" w-full flex flex-col gap-4"

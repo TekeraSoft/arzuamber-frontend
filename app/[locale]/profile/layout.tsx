@@ -2,8 +2,8 @@
 
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { FaBars, FaUser, FaBoxOpen, FaCogs } from "react-icons/fa";
+// import { useState } from "react";
+import { FaUser, FaBoxOpen, FaCogs } from "react-icons/fa";
 import "animate.css";
 
 export default function ProfileLayout({
@@ -12,23 +12,22 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   const t = useTranslations();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Toggle the menu on mobile
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  // const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
-    <div className="container mt-32">
+    <div className="container mt-24">
       <div className="flex flex-col gap-x-12 md:flex-row h-full">
         {/* Sidebar for larger screens, Topbar for mobile */}
-        <div className="h-full  md:w-1/4 rounded-lg bg-secondary text-white p-6 md:block hidden">
-          <Link href="/profile">
+        <div className="h-full  md:w-1/4 rounded-t md:rounded-lg bg-secondary text-white p-6 ">
+          <Link href="/profile" className="text-center md:text-start">
             <h3 className="text-lg font-semibold mb-4 border-b">
               {t("profile.menuTitle")}
             </h3>
-          </Link>
-
-          <ul className="space-y-4">
+          </Link>{" "}
+          <ul className="flex md:flex-col justify-between items-center md:items-start gap-2">
             <li>
               <Link
                 href="/profile"
@@ -56,16 +55,16 @@ export default function ProfileLayout({
           </ul>
         </div>
 
-        {/* Topbar for mobile */}
+        {/* Topbar for mobile
         <div className="md:hidden flex justify-between items-center p-5 bg-secondary text-white rounded-t">
           <h3 className="text-lg font-semibold"> {t("profile.menuTitle")}</h3>
           <button onClick={toggleMenu} className="text-white">
-            {/* Hamburger icon for mobile menu */}
+           
             <FaBars className="h-6 w-6" />
           </button>
-        </div>
+        </div> */}
 
-        {/* Mobile Menu (Appears when isMenuOpen is true) */}
+        {/* Mobile Menu (Appears when isMenuOpen is true)
         {isMenuOpen && (
           <div className="  md:hidden bg-secondary text-white p-3 border-t">
             <ul className="space-y-4">
@@ -95,7 +94,7 @@ export default function ProfileLayout({
               </li>
             </ul>
           </div>
-        )}
+        )} */}
 
         {/* Main content area */}
         <div className="flex-1 h-full w-full min-h-[400px] ">{children}</div>

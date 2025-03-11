@@ -1,15 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 
 import { motion } from "framer-motion";
 
-function SearchBar() {
+function SearchBar({ SearchOpen, setSearchOpen }) {
   const t = useTranslations();
-  const [SearchOpen, setSearchOpen] = useState(false);
 
   // Animasyon ayarları
   const searchVariants = {
@@ -37,7 +35,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="w-full flex justify-start lg:justify-end items-center">
+    <div className="w-full flex justify-start lg:justify-end items-center ">
       {SearchOpen ? (
         <motion.div
           initial="hidden"
@@ -68,7 +66,7 @@ function SearchBar() {
         </motion.div>
       ) : (
         <button
-          className=" w-9 h-9  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 lg:rounded-full rounded-br"
+          className="hidden w-9 h-9  lg:flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 lg:rounded-full rounded-br border-r border-b border-slate-300"
           onClick={() => setSearchOpen(true)}
         >
           <BiSearch size={16} />

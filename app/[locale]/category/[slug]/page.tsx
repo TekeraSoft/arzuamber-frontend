@@ -1,20 +1,23 @@
 "use client";
 
 import Loading from "@/components/utils/Loading";
-import WarningText from "@/components/utils/WarningText";
-import { RootState } from "@/store/store";
+// import WarningText from "@/components/utils/WarningText";
+import { AppDispatch, RootState } from "@/store/store";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useTranslations } from "next-intl";
+import { useDispatch, useSelector } from "react-redux";
+// import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import Filter from "@/components/general/Filter/Filter";
 import { Paginator } from "primereact/paginator";
 import ProductCartItem from "@/components/products/ProductCartItem";
 import NotFoundProduct from "@/components/error/notFoundProduct";
+import Image from "next/image";
+import { setShortCategory } from "@/store/categorySlice";
 
 function CategoryFilteredProducts() {
   const params = useParams();
-  const t = useTranslations("");
+  // const t = useTranslations("");
+  const dispatch = useDispatch<AppDispatch>();
   const { filterProducts, loading, page } = useSelector(
     (state: RootState) => state.products
   );
@@ -22,6 +25,8 @@ function CategoryFilteredProducts() {
   const { slug } = params;
 
   const [pageable, setPageable] = useState({ currentPage: 0, size: 9 });
+
+  const { categories } = useSelector((state: RootState) => state.category);
 
   const onPageChange = (event) => {
     setPageable({ size: event.rows, currentPage: event.page });
@@ -33,7 +38,7 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="md:mx-auto md:container mt-24">
+    <main className="md:mx-auto md:container m md:mt-24">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter
           slug={slug}
@@ -41,10 +46,47 @@ function CategoryFilteredProducts() {
           pageSize={pageable.size}
         />
 
-        <div className="w-full mb-3 h-full">
+        <div className="w-full mb-3 h-full overflow-x-hidden">
+          <div
+            className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 p-0.5 "
+            style={{
+              scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
+              msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için
+            }}
+          >
+            {categories?.length > 0 &&
+              categories.map((category, index) => (
+                <div
+                  onClick={() => dispatch(setShortCategory(category.name))}
+                  key={index}
+                  className="flex flex-col items-center justify-center  cursor-pointer"
+                >
+                  {/* Kategori Resmi ve İsim */}
+                  <div className="flex flex-col items-center">
+                    {/* Kategori Resmi */}
+                    <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105  hover:border-red-600">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
+                        alt={category.name}
+                        fill
+                        priority
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+
+                    {/* Kategori İsmi */}
+                    <h3 className="text-center text-xs md:text-sm max-w-[5rem] truncate">
+                      {category.name}
+                    </h3>
+                  </div>
+                </div>
+              ))}
+          </div>
+          {/* 
           <h2 className="text-center mb-5 text-3xl pb-2 font-semibold ">
             {t("allProduct.allProducts")}
-          </h2>
+          </h2> */}
 
           {loading ? (
             <Loading />

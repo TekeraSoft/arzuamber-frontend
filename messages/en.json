@@ -49,7 +49,11 @@
       "email": "Enter a valid email address",
       "emailRequired": "Email is required",
       "passwordMin": "Password must be at least 6 characters",
-      "passwordRequired": "Password is required"
+      "passwordRequired": "Password is required",
+      "passwordUpperCase": "Password must contain at least one uppercase letter.",
+      "passwordLowerCase": "Password must contain at least one lowercase letter.",
+      "passwordNumber": "Password must contain at least one number.",
+      "passwordSpecialChar": "Password must contain at least one special character."
     }
   },
   "registerForm": {
@@ -75,7 +79,12 @@
       "passwordMin": "Password must be at least 6 characters",
       "passwordRequired": "Password is required",
       "passwordMatch": "Passwords do not match",
-      "rePasswordRequired": "Confirm password is required"
+      "rePasswordRequired": "Confirm password is required",
+      "passwordUpperCase": "Password must contain at least one uppercase letter.",
+      "passwordLowerCase": "Password must contain at least one lowercase letter.",
+      "passwordNumber": "Password must contain at least one number.",
+      "passwordSpecialChar": "Password must contain at least one special character.",
+      "passwordSpecials": "Please include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character in your password."
     },
     "registerFormCheckBox": {
       "KVKK": {
@@ -511,7 +520,7 @@
     "fastDelivery": "Super Fast Delivery",
     "securePayment": "Secure and Easy Payment",
     "carefulPackaging": "Careful Packaging",
-    "companyName": "ARZUAMBER TEXTILE IND. & TRADE LTD",
+    "companyName": "ARZUAMBER FASHION IND. & TRADE LTD",
     "phone": "Phone"
   },
 
@@ -529,6 +538,8 @@
     "ProductNotFoundText": "The product you're looking for could not be found.",
     "BlogNotFoundTitle": "Blog Not Found",
     "BlogNotFoundText": "The blog you're looking for could not be found.",
+    "BlogsNotFoundTitle": "No Blogs Available",
+    "BlogsNotFoundText": "There are no blogs available at the moment. Please check back later.",
     "requiredText": "This field is required !",
     "ButtonText": "Go To Home Page ",
     "somethingWentWrong": "Something went wrong. Please try again later.",
