@@ -5,10 +5,10 @@ import Loading from "../../utils/Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import HomeSliderItem from "./HomeSliderItem";
-import { CarouselType } from "@/constans/HomeSlider";
 import { useState, useEffect } from "react";
 import Button from "@/components/general/Button";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import { CarouselType } from "@/types";
 
 const responsive = {
   superLargeDesktop: {
@@ -76,7 +76,9 @@ const CustomButtonGroup = ({
 };
 
 function HomeSlider() {
-  const { images, loading } = useSelector((state: RootState) => state.general);
+  const { homesliderImages, loading } = useSelector(
+    (state: RootState) => state.general
+  );
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -87,6 +89,8 @@ function HomeSlider() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  console.log(homesliderImages);
 
   return (
     <div className="homepage-slider-div relative w-full -mt-1 md:mt-0 flex justify-center items-center h-full md:container md:mx-auto ">
@@ -118,7 +122,7 @@ function HomeSlider() {
           //}
           dotListClass="flex justify-center items-center gap-2  z-10 "
         >
-          {images?.map((image: CarouselType, index) => (
+          {homesliderImages?.map((image: CarouselType, index) => (
             <HomeSliderItem image={image} key={index} />
           ))}
         </Carousel>

@@ -158,6 +158,8 @@
   "paymentForm": {
     "title": "Ödeme Sayfası",
     "paymentLoading": "Ödeme alınıyor...",
+    "authenticatedOrderInfo": "Sipariş durumunuzu profil sayfasındaki siparişlerim kısmında görebilirsiniz.",
+    "unauthenticatedOrderInfo": "Sipariş durumunuzu görebilmek için lütfen üye olunuz.",
     "PaymentLabels": {
       "PaymentPageTitle": "Kart Bilgileri",
       "cardHolderNameLabel": "Kart Sahibi",
@@ -258,8 +260,15 @@
   "paymentSuccess": {
     "title": "Ödeme Başarılı!",
     "message": "Ödemeniz başarıyla tamamlandı.",
-    "returnHome": "Ana Sayfaya Dön",
+    "CheckOrders": "Siparişlerim",
     "cargoMessage": "Siparişiniz en kısa sürede kargoya verilecektir."
+  },
+
+  "paymentFailure": {
+    "title": "Ödeme Başarısız!",
+    "message": "Ödemeniz tamamlanamadı.Lütfen bilgilerinizi kontrol ediniz ve tekrar deneyiniz.",
+    "returnHome": "Ana Sayfaya Dön",
+    "cargoMessage": "Maalesef, siparişiniz şu anda gönderilememektedir."
   },
 
   "CartPage": {

@@ -166,6 +166,8 @@
   "paymentForm": {
     "title": "Payment Page",
     "paymentLoading": "Processing payment...",
+    "authenticatedOrderInfo": "You can view the status of your order in the 'My Orders' section of your profile page.",
+    "unauthenticatedOrderInfo": "Please sign up to view the status of your order.",
     "PaymentLabels": {
       "PaymentPageTitle": "Card Information",
       "cardHolderNameLabel": "Card Holder",
@@ -261,8 +263,15 @@
   "paymentSuccess": {
     "title": "Payment Successful!",
     "message": "Your payment has been successfully completed.",
-    "returnHome": "Return to Home",
+    "CheckOrders": "My Orders",
     "cargoMessage": "Your order will be shipped as soon as possible."
+  },
+
+  "paymentFailure": {
+    "title": "Payment Failed!",
+    "message": "Your payment could not be completed. Please check your details and try again.",
+    "returnHome": "Return to Home",
+    "cargoMessage": "Unfortunately, your order cannot be shipped at the moment."
   },
 
   "CartPage": {

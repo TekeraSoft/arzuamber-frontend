@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import il from "@/data/il.json";
@@ -9,33 +10,27 @@ import { BasketItem, PaymentFormValues } from "@/types";
 import { InputMask } from "primereact/inputmask";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
-import { FaUser } from "react-icons/fa";
+import { FaExclamationCircle, FaUser } from "react-icons/fa";
 import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
-import Image from "next/image";
-import Loading from "../utils/Loading";
 import { useTranslations } from "next-intl";
 import { useOrderValidationSchema } from "@/error/orderSchema";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { Button } from "primereact/button";
 import { toast } from "react-toastify";
 import { filterData } from "@/data/filterData";
-import { CssBaseline, Step, StepLabel, Stepper } from "@mui/material";
-import { GiCargoShip } from "react-icons/gi";
 import FormStepper from "@/components/productDetail/utils/FormStepper";
-import {
-  MdArrowLeft,
-  MdArrowRight,
-  MdNextPlan,
-  MdSkipNext,
-} from "react-icons/md";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import axios from "axios";
+import DynamicModal from "../utils/DynamicModal";
+import { openDynamicModal } from "@/store/modalsSlice";
+import { useSession } from "next-auth/react";
 // import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
-  // const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
@@ -49,9 +44,7 @@ export default function PaymentForm() {
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [step, setStep] = useState(0);
   const t = useTranslations();
-  const inputExpireMonthRef = useRef(null);
-  const inputExpireYearRef = useRef(null);
-  const inputCvcRef = useRef(null);
+  const session = useSession();
 
   useEffect(() => {
     fetch("https://api.ipify.org?format=json")
@@ -158,6 +151,28 @@ export default function PaymentForm() {
   };
 
   const validationSchema = useOrderValidationSchema(openBillingAddress);
+
+  const handleOpenModal = (title: string, content: string) => {
+    dispatch(openDynamicModal({ title, content }));
+  };
+
+  const [checkboxes, setCheckboxes] = useState({
+    KVKK: session.status == "authenticated" ? true : false,
+
+    MembershipAgreement: session.status == "authenticated" ? true : false,
+  });
+
+  // Checkbox'ların durumunu değiştiren fonksiyon
+  const handleCheckboxChange = (name) => {
+    setCheckboxes((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement;
+
   return (
     <div className="flex flex-col  gap-2 py-3 ">
       <>
@@ -415,7 +430,7 @@ export default function PaymentForm() {
 
                     {/*  BILLING ADDRESS */}
                     <div className="flex flex-col gap-y-4">
-                      <div className="flex flex-row items-center w-full justify-between">
+                      <div className="flex flex-row items-center   justify-start ">
                         <span className="text-xs md:text-sm font-semibold flex  justify-center items-center gap-1">
                           {t(
                             "paymentForm.PaymentLabels.Adress.otherAdressLabel"
@@ -748,24 +763,27 @@ export default function PaymentForm() {
                 )}
                 {step === 2 && (
                   <div className={"flex flex-col mx-4 gap-y-6"}>
-                    <div
-                      className={
-                        "flex md:flex-row justify-between flex-col sm:gap-y-4 gap-y-4 gap-x-4"
-                      }
-                    >
-                      <span className={"bg-gray-100 p-4 rounded-lg"}>
-                        <p className={"font-bold"}>
-                          {t("paymentForm.PaymentLabels.paymentDetailAdress")}
+                    <div className={"flex justify-between flex-col  gap-4"}>
+                      <span
+                        className={"bg-gray-100 p-4 rounded-lg break-words "}
+                      >
+                        <p className={"font-bold break-w"}>
+                          {t("paymentForm.PaymentLabels.paymentDetailAdress")}:
                         </p>
-                        <p>{values.shippingAddress.address}</p>
+                        <p className="text-sm">
+                          {values.shippingAddress.address}
+                        </p>
                       </span>
-                      <span className={"bg-gray-100 p-4 rounded-lg"}>
+                      <span
+                        className={"bg-gray-100 p-4 rounded-lg  break-words"}
+                      >
                         <p className={"font-bold"}>
                           {t(
                             "paymentForm.PaymentLabels.PaymentDetailBillingAddress"
                           )}
+                          :
                         </p>
-                        <p>
+                        <p className="text-sm">
                           {values.billingAddress.address
                             ? values.billingAddress.address
                             : values.shippingAddress.address}
@@ -806,6 +824,99 @@ export default function PaymentForm() {
                         {values.buyer.gsmNumber}
                       </span>
                     </div>
+
+                    <div className="flex flex-col gap-2">
+                      {session.status === "authenticated" ? null : (
+                        <div className="w-full flex flex-col items-center justify-center gap-2 mt-1">
+                          <div className="w-full flex items-center justify-start gap-2">
+                            <input
+                              type="checkbox"
+                              checked={checkboxes.KVKK}
+                              onChange={() => handleCheckboxChange("KVKK")}
+                              className="accent-primary cursor-pointer"
+                            />
+                            <div
+                              className="text-xs font-semibold underline cursor-pointer"
+                              onClick={() =>
+                                handleOpenModal(
+                                  t(
+                                    "registerForm.registerFormCheckBox.KVKK.title"
+                                  ),
+                                  t(
+                                    "registerForm.registerFormCheckBox.KVKK.content"
+                                  )
+                                )
+                              }
+                            >
+                              <span className="text-red-600">*</span>{" "}
+                              {t(
+                                "registerForm.registerFormCheckBox.KVKK.title"
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="w-full flex items-center justify-start gap-2">
+                            <input
+                              type="checkbox"
+                              checked={checkboxes.MembershipAgreement}
+                              onChange={() =>
+                                handleCheckboxChange("MembershipAgreement")
+                              }
+                              className="accent-primary cursor-pointer"
+                            />
+                            <div
+                              className="text-xs font-semibold underline cursor-pointer"
+                              onClick={() =>
+                                handleOpenModal(
+                                  t(
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                                  ),
+                                  t(
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.content"
+                                  )
+                                )
+                              }
+                            >
+                              <span className="text-red-600">*</span>{" "}
+                              {t(
+                                "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                              )}
+                            </div>
+                          </div>
+
+                          <DynamicModal />
+                        </div>
+                      )}
+
+                      <div className="mt-2">
+                        {session.status === "authenticated" ? (
+                          <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-red-600">
+                            <div className="flex items-center bg-red-100 p-2 rounded-full">
+                              <FaExclamationCircle
+                                size={22}
+                                className="text-red-600"
+                              />
+                            </div>
+                            <span className="font-semibold">
+                              {t("paymentForm.authenticatedOrderInfo")}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-red-600">
+                            <div className="flex items-center bg-red-100 p-2 rounded-full">
+                              <FaExclamationCircle
+                                size={22}
+                                className="text-red-600"
+                              />
+                            </div>
+                            <span className="font-semibold">
+                              * {t("paymentForm.unauthenticatedOrderInfo")}*
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <Button
                       onClick={() => {
                         setStep(0);
@@ -824,7 +935,7 @@ export default function PaymentForm() {
                         type="button"
                         onClick={handleSubmit}
                         loading={loading}
-                        disabled={loading}
+                        disabled={loading || isButtonDisabled}
                         className="bg-secondary !font-bold flex justify-center text-white rounded-lg py-3 text-lg w-full transition duration-300"
                       >
                         {t("paymentForm.PaymentLabels.Button")} -{" "}
