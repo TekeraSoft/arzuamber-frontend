@@ -22,11 +22,20 @@ const searchSlice = createSlice({
 
 export const searchProductsDispatch = (searchTerm:string) => async(dispatch) => {
     dispatch(loading(true))
-    getGuardRequest({controller:'product',action:'search-products',params:{searchTerm:searchTerm}}).then(res=> {
+    getGuardRequest({controller:'product',action:'search-product',params:{searchTerm:searchTerm}}).then(res=> {
         dispatch(loading(false))
-        dispatch(getSearchProducts(res.data))
+            dispatch(getSearchProducts(res.data))
     }).catch(err=> {
         dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+export const searechgElement = (formData:any) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'admin',action:'sarch'}).then(res=> {
+        dispatch(load)
     })
 }
 

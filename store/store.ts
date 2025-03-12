@@ -10,6 +10,7 @@ import adminSlice from "@/store/adminSlice";
 import modalsSlice from "@/store/modalsSlice";
 import blogsReducer from "@/store/blogSlice";
 import userReducer from "@/store/userSlice";
+import searchSlice from "@/store/searchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     admin: adminSlice,
     footer: footerReducer,
     modals: modalsSlice,
+    search: searchSlice,
   },
 });
 
