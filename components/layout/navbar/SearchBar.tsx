@@ -226,7 +226,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             <div
               ref={searchResultsRef}
               className={
-                "bg-white border max-h-[345px] flex flex-col gap-y-3 overflow-y-auto rounded-lg top-12 p-3 absolute z-40 animate__animated animate__fadeIn   "
+                "bg-white border-t md:border max-h-[345px] flex flex-col gap-y-3 overflow-y-auto md:rounded-lg top-10  w-full p-3 absolute z-40 animate__animated animate__fadeIn   "
               }
             >
               {searchProducts.map((item, index) => (

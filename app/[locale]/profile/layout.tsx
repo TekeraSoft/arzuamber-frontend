@@ -27,7 +27,7 @@ export default function ProfileLayout({
               {t("profile.menuTitle")}
             </h3>
           </Link>{" "}
-          <ul className="flex md:flex-col justify-between items-center md:items-start gap-2">
+          <ul className="flex md:flex-col justify-around items-center md:items-start gap-2">
             <li>
               <Link
                 href="/profile"

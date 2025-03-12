@@ -6,19 +6,21 @@ import { removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import Loading from "../utils/Loading";
-import TextClip from "../utils/TextClip";
 import Heading from "../general/Heading";
 import CartSummary from "./CartSummary";
-import { MdOutlineDeleteOutline, MdClose } from "react-icons/md";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import Button from "../general/Button";
 import { closeCartModal } from "@/store/modalsSlice";
 import EmptyCart from "./EmptyCart";
+import { IoIosClose } from "react-icons/io";
 
 function CartSidebar() {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const { cartProducts, total, loading } = useSelector((state: RootState) => state.cart);
+  const { cartProducts, total, loading } = useSelector(
+    (state: RootState) => state.cart
+  );
   const { isCartModalOpen } = useSelector((state: RootState) => state.modals);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -68,16 +70,22 @@ function CartSidebar() {
             ref={modalRef}
             className={`w-96  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
-            {
-                loading && <div className={'absolute bg-opacity-100 bg-secondary w-full h-screen'}><Loading /></div>
-            }
+            {loading && (
+              <div
+                className={
+                  "absolute bg-opacity-100 bg-secondary w-full h-screen"
+                }
+              >
+                <Loading />
+              </div>
+            )}
             <div className="absolute top-3 right-3">
-              <Button
-                icon={MdClose}
+              <button
                 onClick={toggleModal}
-                size="icon"
-                color="secondary"
-              />
+                className="bg-secondary text-white w-8 h-8 flex justify-center items-center rounded-lg hover:opacity-75 transition duration-300"
+              >
+                <IoIosClose size={25} />
+              </button>
             </div>
 
             <Heading
@@ -140,7 +148,7 @@ function CartSidebar() {
                                 })
                               }
                               icon={MdOutlineDeleteOutline}
-                              iconSize={20}
+                              iconSize={18}
                               color="third"
                               className="w-full sm:w-auto h-8"
                             />
