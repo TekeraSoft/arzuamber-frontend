@@ -166,6 +166,8 @@
   "paymentForm": {
     "title": "Payment Page",
     "paymentLoading": "Processing payment...",
+    "authenticatedOrderInfo": "You can view the status of your order in the 'My Orders' section of your profile page.",
+    "unauthenticatedOrderInfo": "Please sign up to view the status of your order.",
     "PaymentLabels": {
       "PaymentPageTitle": "Card Information",
       "cardHolderNameLabel": "Card Holder",
@@ -198,7 +200,14 @@
         "BillingAddress": "Billing Address"
       },
       "Button": "PAYMENT",
-      "choose": "Select"
+      "choose": "Select",
+      "DescPayment": "Payment Information",
+      "paymentDetailAdress": "Address",
+      "PaymentDetailBillingAddress": "Billing Address",
+      "ShoppingDetail": "Shopping Detail",
+      "Back": "Back",
+      "Missingİnformation": "Please fill in the missing fields",
+      "EditInformation": "Edit Information"
     },
 
     "paymentCard": {
@@ -254,8 +263,15 @@
   "paymentSuccess": {
     "title": "Payment Successful!",
     "message": "Your payment has been successfully completed.",
-    "returnHome": "Return to Home",
+    "CheckOrders": "My Orders",
     "cargoMessage": "Your order will be shipped as soon as possible."
+  },
+
+  "paymentFailure": {
+    "title": "Payment Failed!",
+    "message": "Your payment could not be completed. Please check your details and try again.",
+    "returnHome": "Return to Home",
+    "cargoMessage": "Unfortunately, your order cannot be shipped at the moment."
   },
 
   "CartPage": {
@@ -319,6 +335,13 @@
     "noOrders": "You have no orders yet.",
     "startShopping": "Start shopping now to place your first order!",
     "order": "Order",
+    "shippingAddress": "Shipping Address",
+    "contactName": "Contact Name",
+    "DetailAdres": "Detail Address",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
     "status": "Status",
     "statuses": {
       "PAID": "Paid",

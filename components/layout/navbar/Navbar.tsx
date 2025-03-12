@@ -66,7 +66,7 @@ function Navbar() {
           <Logo setOpenMenu={setOpenMenu} openMenu={openMenu} />
 
           {/* Hamburger Menu (Mobile) */}
-          <div className="lg:hidden flex items-center justify-center gap-4 ">
+          <div className="lg:hidden flex items-center justify-center gap-2 ">
             {!SearchOpen && (
               <button
                 className="lg:hidden w-7 h-7  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 rounded-full "
@@ -81,7 +81,7 @@ function Navbar() {
               onMouseLeave={() => setIsLangDropdownOpen(false)}
             >
               <button
-                className="w-8 h-7 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
+                className="w-7 h-6 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
                 onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
                 onMouseLeave={() => setIsLangDropdownOpen(false)}
                 onMouseEnter={() => setIsLangDropdownOpen(true)}
@@ -90,7 +90,7 @@ function Navbar() {
               </button>
               {isLangDropdownOpen && (
                 <ul
-                  className=" absolute  top-7 w-8 bg-white border   shadow-md text-sm rounded"
+                  className=" absolute  top-6 w-8 bg-white border   shadow-md text-sm rounded"
                   onMouseEnter={() => setIsLangDropdownOpen(true)}
                 >
                   {supportedLocales.map((lang) => (
@@ -115,8 +115,8 @@ function Navbar() {
               className="flex justify-center items-center relative"
               onClick={openCart}
             >
-              <BsCart2 size={26} className="cursor-pointer text-secondary" />
-              <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-4 w-4 flex items-center justify-center text-xs">
+              <BsCart2 size={24} className="cursor-pointer text-secondary" />
+              <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-3.5 w-3.5 flex items-center justify-center text-[10px]">
                 {cartProducts.length}
               </span>
             </button>
@@ -137,15 +137,17 @@ function Navbar() {
                   className="flex justify-center items-center w-full  text-center   "
                 >
                   <div
-                    className="  relative  gap-1 border border-primary rounded-full  p-1   transition-all duration-300"
+                    className="  relative  gap-1 border border-secondary rounded-lg  px-2 py-1   transition-all duration-300"
                     onMouseLeave={() => {
                       SetLoginRegisterMenu(false);
                     }}
                   >
-                    <FaUser size={16} />
-
+                    <div className=" flex  items-center justify-center text-[10px] text-primary whitespace-nowrap">
+                      <span> {t("menuItems.login")}</span>/
+                      <span> {t("menuItems.signup")}</span>
+                    </div>
                     {loginRegisterMenu == true && (
-                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-16 border rounded-md top-full -right-4 px-0.5  py-1">
+                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-20 border rounded-md top-full  px-0.5  py-1">
                         <span
                           className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
                           onClick={() => {
@@ -303,12 +305,15 @@ function Navbar() {
                         SetLoginRegisterMenu(false);
                       }}
                     >
-                      <FaUser size={26} />
+                      <div className=" flex  border px-1.5 py-1 border-secondary  rounded-lg items-center justify-center text-sm text-secondary whitespace-nowrap">
+                        <span> {t("menuItems.login")}</span>/
+                        <span> {t("menuItems.signup")}</span>
+                      </div>
 
                       {loginRegisterMenu && (
-                        <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-14 md:w-24 border rounded-md top-8 -right-8 px-0.5  py-1">
+                        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-1 bg-gray-50 w-28  border rounded-md top-8 px-1 py-1">
                           <span
-                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
+                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md text-center"
                             onClick={() => {
                               dispatch(openRegisterModal());
                             }}
@@ -317,7 +322,7 @@ function Navbar() {
                           </span>
                           <hr className="w-full" />
                           <span
-                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md"
+                            className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md text-center"
                             onClick={() => {
                               dispatch(openLoginModal());
                             }}
@@ -421,7 +426,7 @@ function Navbar() {
           </div>
         </div>
 
-        {!openMenu && (
+        {!openMenu && SearchOpen && (
           <div className="w-full flex lg:hidden ">
             <SearchBar SearchOpen={SearchOpen} setSearchOpen={setSearchOpen} />
           </div>

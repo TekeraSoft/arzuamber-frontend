@@ -37,13 +37,13 @@ function OrderPage() {
     setRows(event.rows);
   };
 
-  console.log(orders)
+  console.log(orders);
 
   // Sayfalama için gösterilecek siparişleri belirle
   const displayedOrders = orders.slice(first, first + rows);
 
   return (
-    <div className="px-5 py-3 bg-gray-50 rounded-lg ">
+    <div className="px-5 py-3 bg-gray-50 rounded-lg mb-3 ">
       {/* Show message if there are no orders */}
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col justify-center items-center text-center py-8 min-h-96 ">
@@ -73,7 +73,7 @@ function OrderPage() {
                       : "bg-blue-500 text-mywhite"
                   }  px-2 rounded-md`}
                 >
-                  {t("ordersPage.status")}: {' '}
+                  {t("ordersPage.status")}:{" "}
                   {t(`ordersPage.statuses.${order.status}`) ||
                     t("ordersPage.statuses.OTHER")}
                 </span>
@@ -98,6 +98,7 @@ function OrderPage() {
                   {t("ordersPage.totalPrice")}: ₺{order.totalPrice}
                 </div>
               </div>
+
               {/* Products in the order */}
               <div className="flex flex-wrap justify-between items-center">
                 {order.basketItems.map((product, index) => (
@@ -107,7 +108,13 @@ function OrderPage() {
                   >
                     <div className="flex justify-between items-center flex-wrap gap-2 w-full ">
                       <div className="flex gap-2 justify-center items-center">
-                        <Image src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.image}`} alt={product.image} width={45} height={45} className={'rounded'} />
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.image}`}
+                          alt={product.image}
+                          width={45}
+                          height={45}
+                          className={"rounded"}
+                        />
                       </div>
                       <div className="flex gap-2 justify-center items-center">
                         <p className="text-xs md:text-base font-semibold break-words">
@@ -149,21 +156,67 @@ function OrderPage() {
                         })}
                       </div>
                     </div>
+
+                    <div>{}</div>
                   </div>
                 ))}
+
+                <div className="w-full p-4 rounded-lg bg-gray-100">
+                  <h4 className="text-base font-semibold mb-3 text-center">
+                    {t("ordersPage.shippingAddress")}
+                  </h4>
+                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700">
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.contactName")}:
+                      </span>{" "}
+                      {order.shippingAddress.contactName}
+                    </p>
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.street")}:
+                      </span>{" "}
+                      {order.shippingAddress.street}
+                    </p>
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.city")}:
+                      </span>{" "}
+                      {order.shippingAddress.city}
+                    </p>
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.state")}:
+                      </span>{" "}
+                      {order.shippingAddress.state}
+                    </p>
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.country")}:
+                      </span>{" "}
+                      {order.shippingAddress.country}
+                    </p>
+                  </div>
+                  <div className=" my-2">
+                    <span className="font-semibold">
+                      {t("ordersPage.DetailAdres")}:
+                    </span>{" "}
+                    {order.shippingAddress.address}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
           {orders.length > rows && (
-              <div className="card">
-                <Paginator
-                    first={first}
-                    rows={rows}
-                    totalRecords={orders.length}
-                    rowsPerPageOptions={[10, 20, 30]}
-                    onPageChange={onPageChange}
-                />
-              </div>
+            <div className="card">
+              <Paginator
+                first={first}
+                rows={rows}
+                totalRecords={orders.length}
+                rowsPerPageOptions={[10, 20, 30]}
+                onPageChange={onPageChange}
+              />
+            </div>
           )}
         </>
       )}

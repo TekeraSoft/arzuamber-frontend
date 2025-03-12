@@ -15,7 +15,7 @@ const DynamicModal = () => {
   return (
     activeModal.isOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white px-6 py-10 rounded-md w-full max-w-lg max-h-[80vh] relative">
+        <div className="bg-white px-6 py-10 rounded-md w-full max-w-lg max-h-[40vh md:max-h-[70vh] relative">
           {/* Close Button - Right Top Corner */}
           <button
             onClick={handleCloseModal}
