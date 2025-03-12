@@ -26,7 +26,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   const [isMobile, setIsMobile] = useState(false);
   const searchResultsRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
-  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

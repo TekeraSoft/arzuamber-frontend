@@ -51,6 +51,9 @@ export const adminSlice = createSlice({
         getSliders: (state, action) => {
             state.sliders = action.payload;
         },
+        updatedSlider: (state, action) => {
+            state.updatedSlider = state.sliders.filter((item) => item.id !== action.payload);
+        },
         loading: (state, action) => {
             state.loading = action.payload;
         }
@@ -252,6 +255,7 @@ export const deleteSliderDispatch = (id: string) => async(dispatch) => {
     dispatch(loading(true))
     deleteGuardRequest({controller:'admin',action:'delete-slider', params:{id:id}}).then(res=> {
         dispatch(loading(false))
+        dispatch(updatedSlider(id))
         toast.success(res.data?.message);
     }).catch(err => {
         dispatch(loading(false))
@@ -279,5 +283,6 @@ export const {
     getColors,
     getOrders,
     getSliders,
-    reduceOrders} = adminSlice.actions;
+    reduceOrders,
+    updatedSlider} = adminSlice.actions;
 export default adminSlice.reducer;
