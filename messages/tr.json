@@ -9,7 +9,7 @@
 
   "menuItems": {
     "profile": "Profil",
-    "signup": "Kayıt Ol",
+    "signup": "Üye Ol",
     "login": "Giriş Yap",
     "admin": "Yönetici",
     "logout": "Çıkış Yap",
@@ -32,7 +32,7 @@
   },
 
   "SearchBar": {
-    "placeHolder": "Ürün adı giriniz..."
+    "placeHolder": "Ürün adı veya ürün kodu"
   },
 
   "loginForm": {

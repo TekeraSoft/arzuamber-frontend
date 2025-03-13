@@ -7,7 +7,7 @@ import {RootState} from "@/store/store";
 import Resizer from "react-image-file-resizer";
 import {MdCancel} from "react-icons/md";
 import {Button} from "primereact/button";
-import {createSliderDispatch, getAllSliderImageDispatch} from "@/store/adminSlice";
+import {createSliderDispatch, deleteSliderDispatch, getAllSliderImageDispatch} from "@/store/adminSlice";
 
 export default function HomeSliderPage() {
 
@@ -56,9 +56,15 @@ export default function HomeSliderPage() {
                 sliders.map((slider,index) => (
                     <div key={index} className="flex flex-col items-center">
                         <label htmlFor={`file-upload}`}
-                               className="w-48 h-24 flex items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                               className="w-48 h-24 flex relative items-center justify-center rounded-lg border cursor-pointer transition duration-200 overflow-hidden">
+                            <MdCancel className={'text-red-600 absolute z-10 right-0 top-0'} onClick={() => {
+                                const confirmDelete = confirm("Are you sure you want to delete image?");
+                                if (confirmDelete) {
+                                    dispatch(deleteSliderDispatch(slider.id))
+                                }
+                            }} size={24} />
                             <img src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${slider.url}`} alt="Preview"
-                                 className="w-48 h-24 object-cover rounded-lg"/>
+                                 className="w-48 h-24 object-cover brightness-75 rounded-lg"/>
 
                         </label>
                     </div>

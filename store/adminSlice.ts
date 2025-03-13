@@ -52,7 +52,7 @@ export const adminSlice = createSlice({
             state.sliders = action.payload;
         },
         updatedSlider: (state, action) => {
-            state.updatedSlider = state.sliders.filter((item) => item.id !== action.payload);
+            state.sliders = state.sliders.filter((item) => item.id !== action.payload);
         },
         loading: (state, action) => {
             state.loading = action.payload;

@@ -4,13 +4,13 @@ import { toast } from "react-toastify";
 
 // Sepet Tipi
 export interface CartState {
-  homesliderImages: [];
+  homeSliderImages: [];
   loading: boolean;
 }
 
 // Başlangıç durumu (initialState)
 const initialState: CartState = {
-  homesliderImages: [],
+  homeSliderImages: [],
   loading: false,
 };
 
@@ -19,7 +19,7 @@ export const generalSlice = createSlice({
   initialState,
   reducers: {
     getHomeSliders: (state, action) => {
-      state.homesliderImages = action.payload._embedded?.productDtoes;
+      state.homeSliderImages = action.payload;
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -27,9 +27,9 @@ export const generalSlice = createSlice({
   },
 });
 
-export const getlAllHomeSliderImages = () => async (dispatch) => {
+export const getAllHomeSliderImages = () => async (dispatch) => {
   dispatch(loading(true));
-  getGuardRequest({ controller: "slider", action: "get-all-slider" })
+  getGuardRequest({ controller: "slider" })
     .then((res) => {
       dispatch(loading(false));
       dispatch(getHomeSliders(res.data));

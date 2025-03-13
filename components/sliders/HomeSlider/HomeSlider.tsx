@@ -2,13 +2,14 @@
 
 import Carousel from "react-multi-carousel";
 import Loading from "../../utils/Loading";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
 import HomeSliderItem from "./HomeSliderItem";
 import { useState, useEffect } from "react";
 import Button from "@/components/general/Button";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { CarouselType } from "@/types";
+import {getAllHomeSliderImages} from "@/store/generalSlice";
 
 const responsive = {
   superLargeDesktop: {
@@ -76,12 +77,14 @@ const CustomButtonGroup = ({
 };
 
 function HomeSlider() {
-  const { homesliderImages, loading } = useSelector(
+  const { homeSliderImages, loading } = useSelector(
     (state: RootState) => state.general
   );
+  const dispatch = useDispatch<AppDispatch>();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    dispatch(getAllHomeSliderImages())
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -90,7 +93,6 @@ function HomeSlider() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log(homesliderImages);
 
   return (
     <div className="homepage-slider-div relative w-full -mt-1 md:mt-0 flex justify-center items-center h-full md:container md:mx-auto ">
@@ -122,7 +124,7 @@ function HomeSlider() {
           //}
           dotListClass="flex justify-center items-center gap-2  z-10 "
         >
-          {homesliderImages?.map((image: CarouselType, index) => (
+          {homeSliderImages?.map((image: CarouselType, index) => (
             <HomeSliderItem image={image} key={index} />
           ))}
         </Carousel>

@@ -34,7 +34,7 @@
   },
 
   "SearchBar": {
-    "placeHolder": "Enter product name..."
+    "placeHolder": "Enter product name or product code"
   },
 
   "loginForm": {

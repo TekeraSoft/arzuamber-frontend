@@ -108,7 +108,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             <InputText
               onFocus={() => setIsFocused(true)}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={"w-full rounded !shadow-none !outline-none !h-8"}
+              className={"w-full rounded !shadow-none !outline-none !h-10"}
               placeholder={t("SearchBar.placeHolder")}
             />
           </span>

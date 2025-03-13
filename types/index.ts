@@ -163,5 +163,5 @@ export interface PaymentFormValues {
 export interface CarouselType {
   id: string;
   url: string;
-  description?: string;
+  lang: string;
 }
