@@ -1,6 +1,6 @@
 "use client";
 
-import { CarouselType } from "@/constans/HomeSlider";
+import {CarouselType} from "@/types";
 import Image from "next/image";
 
 interface ImageProps {
@@ -8,7 +8,6 @@ interface ImageProps {
 }
 
 function HomeSliderItem({ image }: ImageProps) {
-  console.log(image)
   return (
     <Image
       src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${image.url}`}

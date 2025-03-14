@@ -74,15 +74,11 @@ export default function UpdateProductPage() {
                         formData.append("images", new File([image], fileName, { type: image.type }));
                     });
             });
-            for (const pair of formData.entries()) {
-                console.log(pair[0], pair[1]);
-            }
             try {
                 await dispatch(updateProductDispatch(formData));
             } catch (error) {
                 console.error("Ürün güncelleme hatası:", error);
             }
-            console.log(cleanedValues);
         }
     });
 

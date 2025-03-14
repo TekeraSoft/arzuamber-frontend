@@ -37,8 +37,6 @@ function OrderPage() {
     setRows(event.rows);
   };
 
-  console.log(orders);
-
   // Sayfalama için gösterilecek siparişleri belirle
   const displayedOrders = orders.slice(first, first + rows);
 

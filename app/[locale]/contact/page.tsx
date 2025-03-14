@@ -10,20 +10,27 @@ import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
 import "primereact/resources/primereact.min.css";
 import { useContactPageValidationSchema } from "@/error/contactSchema";
+import axios from "axios";
+import {toast} from "react-toastify";
 
 function ContactPage() {
   const t = useTranslations();
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
+      surname: "",
       email: "",
       message: "",
     },
     validationSchema: useContactPageValidationSchema(),
-    onSubmit: (values) => {
-      console.log("Form Submitted", values);
+    onSubmit: (values,{resetForm}) => {
+      axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/contact`,values).then((res)=> {
+        toast.success(res.data.message);
+        resetForm()
+      }).catch((error) => {
+        toast.error(error.response.data)
+      })
     },
   });
 
@@ -62,7 +69,7 @@ function ContactPage() {
                 </div>
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
                   <FaMapMarkerAlt className="w-10 h-10 text-secondary" />
-                  <p className="mt-3 font-medium text-gray-900">
+                  <div className="mt-3 font-medium text-gray-900">
                     <div className="grid text-xs ">
                       <span>{t("ContactPage.address.street")}, </span>
                       <span>{t("ContactPage.address.building")}, </span>
@@ -76,7 +83,7 @@ function ContactPage() {
                         {t("ContactPage.address.country")}
                       </span>
                     </div>
-                  </p>
+                  </div>
                 </div>
               </div>
 
@@ -95,24 +102,24 @@ function ContactPage() {
                         {t("ContactPage.form.nameLabel")}
                       </label>
                       <InputText
-                        id="firstName"
-                        name="firstName"
+                        id="name"
+                        name="name"
                         placeholder={t("ContactPage.form.namePlaceholder")}
-                        value={formik.values.firstName}
+                        value={formik.values.name}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         className={classNames(
                           "w-full border px-2 py-2 h-10 rounded-lg  outline-secondary text-sm",
                           {
                             "p-invalid":
-                              formik.touched.firstName &&
-                              formik.errors.firstName,
+                              formik.touched.name &&
+                              formik.errors.name,
                           }
                         )}
                       />
-                      {formik.touched.firstName && formik.errors.firstName && (
+                      {formik.touched.name && formik.errors.name && (
                         <div className="text-red-500 text-sm mt-1">
-                          {formik.errors.firstName}
+                          {formik.errors.name}
                         </div>
                       )}
                     </div>
@@ -124,23 +131,23 @@ function ContactPage() {
                         {t("ContactPage.form.lastNameLabel")}
                       </label>
                       <InputText
-                        id="lastName"
-                        name="lastName"
+                        id="surname"
+                        name="surname"
                         placeholder={t("ContactPage.form.lastNamePlaceholder")}
-                        value={formik.values.lastName}
+                        value={formik.values.surname}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         className={classNames(
                           "w-full border px-2 py-2 rounded-lg  h-10  outline-secondary text-sm",
                           {
                             "p-invalid":
-                              formik.touched.lastName && formik.errors.lastName,
+                              formik.touched.surname && formik.errors.surname,
                           }
                         )}
                       />
-                      {formik.touched.lastName && formik.errors.lastName && (
+                      {formik.touched.surname && formik.errors.surname && (
                         <div className="text-red-500 text-sm mt-1">
-                          {formik.errors.lastName}
+                          {formik.errors.surname}
                         </div>
                       )}
                     </div>

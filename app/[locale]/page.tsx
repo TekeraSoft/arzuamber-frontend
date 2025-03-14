@@ -59,8 +59,8 @@ export default function Home() {
           title={t("brand.title")}
           description={t("brand.description")}
           buttonText={t("brand.buttonText")}
-          desktopImageUrl="/images/Brand/brand2.jpg"
-          mobileImageUrl="/images/Brand/brand2.jpg"
+          desktopImageUrl="/images/Brand/all-product-cat-image.jpg"
+          mobileImageUrl="/images/Brand/all-product-cat-image.jpg"
           color="black"
           link="/products"
         />

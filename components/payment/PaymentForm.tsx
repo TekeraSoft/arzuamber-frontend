@@ -136,7 +136,6 @@ export default function PaymentForm() {
       .then((res) => {
         if (res.data.status === "success") {
           setLoading(false);
-          console.log(res);
           setThreeDsModal(res.data.htmlContent);
         } else {
           toast.error(res.data.errorMessage);
@@ -144,7 +143,6 @@ export default function PaymentForm() {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
         toast.error(err.response.data);
       })
       .finally(() => setLoading(false));

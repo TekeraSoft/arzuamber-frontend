@@ -91,7 +91,6 @@ export const updateActiveDispatch = (id,active) => async(dispatch) => {
         dispatch(loading(false))
     }).catch(err => {
         dispatch(loading(false))
-        console.log("Axios Request Hatası:", err.config.url);
         toast.error(err.response.data);
     })
 }

@@ -66,7 +66,7 @@ function Navbar() {
           <Logo setOpenMenu={setOpenMenu} openMenu={openMenu} />
 
           {/* Hamburger Menu (Mobile) */}
-          <div className="lg:hidden flex items-center justify-center gap-x-5 ">
+          <div className="lg:hidden flex items-center justify-center gap-x-4 ">
             {!SearchOpen && (
               <button
                 className="lg:hidden w-7 h-7  flex items-center justify-center bg-secondary text-white  hover:bg-secondaryDark transition duration-300 rounded-full "
@@ -242,7 +242,7 @@ function Navbar() {
           }
 
           {/* Icons */}
-          <ul className="hidden lg:flex items-center justify-center gap-x-6  max-w-48">
+          <ul className="hidden lg:flex items-center justify-center gap-x-6">
             <li
               className="relative z-50"
               onMouseLeave={() => setIsLangDropdownOpen(false)}

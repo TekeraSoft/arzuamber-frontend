@@ -143,7 +143,6 @@ export const filterProductDispatch = (params: object) => async (dispatch) => {
       dispatch(loading(false));
     })
     .catch((err) => {
-      console.log(err);
       dispatch(loading(false));
     })
     .finally(() => {
