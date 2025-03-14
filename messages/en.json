@@ -16,6 +16,27 @@
     "myAccount": "Account"
   },
 
+  "adminTranslate": {
+    "process": "process",
+    "sureMessage": "Are you sure you want to delete?",
+    "blogs": {
+      "title": "Title",
+      "content": "Content",
+      "image": "Image",
+      "category": "Category"
+    },
+    "contactForm": {
+      "title": "Customer Messages",
+      "message": "There are no messages yet."
+    },
+    "labels": {
+      "name": "Name",
+      "surname": "Surname",
+      "email": "E-mail",
+      "message": "Message"
+    }
+  },
+
   "topBar": {
     "discountMessage": "Up to 50% Off on New Season Products!!!",
     "checkItOut": "Check it out!"
@@ -168,6 +189,11 @@
     "paymentLoading": "Processing payment...",
     "authenticatedOrderInfo": "You can view the status of your order in the 'My Orders' section of your profile page.",
     "unauthenticatedOrderInfo": "Please sign up to view the status of your order.",
+    "cardInfo": "We do not store your card details. Your security is our priority.",
+    "robot": {
+      "yes": "Verified",
+      "no": "I'm not a robot."
+    },
     "PaymentLabels": {
       "PaymentPageTitle": "Card Information",
       "cardHolderNameLabel": "Card Holder",

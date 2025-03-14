@@ -7,6 +7,7 @@ import LayoutProvider from "@/components/layout/layout";
 import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 import "animate.css";
+import ReCaptchaProvider from "@/components/utils/ReCaptchaProvider";
 
 export const metadata = {
   title: "Arzu Amber",
@@ -71,7 +72,9 @@ export default async function RootLayout({
       <body className={`antialiased`} suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
-            <LayoutProvider>{children}</LayoutProvider>
+            <ReCaptchaProvider>
+              <LayoutProvider>{children}</LayoutProvider>
+            </ReCaptchaProvider>
           </StoreProvider>
         </NextIntlClientProvider>
       </body>

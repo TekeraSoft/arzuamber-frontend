@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Link } from "@/i18n/routing";
-
 import Heading from "../general/Heading";
 import { FaRegListAlt, FaPlus, FaMinus, FaTimes, FaBars } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
@@ -9,7 +8,7 @@ import { MdCategory } from "react-icons/md";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
 import { BiSolidDiscount } from "react-icons/bi";
 import { TbSettingsCog } from "react-icons/tb";
-import { MdOutlineSlideshow } from "react-icons/md";
+import { RiMailSendLine } from "react-icons/ri";
 
 const SideBar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -19,11 +18,7 @@ const SideBar = () => {
     {
       name: "General",
       icon: IoMdHome,
-      options: [
-        { name: "Go to Home", url: "/" },
-        { name: "Summary", url: "/admin" },
-        { name: "Orders", url: "/admin/orders" },
-      ],
+      options: [{ name: "Go to Home", url: "/" }],
     },
 
     {
@@ -62,7 +57,12 @@ const SideBar = () => {
         { name: "Color", url: "/admin/settings/product-colors" },
         { name: "Home Slider", url: "/admin/settings/sliders/home-slider" },
       ],
-    }
+    },
+    {
+      name: "Forms",
+      icon: RiMailSendLine,
+      options: [{ name: "Customer Messages", url: "/admin/contact-messages" }],
+    },
   ];
 
   const toggleMenu = (menuName: string) => {

@@ -6,7 +6,7 @@ export type RequestOptions = {
   params?: object;
 };
 
-export interface ProductProps {
+export interface AdminProps {
   product: Product;
   products: Product[];
   categories: Category[];
@@ -21,6 +21,7 @@ export interface ProductProps {
     totalPages: number;
     number: number;
   };
+  contactForms: [];
 }
 
 export type Slider = {
@@ -28,7 +29,7 @@ export type Slider = {
   url: string;
   lang: string;
   isActive: boolean;
-}
+};
 
 export type Order = {
   buyer: Buyer;

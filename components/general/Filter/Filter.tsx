@@ -40,7 +40,15 @@ function Filter({
     // subCategories: null,
     lowToHigh: null,
     highToLow: null,
+    discountedProduct: false,
   });
+
+  const handleCheckboxChange = (e) => {
+    setSelectedFilters({
+      ...selectedFilters,
+      discountedProduct: e.target.checked, // Checkbox işaretlendiğinde true, kaldırıldığında false
+    });
+  };
 
   // Menü görünürlüğünü kontrol etmek için
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,26 +82,32 @@ function Filter({
       // Burada eski ve yeni filtreleri karşılaştırabiliriz
 
       dispatch(
-        filterProductDispatch({
-          size: selectedFilters.sizes,
-          color: selectedFilters.colors,
-          category: activeCategory,
-          length: selectedFilters.lengths,
-          page: currnetPage,
-          pageSize: pageSize,
-        })
+        filterProductDispatch(
+          {
+            size: selectedFilters.sizes,
+            color: selectedFilters.colors,
+            category: activeCategory,
+            length: selectedFilters.lengths,
+            page: currnetPage,
+            pageSize: pageSize,
+          },
+          selectedFilters.discountedProduct
+        )
       );
     } else {
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
       dispatch(
-        filterProductDispatch({
-          size: null,
-          color: null,
-          category: null,
-          length: null,
-          page: currnetPage,
-          pageSize: pageSize,
-        })
+        filterProductDispatch(
+          {
+            size: selectedFilters.sizes,
+            color: selectedFilters.colors,
+            category: activeCategory,
+            length: selectedFilters.lengths,
+            page: currnetPage,
+            pageSize: pageSize,
+          },
+          selectedFilters.discountedProduct
+        )
       );
     }
 
@@ -500,6 +514,17 @@ function Filter({
           {t("Filter.title")}
         </h3>
 
+        <div className="flex justify-center items-center gap-1">
+          <input
+            type="checkbox"
+            checked={selectedFilters.discountedProduct}
+            onChange={handleCheckboxChange}
+          />
+          <label className="text-secondary text-sm">
+            Discounted Products Only
+          </label>
+        </div>
+
         {/* Kategoriler */}
         <div className="flex flex-col">
           <div
@@ -821,8 +846,7 @@ function Filter({
           </div>
        
           <hr className="bg-secondaryDark mt-1" />
-        </div>
-   */}
+        </div>*/}
       </div>
     </div>
   );

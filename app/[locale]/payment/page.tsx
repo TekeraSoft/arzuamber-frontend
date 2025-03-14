@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import PaymentForm from "@/components/payment/PaymentForm";
 import { filterData } from "@/data/filterData";
-import { Button } from "primereact/button";
 
 const PaymentPage = () => {
   // const t = useTranslations();
