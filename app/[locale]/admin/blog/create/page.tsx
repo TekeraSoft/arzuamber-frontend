@@ -39,7 +39,7 @@ const AdminBlogCreate = () => {
         "image",
         new File([image], image.name, { type: image.type })
       );
-      dispatch(createBlogDispatch(formData, resetForm));
+      dispatch(createBlogDispatch(formData, resetForm,setImage));
     },
   });
 

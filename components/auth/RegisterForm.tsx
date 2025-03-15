@@ -14,9 +14,9 @@ import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
 import DynamicModal from "../utils/DynamicModal";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import ReCAPTCHA from "react-google-recaptcha";
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
@@ -47,6 +47,7 @@ function RegisterForm() {
     dispatch(openDynamicModal({ title, content }));
   };
 
+  const [recaptcha, setRecaptcha] = useState();
   const [checkboxes, setCheckboxes] = useState({
     KVKK: false,
     ElectronicMessage: false,
@@ -62,7 +63,7 @@ function RegisterForm() {
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement;
+  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement || recaptcha===undefined ? true : false;
 
   return (
     <div>
@@ -282,6 +283,13 @@ function RegisterForm() {
 
           <DynamicModal />
         </div>
+
+
+
+        <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            onChange={setRecaptcha}
+        />
 
         {isButtonDisabled && (
           <div className="text-xs text-red-600">

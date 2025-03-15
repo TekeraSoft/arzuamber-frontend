@@ -27,6 +27,8 @@ import DynamicModal from "../utils/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import Image from "next/image";
+import ReCAPTCHA from "react-google-recaptcha";
 // import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
@@ -168,52 +170,17 @@ export default function PaymentForm() {
     }));
   };
 
-  const [recaptcha, setRecaptcha] = useState({ loading: false, robot: true });
 
-  // Butonun devre dışı kalma durumunu kontrol et
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const handleRecaptchaSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [recaptcha, setRecaptcha] = useState();
 
-    if (!executeRecaptcha) {
-      return;
-    }
 
-    // Yüklenme durumunu başlat
-    setRecaptcha((prev) => ({ ...prev, loading: true }));
 
-    try {
-      const token = await executeRecaptcha("recapcthaSubmit");
-      console.log("reCAPTCHA token:", token);
-
-      const response = await fetch(`/api/verify-recaptcha`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setRecaptcha({ loading: false, robot: false });
-      } else {
-        setRecaptcha({ loading: false, robot: true });
-      }
-    } catch (error) {
-      console.error("reCAPTCHA doğrulama hatası:", error);
-      setRecaptcha({ loading: false, robot: true });
-    }
-  };
 
   const isButtonDisabled =
-    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha.robot;
+    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha===undefined ? true : false;
 
-  console.log(session);
-  console.log(checkboxes);
-  console.log(recaptcha);
 
-  console.log(isButtonDisabled);
 
   return (
     <div className="flex flex-col  gap-2 py-3 ">
@@ -969,19 +936,18 @@ export default function PaymentForm() {
                         </div>
                       </div>
 
-                      <Button
-                        onClick={handleRecaptchaSubmit}
-                        className="w-full md:w-1/4 min-w-40 text-xs"
-                        label={
-                          recaptcha.robot
-                            ? t("paymentForm.robot.no")
-                            : t("paymentForm.robot.yes")
-                        }
-                        icon={recaptcha.robot ? "pi pi-shield" : "pi pi-check"}
-                        severity={recaptcha.robot ? "danger" : "success"}
-                        loading={recaptcha.loading}
-                        size="small"
+
+
+                      <ReCAPTCHA
+                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                          onChange={setRecaptcha}
                       />
+
+
+
+
+
+
                     </div>
 
                     <Button

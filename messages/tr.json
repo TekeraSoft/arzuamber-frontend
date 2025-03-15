@@ -176,6 +176,7 @@
     "KDV": "Fiyatlarımıza KDV dahildir."
   },
 
+
   "paymentForm": {
     "title": "Ödeme Sayfası",
     "paymentLoading": "Ödeme alınıyor...",
@@ -398,7 +399,9 @@
       "PENDING": "Beklemede",
       "FAILED": "Başarısız",
       "CANCELED": "İptal Edildi",
-      "OTHER": "Bilinmeyen Durum"
+      "OTHER": "Bilinmeyen Durum",
+      "SHIPPED": "Kargoya verildi",
+      "DELIVERED": "Teslim edildi"
     },
     "orderDate": "Sipariş Tarihi",
     "totalPrice": "Toplam Fiyat",

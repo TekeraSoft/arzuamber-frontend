@@ -34,6 +34,7 @@ export default function UpdateProductPage() {
         initialValues: {
             id: product?.id || '',
             name: product?.name || '',
+            slug: product?.slug || '',
             category: product?.category || '',
             subCategory: product?.subCategory || '',
             description: product?.description || '',

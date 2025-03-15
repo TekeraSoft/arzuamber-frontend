@@ -17,6 +17,7 @@ const initialState: AdminProps = {
   categories: [],
   sliders: [],
   page: {},
+  blogPage: {},
   colors: [],
   orders: [],
   blogs: [],
@@ -67,12 +68,20 @@ export const adminSlice = createSlice({
       );
     },
     deleteContactMessage: (state, action) => {
-      state.sliders = state.sliders.filter(
+      state.contactForms._embedded.contactDtoes = state.contactForms._embedded.contactDtoes.filter(
         (item) => item.id !== action.payload
       );
     },
     deleteBlog: (state, action) => {
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
+    },
+    getBlogs: (state, action) => {
+      state.blogs = action.payload._embedded.blogDtoes;
+      state.blogPage = action.payload.page;
+    },
+    setOrderStatus: (state, action) => {
+      let findOrder = state.orders.find((item) => item.id === action.payload.id);
+      findOrder.status = action.payload.status;
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -302,6 +311,18 @@ export const getAllOrdersDispatch =
       });
   };
 
+export const changeOrderStatusDispatch = (id: string, status:string) => async (dispatch) => {
+  dispatch(loading(true));
+  patchRequest({controller: "admin", action: "change-order-status", params: { orderId:id, status:status }}).then((res) => {
+    dispatch(loading(false));
+    dispatch(setOrderStatus({id:id, status:status}));
+    toast.success(res.data?.message);
+  }).catch((err) => {
+    dispatch(loading(false));
+    toast.error(err.response?.data);
+  })
+}
+
 export const deleteOrderDispatch = (id: string) => async (dispatch) => {
   dispatch(loading(false));
   deleteGuardRequest({
@@ -321,12 +342,13 @@ export const deleteOrderDispatch = (id: string) => async (dispatch) => {
 };
 
 export const createBlogDispatch =
-  (value: object, resetForm: () => void) => async (dispatch) => {
+  (value: object, resetForm: () => void, setImage) => async (dispatch) => {
     dispatch(loading(true));
     postGuardRequest({ controller: "admin", action: "create-blog" }, value)
       .then((res) => {
         dispatch(loading(false));
         resetForm();
+        setImage(null)
         toast.success(res.data?.message);
       })
       .catch((err) => {
@@ -334,6 +356,17 @@ export const createBlogDispatch =
         toast.error(err.response?.data);
       });
   };
+
+export const getAllBlogDispatch = (page:number, size: number) => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({ controller: "admin", action: "get-all-blog", params: { page: page, size: size }}).then(res=> {
+    dispatch(loading(false));
+    dispatch(getBlogs(res?.data))
+  }).catch((err) => {
+    dispatch(loading(false));
+    toast.error(err.response?.data);
+  })
+}
 
 export const deleteBlogDispatch = (id: string) => async (dispatch) => {
   dispatch(loading(true));
@@ -392,9 +425,9 @@ export const getAllSliderImageDispatch = () => async (dispatch) => {
     });
 };
 
-export const getAllContactForn = () => async (dispatch) => {
+export const getAllContacts = (page:number,size:number) => async (dispatch) => {
   dispatch(loading(true));
-  getGuardRequest({ controller: "admin", action: "get-all-contactforms" })
+  getGuardRequest({ controller: "admin", action: "get-all-contact", params: { page: page, size: size } })
     .then((res) => {
       dispatch(loading(false));
       dispatch(getContactForms(res?.data));
@@ -409,7 +442,7 @@ export const adminDeleteContactMessage = (id: string) => async (dispatch) => {
   dispatch(loading(true));
   deleteGuardRequest({
     controller: "admin",
-    action: "delete-contact-message",
+    action: "delete-contact",
     params: { id: id },
   })
     .then((res) => {
@@ -437,5 +470,7 @@ export const {
   getContactForms,
   deleteContactMessage,
   deleteBlog,
+    getBlogs,
+    setOrderStatus
 } = adminSlice.actions;
 export default adminSlice.reducer;

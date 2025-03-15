@@ -14,6 +14,7 @@ import { InputText } from "primereact/inputtext";
 import { SpinnerIcon } from "primereact/icons/spinner";
 import { useRouter } from "@/i18n/routing";
 import { MdCancel } from "react-icons/md";
+import textClip from "@/components/utils/TextClip";
 
 function SearchBar({ SearchOpen, setSearchOpen }) {
   const t = useTranslations();
@@ -253,7 +254,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                         "flex flex-row items-center justify-between w-full"
                       }
                     >
-                      <h4 className={"text-black"}>{item.name}</h4>
+                      <h4 className={"text-black truncate"}>{textClip(item.name)}</h4>
                       <strong>
                         {item.price.toLocaleString("tr-TR", {
                           style: "currency",
@@ -263,7 +264,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                     </div>
                     <span
                       className={
-                        "flex flex-row justify-start flex-wrap gap-x-4"
+                        "flex flex-row justify-start flex-wrap gap-2"
                       }
                     >
                       {item.colorSize.flatMap((cs, index) => (

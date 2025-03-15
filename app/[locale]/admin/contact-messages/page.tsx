@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  adminDeleteContactMessage,
-  getAllContactForn,
+  adminDeleteContactMessage, getAllContacts,
 } from "@/store/adminSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import Loading from "@/components/utils/Loading";
@@ -18,36 +17,6 @@ import { FaTimes } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 
 function ContactMessagesPage() {
-  // const contactForms = [
-  //   {
-  //     id: 1,
-  //     name: "Ahmet",
-  //     surname: "Yılmaz",
-  //     email: "ahmetyilmaz@example.com",
-  //     message: "Merhaba, ürünleriniz hakkında bilgi almak istiyorum.",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Ayşe",
-  //     surname: "Kara",
-  //     email: "aysekara@example.com",
-  //     message: "Siparişimle ilgili bir sorunum var, yardımcı olabilir misiniz?",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Mehmet",
-  //     surname: "Demir",
-  //     email: "mehmetdemir@example.com",
-  //     message: "Web sitenizde bazı hatalar fark ettim, düzeltilebilir mi?",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Zeynep",
-  //     surname: "Çelik",
-  //     email: "zeynepcelik@example.com",
-  //     message: "Yeni ürünler ne zaman stoklara gelecek?",
-  //   },
-  // ];
 
   const dispatch = useDispatch<AppDispatch>();
   const { contactForms, loading } = useSelector(
@@ -56,10 +25,10 @@ function ContactMessagesPage() {
   const t = useTranslations();
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
+  const [pageable,setPageable] = useState({ page: 0, size: 15 });
   useEffect(() => {
-    dispatch(getAllContactForn());
-  }, [dispatch]);
+    dispatch(getAllContacts(pageable.page,pageable.size));
+  }, [dispatch,pageable.page,pageable.size]);
 
   const handleDelete = (id: string) => {
     setSelectedId(id);
@@ -71,6 +40,10 @@ function ContactMessagesPage() {
       dispatch(adminDeleteContactMessage(selectedId));
       setVisible(false);
     }
+  };
+
+  const onPageChange = (event) => {
+    setPageable({ size: event.rows, currentPage: event.page });
   };
 
   const actionBodyTemplate = (rowData: { id: string }) => (
@@ -91,11 +64,20 @@ function ContactMessagesPage() {
 
       {loading ? (
         <Loading />
-      ) : contactForms.length > 0 ? (
+      ) : contactForms?._embedded?.contactDtoes.length > 0 ? (
         <div className="overflow-x-auto border">
           <DataTable
-            value={contactForms}
-            responsiveLayout="scroll"
+            value={contactForms._embedded.contactDtoes}
+            paginator
+            lazy={true}
+            first={pageable.page * pageable.size}
+            rows={pageable.size}
+            rowsPerPageOptions={[15, 30, 50, 70]}
+            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate="{first} to {last} of {totalRecords}"
+            totalRecords={contactForms.page.totalElements}
+            onPage={onPageChange}
+            loading={loading}
             className="min-w-full"
           >
             <Column

@@ -12,14 +12,13 @@ import { Dialog } from "@mui/material";
 import { FaTimes } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import NotFoundBlogs from "@/components/error/NotFoundBlogs";
-import { getBlogsDispatch } from "@/store/blogSlice";
 import Image from "next/image";
-import { deleteBlogDispatch } from "@/store/adminSlice";
+import {deleteBlogDispatch, getAllBlogDispatch} from "@/store/adminSlice";
 
 function AdminAllBlogPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { blogs, loading, page } = useSelector(
-    (state: RootState) => state.blog
+  const { blogs, loading, blogPage } = useSelector(
+    (state: RootState) => state.admin
   );
   const t = useTranslations();
   const [visible, setVisible] = useState(false);
@@ -27,8 +26,8 @@ function AdminAllBlogPage() {
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
 
   useEffect(() => {
-    dispatch(getBlogsDispatch(pageable.currentPage, pageable.size));
-  }, [dispatch, pageable]);
+    dispatch(getAllBlogDispatch(pageable.currentPage, pageable.size));
+  }, [dispatch, pageable.currentPage, pageable.size]);
 
   const handleDelete = (id: string) => {
     setSelectedId(id);
@@ -46,7 +45,7 @@ function AdminAllBlogPage() {
     setPageable({ size: event.rows, currentPage: event.page });
   };
 
-  console.log(blogs);
+  console.log(blogs)
 
   const actionBodyTemplate = (rowData: { id: string }) => (
     <Button
@@ -71,7 +70,6 @@ function AdminAllBlogPage() {
     );
   };
 
-  console.log(blogs);
   return (
     <div className="">
       {loading ? (
@@ -80,13 +78,12 @@ function AdminAllBlogPage() {
         <div className="overflow-x-auto ">
           <DataTable
             value={blogs}
-            responsiveLayout="scroll"
             className="min-w-full table-layout-auto"
             lazy={true}
             paginator
             rows={pageable.size}
             first={pageable.currentPage}
-            totalRecords={page.totalElements}
+            totalRecords={blogPage.totalElements}
             onPage={onPageChange}
             rowsPerPageOptions={[15, 25, 100]}
           >

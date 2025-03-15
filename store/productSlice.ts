@@ -140,7 +140,6 @@ export const filterProductDispatch =
       },
     })
       .then((res) => {
-        console.log(isDiscountChecked);
         let filteredProducts = res.data._embedded?.productDtoes;
 
         if (isDiscountChecked) {

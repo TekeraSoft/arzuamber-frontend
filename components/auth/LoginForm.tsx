@@ -45,7 +45,6 @@ function LoginForm() {
           }
         })
         .catch((err) => {
-          console.log(err);
           setErrorState(err.response.data.message);
         });
     },

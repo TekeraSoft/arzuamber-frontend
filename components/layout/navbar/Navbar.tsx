@@ -76,40 +76,40 @@ function Navbar() {
               </button>
             )}
 
-            <li
-              className="flex  justify-center items-center relative z-50"
-              onMouseLeave={() => setIsLangDropdownOpen(false)}
-            >
-              <button
-                className="w-7 h-6 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
-                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                onMouseLeave={() => setIsLangDropdownOpen(false)}
-                onMouseEnter={() => setIsLangDropdownOpen(true)}
-              >
-                {locale}
-              </button>
-              {isLangDropdownOpen && (
-                <ul
-                  className=" absolute  top-6 w-8 bg-white border   shadow-md text-sm rounded"
-                  onMouseEnter={() => setIsLangDropdownOpen(true)}
-                >
-                  {supportedLocales.map((lang) => (
-                    <li
-                      key={lang}
-                      className="transition-all duration-200 hover:scale-105"
-                    >
-                      <button
-                        onClick={() => changeLanguage(lang)}
-                        className="block  w-full  py-1.5 text-center text-xs text-secondary rounded 
-                                hover:bg-secondary hover:text-white  transition-all duration-300"
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+            {/*<li*/}
+            {/*  className="flex  justify-center items-center relative z-50"*/}
+            {/*  onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
+            {/*>*/}
+            {/*  <button*/}
+            {/*    className="w-7 h-6 flex items-center justify-center border border-slate-300   rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"*/}
+            {/*    onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}*/}
+            {/*    onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
+            {/*    onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
+            {/*  >*/}
+            {/*    {locale}*/}
+            {/*  </button>*/}
+            {/*  {isLangDropdownOpen && (*/}
+            {/*    <ul*/}
+            {/*      className=" absolute  top-6 w-8 bg-white border   shadow-md text-sm rounded"*/}
+            {/*      onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
+            {/*    >*/}
+            {/*      {supportedLocales.map((lang) => (*/}
+            {/*        <li*/}
+            {/*          key={lang}*/}
+            {/*          className="transition-all duration-200 hover:scale-105"*/}
+            {/*        >*/}
+            {/*          <button*/}
+            {/*            onClick={() => changeLanguage(lang)}*/}
+            {/*            className="block  w-full  py-1.5 text-center text-xs text-secondary rounded */}
+            {/*                    hover:bg-secondary hover:text-white  transition-all duration-300"*/}
+            {/*          >*/}
+            {/*            {lang.toUpperCase()}*/}
+            {/*          </button>*/}
+            {/*        </li>*/}
+            {/*      ))}*/}
+            {/*    </ul>*/}
+            {/*  )}*/}
+            {/*</li>*/}
 
             <button
               className="flex justify-center items-center relative"
@@ -243,36 +243,36 @@ function Navbar() {
 
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-x-6">
-            <li
-              className="relative z-50"
-              onMouseLeave={() => setIsLangDropdownOpen(false)}
-            >
-              <button
-                className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
-                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                onMouseLeave={() => setIsLangDropdownOpen(false)}
-                onMouseEnter={() => setIsLangDropdownOpen(true)}
-              >
-                {locale}
-              </button>
-              {isLangDropdownOpen && (
-                <ul
-                  className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"
-                  onMouseEnter={() => setIsLangDropdownOpen(true)}
-                >
-                  {supportedLocales.map((lang) => (
-                    <li key={lang}>
-                      <button
-                        onClick={() => changeLanguage(lang)}
-                        className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"
-                      >
-                        {lang === "tr" ? "TR" : "EN"}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+            {/*<li*/}
+            {/*  className="relative z-50"*/}
+            {/*  onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
+            {/*>*/}
+            {/*  <button*/}
+            {/*    className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"*/}
+            {/*    onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}*/}
+            {/*    onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
+            {/*    onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
+            {/*  >*/}
+            {/*    {locale}*/}
+            {/*  </button>*/}
+            {/*  {isLangDropdownOpen && (*/}
+            {/*    <ul*/}
+            {/*      className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"*/}
+            {/*      onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
+            {/*    >*/}
+            {/*      {supportedLocales.map((lang) => (*/}
+            {/*        <li key={lang}>*/}
+            {/*          <button*/}
+            {/*            onClick={() => changeLanguage(lang)}*/}
+            {/*            className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"*/}
+            {/*          >*/}
+            {/*            {lang === "tr" ? "TR" : "EN"}*/}
+            {/*          </button>*/}
+            {/*        </li>*/}
+            {/*      ))}*/}
+            {/*    </ul>*/}
+            {/*  )}*/}
+            {/*</li>*/}
 
             <li className="relative">
               <button

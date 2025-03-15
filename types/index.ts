@@ -15,6 +15,12 @@ export interface AdminProps {
   blogs: Blog[];
   sliders: Slider[];
   loading: boolean;
+  blogPage: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  }
   page: {
     size: number;
     totalElements: number;

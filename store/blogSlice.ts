@@ -43,11 +43,11 @@ export const getBlogsDispatch =
       params: { page: page, size: size },
     })
       .then((res) => {
-        dispatch(getBlogs(res.data));
+        dispatch(getBlogs(res?.data));
         dispatch(loading(false));
       })
       .catch((err) => {
-        toast.error(err.response.data);
+        toast.error(err.response?.data);
       })
       .finally(() => {
         dispatch(loading(false));

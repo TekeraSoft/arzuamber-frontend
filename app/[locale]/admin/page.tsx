@@ -4,7 +4,7 @@ import { format } from "date-fns/format";
 import { tr } from "date-fns/locale";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { deleteOrderDispatch, getAllOrdersDispatch } from "@/store/adminSlice";
+import {changeOrderStatusDispatch, deleteOrderDispatch, getAllOrdersDispatch} from "@/store/adminSlice";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { MdDelete } from "react-icons/md";
