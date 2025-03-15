@@ -943,11 +943,6 @@ export default function PaymentForm() {
                           onChange={setRecaptcha}
                       />
 
-
-
-
-
-
                     </div>
 
                     <Button
