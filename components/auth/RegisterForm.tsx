@@ -63,7 +63,7 @@ function RegisterForm() {
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement || recaptcha===undefined ? true : false;
+  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement;
 
   return (
     <div>
@@ -286,10 +286,10 @@ function RegisterForm() {
 
 
 
-        <ReCAPTCHA
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-            onChange={setRecaptcha}
-        />
+        {/*<ReCAPTCHA*/}
+        {/*    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}*/}
+        {/*    onChange={setRecaptcha}*/}
+        {/*/>*/}
 
         {isButtonDisabled && (
           <div className="text-xs text-red-600">

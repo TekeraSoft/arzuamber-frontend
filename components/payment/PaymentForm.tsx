@@ -177,8 +177,7 @@ export default function PaymentForm() {
 
 
 
-  const isButtonDisabled =
-    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha===undefined ? true : false;
+  const isButtonDisabled = checkboxes.KVKK || checkboxes.MembershipAgreement;
 
 
 
@@ -938,10 +937,10 @@ export default function PaymentForm() {
 
 
 
-                      <ReCAPTCHA
-                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                          onChange={setRecaptcha}
-                      />
+                      {/*<ReCAPTCHA*/}
+                      {/*    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}*/}
+                      {/*    onChange={setRecaptcha}*/}
+                      {/*/>*/}
 
                     </div>
 
