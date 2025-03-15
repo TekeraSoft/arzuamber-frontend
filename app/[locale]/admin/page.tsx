@@ -11,19 +11,12 @@ import {MdDelete} from "react-icons/md";
 import {Dropdown} from "primereact/dropdown";
 import {isToday, parseISO} from "date-fns";
 import Image from "next/image";
+import useWebSocket from "@/hooks/useWebSocket";
 
 function AdminPage() {
-    const dispatch = useDispatch<AppDispatch>();
-    const {orders, page, loading} = useSelector(
-        (state: RootState) => state.admin
-    );
     const [pageable, setPageable] = useState({currentPage: 0, size: 15});
     const [expandedRows, setExpandedRows] = useState(null);
-
-    useEffect(() => {
-        dispatch(getAllOrdersDispatch(pageable.currentPage, pageable.size));
-    }, [pageable.currentPage, pageable.size, dispatch]);
-
+    const { orders } = useWebSocket(pageable.currentPage, pageable.size);
     const onPageChange = (event) => {
         setPageable({size: event.rows, currentPage: event.page});
     };
@@ -31,6 +24,8 @@ function AdminPage() {
     const allowExpansion = (rowData) => {
         return rowData.basketItems.length > 0;
     };
+
+    console.log(orders)
 
     const rowExpansionTemplate = (data) => {
         return (
@@ -62,7 +57,7 @@ function AdminPage() {
                 paginator
                 rows={pageable.size}
                 first={pageable.currentPage}
-                totalRecords={page.totalElements}
+                totalRecords={orders?.page?.totalElements}
                 onPage={onPageChange}
                 rowsPerPageOptions={[15, 25, 100]}
                 rowExpansionTemplate={rowExpansionTemplate}

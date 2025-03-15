@@ -32,7 +32,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
+    <html lang="tr" suppressHydrationWarning={true}>
       <head>
         <meta
           name="description"
