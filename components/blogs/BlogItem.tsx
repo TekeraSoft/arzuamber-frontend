@@ -1,7 +1,7 @@
 // components/BlogItem.tsx
 import React from "react";
 import Image from "next/image";
-import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { Link } from "@/i18n/routing";
 import { BlogProps } from "@/types/Props";
 import { useTranslations } from "next-intl";
@@ -12,7 +12,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
   return (
     <div className=" shadow-md rounded-lg p-5 flex flex-col justify-center items-center">
       <Link href={`/blog/${blog.slug}`}>
-        <div className="relative w-full h-56 sm:h-72 lg:h-72">
+        <div className="relative w-full h-60 ">
           <Image
             className="object-cover w-full h-full rounded-lg"
             src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${blog.image}`}
@@ -38,11 +38,7 @@ const BlogCartItem = ({ blog }: { blog: BlogProps }) => {
       <p className="mt-3 text-gray-600 line-clamp-2 text-sm">{blog.content}</p>
       <div className="h-0 mt-6 mb-4 border-t-2 border-gray-200 border-dashed"></div>
 
-      <div className="flex items-center justify-between gap-2 text-xs font-bold tracking-widest text-gray-500 uppercase w-full">
-        <div className="flex">
-          <FaCalendarAlt className="mr-2 text-gray-400 text-sm" />
-          {blog.date}
-        </div>
+      <div className="flex items-center justify-end gap-2 text-xs font-bold tracking-widest text-gray-500 uppercase w-full">
         <p className=" text-sm md:text-md flex justify-end items-center ">
           <Link
             href={`/blog/${blog.slug}`}

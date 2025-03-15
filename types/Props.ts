@@ -89,12 +89,10 @@ export interface Subcategory {
 
 //! BlogProps
 export interface BlogProps {
-  id: string;
   category: string;
   title: string;
   content: string;
   image: string;
-  date: string;
 }
 
 //! Cart Page Props

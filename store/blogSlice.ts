@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {Blog} from "@/types";
-import {getGuardRequest} from "@/services/requestservice";
-import {toast} from "react-toastify";
+import { Blog } from "@/types";
+import { getGuardRequest } from "@/services/requestservice";
+import { toast } from "react-toastify";
 
 export interface BlogProps {
   blogs: Blog[];
-  blog: Blog
+  blog: Blog;
   loading: boolean;
   error: boolean;
 }
@@ -30,32 +30,46 @@ export const blogSlice = createSlice({
     },
     loading: (state, action) => {
       state.loading = action.payload;
-    }
+    },
   },
 });
 
-export const getBlogsDispatch = (page: number, size: number) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'blog',action:'get-all-blog',params:{page:page, size:size}}).then(res=> {
-    dispatch(getBlogs(res.data))
-    dispatch(loading(false))
-  }).catch(err => {
-    toast.error(err.response.data)
-  }).finally(()=> {
-    dispatch(loading(false))
-  })
-}
+export const getBlogsDispatch =
+  (page: number, size: number) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "blog",
+      action: "get-all-blog",
+      params: { page: page, size: size },
+    })
+      .then((res) => {
+        dispatch(getBlogs(res.data));
+        dispatch(loading(false));
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
-export const getBlogDispatch = (slug: string) => async(dispatch) => {
-  dispatch(loading(true))
-  getGuardRequest({controller:'blog',action:'get-blog',params:{slug:slug}}).then(res=> {
-    dispatch(loading(false))
-    dispatch(getBlog(res.data))
-  }).catch(err => {
-    dispatch(loading(false))
-    toast.error(err.response.data);
+export const getBlogDispatch = (slug: string) => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({
+    controller: "blog",
+    action: "get-blog",
+    params: { slug: slug },
   })
-}
+    .then((res) => {
+      dispatch(loading(false));
+      dispatch(getBlog(res.data));
+    })
+    .catch((err) => {
+      dispatch(loading(false));
+      toast.error(err.response.data);
+    });
+};
 
-export const {getBlogs,getBlog,loading} = blogSlice.actions;
+export const { getBlogs, getBlog, loading } = blogSlice.actions;
 export default blogSlice.reducer;

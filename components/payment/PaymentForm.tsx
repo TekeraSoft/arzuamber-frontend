@@ -26,6 +26,7 @@ import axios from "axios";
 import DynamicModal from "../utils/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 // import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
@@ -155,9 +156,8 @@ export default function PaymentForm() {
   };
 
   const [checkboxes, setCheckboxes] = useState({
-    KVKK: session.status == "authenticated" ? true : false,
-
-    MembershipAgreement: session.status == "authenticated" ? true : false,
+    KVKK: session.status == "authenticated" ? false : true,
+    MembershipAgreement: session.status == "authenticated" ? false : true,
   });
 
   // Checkbox'ların durumunu değiştiren fonksiyon
@@ -168,8 +168,52 @@ export default function PaymentForm() {
     }));
   };
 
+  const [recaptcha, setRecaptcha] = useState({ loading: false, robot: true });
+
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement;
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleRecaptchaSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!executeRecaptcha) {
+      return;
+    }
+
+    // Yüklenme durumunu başlat
+    setRecaptcha((prev) => ({ ...prev, loading: true }));
+
+    try {
+      const token = await executeRecaptcha("recapcthaSubmit");
+      console.log("reCAPTCHA token:", token);
+
+      const response = await fetch(`/api/verify-recaptcha`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setRecaptcha({ loading: false, robot: false });
+      } else {
+        setRecaptcha({ loading: false, robot: true });
+      }
+    } catch (error) {
+      console.error("reCAPTCHA doğrulama hatası:", error);
+      setRecaptcha({ loading: false, robot: true });
+    }
+  };
+
+  const isButtonDisabled =
+    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha.robot;
+
+  console.log(session);
+  console.log(checkboxes);
+  console.log(recaptcha);
+
+  console.log(isButtonDisabled);
 
   return (
     <div className="flex flex-col  gap-2 py-3 ">
@@ -760,7 +804,9 @@ export default function PaymentForm() {
                   </>
                 )}
                 {step === 2 && (
-                  <div className={"flex flex-col mx-4 gap-y-6"}>
+                  <div
+                    className={"tex-xs md:text-base flex flex-col mx-4 gap-y-6"}
+                  >
                     <div className={"flex justify-between flex-col  gap-4"}>
                       <span
                         className={"bg-gray-100 p-4 rounded-lg break-words "}
@@ -829,7 +875,7 @@ export default function PaymentForm() {
                           <div className="w-full flex items-center justify-start gap-2">
                             <input
                               type="checkbox"
-                              checked={checkboxes.KVKK}
+                              checked={!checkboxes.KVKK}
                               onChange={() => handleCheckboxChange("KVKK")}
                               className="accent-primary cursor-pointer"
                             />
@@ -856,7 +902,7 @@ export default function PaymentForm() {
                           <div className="w-full flex items-center justify-start gap-2">
                             <input
                               type="checkbox"
-                              checked={checkboxes.MembershipAgreement}
+                              checked={!checkboxes.MembershipAgreement}
                               onChange={() =>
                                 handleCheckboxChange("MembershipAgreement")
                               }
@@ -886,13 +932,13 @@ export default function PaymentForm() {
                         </div>
                       )}
 
-                      <div className="mt-2">
+                      <div className="mt-2 bg-green-100 rounded-lg shadow p-2">
                         {session.status === "authenticated" ? (
-                          <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-red-600">
-                            <div className="flex items-center bg-red-100 p-2 rounded-full">
+                          <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-green-600">
+                            <div className="flex items-center   rounded-full">
                               <FaExclamationCircle
                                 size={22}
-                                className="text-red-600"
+                                className="text-green-600"
                               />
                             </div>
                             <span className="font-semibold">
@@ -901,10 +947,10 @@ export default function PaymentForm() {
                           </div>
                         ) : (
                           <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-red-600">
-                            <div className="flex items-center bg-red-100 p-2 rounded-full">
+                            <div className="flex items-center bg-green-100p-2 rounded-full">
                               <FaExclamationCircle
                                 size={22}
-                                className="text-red-600"
+                                className="text-green-600"
                               />
                             </div>
                             <span className="font-semibold">
@@ -913,6 +959,29 @@ export default function PaymentForm() {
                           </div>
                         )}
                       </div>
+
+                      <div className="flex justify-start items-center p-2 bg-orange-100 rounded-lg shadow my-2">
+                        <div className="flex items-center text-orange-700 text-lg gap-2">
+                          <FaExclamationCircle />
+                          <span className="font-semibold text-xs md:text-sm">
+                            {t("paymentForm.cardInfo")}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={handleRecaptchaSubmit}
+                        className="w-full md:w-1/4 min-w-40 text-xs"
+                        label={
+                          recaptcha.robot
+                            ? t("paymentForm.robot.no")
+                            : t("paymentForm.robot.yes")
+                        }
+                        icon={recaptcha.robot ? "pi pi-shield" : "pi pi-check"}
+                        severity={recaptcha.robot ? "danger" : "success"}
+                        loading={recaptcha.loading}
+                        size="small"
+                      />
                     </div>
 
                     <Button

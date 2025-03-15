@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 import PageContainer from "@/components/Containers/PageContainer";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
@@ -10,8 +10,10 @@ import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
 import "primereact/resources/primereact.min.css";
 import { useContactPageValidationSchema } from "@/error/contactSchema";
+import { FaMapMarkedAlt } from "react-icons/fa";
+
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 function ContactPage() {
   const t = useTranslations();
@@ -24,13 +26,16 @@ function ContactPage() {
       message: "",
     },
     validationSchema: useContactPageValidationSchema(),
-    onSubmit: (values,{resetForm}) => {
-      axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/contact`,values).then((res)=> {
-        toast.success(res.data.message);
-        resetForm()
-      }).catch((error) => {
-        toast.error(error.response.data)
-      })
+    onSubmit: (values, { resetForm }) => {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/contact`, values)
+        .then((res) => {
+          toast.success(res.data.message);
+          resetForm();
+        })
+        .catch((error) => {
+          toast.error(error.response.data);
+        });
     },
   });
 
@@ -68,7 +73,7 @@ function ContactPage() {
                   </p>
                 </div>
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
-                  <FaMapMarkerAlt className="w-10 h-10 text-secondary" />
+                  <FaMapMarkedAlt className="w-12 h-11 text-secondary" />
                   <div className="mt-3 font-medium text-gray-900">
                     <div className="grid text-xs ">
                       <span>{t("ContactPage.address.street")}, </span>
@@ -112,8 +117,7 @@ function ContactPage() {
                           "w-full border px-2 py-2 h-10 rounded-lg  outline-secondary text-sm",
                           {
                             "p-invalid":
-                              formik.touched.name &&
-                              formik.errors.name,
+                              formik.touched.name && formik.errors.name,
                           }
                         )}
                       />
