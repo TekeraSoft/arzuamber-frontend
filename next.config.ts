@@ -17,12 +17,12 @@ const nextConfig = {
         pathname: '/minio/**',
       },
     ],
-  //remotePatterns: [
-  //  {
-  //    protocol: "http",
-  //    hostname: "localhost",
-  //  },
-  //],
+    //remotePatterns: [
+    //  {
+    //    protocol: "http",
+    //    hostname: "localhost",
+    //  },
+    //],
   },
 } as import("next").NextConfig;
 

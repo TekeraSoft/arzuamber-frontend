@@ -145,9 +145,8 @@ const DetailClient = ({ product }: productProps) => {
                   }}
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
                   alt={product.name}
-                  width={200}
-                  height={400}
-                  objectPosition={'center'}
+                  width={1000}
+                  height={1000}
                   priority
                 />
               </div>

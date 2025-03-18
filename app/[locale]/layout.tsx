@@ -49,6 +49,7 @@ export default async function RootLayout({
       <head>
         {/* Google Site Verification */}
         <meta name="google-site-verification" content="O-f3qbjISsw7TRWDMEfgudgwHkDyfpmrqfKP0TrUiTs"/>
+        <meta name="facebook-domain-verification" content="267es9z1tmrtsycw4r1ochkmcsrzpi"/>
       </head>
       <body className={`antialiased`} suppressHydrationWarning={true}>
       <NextIntlClientProvider messages={messages}>
