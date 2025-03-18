@@ -26,6 +26,7 @@ export const filterData: Filter = {
             "XXXL",
             "XXXXL",
             "Standart",
+            "Oversize",
             "32",
             "34",
             "36",

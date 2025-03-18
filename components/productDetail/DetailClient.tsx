@@ -99,7 +99,7 @@ const DetailClient = ({ product }: productProps) => {
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 h-[450px] md:h-full ">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 md:h-full ">
           <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
@@ -114,8 +114,8 @@ const DetailClient = ({ product }: productProps) => {
                   }}
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
                   alt={product.name}
-                  width={500}
-                  height={700}
+                  width={300}
+                  height={500}
                   priority
                 />
               </div>
@@ -138,15 +138,16 @@ const DetailClient = ({ product }: productProps) => {
                 className="flex justify-center items-center w-full h-full rounded-lg mb-5"
               >
                 <Image
-                  className="cursor-zoom-in w-full h-full object-cover rounded-lg"
+                  className="cursor-zoom-in w-full h-full object-cover rounded-lg "
                   onClick={() => {
                     setPhotoIndex(index);
                     setIsModalOpen(true);
                   }}
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
                   alt={product.name}
-                  width={500}
-                  height={700}
+                  width={200}
+                  height={400}
+                  objectPosition={'center'}
                   priority
                 />
               </div>
@@ -154,13 +155,13 @@ const DetailClient = ({ product }: productProps) => {
           </Carousel>
         </div>
 
-        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
+        <h3 className=" md:hidden sm:mt-3 mt-0 text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
           {product.name}
         </h3>
 
         <div
           className={
-            "md:hidden flex  flex-col justify-center items-start gap-2  my-3 w-full "
+            "md:hidden flex  flex-col justify-center items-start gap-2  my-1 w-full "
           }
         >
           <div className="flex justify-center items-center gap-2">

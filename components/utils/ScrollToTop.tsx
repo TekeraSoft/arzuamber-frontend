@@ -23,7 +23,7 @@ export default function ScrollToTop() {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 bg-secondary border text-white p-1 md:p-3 rounded-full shadow-lg hover:scale-105 transition-all text-2xl"
+          className="fixed bottom-5 z-50 right-5 bg-secondary border text-white p-1 md:p-3 rounded-full shadow-lg hover:scale-105 transition-all text-2xl"
         >
           <IoIosArrowUp />
         </button>

@@ -138,8 +138,6 @@ function Filter({
     }));
   };
 
-  console.log(selectedFilters);
-
   return (
     <div className="relative md:w-1/4 z-40  ">
       {/* Mobil Menü Butonu */}

@@ -36,14 +36,14 @@ export default async function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning={true}>
     <Head>
-      <meta name="google-site-verification" content="google7bd2e17cd7bbe244"/>
+      <meta name="google-site-verification" content="O-f3qbjISsw7TRWDMEfgudgwHkDyfpmrqfKP0TrUiTs"/>
       <meta
           name="description"
           content="ArzuAmber ile modanın en özel parçalarına ulaşın! Kadın giyim, trend butik ürünler ve şıklık için en yeni koleksiyonları keşfedin."
       />
       <meta
           name="keywords"
-          content="butik, moda, kadın giyim, trend kıyafetler, şık kombinler, yeni sezon moda, online alışveriş, arzuamber butik"
+          content="butik, moda, kadın giyim, trend kıyafetler, şık kombinler, yeni sezon moda, online alışveriş, arzuamber"
       />
       <meta name="author" content="Arzuamber Moda"/>
       <meta name="robots" content="index, follow"/>
@@ -72,7 +72,7 @@ export default async function RootLayout({
       />
     </Head>
     <body className={`antialiased`} suppressHydrationWarning={true}>
-        <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <ReCaptchaProvider>
               <LayoutProvider>{children}</LayoutProvider>
