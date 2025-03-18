@@ -2,9 +2,8 @@
 import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
-import PageContainer from "../Containers/PageContainer";
 import { Product } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -87,6 +86,25 @@ const DetailClient = ({ product }: productProps) => {
   const openCart = () => {
     dispatch(openCartModal());
   };
+
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq("track", "PageView");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq("track", "ViewContent", {
+        content_name: product.name,
+        content_ids: [product.id],
+        content_type: "product",
+        value: product.price,
+        currency: "TL",
+        content_category: product.category,
+      });
+    }
+  }, [product]);
 
   return (
     <div className="container mx-auto md:mt-24 ">
