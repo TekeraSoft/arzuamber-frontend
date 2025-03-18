@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect } from "react";
 import { clearCart } from "@/store/cartSlice";
+import { useSession } from "next-auth/react";
 
 const SuccessPage = () => {
   const t = useTranslations();
@@ -19,6 +20,8 @@ const SuccessPage = () => {
       dispatch(clearCart());
     }
   }, [dispatch, cartProducts.length]);
+
+  const session = useSession();
 
   return (
     <PageContainer>
@@ -35,12 +38,22 @@ const SuccessPage = () => {
             </p>
             <FaTruckFast className=" text-2xl md:text-3xl" />
           </div>
-          <Link
-            href="/profile/orders"
-            className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg shadow-md hover:scale-105 transition"
-          >
-            {t("paymentSuccess.CheckOrders")}
-          </Link>
+
+          {session.status === "authenticated" ? (
+            <Link
+              href="/profile/orders"
+              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg shadow-md hover:scale-105 transition"
+            >
+              {t("paymentSuccess.CheckOrders")}
+            </Link>
+          ) : (
+            <Link
+              href="/"
+              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg shadow-md hover:scale-105 transition"
+            >
+              {t("paymentFailure.returnHome")}
+            </Link>
+          )}
         </div>
       </div>
     </PageContainer>

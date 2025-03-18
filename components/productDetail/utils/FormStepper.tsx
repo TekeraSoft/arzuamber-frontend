@@ -60,21 +60,33 @@ function QontoStepIcon(props: StepIconProps) {
     </QontoStepIconRoot>
   );
 }
-
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.active}, &.${stepConnectorClasses.completed}`]: {
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 22,
+  },
+  [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        "linear-gradient( 95deg, rgb(34,197,94) 0%, rgb(22,163,74) 50%, rgb(5,150,105) 100%)",
+        "linear-gradient(95deg, #66bb6a 0%, #43a047 50%, #2e7d32 100%)", // Yeşil tonlarında renk geçişi
+    },
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient(95deg, #66bb6a 0%, #43a047 50%, #2e7d32 100%)", // Yeşil tonlarında renk geçişi
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
-    backgroundColor: "#eaeaf0",
+    height: 3,
+    border: 0,
+    backgroundColor: "#eaeaf0", // Normal durumda çizginin rengini belirliyor
+    borderRadius: 1,
     ...theme.applyStyles("dark", {
       backgroundColor: theme.palette.grey[800],
     }),
   },
 }));
+
 const ColorlibStepIconRoot = styled("div")<{
   ownerState: { completed?: boolean; active?: boolean };
 }>(({ theme }) => ({

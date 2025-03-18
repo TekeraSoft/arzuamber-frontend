@@ -15,11 +15,13 @@ import { useLoginValidationSchema } from "@/error/loginSchema";
 import { Message } from "primereact/message";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [errorState, setErrorState] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [recaptcha, setRecaptcha] = useState();
   const t = useTranslations();
   const router = useRouter();
 
@@ -56,6 +58,9 @@ function LoginForm() {
     dispatch(closeLoginModal());
     dispatch(openRegisterModal());
   };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled = recaptcha == null ? true : false;
 
   return (
     <div>
@@ -140,6 +145,11 @@ function LoginForm() {
           )}
         </span>
 
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          onChange={setRecaptcha}
+        />
+
         <div className="flex flex-col justify-center items-center w-full ">
           <Button
             text={t("loginForm.loginButton")}
@@ -147,7 +157,12 @@ function LoginForm() {
             color="primary"
             animation
             size="center"
-            className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg transition duration-200 "
+            className={` ${
+              isButtonDisabled
+                ? "bg-secondary  cursor-not-allowed"
+                : "bg-primary "
+            }   text-mywhite py-2 rounded-lg transition duration-200  `}
+            disabled={isButtonDisabled}
           />
           {/* <Button
             size="small"

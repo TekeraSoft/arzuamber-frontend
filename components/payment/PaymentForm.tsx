@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import il from "@/data/il.json";
@@ -26,8 +26,6 @@ import axios from "axios";
 import DynamicModal from "../utils/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import Image from "next/image";
 import ReCAPTCHA from "react-google-recaptcha";
 // import { clearCart } from "@/store/cartSlice";
 
@@ -170,14 +168,21 @@ export default function PaymentForm() {
     }));
   };
 
-
-
   const [recaptcha, setRecaptcha] = useState(null);
 
+  const isButtonDisabled =
+    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha == null
+      ? true
+      : false;
 
-  const isButtonDisabled = checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha == null ? true : false;
+  const yearRef = useRef<InputMask>(null);
+  const cvcRef = useRef<InputMask>(null);
 
+  console.log(checkboxes);
 
+  console.log();
+
+  console.log(isButtonDisabled);
 
   return (
     <div className="flex flex-col  gap-2 py-3 ">
@@ -677,6 +682,7 @@ export default function PaymentForm() {
                             <VscCreditCard size={24} />
                           </span>
                           <InputMask
+                            onComplete={() => yearRef.current?.focus()}
                             onChange={(e) =>
                               setFieldValue(
                                 "paymentCard.expireMonth",
@@ -695,12 +701,14 @@ export default function PaymentForm() {
                             )}
                           />
                           <InputMask
+                            ref={yearRef}
                             onChange={(e) =>
                               setFieldValue(
                                 "paymentCard.expireYear",
                                 e.target.value
                               )
                             }
+                            onComplete={() => cvcRef.current?.focus()}
                             value={values.paymentCard.expireYear}
                             mask="99"
                             className={`border px-2 placeholder:text-md ${
@@ -718,6 +726,7 @@ export default function PaymentForm() {
                             <ImCreditCard size={24} />
                           </span>
                           <InputMask
+                            ref={cvcRef}
                             value={values.paymentCard.cvc}
                             onChange={(e) =>
                               setFieldValue("paymentCard.cvc", e.value)
@@ -924,13 +933,10 @@ export default function PaymentForm() {
                         )}
                       </div>
 
-
-
                       <ReCAPTCHA
-                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                          onChange={setRecaptcha}
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                        onChange={setRecaptcha}
                       />
-
                     </div>
 
                     <Button
