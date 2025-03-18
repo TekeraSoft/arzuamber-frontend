@@ -141,6 +141,7 @@ function Filter({
     setIsMenuOpen(!isMenuOpen);
   };
 
+
   return (
     <div className="relative md:w-1/4 z-40  ">
       {/* Mobil Menü Butonu */}
@@ -163,15 +164,15 @@ function Filter({
         onClick={toggleMenu}
       >
         <div
-          className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
-          onClick={(e) => e.stopPropagation()}
+            className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
+            onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col justify-center items-end  mt-20 w-full">
             <button
-              onClick={toggleMenu}
-              className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
+                onClick={toggleMenu}
+                className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
             >
-              <FaTimes size={16} />
+              <FaTimes size={16}/>
             </button>
             <h3 className="text-center text-2xl font-bold text-primary  w-full border-b border-secondary ">
               {t("Filter.title")}
@@ -179,71 +180,90 @@ function Filter({
           </div>
 
           {/* Mobil sabit filtreler */}
+
+          {/*    indirimli ürünler*/}
+          <div className="flex justify-start items-center gap-2">
+            <input
+                type="checkbox"
+                checked={selectedFilters.discountedProduct}
+                onChange={handleCheckboxChange}
+                className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+            />
+            <label className={`font-medium text-sm ${
+                selectedFilters.discountedProduct == true
+                    ? "text-primary font-bold"
+                    : "text-gray-500 font-thin"
+            }`}>
+              {t("Filter.discountedProducts")}
+            </label>
+          </div>
+
+
           {/* Kategoriler */}
           <div className="flex flex-col">
             <div
-              className="flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
-              onClick={() =>
-                setOpenState({ ...openState, category: !openState.category })
-              }
+                className="flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
+                onClick={() =>
+                    setOpenState({...openState, category: !openState.category})
+                }
             >
               <h3 className="text-lg font-semibold">
                 {t("Filter.categories")}
               </h3>
               {openState.category ? (
-                <FaMinus className="font-semibold" />
+                  <FaMinus className="font-semibold"/>
               ) : (
-                <FaPlus className="font-semibold" />
+                  <FaPlus className="font-semibold"/>
               )}
             </div>
 
             <ul
-              className={`transition-all duration-500 ease-in-out overflow-hidden gap-1 ${
-                openState.category ? "max-h-[1000px]" : "max-h-0"
-              } flex flex-col`}
+                className={`transition-all duration-500 ease-in-out overflow-hidden gap-1 ${
+                    openState.category ? "max-h-[1000px]" : "max-h-0"
+                } flex flex-col`}
             >
               {categories.map((category, index) => (
-                <li key={index} className="flex flex-col gap-y-2">
-                  <div
-                    className="flex items-center gap-x-3"
-                    onClick={() => dispatch(setShortCategory(""))}
-                  >
-                    <input
-                      type="checkbox" // checkbox olarak kullanıyoruz
-                      className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                      checked={selectedFilters.categories === category.name} // selectedFilters.categories sadece tek bir kategori
-                      value={category.name}
-                      onChange={(e) => {
-                        if (selectedFilters.categories === category.name) {
-                          // Eğer bu kategori zaten seçiliyse, seçili kategoriyi kaldır
-
-                          setSelectedFilters({
-                            ...selectedFilters,
-                            categories: null, // Kategoriyi kaldır
-                            // subCategories: null, // Alt kategoriyi sıfırla
-                          });
-                        } else {
-                          // Eğer kategori seçili değilse, yeni kategoriye ata
-                          setSelectedFilters({
-                            ...selectedFilters,
-                            categories: e.target.value,
-                            // subCategories: null, // Alt kategoriyi sıfırla
-                          });
-                        }
-                      }}
-                    />
-                    <label
-                      className={`font-medium text-sm ${
-                        selectedFilters.categories === category.name
-                          ? "text-primary font-bold"
-                          : "text-gray-500 font-thin"
-                      }`}
+                  <li key={index} className="flex flex-col gap-y-2">
+                    <div
+                        className="flex items-center gap-x-3"
+                        onClick={() => dispatch(setShortCategory(""))}
                     >
-                      {category.name}
-                    </label>
-                  </div>
+                      <input
+                          type="checkbox" // checkbox olarak kullanıyoruz
+                          className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                          checked={selectedFilters.categories === category.name} // selectedFilters.categories sadece tek bir kategori
+                          value={category.name}
+                          onChange={(e) => {
+                            if (selectedFilters.categories === category.name) {
+                              // Eğer bu kategori zaten seçiliyse, seçili kategoriyi kaldır
 
-                  {/* Alt Kategoriler
+                              setSelectedFilters({
+                                ...selectedFilters,
+                                categories: null, // Kategoriyi kaldır
+                                // subCategories: null, // Alt kategoriyi sıfırla
+                              });
+                            } else {
+                              // Eğer kategori seçili değilse, yeni kategoriye ata
+                              setSelectedFilters({
+                                ...selectedFilters,
+                                categories: e.target.value,
+                                // subCategories: null, // Alt kategoriyi sıfırla
+                              });
+                            }
+                          }}
+                      />
+                      <label
+                          className={`font-medium text-sm ${
+                              selectedFilters.categories === category.name
+                                  ? "text-primary font-bold"
+                                  : "text-gray-500 font-thin"
+                          }`}
+                      >
+                        {category.name}
+                      </label>
+                    </div>
+
+                    {/* Alt Kategoriler
                   {selectedFilters.categories === category.name && (
                     <div className="ml-6 flex flex-col gap-1">
                       {category.subCategories.map((subcategory, index) => (
@@ -289,177 +309,177 @@ function Filter({
                       ))}
                     </div>
                   )} */}
-                </li>
+                  </li>
               ))}
             </ul>
 
-            <hr className="bg-secondaryDark mt-2" />
+            <hr className="bg-secondaryDark mt-2"/>
           </div>
 
           {/* Bedenler */}
           <div className={"flex flex-col"}>
             <div
-              className={
-                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
-              }
-              onClick={() =>
-                setOpenState({ ...openState, size: !openState.size })
-              }
+                className={
+                  "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+                }
+                onClick={() =>
+                    setOpenState({...openState, size: !openState.size})
+                }
             >
               <h3 className={"text-lg font-semibold"}>{t("Filter.sizes")}</h3>
               {openState.size ? (
-                <FaMinus className={"font-semibold"} />
+                  <FaMinus className={"font-semibold"}/>
               ) : (
-                <FaPlus className={" font-semibold"} />
+                  <FaPlus className={" font-semibold"}/>
               )}
             </div>
             <ul
-              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-                openState.size ? "max-h-[1000px]" : "max-h-0"
-              } flex flex-col h-full`}
+                className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                    openState.size ? "max-h-[1000px]" : "max-h-0"
+                } flex flex-col h-full`}
             >
               {filterData.sizes.values.map((size, index) => (
-                <li key={index} className="flex flex-row gap-x-3">
-                  <input
-                    type="checkbox"
-                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.sizes === size}
-                    value={size}
-                    onChange={() =>
-                      setSelectedFilters({
-                        ...selectedFilters,
-                        sizes: selectedFilters.sizes === size ? null : size,
-                      })
-                    }
-                  />
-                  <label
-                    className={`font-medium transition-all duration-300 text-sm ${
-                      selectedFilters.sizes === size
-                        ? "text-primary font-bold"
-                        : "text-gray-500 font-thin"
-                    }`}
-                  >
-                    {size}
-                  </label>
-                </li>
+                  <li key={index} className="flex flex-row gap-x-3">
+                    <input
+                        type="checkbox"
+                        className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                        checked={selectedFilters.sizes === size}
+                        value={size}
+                        onChange={() =>
+                            setSelectedFilters({
+                              ...selectedFilters,
+                              sizes: selectedFilters.sizes === size ? null : size,
+                            })
+                        }
+                    />
+                    <label
+                        className={`font-medium transition-all duration-300 text-sm ${
+                            selectedFilters.sizes === size
+                                ? "text-primary font-bold"
+                                : "text-gray-500 font-thin"
+                        }`}
+                    >
+                      {size}
+                    </label>
+                  </li>
               ))}
             </ul>
 
-            <hr className={"bg-secondaryDark mt-1"} />
+            <hr className={"bg-secondaryDark mt-1"}/>
           </div>
 
           {/* Renkler */}
           <div className={"flex flex-col"}>
             <div
-              className={
-                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
-              }
-              onClick={() =>
-                setOpenState({ ...openState, color: !openState.color })
-              }
+                className={
+                  "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+                }
+                onClick={() =>
+                    setOpenState({...openState, color: !openState.color})
+                }
             >
               <h3 className={"text-lg font-semibold"}>{t("Filter.colors")}</h3>
               {openState.color ? (
-                <FaMinus className={"font-semibold"} />
+                  <FaMinus className={"font-semibold"}/>
               ) : (
-                <FaPlus className={" font-semibold"} />
+                  <FaPlus className={" font-semibold"}/>
               )}
             </div>
             <ul
-              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-                openState.color ? "max-h-[1000px]" : "max-h-0"
-              } flex flex-col`}
+                className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                    openState.color ? "max-h-[1000px]" : "max-h-0"
+                } flex flex-col`}
             >
               {colors.map((color, index) => (
-                <li
-                  key={index}
-                  className={"flex flex-row justify-start items-center gap-x-2"}
-                >
-                  <input
-                    type="checkbox"
-                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.colors === color.name}
-                    value={color.name}
-                    onChange={() => {
-                      setSelectedFilters({
-                        ...selectedFilters,
-                        colors:
-                          selectedFilters.colors === color.name
-                            ? null
-                            : color.name,
-                      });
-                    }}
-                  />
-                  <label
-                    className={`font-medium transition-all duration-300 text-base ${
-                      selectedFilters.colors === color.name
-                        ? "text-primary font-bold"
-                        : "text-gray-500 font-thin"
-                    }`}
+                  <li
+                      key={index}
+                      className={"flex flex-row justify-start items-center gap-x-2"}
                   >
-                    {color.name}
-                  </label>
-                </li>
+                    <input
+                        type="checkbox"
+                        className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                        checked={selectedFilters.colors === color.name}
+                        value={color.name}
+                        onChange={() => {
+                          setSelectedFilters({
+                            ...selectedFilters,
+                            colors:
+                                selectedFilters.colors === color.name
+                                    ? null
+                                    : color.name,
+                          });
+                        }}
+                    />
+                    <label
+                        className={`font-medium transition-all duration-300 text-base ${
+                            selectedFilters.colors === color.name
+                                ? "text-primary font-bold"
+                                : "text-gray-500 font-thin"
+                        }`}
+                    >
+                      {color.name}
+                    </label>
+                  </li>
               ))}
             </ul>
 
-            <hr className={"bg-secondaryDark mt-1"} />
+            <hr className={"bg-secondaryDark mt-1"}/>
           </div>
 
           {/* Uzunluk */}
           <div className={"flex flex-col"}>
             <div
-              className={
-                "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
-              }
-              onClick={() =>
-                setOpenState({ ...openState, length: !openState.length })
-              }
+                className={
+                  "flex flex-row items-center justify-between  cursor-pointer mb-2 transition-all duration-300  text-secondaryDark hover:text-primary"
+                }
+                onClick={() =>
+                    setOpenState({...openState, length: !openState.length})
+                }
             >
               <h3 className={"text-lg font-semibold"}>{t("Filter.lengths")}</h3>
               {openState.length ? (
-                <FaMinus className={" font-semibold"} />
+                  <FaMinus className={" font-semibold"}/>
               ) : (
-                <FaPlus className={" font-semibold"} />
+                  <FaPlus className={" font-semibold"}/>
               )}
             </div>
             <ul
-              className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
-                openState.length ? "max-h-[1000px]" : "max-h-0"
-              } flex flex-col`}
+                className={`transition-[max-height] duration-500 ease-in-out overflow-hidden gap-1 ${
+                    openState.length ? "max-h-[1000px]" : "max-h-0"
+                } flex flex-col`}
             >
               {filterData.lengths.values.map((length, index) => (
-                <li
-                  key={index}
-                  className="flex flex-row justify-start items-center gap-x-3"
-                >
-                  <input
-                    type="checkbox"
-                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                    checked={selectedFilters.lengths === length}
-                    value={length}
-                    onChange={() =>
-                      setSelectedFilters({
-                        ...selectedFilters,
-                        lengths:
-                          selectedFilters.lengths === length ? null : length,
-                      })
-                    }
-                  />
-                  <label
-                    className={`font-medium transition-all duration-300 text-sm ${
-                      selectedFilters.lengths === length
-                        ? "text-primary font-bold"
-                        : "text-gray-500 font-thin"
-                    }`}
+                  <li
+                      key={index}
+                      className="flex flex-row justify-start items-center gap-x-3"
                   >
-                    {length}
-                  </label>
-                </li>
+                    <input
+                        type="checkbox"
+                        className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                        checked={selectedFilters.lengths === length}
+                        value={length}
+                        onChange={() =>
+                            setSelectedFilters({
+                              ...selectedFilters,
+                              lengths:
+                                  selectedFilters.lengths === length ? null : length,
+                            })
+                        }
+                    />
+                    <label
+                        className={`font-medium transition-all duration-300 text-sm ${
+                            selectedFilters.lengths === length
+                                ? "text-primary font-bold"
+                                : "text-gray-500 font-thin"
+                        }`}
+                    >
+                      {length}
+                    </label>
+                  </li>
               ))}
             </ul>
 
-            <hr className={"bg-secondaryDark mt-1"} />
+            <hr className={"bg-secondaryDark mt-1"}/>
           </div>
 
           {/*  Price Boxes */}
@@ -514,14 +534,20 @@ function Filter({
           {t("Filter.title")}
         </h3>
 
-        <div className="flex justify-center items-center gap-1">
+        {/*    indirimli ürünler*/}
+        <div className="flex justify-start items-center gap-2">
           <input
-            type="checkbox"
-            checked={selectedFilters.discountedProduct}
-            onChange={handleCheckboxChange}
+              type="checkbox"
+              checked={selectedFilters.discountedProduct}
+              onChange={handleCheckboxChange}
+              className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
           />
-          <label className="text-secondary text-sm">
-            Discounted Products Only
+          <label className={`font-medium text-sm ${
+              selectedFilters.discountedProduct == true
+                  ? "text-primary font-bold"
+                  : "text-gray-500 font-thin"
+          }`}>
+            {t("Filter.discountedProducts")}
           </label>
         </div>
 

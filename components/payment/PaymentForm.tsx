@@ -172,12 +172,10 @@ export default function PaymentForm() {
 
 
 
-  const [recaptcha, setRecaptcha] = useState();
+  const [recaptcha, setRecaptcha] = useState(null);
 
 
-
-
-  const isButtonDisabled = checkboxes.KVKK || checkboxes.MembershipAgreement;
+  const isButtonDisabled = checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha == null ? true : false;
 
 
 
@@ -926,21 +924,12 @@ export default function PaymentForm() {
                         )}
                       </div>
 
-                      <div className="flex justify-start items-center p-2 bg-orange-100 rounded-lg shadow my-2">
-                        <div className="flex items-center text-orange-700 text-lg gap-2">
-                          <FaExclamationCircle />
-                          <span className="font-semibold text-xs md:text-sm">
-                            {t("paymentForm.cardInfo")}
-                          </span>
-                        </div>
-                      </div>
 
 
-
-                      {/*<ReCAPTCHA*/}
-                      {/*    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}*/}
-                      {/*    onChange={setRecaptcha}*/}
-                      {/*/>*/}
+                      <ReCAPTCHA
+                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                          onChange={setRecaptcha}
+                      />
 
                     </div>
 

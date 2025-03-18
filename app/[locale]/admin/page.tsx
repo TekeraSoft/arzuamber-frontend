@@ -4,29 +4,61 @@ import { format } from "date-fns/format";
 import { tr } from "date-fns/locale";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import {changeOrderStatusDispatch, deleteOrderDispatch, getAllOrdersDispatch} from "@/store/adminSlice";
+import {
+    changeOrderStatusDispatch,
+    deleteOrderDispatch,
+    getAllOrdersDispatch,
+    setNewOrderToReturnWebsocket
+} from "@/store/adminSlice";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { MdDelete } from "react-icons/md";
 import { Dropdown } from "primereact/dropdown";
 import { isToday, parseISO } from "date-fns";
 import Image from "next/image";
+import useWebSocket from "@/hooks/useWebSocket";
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 function AdminPage() {
   const dispatch = useDispatch<AppDispatch>();
+
+  const imageUri = process.env.NEXT_PUBLIC_RESOURCE_API || "";
   const { orders, page, loading } = useSelector(
     (state: RootState) => state.admin
   );
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
   const [expandedRows, setExpandedRows] = useState(null);
+  //const { orders } = useWebSocket(pageable.currentPage,pageable.size);
 
   useEffect(() => {
     dispatch(getAllOrdersDispatch(pageable.currentPage, pageable.size));
+      const socket = new SockJS(process.env.NEXT_PUBLIC_SOCKET_URI);
+      const stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, function () {
+
+          // 🔔 Yeni siparişleri dinle
+          stompClient.subscribe("/topic/orders", function (res) {
+              const newOrder = JSON.parse(res.body);
+              playAudio()
+              dispatch(setNewOrderToReturnWebsocket(newOrder))
+          });
+      });
+
+      return () => {
+          stompClient.disconnect();
+      };
   }, [pageable.currentPage, pageable.size, dispatch]);
 
   const onPageChange = (event) => {
     setPageable({ size: event.rows, currentPage: event.page });
   };
+
+  const playAudio = () => {
+      const audio = new Audio("/audio/order-alert.mp3");
+      audio.play();
+  }
 
   const allowExpansion = (rowData) => {
     return rowData.basketItems.length > 0;
@@ -44,7 +76,7 @@ function AdminPage() {
           header={"Image"}
           body={(row) => (
             <Image
-              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${row.image}`}
+              src={`${imageUri}${row.image}`}
               alt={row.image}
               width={35}
               height={35}
@@ -72,7 +104,6 @@ function AdminPage() {
         paginator
         rows={pageable.size}
         first={pageable.currentPage}
-        totalRecords={page.totalElements}
         onPage={onPageChange}
         rowsPerPageOptions={[15, 25, 100]}
         rowExpansionTemplate={rowExpansionTemplate}

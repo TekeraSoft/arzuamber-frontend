@@ -8,6 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 import "animate.css";
 import ReCaptchaProvider from "@/components/utils/ReCaptchaProvider";
+import Head from "next/head";
 
 export const metadata = {
   title: "Arzu Amber",
@@ -34,42 +35,43 @@ export default async function RootLayout({
 
   return (
     <html lang="tr" suppressHydrationWarning={true}>
-      <head>
-        <meta
+    <Head>
+      <meta name="google-site-verification" content="google7bd2e17cd7bbe244"/>
+      <meta
           name="description"
           content="ArzuAmber ile modanın en özel parçalarına ulaşın! Kadın giyim, trend butik ürünler ve şıklık için en yeni koleksiyonları keşfedin."
-        />
-        <meta
+      />
+      <meta
           name="keywords"
           content="butik, moda, kadın giyim, trend kıyafetler, şık kombinler, yeni sezon moda, online alışveriş, arzuamber butik"
-        />
-        <meta name="author" content="Arzuamber Moda" />
-        <meta name="robots" content="index, follow" />
-        <meta
+      />
+      <meta name="author" content="Arzuamber Moda"/>
+      <meta name="robots" content="index, follow"/>
+      <meta
           property="og:title"
           content="ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler"
-        />
-        <meta
+      />
+      <meta
           property="og:description"
           content="En yeni moda trendlerini keşfedin! ArzuAmber Butik ile tarzınızı tamamlayacak eşsiz kombinleri bulun."
-        />
-        <meta
+      />
+      <meta
           property="og:image"
           content="https://www.arzuamber.com/images/og-image.jpg"
-        />
-        <meta property="og:url" content="https://www.arzuamber.com" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
+      />
+      <meta property="og:url" content="https://www.arzuamber.com"/>
+      <meta property="og:type" content="website"/>
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta
           name="twitter:title"
           content="ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler"
-        />
-        <meta
+      />
+      <meta
           name="twitter:description"
           content="Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!"
-        />
-      </head>
-      <body className={`antialiased`} suppressHydrationWarning={true}>
+      />
+    </Head>
+    <body className={`antialiased`} suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <ReCaptchaProvider>

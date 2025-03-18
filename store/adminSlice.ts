@@ -83,6 +83,9 @@ export const adminSlice = createSlice({
       let findOrder = state.orders.find((item) => item.id === action.payload.id);
       findOrder.status = action.payload.status;
     },
+    setNewOrderToReturnWebsocket: (state, action) => {
+      state.orders = [...state.orders, action.payload];
+    },
     loading: (state, action) => {
       state.loading = action.payload;
     },
@@ -471,6 +474,7 @@ export const {
   deleteContactMessage,
   deleteBlog,
     getBlogs,
-    setOrderStatus
+    setOrderStatus,
+  setNewOrderToReturnWebsocket
 } = adminSlice.actions;
 export default adminSlice.reducer;

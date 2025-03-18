@@ -45,8 +45,6 @@ function AdminAllBlogPage() {
     setPageable({ size: event.rows, currentPage: event.page });
   };
 
-  console.log(blogs)
-
   const actionBodyTemplate = (rowData: { id: string }) => (
     <Button
       icon="pi pi-trash"

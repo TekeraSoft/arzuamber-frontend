@@ -1,61 +1,59 @@
-import { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
-import SockJS from 'sockjs-client';
+import { useEffect, useState, useRef } from "react";
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const useWebSocket = (page, size) => {
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState([]); // Siparişleri tutan state
+    const audioRef = useRef(null); // 🎵 Audio nesnesini tutacak referans
+    const previousOrderCountRef = useRef(0); // Önceki sipariş sayısını tutacak referans
 
     useEffect(() => {
-        const socket = new SockJS("http://localhost:8080/ws"); // WebSocket URL'niz
-        const stompClient = new Client({
-            webSocketFactory: () => socket,
-            reconnectDelay: 5000,
-            debug: (str) => {
-                console.log(str);
-            },
-            onConnect: () => {
-                console.log("✅ WebSocket connected");
+        const socket = new SockJS(process.env.NEXT_PUBLIC_SOCKET_URI);
+        const stompClient = Stomp.over(socket);
 
-                // Sayfa ve boyut parametrelerini içeren payload oluşturuluyor
-                const orderRequestDto = {
-                    page: page,
-                    size: size
-                };
+        stompClient.connect({}, function () {
 
-                stompClient.subscribe("/topic/orders", (response) => {
-                    console.log("📦 Received orders:", response.body);
-                    try {
-                        const ordersData = JSON.parse(response.body);
-                        console.log("📊 Orders data:", ordersData);
+            // 🔔 Yeni siparişleri dinle
+            stompClient.subscribe("/topic/orders", function (res) {
+                const newOrder = JSON.parse(res.body);
 
-                        // 'orders' state'ini güncelleyin
-                        setOrders(ordersData._embedded?.orderDtos || []);
-                    } catch (error) {
-                        console.error("❌ Error parsing orders data:", error);
-                    }
-                });
-
-                // Sipariş verilerini almak için payload'ı gönderiyoruz
-                stompClient.publish({
-                    destination: "/app/orders", // Backend'de tanımladığınız endpoint
-                    body: JSON.stringify(orderRequestDto)
-                });
-            },
-            onStompError: (frame) => {
-                console.error("❌ STOMP error:", frame.headers['message']);
-                console.error("Additional details:", frame.body);
-            },
+                setOrders((prevOrders) => [newOrder, ...prevOrders]); // Yeni siparişi listeye ekle
+            });
         });
 
-        stompClient.activate(); // Bağlantıyı başlat
+        return () => {
+            stompClient.disconnect();
+        };
+    }, []);
 
-        return () => stompClient.deactivate(); // Cleanup
-    }, [page, size]); // page ve size değiştiğinde yeniden bağlanacak
+    useEffect(() => {
+        // Sayfa açıldığında ses dosyasını yükle ama çalma
+        const audio = new Audio("/audio/order-alert.mp3");
+        audioRef.current = audio;
+
+        // Ses engelini kaldırmak için kullanıcı tıklamasını bekle
+        const unlockAudio = () => {
+            audio.play().then(() => {
+                audio.pause();
+            }).catch(e => console.warn("🔇 Ses yüklenemedi:", e));
+
+            document.removeEventListener("click", unlockAudio); // Tıklama sonrası engeli kaldır
+        };
+
+        document.addEventListener("click", unlockAudio);
+
+        return () => {
+            document.removeEventListener("click", unlockAudio); // Temizleme
+        };
+    }, []);
+
     const playSound = () => {
-        const audio = new Audio("/notification.mp3"); // Zil sesi dosyanız
-        audio.play();
+        if (audioRef.current) {
+            audioRef.current.play().catch(e => console.warn("🔇 Ses çalma hatası:", e));
+        }
     };
-    return { orders };
+
+    return { orders }; // Siparişleri döndür
 };
 
 export default useWebSocket;
