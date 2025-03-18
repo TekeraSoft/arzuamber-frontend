@@ -176,7 +176,6 @@
     "KDV": "Fiyatlarımıza KDV dahildir."
   },
 
-
   "paymentForm": {
     "title": "Ödeme Sayfası",
     "paymentLoading": "Ödeme alınıyor...",
@@ -469,6 +468,8 @@
   "Filter": {
     "title": "Filtre",
     "discountedProducts": "İndirimli ürünler",
+    "highToLow": "Fiyat: Yüksekten Düşüğe",
+    "lowToHigh": "Fiyat: Düşükten Yükseğe",
     "sizes": "Beden",
     "colors": "Renk",
     "categories": "Kategoriler",

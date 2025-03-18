@@ -123,46 +123,35 @@ export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
     });
 };
 
-export const filterProductDispatch =
-  (params: object, isDiscountChecked?: boolean) => async (dispatch) => {
-    dispatch(loading(true));
-    getGuardRequest({
-      controller: "product",
-      action: "filter-product",
-      params: {
-        size: params.size,
-        color: params.color,
-        category: params.category,
-        subcategory: params.subcategory,
-        length: params.length,
-        page: params.page,
-        pageSize: params.pageSize,
-      },
+export const filterProductDispatch = (params: object) => async (dispatch) => {
+  dispatch(loading(true));
+  getGuardRequest({
+    controller: "product",
+    action: "filter-product",
+    params: {
+      size: params.size,
+      color: params.color,
+      category: params.category,
+      subcategory: params.subcategory,
+      length: params.length,
+      sortDirection: params.sortDirection,
+      onlyDiscounted: params.onlyDiscounted,
+      page: params.page,
+      pageSize: params.pageSize,
+    },
+  })
+    .then((res) => {
+      dispatch(getFilterProducts(res.data));
+      dispatch(loading(false));
     })
-      .then((res) => {
-        let filteredProducts = res.data._embedded?.productDtoes;
-
-        if (isDiscountChecked) {
-          filteredProducts = filteredProducts.filter(
-            (product) => product.discountPrice
-          );
-        }
-
-        dispatch(
-          getFilterProducts({
-            ...res.data,
-            _embedded: { productDtoes: filteredProducts },
-          })
-        );
-        dispatch(loading(false));
-      })
-      .catch((err) => {
-        dispatch(loading(false));
-      })
-      .finally(() => {
-        dispatch(loading(false));
-      });
-  };
+    .catch((err) => {
+      dispatch(loading(false));
+      console.log(err);
+    })
+    .finally(() => {
+      dispatch(loading(false));
+    });
+};
 
 export const getAllColorsDispatch = () => async (dispatch) => {
   dispatch(loading(true));

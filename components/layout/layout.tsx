@@ -11,6 +11,7 @@ import { PrimeReactProvider } from "primereact/api";
 import AuthLayout from "@/components/auth/authLayout";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.css"; // PrimeReact stilleri
+import ScrollToTop from "../utils/ScrollToTop";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
             <CartSidebar />
             <AuthLayout />
             {children}
+            <ScrollToTop />
           </main>
           {path.startsWith("/admin") ? null : <Footer />}
         </GradientColorContainer>

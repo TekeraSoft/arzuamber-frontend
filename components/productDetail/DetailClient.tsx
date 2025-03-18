@@ -8,8 +8,8 @@ import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -17,7 +17,7 @@ import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import NextSeoHead from "../utils/NextSeoHead";
 import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
-import {Button} from "primereact/button";
+import { Button } from "primereact/button";
 
 const responsive = {
   superLargeDesktop: {
@@ -47,7 +47,7 @@ const DetailClient = ({ product }: productProps) => {
   const t = useTranslations();
 
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0]);
-  const {loading} = useSelector((state: RootState) => state.cart);
+  const { loading } = useSelector((state: RootState) => state.cart);
   const [errorState, setErrorState] = useState({
     sizeError: false,
     colorError: false,
@@ -99,11 +99,7 @@ const DetailClient = ({ product }: productProps) => {
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full mt-7 mb-5 ">
-          {product.name}
-        </h3>
-
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 h-[520px] md:h-full ">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 h-[450px] md:h-full ">
           <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
@@ -158,6 +154,10 @@ const DetailClient = ({ product }: productProps) => {
           </Carousel>
         </div>
 
+        <h3 className=" md:hidden text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
+          {product.name}
+        </h3>
+
         <div
           className={
             "md:hidden flex  flex-col justify-center items-start gap-2  my-3 w-full "
@@ -206,9 +206,9 @@ const DetailClient = ({ product }: productProps) => {
           </div>
         </div>
 
-        <div className=" w-full md:w-3/6 mt-6  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg min-h-[800px] ">
+        <div className=" w-full md:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg min-h-[800px] ">
           <div className="w-full flex flex-col  justify-between items-start  gap-2">
-            <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis whitespace-nowrap w-full">
+            <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full">
               {product.name}
             </h3>
             <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 py-1 rounded-md  w-1/2">
@@ -416,7 +416,7 @@ const DetailClient = ({ product }: productProps) => {
 
           <div className="flex justify-start items-center gap-2 h-12">
             <Button
-                loading={loading}
+              loading={loading}
               onClick={() => {
                 if (!stateProduct.size) {
                   setErrorState({ ...errorState, sizeError: true });
@@ -445,7 +445,7 @@ const DetailClient = ({ product }: productProps) => {
                 }
               }}
               className={
-                "bg-secondary h-12 w-3/4 !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
+                "!bg-secondary h-12 w-3/4 !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
               }
             >
               {t("productDetail.productAddCart")}

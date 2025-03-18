@@ -14,10 +14,12 @@ import { useTranslations } from "next-intl";
 import { useLoginValidationSchema } from "@/error/loginSchema";
 import { Message } from "primereact/message";
 import { useRouter } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [errorState, setErrorState] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const t = useTranslations();
   const router = useRouter();
 
@@ -108,17 +110,29 @@ function LoginForm() {
 
         <span className="w-full flex flex-col">
           <label className={"font-medium"}>{t("loginForm.password")}</label>
-          <InputText
-            id="password"
-            value={formik.values.password}
-            type={"password"}
-            onChange={formik.handleChange}
-            className={`w-full h-8 rounded border px-2 outline-secondary ring-secondary ${
-              formik.touched.password && formik.errors.password
-                ? "border-red-500"
-                : ""
-            }`}
-          />
+          <div className="relative w-full">
+            <InputText
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full h-8 rounded border px-2 pr-10 outline-secondary ring-secondary ${
+                formik.touched.password && formik.errors.password
+                  ? "border-red-500"
+                  : ""
+              }`}
+            />
+            {/* Şifreyi Göster/Gizle Butonu */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-3 flex items-center text-gray-600 hover:text-gray-900"
+            >
+              {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+            </button>
+          </div>
+
           {formik.touched.password && formik.errors.password && (
             <small className="text-xs text-red-600 mt-1">
               {formik.errors.password}

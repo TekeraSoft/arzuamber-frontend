@@ -17,6 +17,7 @@ import DynamicModal from "../utils/DynamicModal";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
@@ -54,6 +55,9 @@ function RegisterForm() {
     MembershipAgreement: false,
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
+
   // Checkbox'ların durumunu değiştiren fonksiyon
   const handleCheckboxChange = (name) => {
     setCheckboxes((prevState) => ({
@@ -63,7 +67,10 @@ function RegisterForm() {
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled = !checkboxes.KVKK || !checkboxes.MembershipAgreement || recaptcha == null ? true : false;
+  const isButtonDisabled =
+    !checkboxes.KVKK || !checkboxes.MembershipAgreement || recaptcha == null
+      ? true
+      : false;
 
   return (
     <div>
@@ -160,19 +167,31 @@ function RegisterForm() {
               <label className={"font-medium text-sm"}>
                 {t("registerForm.password")}
               </label>
-
-              <InputText
-                id="password"
-                type={"password"}
-                value={formik.values.password}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
+              <div className="relative w-full">
+                <InputText
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formik.values.password}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  className={`w-full h-10 rounded border px-2 pr-10 outline-secondary ring-secondary ${
+                    formik.touched.password && formik.errors.password
+                      ? "border-red-500"
+                      : ""
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-600 hover:text-gray-900"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash size={18} />
+                  ) : (
+                    <FaEye size={18} />
+                  )}
+                </button>
+              </div>
 
               {formik.touched.password && formik.errors.password && (
                 <small className="text-[10px] text-red-600 ">
@@ -185,19 +204,32 @@ function RegisterForm() {
               <label className={"font-medium text-sm"}>
                 {t("registerForm.rePassword")}
               </label>
+              <div className="relative w-full">
+                <InputText
+                  id="rePassword"
+                  type={showRePassword ? "text" : "password"}
+                  value={formik.values.rePassword}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  className={`w-full h-10 rounded border px-2 pr-10 outline-secondary ring-secondary ${
+                    formik.touched.rePassword && formik.errors.rePassword
+                      ? "border-red-500"
+                      : ""
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowRePassword(!showRePassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-600 hover:text-gray-900"
+                >
+                  {showRePassword ? (
+                    <FaEyeSlash size={18} />
+                  ) : (
+                    <FaEye size={18} />
+                  )}
+                </button>
+              </div>
 
-              <InputText
-                id="rePassword"
-                type={"password"}
-                onBlur={formik.handleBlur}
-                value={formik.values.rePassword}
-                onChange={formik.handleChange}
-                className={`w-full h-10 rounded border px-2 outline-secondary ring-secondary ${
-                  formik.touched.rePassword && formik.errors.rePassword
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
               {formik.touched.rePassword && formik.errors.rePassword && (
                 <small className="text-[10px] text-red-600  ">
                   {formik.errors.rePassword}
@@ -284,11 +316,9 @@ function RegisterForm() {
           <DynamicModal />
         </div>
 
-
-
         <ReCAPTCHA
-           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-           onChange={setRecaptcha}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          onChange={setRecaptcha}
         />
 
         {isButtonDisabled && (

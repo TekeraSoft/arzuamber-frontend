@@ -11,6 +11,7 @@ import BlogCartItem from "@/components/blogs/BlogItem";
 import { getBlogsDispatch } from "@/store/blogSlice";
 
 import NotFoundBlogs from "@/components/error/NotFoundBlogs";
+import { Paginator } from "primereact/paginator";
 
 function AllBlog() {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +24,15 @@ function AllBlog() {
   useEffect(() => {
     dispatch(getBlogsDispatch(pageable.currentPage, pageable.size));
   }, [pageable.currentPage, pageable.size, dispatch]);
+
+  const onPageChange = (event) => {
+    setPageable({ size: event.rows, currentPage: event.page });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   if (loading) return <Loading />;
 
@@ -47,6 +57,15 @@ function AllBlog() {
                   <BlogCartItem key={index} blog={blog} />
                 ))}
               </div>
+
+              <Paginator
+                className={"my-12 "}
+                first={pageable.currentPage * pageable.size}
+                rows={pageable.size}
+                totalRecords={page.totalElements}
+                rowsPerPageOptions={[9, 20, 30]}
+                onPageChange={onPageChange}
+              />
             </>
           ) : (
             <NotFoundBlogs />

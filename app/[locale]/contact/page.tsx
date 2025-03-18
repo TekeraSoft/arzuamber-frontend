@@ -14,6 +14,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import Category from "@/components/home/Category";
 
 function ContactPage() {
   const t = useTranslations();
@@ -46,7 +47,9 @@ function ContactPage() {
         <meta name="description" content={t("ContactPage.metaDescription")} />
       </Head>
 
-      <PageContainer>
+      <Category />
+      <hr className="w-full border-secondary mx-auto container" />
+      <div className=" mx-3  md:container md:mx-auto mb-12  mt-2">
         <form onSubmit={formik.handleSubmit}>
           <div className=" mx-auto animate__animated animate__fadeIn  ">
             <div className="max-w-2xl mx-auto text-center">
@@ -58,7 +61,15 @@ function ContactPage() {
               </p>
             </div>
 
-            <div className="max-w-5xl mx-auto mt-5">
+            <div className="max-w-6xl mx-auto mt-5 grid gap-4">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d797.7763359713855!2d30.69932672850806!3d36.88782807088876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c391433f5d9d85%3A0xf088a952b396c64c!2sARZUAMBER%20MODA!5e0!3m2!1str!2str!4v1742284399531!5m2!1str!2str"
+                className="w-full  h-[400px] border-0 rounded-lg"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+
               <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-3">
                 <div className="bg-white rounded-xl flex flex-col justify-center items-center p-6">
                   <FaPhoneAlt className="w-10 h-10 text-secondary" />
@@ -92,7 +103,7 @@ function ContactPage() {
                 </div>
               </div>
 
-              <div className="mt-4 bg-white rounded-lg px-6 md:px-8 py-6 w-full">
+              <div className="mt-4 bg-white rounded-lg px-5 md:px-8 py-6 w-full">
                 <h3 className="text-3xl font-semibold text-center text-gray-900">
                   {t("ContactPage.messageTitle")}
                 </h3>
@@ -224,7 +235,7 @@ function ContactPage() {
             </div>
           </div>
         </form>
-      </PageContainer>
+      </div>
     </>
   );
 }
