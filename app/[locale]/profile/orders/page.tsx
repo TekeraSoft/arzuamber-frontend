@@ -41,7 +41,7 @@ function OrderPage() {
   const displayedOrders = orders.slice(first, first + rows);
 
   return (
-    <div className="px-5 py-3 bg-gray-50 rounded-lg mb-3 ">
+    <div className=" px-2  ">
       {/* Show message if there are no orders */}
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col justify-center items-center text-center py-8 min-h-96 ">
@@ -53,8 +53,8 @@ function OrderPage() {
         <>
           {/* Orders List */}
           {displayedOrders.map((order, index) => (
-            <div key={index} className="mb-8 border-b  w-full">
-              <div className="flex  justify-between items-center gap-1 mb-4">
+            <div key={index} className="   w-full border-b border-black">
+              <div className="flex  justify-between items-center gap-1 mb-4 px-1 py-1">
                 <h3 className="text-base md:text-lg font-semibold">
                   {t("ordersPage.order")} #{order.paymentId}
                 </h3>
@@ -76,7 +76,7 @@ function OrderPage() {
                     t("ordersPage.statuses.OTHER")}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center  px-1">
                 <div className="text-xs md:text-sm text-gray-500 mb-4">
                   <span className="font-semibold">
                     {t("ordersPage.orderDate")}
@@ -92,7 +92,7 @@ function OrderPage() {
                     day: "numeric",
                   })}
                 </div>
-                <div className="text-sm md:text-sm font-semibold mb-4">
+                <div className="text-sm md:text-sm font-semibold mb-4 underline">
                   {t("ordersPage.totalPrice")}: ₺{order.totalPrice}
                 </div>
               </div>
@@ -102,7 +102,7 @@ function OrderPage() {
                 {order.basketItems.map((product, index) => (
                   <div
                     key={index}
-                    className="flex gap-3 mb-6 p-4 bg-gray-100 rounded-lg w-full "
+                    className="flex gap-3 md:mb-6 p-2  rounded-lg w-full border-b "
                   >
                     <div className="flex justify-between items-center flex-wrap gap-2 w-full ">
                       <div className="flex gap-2 justify-center items-center">
@@ -159,11 +159,11 @@ function OrderPage() {
                   </div>
                 ))}
 
-                <div className="w-full p-4 rounded-lg bg-gray-100">
-                  <h4 className="text-base font-semibold mb-3 text-center">
+                <div className="w-full p-2 rounded-lg ">
+                  <h4 className="text-lg font-semibold mb-3 text-center border-b">
                     {t("ordersPage.shippingAddress")}
                   </h4>
-                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700">
+                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700 w-full">
                     <p>
                       <span className="font-semibold">
                         {t("ordersPage.contactName")}:
@@ -172,9 +172,9 @@ function OrderPage() {
                     </p>
                     <p>
                       <span className="font-semibold">
-                        {t("ordersPage.street")}:
+                        {t("ordersPage.country")}:
                       </span>{" "}
-                      {order.shippingAddress.street}
+                      {order.shippingAddress.country}
                     </p>
                     <p>
                       <span className="font-semibold">
@@ -182,6 +182,7 @@ function OrderPage() {
                       </span>{" "}
                       {order.shippingAddress.city}
                     </p>
+
                     <p>
                       <span className="font-semibold">
                         {t("ordersPage.state")}:
@@ -190,13 +191,13 @@ function OrderPage() {
                     </p>
                     <p>
                       <span className="font-semibold">
-                        {t("ordersPage.country")}:
+                        {t("ordersPage.street")}:
                       </span>{" "}
-                      {order.shippingAddress.country}
+                      {order.shippingAddress.street}
                     </p>
                   </div>
                   <div className=" my-2">
-                    <span className="font-semibold">
+                    <span className="font-semibold text-sm">
                       {t("ordersPage.DetailAdres")}:
                     </span>{" "}
                     {order.shippingAddress.address}

@@ -11,13 +11,13 @@ export default function ProfilePage() {
   const { data: session } = useSession();
 
   return (
-    <div className="w-full px-4 md:px-8 py-6 space-y-8 h-full bg-white rounded-b  md:rounded-lg  ">
+    <div className="w-full px-4   space-y-8 h-full rounded-md  ">
       {/* Personal Information Section */}
-      <div className="space-y-6">
+      <div className="  space-y-3">
         <h3 className="text-xl  md:text-2xl font-semibold text-primary">
           {t("userInfo.title")}
         </h3>
-        <div className="space-y-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+        <div className="space-y-4   ">
           <div className="flex items-center space-x-3">
             <FaRegAddressCard className="text-primary text-xl" />
             <span className="font-medium text-gray-800">

@@ -4,6 +4,7 @@ export interface ModalState {
   isRegisterModalOpen: boolean;
   isLoginModalOpen: boolean;
   isCartModalOpen: boolean;
+  isForgotPassModalOpen: boolean;
   activeModal: { isOpen: boolean; title: string; content: string };
 }
 
@@ -11,6 +12,7 @@ const initialState: ModalState = {
   isRegisterModalOpen: false,
   isLoginModalOpen: false,
   isCartModalOpen: false,
+  isForgotPassModalOpen: false,
   activeModal: { isOpen: false, title: "", content: "" },
 };
 
@@ -18,24 +20,24 @@ export const modalsSlice = createSlice({
   name: "modals",
   initialState,
   reducers: {
-    openRegisterModal(state) {
-      state.isRegisterModalOpen = true;
+    setRegisterModal(state, action) {
+      state.isRegisterModalOpen = action.payload;
     },
-    closeRegisterModal(state) {
-      state.isRegisterModalOpen = false;
+
+    setLoginModal(state, action) {
+      state.isLoginModalOpen = action.payload;
     },
-    openLoginModal(state) {
-      state.isLoginModalOpen = true;
-    },
-    closeLoginModal(state) {
-      state.isLoginModalOpen = false;
-    },
+
     openCartModal(state) {
       state.isCartModalOpen = true;
     },
     closeCartModal(state) {
       state.isCartModalOpen = false;
     },
+    setForgotPassModal(state, action) {
+      state.isForgotPassModalOpen = action.payload;
+    },
+
     openDynamicModal(
       state,
       action: PayloadAction<{ title: string; content: string }>
@@ -55,14 +57,13 @@ export const modalsSlice = createSlice({
 });
 
 export const {
-  openRegisterModal,
-  closeRegisterModal,
-  openLoginModal,
-  closeLoginModal,
+  setRegisterModal,
+  setLoginModal,
   openCartModal,
   closeCartModal,
   openDynamicModal,
   closeDynamicModal,
+  setForgotPassModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

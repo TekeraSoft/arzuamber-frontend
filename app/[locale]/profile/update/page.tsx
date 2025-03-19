@@ -6,7 +6,7 @@ function UserUpdatePage() {
   const t = useTranslations();
 
   return (
-    <div className="w-full flex justify-center items-center flex-col my-5  ">
+    <div className="w-full flex justify-center items-center flex-col    container ">
       {/* <h2 className="text-2xl font-semibold text-center">
         {t("profileUpdate.updateInfo")}
       </h2> */}

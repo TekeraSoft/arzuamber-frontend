@@ -119,6 +119,15 @@
     "acceptAgreementError": "*Kayıt olmak için sözleşmeleri kabul edin lütfen."
   },
 
+  "forgotPassForm": {
+    "title": "Şifremi Unuttum",
+    "login": "Giriş Yap",
+    "submit": "Gönder",
+    "description": "Yeni şifreniz için mail göndereceğiz.",
+    "success": "Şifrenizi sıfırlamak için mailinizi kontrol edin.",
+    "fail": "Mail Gönderilemedi:"
+  },
+
   "allProduct": {
     "allProducts": "Tüm Ürünler"
   },
@@ -362,7 +371,9 @@
     "menuTitle": "Profil Menüsü",
     "profile": "Profil",
     "orders": "Siparişler",
-    "update": "Güncelle"
+    "update": "Güncelle",
+    "passchange": "Şifre değiştir",
+    "submitting": "Gönderiliyor..."
   },
 
   "userInfo": {
@@ -384,7 +395,7 @@
   "ordersPage": {
     "noOrders": "Henüz siparişiniz yok.",
     "startShopping": "İlk siparişinizi vermek için şimdi alışveriş yapmaya başlayın!",
-    "order": "Siparişler",
+    "order": "Sipariş kodu:",
     "status": "Durum",
     "shippingAddress": "Teslimat Adresi",
     "contactName": "İletişim Adı",

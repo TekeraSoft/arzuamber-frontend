@@ -168,7 +168,7 @@ export default function PaymentForm() {
     }));
   };
 
-  const [recaptcha, setRecaptcha] = useState(null);
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
 
   const isButtonDisabled =
     checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha == null

@@ -1,7 +1,11 @@
 "use client";
 
 import Button from "@/components/general/Button";
-import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
+import {
+  setLoginModal,
+  setRegisterModal,
+  setForgotPassModal,
+} from "@/store/modalsSlice";
 import { AppDispatch } from "@/store/store";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -21,7 +25,7 @@ function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [errorState, setErrorState] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [recaptcha, setRecaptcha] = useState();
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
   const t = useTranslations();
   const router = useRouter();
 
@@ -40,7 +44,7 @@ function LoginForm() {
         .then((res) => {
           if (res.status === 200) {
             toast.success("Login successfully");
-            dispatch(closeLoginModal());
+            dispatch(setLoginModal(false));
             router.push("/");
           } else {
             if (res.status === 401) {
@@ -55,8 +59,13 @@ function LoginForm() {
   });
 
   const handleChangeModal = () => {
-    dispatch(closeLoginModal());
-    dispatch(openRegisterModal());
+    dispatch(setLoginModal(false));
+    dispatch(setRegisterModal(true));
+  };
+
+  const handeChangeForgotModal = () => {
+    dispatch(setLoginModal(false));
+    dispatch(setForgotPassModal(true));
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
@@ -88,7 +97,7 @@ function LoginForm() {
         <button
           type={"button"}
           color="primary"
-          onClick={() => dispatch(closeLoginModal())}
+          onClick={() => dispatch(setLoginModal(false))}
           className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95 outline-secondary"
         >
           <MdCancel size={28} />
@@ -180,6 +189,12 @@ function LoginForm() {
         onClick={() => handleChangeModal()}
       >
         {t("loginForm.noAccount")}
+      </p>
+      <p
+        className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold mt-4"
+        onClick={() => handeChangeForgotModal()}
+      >
+        Şifremi Unuttum
       </p>
     </div>
   );

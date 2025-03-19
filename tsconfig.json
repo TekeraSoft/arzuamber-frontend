@@ -24,6 +24,13 @@
       }
     ]
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "app/api/my-sitemap/route.js",
+    "app/api/my-sitemap/post.js"
+  ],
   "exclude": ["node_modules"]
 }
