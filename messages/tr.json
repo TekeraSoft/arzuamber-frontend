@@ -79,6 +79,9 @@
     "email": "E-posta",
     "password": "Şifre",
     "rePassword": "Şifre Kontrol",
+    "currentPassword": "Eski Şifre",
+    "newPassword": "Yeni Şifre",
+    "newRePassword": "Yeni Şifre Tekrarı",
     "registerButton": "Kayıt Ol",
     "registerLink": "Zaten bir hesabınız var mı? Giriş yap",
     "errors": {
@@ -125,7 +128,19 @@
     "submit": "Gönder",
     "description": "Yeni şifreniz için mail göndereceğiz.",
     "success": "Şifrenizi sıfırlamak için mailinizi kontrol edin.",
-    "fail": "Mail Gönderilemedi:"
+    "fail": "Mail Gönderilemedi:",
+    "changeSuccess": "Şireniz Değiştirildi.",
+    "changeFail": "Şifreniz değiştirilemedi.",
+    "passMin": "Şifre en az 6 karakter olmalı.",
+    "passReq": "Şifre alanı zorunludur.",
+    "passReReq": "Şifre Tekrar alanı zorunludur.",
+    "noMatchPass": "Şifreler eşleşmiyor.",
+    "phoneSuccess": "Telefonunuz güncellendi.",
+    "phoneFail": "Telefonunuz güncellenemedi",
+    "addressMin": "Adres en az 10 karakter olmalı",
+    "addressReq": "Adres alanı zorunlu.",
+    "addressSuccess": "Adresiniz güncellendi.",
+    "adressFail": "Adresiniz güncellenemedi"
   },
 
   "allProduct": {
@@ -377,10 +392,10 @@
   },
 
   "userInfo": {
-    "title": "User Information",
-    "name": "Name",
-    "email": "Email",
-    "phone": "Phone",
+    "title": "Kullanıcı Bilgileri",
+    "name": "Ad-Soyad",
+    "email": "E-posta",
+    "phone": "Telefon",
     "address": "Adres"
   },
 

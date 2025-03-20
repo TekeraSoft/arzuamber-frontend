@@ -29,7 +29,7 @@ function ForgotPasswordModal() {
         const response = await axios.post("/api/forgot-password", {
           email: values.forgotEmail,
         });
-
+        dispatch(setForgotPassModal(false));
         toast.success(t("forgotPassForm.success"), response.data);
       } catch (error) {
         toast.error(t("forgotPassForm.fail"), error);

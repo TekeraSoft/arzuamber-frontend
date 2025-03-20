@@ -20,11 +20,11 @@ function PasswordChangePage() {
   // ✅ Yup şema tanımlandı
   const validationSchema = Yup.object({
     changedPassword: Yup.string()
-      .min(6, "Şifre en az 6 karakter olmalıdır.")
-      .required("Şifre zorunludur."),
+      .min(6, t("forgotPassForm.passMin"))
+      .required(t("forgotPassForm.passReq")),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("changedPassword")], "Şifreler eşleşmiyor.")
-      .required("Şifre tekrarı zorunludur."),
+      .oneOf([Yup.ref("changedPassword")], t("forgotPassForm.noMatchPass"))
+      .required(t("forgotPassForm.passReReq")),
   });
 
   const formik = useFormik({
@@ -40,25 +40,29 @@ function PasswordChangePage() {
         const response = await axios.post("/api/forgot-password", {
           changedPassword: values.changedPassword,
         });
-        console.log(response);
-        toast.success(t("forgotPassForm.success"));
+
+        if (response.status === 200) {
+          toast.success(t("forgotPassForm.changeSuccess"));
+        } else {
+          toast.error(t("forgotPassForm.changeFail"));
+        }
       } catch (error) {
         console.log(error);
-        toast.error(t("forgotPassForm.fail"));
+        toast.error(t("forgotPassForm.changeFail"));
       }
     },
   });
 
   return (
-    <div className="flex flex-col w-full h-full container">
+    <div className="flex flex-col w-full h-full container max-w-2xl ">
       <h1 className="uppercase text-center md:text-xl">
         {t("profile.passchange")}
       </h1>
-      <form onSubmit={formik.handleSubmit} className="max-w-xl mx-auto">
+      <form onSubmit={formik.handleSubmit} className="w-full mx-auto space-y-3">
         {/* old Şifre alanı */}
         <div className="w-full relative gap-y-1 flex flex-col w-f">
           <label className={"font-medium text-sm"}>
-            {t("registerForm.password")}
+            {t("registerForm.currentPassword")}
           </label>
           <div className="relative w-full">
             <InputText
@@ -94,7 +98,7 @@ function PasswordChangePage() {
         {/*  new Şifre alanı */}
         <div className="w-full relative gap-y-1 flex flex-col w-f">
           <label className={"font-medium text-sm"}>
-            {t("registerForm.password")}
+            {t("registerForm.newPassword")}
           </label>
           <div className="relative w-full">
             <InputText
@@ -127,7 +131,7 @@ function PasswordChangePage() {
         {/* Şifre Tekrarı (Sadece doğrulama için) */}
         <div className="w-full relative gap-y-1 flex flex-col">
           <label className={"font-medium text-sm"}>
-            {t("registerForm.rePassword")}
+            {t("registerForm.newRePassword")}
           </label>
           <div className="relative w-full">
             <InputText

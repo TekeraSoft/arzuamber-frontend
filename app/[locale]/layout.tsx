@@ -8,7 +8,6 @@ import "react-multi-carousel/lib/styles.css";
 import "./globals.css";
 import "animate.css";
 import ReCaptchaProvider from "@/components/utils/ReCaptchaProvider";
-import Head from "next/head";
 import Image from "next/image";
 
 export const metadata = {
