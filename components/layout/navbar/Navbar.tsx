@@ -8,8 +8,8 @@ import Logo from "./Logo";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openCartModal,
-  openLoginModal,
-  openRegisterModal,
+  setLoginModal,
+  setRegisterModal,
 } from "@/store/modalsSlice";
 import { useLocale } from "next-intl";
 import { AppDispatch, RootState } from "@/store/store";
@@ -151,7 +151,7 @@ function Navbar() {
                         <span
                           className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
                           onClick={() => {
-                            dispatch(openRegisterModal());
+                            dispatch(setRegisterModal(true));
                           }}
                         >
                           {t("menuItems.signup")}
@@ -160,7 +160,7 @@ function Navbar() {
                         <span
                           className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md"
                           onClick={() => {
-                            dispatch(openLoginModal());
+                            dispatch(setLoginModal(true));
                           }}
                         >
                           {t("menuItems.login")}
@@ -315,7 +315,7 @@ function Navbar() {
                           <span
                             className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md text-center"
                             onClick={() => {
-                              dispatch(openRegisterModal());
+                              dispatch(setRegisterModal(true));
                             }}
                           >
                             {t("menuItems.signup")}
@@ -324,7 +324,7 @@ function Navbar() {
                           <span
                             className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md text-center"
                             onClick={() => {
-                              dispatch(openLoginModal());
+                              dispatch(setLoginModal(true));
                             }}
                           >
                             {t("menuItems.login")}

@@ -79,6 +79,9 @@
     "email": "E-posta",
     "password": "Şifre",
     "rePassword": "Şifre Kontrol",
+    "currentPassword": "Eski Şifre",
+    "newPassword": "Yeni Şifre",
+    "newRePassword": "Yeni Şifre Tekrarı",
     "registerButton": "Kayıt Ol",
     "registerLink": "Zaten bir hesabınız var mı? Giriş yap",
     "errors": {
@@ -117,6 +120,27 @@
       }
     },
     "acceptAgreementError": "*Kayıt olmak için sözleşmeleri kabul edin lütfen."
+  },
+
+  "forgotPassForm": {
+    "title": "Şifremi Unuttum",
+    "login": "Giriş Yap",
+    "submit": "Gönder",
+    "description": "Yeni şifreniz için mail göndereceğiz.",
+    "success": "Şifrenizi sıfırlamak için mailinizi kontrol edin.",
+    "fail": "Mail Gönderilemedi:",
+    "changeSuccess": "Şireniz Değiştirildi.",
+    "changeFail": "Şifreniz değiştirilemedi.",
+    "passMin": "Şifre en az 6 karakter olmalı.",
+    "passReq": "Şifre alanı zorunludur.",
+    "passReReq": "Şifre Tekrar alanı zorunludur.",
+    "noMatchPass": "Şifreler eşleşmiyor.",
+    "phoneSuccess": "Telefonunuz güncellendi.",
+    "phoneFail": "Telefonunuz güncellenemedi",
+    "addressMin": "Adres en az 10 karakter olmalı",
+    "addressReq": "Adres alanı zorunlu.",
+    "addressSuccess": "Adresiniz güncellendi.",
+    "adressFail": "Adresiniz güncellenemedi"
   },
 
   "allProduct": {
@@ -222,7 +246,7 @@
       "DescPayment": "Ödeme Bilgileri",
       "paymentDetailAdress": "Adres",
       "PaymentDetailBillingAddress": "Fatura Adresi",
-      "ShoppingDetail": "Alışveriş Detayı",
+      "ShoppingDetail": "Ödemeye Devam Et",
       "Back": "Geri",
       "Missingİnformation": "Lütfen eksik alanları doldurunuz",
       "EditInformation": "Bilgileri Düzenle",
@@ -362,14 +386,16 @@
     "menuTitle": "Profil Menüsü",
     "profile": "Profil",
     "orders": "Siparişler",
-    "update": "Güncelle"
+    "update": "Güncelle",
+    "passchange": "Şifre değiştir",
+    "submitting": "Gönderiliyor..."
   },
 
   "userInfo": {
-    "title": "User Information",
-    "name": "Name",
-    "email": "Email",
-    "phone": "Phone",
+    "title": "Kullanıcı Bilgileri",
+    "name": "Ad-Soyad",
+    "email": "E-posta",
+    "phone": "Telefon",
     "address": "Adres"
   },
 
@@ -384,7 +410,7 @@
   "ordersPage": {
     "noOrders": "Henüz siparişiniz yok.",
     "startShopping": "İlk siparişinizi vermek için şimdi alışveriş yapmaya başlayın!",
-    "order": "Siparişler",
+    "order": "Sipariş kodu:",
     "status": "Durum",
     "shippingAddress": "Teslimat Adresi",
     "contactName": "İletişim Adı",

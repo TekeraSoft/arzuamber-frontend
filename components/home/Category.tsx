@@ -3,7 +3,7 @@
 import { AppDispatch, RootState } from "@/store/store";
 import React, { useEffect } from "react";
 import Loading from "../utils/Loading";
-import { getCategoriesDispatch } from "@/store/categorySlice";
+import { getCategoriesDispatch, setShortCategory } from "@/store/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
@@ -61,6 +61,9 @@ function Category() {
           {categories.map((category, index) => (
             <Link
               href={`/category/${category.name}`}
+              onClick={() => {
+                dispatch(setShortCategory(category.name));
+              }}
               key={index}
               className="flex flex-col items-center justify-center  cursor-pointer"
             >

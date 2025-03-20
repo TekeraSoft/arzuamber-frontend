@@ -4,9 +4,9 @@ import { registerUserDispatch } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import {
-  closeRegisterModal,
+  setRegisterModal,
   openDynamicModal,
-  openLoginModal,
+  setLoginModal,
 } from "@/store/modalsSlice";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
@@ -24,8 +24,8 @@ function RegisterForm() {
   const router = useRouter();
 
   const handleChangeModal = () => {
-    dispatch(closeRegisterModal());
-    dispatch(openLoginModal());
+    dispatch(setRegisterModal(false));
+    dispatch(setLoginModal(true));
   };
 
   const formik = useFormik({
@@ -48,7 +48,7 @@ function RegisterForm() {
     dispatch(openDynamicModal({ title, content }));
   };
 
-  const [recaptcha, setRecaptcha] = useState();
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
   const [checkboxes, setCheckboxes] = useState({
     KVKK: false,
     ElectronicMessage: false,
@@ -77,7 +77,7 @@ function RegisterForm() {
       <button
         type={"button"}
         color="primary"
-        onClick={() => dispatch(closeRegisterModal())}
+        onClick={() => dispatch(setRegisterModal(false))}
         className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95"
       >
         <MdCancel size={28} />

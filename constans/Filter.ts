@@ -43,11 +43,10 @@ export const filterData: Filter = {
       "58",
       "38/40",
       "40/42",
-      "XS-S",
       "S-M",
       "M-L",
       "L-XL",
-      "XXL-XXXL"
+      "XL-2XL",
     ],
   },
   colors: {

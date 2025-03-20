@@ -1,7 +1,11 @@
 "use client";
 
 import Button from "@/components/general/Button";
-import { closeLoginModal, openRegisterModal } from "@/store/modalsSlice";
+import {
+  setLoginModal,
+  setRegisterModal,
+  setForgotPassModal,
+} from "@/store/modalsSlice";
 import { AppDispatch } from "@/store/store";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,11 +19,13 @@ import { useLoginValidationSchema } from "@/error/loginSchema";
 import { Message } from "primereact/message";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [errorState, setErrorState] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
   const t = useTranslations();
   const router = useRouter();
 
@@ -38,7 +44,7 @@ function LoginForm() {
         .then((res) => {
           if (res.status === 200) {
             toast.success("Login successfully");
-            dispatch(closeLoginModal());
+            dispatch(setLoginModal(false));
             router.push("/");
           } else {
             if (res.status === 401) {
@@ -53,9 +59,17 @@ function LoginForm() {
   });
 
   const handleChangeModal = () => {
-    dispatch(closeLoginModal());
-    dispatch(openRegisterModal());
+    dispatch(setLoginModal(false));
+    dispatch(setRegisterModal(true));
   };
+
+  const handeChangeForgotModal = () => {
+    dispatch(setLoginModal(false));
+    dispatch(setForgotPassModal(true));
+  };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled = recaptcha == null ? true : false;
 
   return (
     <div>
@@ -83,7 +97,7 @@ function LoginForm() {
         <button
           type={"button"}
           color="primary"
-          onClick={() => dispatch(closeLoginModal())}
+          onClick={() => dispatch(setLoginModal(false))}
           className="absolute top-3 right-4 md:top-6 md:right-6 text-primary hover:scale-95 outline-secondary"
         >
           <MdCancel size={28} />
@@ -140,6 +154,11 @@ function LoginForm() {
           )}
         </span>
 
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          onChange={setRecaptcha}
+        />
+
         <div className="flex flex-col justify-center items-center w-full ">
           <Button
             text={t("loginForm.loginButton")}
@@ -147,7 +166,12 @@ function LoginForm() {
             color="primary"
             animation
             size="center"
-            className=" bg-primary hover:bg-primaryDark text-mywhite py-2 rounded-lg transition duration-200 "
+            className={` ${
+              isButtonDisabled
+                ? "bg-secondary  cursor-not-allowed"
+                : "bg-primary "
+            }   text-mywhite py-2 rounded-lg transition duration-200  `}
+            disabled={isButtonDisabled}
           />
           {/* <Button
             size="small"
@@ -165,6 +189,12 @@ function LoginForm() {
         onClick={() => handleChangeModal()}
       >
         {t("loginForm.noAccount")}
+      </p>
+      <p
+        className="w-full  text-center hover:underline cursor-pointer text-primary font-semibold mt-4"
+        onClick={() => handeChangeForgotModal()}
+      >
+        Şifremi Unuttum
       </p>
     </div>
   );

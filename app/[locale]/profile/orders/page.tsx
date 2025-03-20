@@ -26,7 +26,7 @@ function OrderPage() {
   }, [dispatch, session?.user.email]);
 
   const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(10);
+  const [rows, setRows] = useState(3);
 
   if (loading == true) {
     return <Loading />;
@@ -41,7 +41,7 @@ function OrderPage() {
   const displayedOrders = orders.slice(first, first + rows);
 
   return (
-    <div className="px-5 py-3 bg-gray-50 rounded-lg mb-3 ">
+    <div className=" px-2 border-y border-black  ">
       {/* Show message if there are no orders */}
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col justify-center items-center text-center py-8 min-h-96 ">
@@ -50,16 +50,16 @@ function OrderPage() {
           <p className="text-gray-500">{t("ordersPage.startShopping")}</p>
         </div>
       ) : (
-        <>
+        <div>
           {/* Orders List */}
           {displayedOrders.map((order, index) => (
-            <div key={index} className="mb-8 border-b  w-full">
-              <div className="flex justify-between items-center mb-4">
+            <div key={index} className=" border-y  w-full  ">
+              <div className="flex  justify-between items-center gap-1 mb-4 px-1 py-1">
                 <h3 className="text-base md:text-lg font-semibold">
                   {t("ordersPage.order")} #{order.paymentId}
                 </h3>
                 <span
-                  className={`font-semibold text-sm md:text-sm ${
+                  className={`font-semibold text-sm md:text-sm p-2 ${
                     order.status === "PAID"
                       ? "bg-green-500 text-mywhite"
                       : order.status === "PENDING"
@@ -76,7 +76,7 @@ function OrderPage() {
                     t("ordersPage.statuses.OTHER")}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center  px-1">
                 <div className="text-xs md:text-sm text-gray-500 mb-4">
                   <span className="font-semibold">
                     {t("ordersPage.orderDate")}
@@ -92,20 +92,20 @@ function OrderPage() {
                     day: "numeric",
                   })}
                 </div>
-                <div className="text-sm md:text-sm font-semibold mb-4">
+                <div className="text-sm md:text-sm font-semibold mb-4 underline">
                   {t("ordersPage.totalPrice")}: ₺{order.totalPrice}
                 </div>
               </div>
 
               {/* Products in the order */}
-              <div className="flex flex-wrap justify-between items-center">
+              <div className="flex flex-wrap justify-between items-center gap-1 ">
                 {order.basketItems.map((product, index) => (
                   <div
                     key={index}
-                    className="flex gap-3 mb-6 p-4 bg-gray-100 rounded-lg w-full "
+                    className="flex gap-3 md:mb-6 p-2  rounded-lg w-full border "
                   >
-                    <div className="flex justify-between items-center flex-wrap gap-2 w-full ">
-                      <div className="flex gap-2 justify-center items-center">
+                    <div className="flex justify-between items-center  gap-2 w-full ">
+                      <div className="flex gap-2 justify-center items-center ">
                         <Image
                           src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${product.image}`}
                           alt={product.image}
@@ -114,8 +114,8 @@ function OrderPage() {
                           className={"rounded"}
                         />
                       </div>
-                      <div className="flex gap-2 justify-center items-center">
-                        <p className="text-xs md:text-base font-semibold break-words">
+                      <div className="flex flex-col gap-2 justify-center items-start md:items-center max-w-32 md:max-w-48">
+                        <p className="text-xsa md:text-base font-semibold ">
                           {product.name}
                         </p>
                         <p className="text-xs md:text-base text-gray-600">
@@ -125,68 +125,50 @@ function OrderPage() {
                           :{product.stockCode}
                         </p>
                       </div>
-                      <div className="text-gray-600 text-xs md:text-sm">
-                        <span className="font-semibold">
-                          {t("ordersPage.color")}
-                        </span>
-                        : {product.color}
-                      </div>
-                      <div className="text-gray-600 text-xs md:text-sm">
-                        <span className="font-semibold">
-                          {t("ordersPage.size")}
-                        </span>
-                        : {product.size}
-                      </div>
-                      <div className="text-gray-600 text-xs md:text-sm">
-                        <span className="font-semibold">
-                          {t("ordersPage.quantity")}
-                        </span>
-                        : {product.quantity}
-                      </div>
-                      <div className="text-gray-600 text-xs md:text-sm">
-                        <span className="font-semibold">
-                          {t("ordersPage.price")}
-                        </span>
-                        : ₺
-                        {product.price.toLocaleString("tr-TR", {
-                          style: "currency",
-                          currency: "TRY",
-                        })}
+                      <div className="grid gap-2 grid-cols-2 sm:w-2/6">
+                        <div className="text-gray-600 text-xs md:text-sm">
+                          <span className="font-semibold">
+                            {t("ordersPage.color")}
+                          </span>
+                          : {product.color}
+                        </div>
+                        <div className="text-gray-600 text-xs md:text-sm">
+                          <span className="font-semibold">
+                            {t("ordersPage.size")}
+                          </span>
+                          : {product.size}
+                        </div>
+                        <div className="text-gray-600 text-xs md:text-sm">
+                          <span className="font-semibold">
+                            {t("ordersPage.quantity")}
+                          </span>
+                          : {product.quantity}
+                        </div>
+                        <div className="text-gray-600 text-xs md:text-sm">
+                          <span className="font-semibold">
+                            {t("ordersPage.price")}
+                          </span>
+                          : ₺
+                          {product.price.toLocaleString("tr-TR", {
+                            style: "currency",
+                            currency: "TRY",
+                          })}
+                        </div>
                       </div>
                     </div>
-
-                    <div>{}</div>
                   </div>
                 ))}
 
-                <div className="w-full p-4 rounded-lg bg-gray-100">
-                  <h4 className="text-base font-semibold mb-3 text-center">
+                <div className="w-full p-2 rounded-lg ">
+                  <h4 className="text-lg font-semibold mb-3 text-center border-b">
                     {t("ordersPage.shippingAddress")}
                   </h4>
-                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700">
-                    <p>
-                      <span className="font-semibold">
+                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700 w-full">
+                    <p className="capitalize">
+                      <span className="font-semibold ">
                         {t("ordersPage.contactName")}:
                       </span>{" "}
                       {order.shippingAddress.contactName}
-                    </p>
-                    <p>
-                      <span className="font-semibold">
-                        {t("ordersPage.street")}:
-                      </span>{" "}
-                      {order.shippingAddress.street}
-                    </p>
-                    <p>
-                      <span className="font-semibold">
-                        {t("ordersPage.city")}:
-                      </span>{" "}
-                      {order.shippingAddress.city}
-                    </p>
-                    <p>
-                      <span className="font-semibold">
-                        {t("ordersPage.state")}:
-                      </span>{" "}
-                      {order.shippingAddress.state}
                     </p>
                     <p>
                       <span className="font-semibold">
@@ -194,9 +176,28 @@ function OrderPage() {
                       </span>{" "}
                       {order.shippingAddress.country}
                     </p>
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.city")}:
+                      </span>{" "}
+                      {order.shippingAddress.city}
+                    </p>
+
+                    <p>
+                      <span className="font-semibold">
+                        {t("ordersPage.state")}:
+                      </span>{" "}
+                      {order.shippingAddress.state}
+                    </p>
+                    <p className="capitalize">
+                      <span className="font-semibold">
+                        {t("ordersPage.street")}:
+                      </span>{" "}
+                      {order.shippingAddress.street}
+                    </p>
                   </div>
                   <div className=" my-2">
-                    <span className="font-semibold">
+                    <span className="font-semibold text-sm">
                       {t("ordersPage.DetailAdres")}:
                     </span>{" "}
                     {order.shippingAddress.address}
@@ -211,12 +212,12 @@ function OrderPage() {
                 first={first}
                 rows={rows}
                 totalRecords={orders.length}
-                rowsPerPageOptions={[10, 20, 30]}
+                rowsPerPageOptions={[5, 10, 20]}
                 onPageChange={onPageChange}
               />
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

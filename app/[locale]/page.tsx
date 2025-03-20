@@ -11,6 +11,7 @@ import PopulateProductSlider from "@/components/sliders/productSlider/PopulatePr
 import Category from "@/components/home/Category";
 
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
 
 export default function Home() {
   const t = useTranslations();
@@ -19,6 +20,12 @@ export default function Home() {
     () => import("@/components/home/CategoryBrand"),
     { ssr: false }
   );
+
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq("track", "PageView");
+    }
+  }, []);
 
   return (
     <>

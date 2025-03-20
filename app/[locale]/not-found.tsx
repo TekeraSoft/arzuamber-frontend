@@ -1,8 +1,9 @@
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import React from "react";
 import { FaRegSadTear } from "react-icons/fa";
 
-export default function NotFoundPage() {
+function NotFoundPage() {
   const t = useTranslations();
 
   return (
@@ -21,10 +22,12 @@ export default function NotFoundPage() {
       {/* Ana sayfaya yönlendirme */}
       <Link
         href="/"
-        className="px-6 py-3 bg-secondary text-white rounded-full hover:scale-105 transition-colors"
+        className="px-6 py-3 bg-secondary text-white rounded-full hover:scale-105 transition duration-300"
       >
         {t("warningText.ButtonText")}
       </Link>
     </div>
   );
 }
+
+export default NotFoundPage;
