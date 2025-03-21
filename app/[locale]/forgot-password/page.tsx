@@ -6,9 +6,13 @@ import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 import { useNewPassSchema } from "@/error/newPassSchema";
 import { useTranslations } from "next-intl";
+import {useSearchParams} from "next/navigation";
 
 const ForgotPasswordPage = () => {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const mail = searchParams.get("mail")
+  const token = searchParams.get("token")
 
   const formik = useFormik({
     initialValues: {
