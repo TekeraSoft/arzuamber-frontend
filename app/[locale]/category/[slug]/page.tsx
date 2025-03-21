@@ -1,11 +1,10 @@
 "use client";
 
 import Loading from "@/components/utils/Loading";
-// import WarningText from "@/components/utils/WarningText";
 import { AppDispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import Filter from "@/components/general/Filter/Filter";
 import { Paginator } from "primereact/paginator";
@@ -16,7 +15,7 @@ import { setShortCategory } from "@/store/categorySlice";
 
 function CategoryFilteredProducts() {
   const params = useParams();
-  // const t = useTranslations("");
+  const t = useTranslations("");
   const dispatch = useDispatch<AppDispatch>();
   const { filterProducts, loading, page } = useSelector(
     (state: RootState) => state.products
@@ -46,7 +45,7 @@ function CategoryFilteredProducts() {
           pageSize={pageable.size}
         />
 
-        <div className="w-full mb-3 h-full overflow-x-hidden">
+        <div className="w-full  my-7 h-full overflow-x-hidden">
           <div
             className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 p-0.5 "
             style={{
@@ -59,7 +58,7 @@ function CategoryFilteredProducts() {
                 <div
                   onClick={() => dispatch(setShortCategory(category.name))}
                   key={index}
-                  className="flex flex-col items-center justify-center  cursor-pointer"
+                  className="flex flex-col items-center justify-center  cursor-pointer "
                 >
                   {/* Kategori Resmi ve İsim */}
                   <div className="flex flex-col items-center">

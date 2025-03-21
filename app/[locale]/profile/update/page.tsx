@@ -3,10 +3,11 @@
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { InputMask } from "primereact/inputmask";
 import { InputTextarea } from "primereact/inputtextarea";
 import { toast } from "react-toastify";
+import { useUserUpdateAddressSchema } from "@/error/userUpdateAddressSchema";
+import { useUserUpdatePhoneSchema } from "@/error/userUpdatePhoneSchema";
 
 function UserUpdatePage() {
   const { data: session } = useSession();
@@ -15,9 +16,7 @@ function UserUpdatePage() {
   // Telefon Formu
   const phoneFormik = useFormik({
     initialValues: { phone: "" },
-    validationSchema: Yup.object({
-      phone: Yup.string().required(t("paymentForm.buyer.gsmNumber")),
-    }),
+    validationSchema: useUserUpdatePhoneSchema(),
     onSubmit: async (values) => {
       const response = await fetch("/api/update-phone", {
         method: "POST",
@@ -35,11 +34,8 @@ function UserUpdatePage() {
   // Adres Formu
   const addressFormik = useFormik({
     initialValues: { address: "" },
-    validationSchema: Yup.object({
-      address: Yup.string()
-        .min(10, t("forgotPassForm.addressMin"))
-        .required(t("forgotPassForm.addressReq")),
-    }),
+    validationSchema: useUserUpdateAddressSchema(),
+
     onSubmit: async (values) => {
       const response = await fetch("/api/update-address", {
         method: "POST",

@@ -23,7 +23,7 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [openUserDropdown, setOpenUserDropdown] = useState(false);
-  const [SearchOpen, setSearchOpen] = useState(false);
+  const [SearchOpen, setSearchOpen] = useState(true);
   const [loginRegisterMenu, SetLoginRegisterMenu] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();

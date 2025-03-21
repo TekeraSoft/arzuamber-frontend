@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion"; // Animasyonlar için
+import { useTranslations } from "next-intl";
 
 export default function CategoryBrand() {
   const dispatch = useDispatch<AppDispatch>();
+  const t = useTranslations();
 
   useEffect(() => {
     dispatch(getCategoriesDispatch());
@@ -21,10 +23,10 @@ export default function CategoryBrand() {
   );
 
   return (
-    <div className="container mx-auto mt-16 lg:mt-20 px-4">
-      {/* <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10 uppercase tracking-widest">
-        Kategoriler
-      </h2> */}
+    <div className="container mx-auto  mt-8 px-4">
+      <h2 className="text-2xl md:text-4xl font-semibold text-center mb-5 uppercase tracking-widest">
+        {t("Filter.categories")}
+      </h2>
 
       {loading ? (
         <Loading />
