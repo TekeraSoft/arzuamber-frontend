@@ -2,13 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
-import * as Yup from "yup"; // ✅ Yup import edildi
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useUserPassChangeSchema } from "@/error/userPassChangeSchema";
 
 function PasswordChangePage() {
   const t = useTranslations();
@@ -17,16 +17,6 @@ function PasswordChangePage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // ✅ Yup şema tanımlandı
-  const validationSchema = Yup.object({
-    changedPassword: Yup.string()
-      .min(6, t("forgotPassForm.passMin"))
-      .required(t("forgotPassForm.passReq")),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("changedPassword")], t("forgotPassForm.noMatchPass"))
-      .required(t("forgotPassForm.passReReq")),
-  });
-
   const formik = useFormik({
     initialValues: {
       changedPassword: "",
@@ -34,7 +24,7 @@ function PasswordChangePage() {
       currentPassword: "",
       email: session.data?.user?.email,
     },
-    validationSchema,
+    validationSchema: useUserPassChangeSchema(),
     onSubmit: async (values) => {
       try {
         const response = await axios.post("/api/forgot-password", {

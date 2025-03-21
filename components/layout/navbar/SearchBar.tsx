@@ -187,14 +187,14 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
           variants={isMobile ? searchVariants : desktopSearchVariants} // Mobil & Desktop farkı
           className={`${
             SearchOpen ? "flex" : "hidden"
-          } relative bg-mywhite justify-center items-center text-black px-5 py-1 border-b md:border-none min-w-full gap-2`}
+          } relative bg-mywhite justify-center items-center text-black px-4 py-1 border-b md:border-none min-w-full gap-2`}
         >
-          <div
+          {/* <div
             className="lg:hidden flex justify-center items-center bg-secondary text-mywhite p-1  rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
             onClick={() => setSearchOpen(false)}
           >
             <IoMdClose className="text-sm" />
-          </div>
+          </div> */}
 
           <div className="w-full  flex transition duration-300 !focus:outline-secondary">
             <span className="p-input-icon-right w-full">
@@ -254,7 +254,9 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                         "flex flex-row items-center justify-between w-full"
                       }
                     >
-                      <h4 className={"text-black truncate"}>{textClip(item.name)}</h4>
+                      <h4 className={"text-black truncate"}>
+                        {textClip(item.name)}
+                      </h4>
                       <strong>
                         {item.price.toLocaleString("tr-TR", {
                           style: "currency",
@@ -263,9 +265,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                       </strong>
                     </div>
                     <span
-                      className={
-                        "flex flex-row justify-start flex-wrap gap-2"
-                      }
+                      className={"flex flex-row justify-start flex-wrap gap-2"}
                     >
                       {item.colorSize.flatMap((cs, index) => (
                         <span key={index} className={"flex flex-row gap-x-1"}>

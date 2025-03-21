@@ -145,7 +145,7 @@ function Filter({
         onClick={toggleMenu}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-[60px] right-3  md:hidden px-6 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
+        }   top-40 right-3  md:hidden px-6 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
       >
         {t("Filter.title")}
       </button>

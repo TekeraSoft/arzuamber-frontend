@@ -140,7 +140,18 @@
     "addressMin": "Adres en az 10 karakter olmalı",
     "addressReq": "Adres alanı zorunlu.",
     "addressSuccess": "Adresiniz güncellendi.",
-    "adressFail": "Adresiniz güncellenemedi"
+    "adressFail": "Adresiniz güncellenemedi",
+    "newPasMin": "Yeni şifre en az 6 karakter olmalı.",
+    "newPasReq": "Yeni şifre alanı zorunlu."
+  },
+
+  "forgotPass": {
+    "title": "Şifremi Sıfırla",
+    "newPassLabel": "Yeni Şifre",
+    "newPassReLabel": "Şifreyi Onayla",
+    "passUpdateBtn": "Şifreyi Güncelle",
+    "passUpdate": "Şifre güncellendi:",
+    "passNotUpdate": "Şifre güncellenirken hata oluştu:"
   },
 
   "allProduct": {

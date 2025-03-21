@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import Loading from "@/components/utils/Loading";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Paginator } from "primereact/paginator";
 import NotFoundProduct from "@/components/error/notFoundProduct";
 import { getCategoriesDispatch } from "@/store/adminSlice";
@@ -15,8 +15,8 @@ import Image from "next/image";
 import { setShortCategory } from "@/store/categorySlice";
 
 function Products() {
-  // const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
+  const t = useTranslations("");
   const [pageable, setPageable] = useState({ currentPage: 0, size: 9 });
 
   const { products, filterProducts, loading, page } = useSelector(
@@ -43,7 +43,7 @@ function Products() {
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
-        <div className="w-full mb-3 h-full">
+        <div className="w-full my-5 h-full">
           <div
             className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 mb-2 "
             style={{
