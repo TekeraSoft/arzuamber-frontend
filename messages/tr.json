@@ -399,7 +399,23 @@
     "orders": "Siparişler",
     "update": "Güncelle",
     "passchange": "Şifre değiştir",
-    "submitting": "Gönderiliyor..."
+    "submitting": "Gönderiliyor...",
+    "notLoggedIn": {
+      "title": "Giriş Yapmadınız",
+      "description": "Profilinize erişebilmek için giriş yapmanız gerekiyor.",
+      "loginButton": "Giriş Yap"
+    },
+    "statistics": {
+      "title": "Profil İstatistikleri",
+      "totalOrders": "Toplam Sipariş",
+      "totalSpent": "Toplam Harcama (₺)",
+      "pendingOrders": "Bekleyen Siparişler",
+      "completedOrders": "Tamamlanan Siparişler",
+      "paidOrders": "Ödenen Siparişler",
+      "canceledOrders": "İptal Edilen Siparişler"
+    },
+    "updateAddress": "Adresinizi Güncelleyin",
+    "updatePhone": "Telefon Güncelle"
   },
 
   "userInfo": {

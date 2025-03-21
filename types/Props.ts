@@ -11,6 +11,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   role: string;
+  phoneNumber: string;
 }
 
 //! Review Props
