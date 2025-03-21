@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 import { useNewPassSchema } from "@/error/newPassSchema";
 import { useTranslations } from "next-intl";
+import { toast } from "react-toastify";
 
 const ForgotPasswordPage = () => {
   const t = useTranslations();
@@ -21,9 +22,9 @@ const ForgotPasswordPage = () => {
         const response = await axios.post("/api/reset-password", {
           password: values.newPassword,
         });
-        console.log(t("forgotPass.passUpdate"), response.data);
+        toast.success(t("forgotPass.passUpdate"), response.data);
       } catch (error) {
-        console.error(t("forgotPass.passNotUpdate"), error);
+        toast.error(t("forgotPass.passNotUpdate"), error);
       }
     },
   });
