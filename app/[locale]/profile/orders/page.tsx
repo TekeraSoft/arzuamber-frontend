@@ -41,10 +41,10 @@ function OrderPage() {
   const displayedOrders = orders.slice(first, first + rows);
 
   return (
-    <div className=" px-2 border-y border-black  ">
+    <div className=" flex flex-col justify-center items-center w-full px-2   ">
       {/* Show message if there are no orders */}
       {!orders || orders.length === 0 ? (
-        <div className="flex flex-col justify-center items-center text-center py-8 min-h-96 ">
+        <div className="flex flex-col justify-center items-center text-center py-8 min-h-96 w-full ">
           <RiFilePaper2Line size={35} />
           <h2 className="text-lg font-semibold">{t("ordersPage.noOrders")}</h2>
           <p className="text-gray-500">{t("ordersPage.startShopping")}</p>
