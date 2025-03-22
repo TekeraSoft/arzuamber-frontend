@@ -156,9 +156,18 @@ export default function PaymentForm() {
   };
 
   const [checkboxes, setCheckboxes] = useState({
-    KVKK: session.status == "authenticated" ? false : true,
-    MembershipAgreement: session.status == "authenticated" ? false : true,
+    KVKK: true,
+    MembershipAgreement: true,
   });
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setCheckboxes({
+        KVKK: false,
+        MembershipAgreement: false,
+      });
+    }
+  }, [session.status]);
 
   // Checkbox'ların durumunu değiştiren fonksiyon
   const handleCheckboxChange = (name) => {
@@ -177,12 +186,6 @@ export default function PaymentForm() {
 
   const yearRef = useRef<InputMask>(null);
   const cvcRef = useRef<InputMask>(null);
-
-  console.log(checkboxes);
-
-  console.log();
-
-  console.log(isButtonDisabled);
 
   return (
     <div className="flex flex-col  gap-2 py-3 ">

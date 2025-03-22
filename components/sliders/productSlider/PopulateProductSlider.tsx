@@ -45,7 +45,7 @@ function PopulateProductSlider() {
   function CustomLeftArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full opacity-70 bg-white p-1 md:p-3  hover:opacity-100"
+        className="absolute rounded-full left-2 opacity-70 bg-white p-1 md:p-3  hover:opacity-100"
         onClick={onClick}
       >
         <BiLeftArrow className="text-secondary" size={24} />
@@ -56,7 +56,7 @@ function PopulateProductSlider() {
   function CustomRightArrow({ onClick }: ArrowProps) {
     return (
       <button
-        className="absolute rounded-full right-0 z-5 opacity-70 bg-white p-1 md:p-3 hover:opacity-100"
+        className="absolute rounded-full right-2 z-5 opacity-70 bg-white p-1 md:p-3 hover:opacity-100"
         onClick={onClick}
       >
         <BiRightArrow className="text-secondary" size={24} />
@@ -85,7 +85,7 @@ function PopulateProductSlider() {
           customTransition="all .7s"
           transitionDuration={1000}
           containerClass="carousel-container"
-          itemClass="flex justify-center items-center py-5 "
+          itemClass="flex justify-center items-center py-5 px-0.5 md:px-0"
         >
           {populateProducts?.map((product: Product) => (
             <ProductsSliderItem product={product} key={product.id} />

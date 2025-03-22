@@ -34,3 +34,27 @@ body {
   --sb-thumb-color: #8174a0;
   --sb-size: 14px;
 }
+
+.SliderContainer {
+  @apply w-full 
+         sm:w-[1000px] 
+         md:w-[1100px] 
+         lg:w-[1250px] 
+         xl:w-[1320px];
+}
+
+.navbarContainer {
+  @apply w-full 
+         sm:w-full
+         md:w-[1100px] 
+         lg:w-[1250px] 
+         xl:w-[1350px];
+}
+
+.HomeSliderContainer {
+  @apply w-full 
+         sm:w-[1000px] 
+         md:w-[1100px] 
+         lg:w-[1250px] 
+         xl:w-[1300px];
+}

@@ -23,7 +23,7 @@ export default function CategoryBrand() {
   );
 
   return (
-    <div className="container mx-auto  mt-8 px-4">
+    <div className="  flex flex-col justify-center items-center w-full  mt-8 px-4">
       <h2 className="text-2xl md:text-4xl font-semibold text-center mb-5 uppercase tracking-widest">
         {t("Filter.categories")}
       </h2>
@@ -31,7 +31,7 @@ export default function CategoryBrand() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="HomeSliderContainer grid grid-cols-2 gap-6">
           {categories.map((category, index) => (
             <motion.div
               key={index}
