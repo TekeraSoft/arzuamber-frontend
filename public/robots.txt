@@ -1,6 +1,6 @@
 User-agent: *
 Disallow: /admin/
-Disallow: /private/
+Disallow: /profile/
 Allow: /public/
 
-Sitemap:http://localhost:3000/api/my-sitemap
+Sitemap:https://arzuamber.com/api/my-sitemap

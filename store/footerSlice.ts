@@ -6,7 +6,7 @@ const initialState = {
     facebook: "https://www.facebook.com/profile.php?id=61572463754368",
     instagram: "https://www.instagram.com/arzuamber.moda",
     whatsapp:
-      "https://api.whatsapp.com/message/5BSDWLJIL4BSL1?autoload=1&app_absent=0",
+      "https://wa.me/message/5BSDWLJIL4BSL1",
   },
 };
 

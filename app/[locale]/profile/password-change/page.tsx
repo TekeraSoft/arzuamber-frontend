@@ -9,37 +9,35 @@ import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useUserPassChangeSchema } from "@/error/userPassChangeSchema";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
+import {changePasswordDispatch} from "@/store/userSlice";
 
 function PasswordChangePage() {
   const t = useTranslations();
-  const session = useSession();
+  const dispatch = useDispatch<AppDispatch>();
+  const {data:session} = useSession();
   const [showPassword, setShowPassword] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       changedPassword: "",
       confirmPassword: "",
       currentPassword: "",
-      email: session.data?.user?.email,
+      email: session?.user?.email,
+      token: session?.accessToken
     },
     validationSchema: useUserPassChangeSchema(),
-    onSubmit: async (values) => {
-      try {
-        const response = await axios.post("/api/forgot-password", {
-          changedPassword: values.changedPassword,
-        });
-
-        if (response.status === 200) {
-          toast.success(t("forgotPassForm.changeSuccess"));
-        } else {
-          toast.error(t("forgotPassForm.changeFail"));
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error(t("forgotPassForm.changeFail"));
-      }
+    onSubmit: async (values,{resetForm}) => {
+       dispatch(changePasswordDispatch({
+         oldPassword: values.currentPassword,
+         password: values.changedPassword,
+         email: values.email,
+         token: values.token,
+       },resetForm))
     },
   });
 
@@ -79,11 +77,6 @@ function PasswordChangePage() {
               )}
             </button>
           </div>
-          {formik.touched.changedPassword && formik.errors.changedPassword && (
-            <small className="text-[10px] text-red-600 ">
-              {formik.errors.changedPassword}
-            </small>
-          )}
         </div>
         {/*  new Şifre alanı */}
         <div className="w-full relative gap-y-1 flex flex-col w-f">

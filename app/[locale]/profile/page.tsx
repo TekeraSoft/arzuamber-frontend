@@ -22,7 +22,9 @@ import { getUserOrdersDispatch } from "@/store/userSlice";
 import { useEffect } from "react";
 import { BiSolidDiscount } from "react-icons/bi";
 
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";import { FaTruck } from "react-icons/fa";import { FaHouseChimney } from "react-icons/fa6";
+
+
 
 export default function ProfilePage() {
   const t = useTranslations();
@@ -41,7 +43,7 @@ export default function ProfilePage() {
   // const pendingOrders = orders.filter((order) => order.status === "PENDING");
   const completedOrders = orders.filter((order) => order.status === "SHIPPED");
   const paidOrders = orders.filter((order) => order.status === "PAID");
-  const canceledOrders = orders.filter((order) => order.status === "CANCELED");
+  const canceledOrders = orders.filter((order) => order.status === "CANCELLED");
 
   console.log(orders);
 
@@ -109,6 +111,25 @@ export default function ProfilePage() {
               )}
             </span>
           </div>
+          {/* Adres Bölümü */}
+          <div className="flex  items-center justify-start w-full gap-2">
+<div className="flex items-center space-x-3">  <FaHouseChimney className="text-primary text-xl" />
+  <h3 className="font-semibold text-primary">
+    {t("userInfo.address")}:
+  </h3>
+</div>
+
+            {session?.user?.address ? (
+                <p className="text-sm">{session.user.address}</p>
+            ) : (
+                <Link
+                    href={"/profile/update"}
+                    className="text-sm text-red-500 hover:underline"
+                >
+                  {t("profile.updateAddress")}
+                </Link>
+            )}
+          </div>{" "}
         </div>
       </div>
 
@@ -122,7 +143,7 @@ export default function ProfilePage() {
 
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {/* Sipariş Sayısı */}
-            <div className="flex flex-col items-center bg-indigo-100 p-4 rounded-lg shadow-md">
+            <div className="flex flex-col items-center bg-indigo-200 p-4 rounded-lg shadow-md">
               <FaShoppingCart className="text-indigo-600 text-3xl" />
               <span className="text-3xl font-semibold text-indigo-700">
                 {orders.length}
@@ -143,7 +164,7 @@ export default function ProfilePage() {
                   .toFixed(2)}
               </span>
               <p className="text-sm text-gray-600 truncate">
-                {t("profile.statistics.totalSpent")} (₺)
+                {t("profile.statistics.totalSpent")}
               </p>
             </div>
             {/* Bekleyen Siparişler */}
@@ -164,16 +185,7 @@ export default function ProfilePage() {
               <p className="text-sm text-gray-600 truncate">Kuponlarım</p>
             </div>
 
-            {/* Tamamlanan Siparişler */}
-            <div className="flex flex-col items-center bg-green-100 p-4 rounded-lg shadow-md">
-              <FaCheckCircle className="text-green-500 text-3xl" />
-              <span className="text-3xl font-semibold text-green-600">
-                {completedOrders.length}
-              </span>
-              <p className="text-sm text-gray-600 truncate">
-                {t("profile.statistics.completedOrders")}
-              </p>
-            </div>
+
             {/* Ödenen Siparişler */}
             <div className="flex flex-col items-center bg-blue-100 p-4 rounded-lg shadow-md">
               <FaCreditCard className="text-blue-500 text-3xl" />
@@ -184,6 +196,19 @@ export default function ProfilePage() {
                 {t("profile.statistics.paidOrders")}
               </p>
             </div>
+
+            {/* kargolanan Siparişler */}
+            <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-md">
+              <FaTruck className=" text-3xl" />
+              <span className="text-3xl font-semibold ">
+                {completedOrders.length}
+              </span>
+              <p className="text-sm text-gray-600 truncate">
+                {t("profile.statistics.completedOrders")}
+              </p>
+            </div>
+
+
             {/* İptal Edilen Siparişler */}
             <div className="flex flex-col items-center bg-red-100 p-4 rounded-lg shadow-md">
               <FaTimesCircle className="text-red-500 text-3xl" />
@@ -196,23 +221,6 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-        {/* Adres Bölümü */}
-        <div className="flex flex-col items-start justify-center w-full gap-2">
-          <h3 className="text-xl md:text-2xl font-semibold text-primary">
-            {t("userInfo.address")}
-          </h3>
-
-          {session?.user?.adress ? (
-            <p className="text-sm">{session.user.adress}</p>
-          ) : (
-            <Link
-              href={"/profile/update"}
-              className="text-sm text-red-500 hover:underline"
-            >
-              {t("profile.updateAddress")}
-            </Link>
-          )}
-        </div>{" "}
       </div>
     </div>
   );

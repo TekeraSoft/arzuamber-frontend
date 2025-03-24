@@ -71,6 +71,18 @@ export default function PaymentForm() {
     setBasketItems(basketItems);
   }, [cartProducts]);
 
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
+
+   const [checkboxes, setCheckboxes] = useState({
+     KVKK: session.status === "authenticated" ? false : true,
+     MembershipAgreement: session.status == "authenticated" ? false : true,
+   });
+
+   const isButtonDisabled =
+       session ? false : true || recaptcha === null
+           ? true
+           : false;
+
   useEffect(() => {
     if (threeDsModal) {
       const tempDiv = document.createElement("div");
@@ -155,11 +167,6 @@ export default function PaymentForm() {
     dispatch(openDynamicModal({ title, content }));
   };
 
-  const [checkboxes, setCheckboxes] = useState({
-    KVKK: session.status == "authenticated" ? false : true,
-    MembershipAgreement: session.status == "authenticated" ? false : true,
-  });
-
   // Checkbox'ların durumunu değiştiren fonksiyon
   const handleCheckboxChange = (name) => {
     setCheckboxes((prevState) => ({
@@ -168,21 +175,8 @@ export default function PaymentForm() {
     }));
   };
 
-  const [recaptcha, setRecaptcha] = useState<string | null>(null);
-
-  const isButtonDisabled =
-    checkboxes.KVKK || checkboxes.MembershipAgreement || recaptcha == null
-      ? true
-      : false;
-
   const yearRef = useRef<InputMask>(null);
   const cvcRef = useRef<InputMask>(null);
-
-  console.log(checkboxes);
-
-  console.log();
-
-  console.log(isButtonDisabled);
 
   return (
     <div className="flex flex-col  gap-2 py-3 ">
@@ -957,7 +951,7 @@ export default function PaymentForm() {
                         type="button"
                         onClick={handleSubmit}
                         loading={loading}
-                        disabled={loading || isButtonDisabled}
+                        disabled={loading || isButtonDisabled }
                         className="bg-secondary !font-bold flex justify-center text-white rounded-lg py-3 text-lg w-full transition duration-300"
                       >
                         {t("paymentForm.PaymentLabels.Button")} -{" "}

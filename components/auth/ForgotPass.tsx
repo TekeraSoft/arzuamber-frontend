@@ -1,13 +1,13 @@
 "use client";
 
 import { setLoginModal, setForgotPassModal } from "@/store/modalsSlice";
-import { AppDispatch } from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MdCancel } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useTranslations } from "use-intl";
 import Button from "../general/Button";
 import { useForgotPassValidationSchema } from "@/error/forgotPassSchema";
@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 
 function ForgotPasswordModal() {
   const dispatch = useDispatch<AppDispatch>();
+  const [loadin, setLoadin] = useState(false);
   const t = useTranslations();
   const [recaptcha, setRecaptcha] = useState<string | null>(null);
 
@@ -26,13 +27,17 @@ function ForgotPasswordModal() {
     validationSchema: useForgotPassValidationSchema(),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post("/api/forgot-password", {
-          email: values.forgotEmail,
-        });
-        dispatch(setForgotPassModal(false));
-        toast.success(t("forgotPassForm.success"), response.data);
+        setLoadin(true);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API}/user/forgot-password-mail`, {
+          params: {email: values.forgotEmail},
+        }).then(res=> {
+          dispatch(setForgotPassModal(false));
+          toast.success("Yeni şifrenizi belirlemek için mail adresinizi kontrol ediniz");
+          setLoadin(false);
+        })
       } catch (error) {
-        toast.error(t("forgotPassForm.fail"), error);
+        console.log(error);
+        setLoadin(false);
       }
     },
   });
@@ -96,6 +101,7 @@ function ForgotPasswordModal() {
 
         <div className="flex flex-col justify-center items-center w-full ">
           <Button
+              loading={loadin}
             text={t("forgotPassForm.submit")}
             type="submit"
             color="primary"

@@ -9,6 +9,7 @@ import "./globals.css";
 import "animate.css";
 import ReCaptchaProvider from "@/components/utils/ReCaptchaProvider";
 import Image from "next/image";
+import Script from "next/script";
 
 export const metadata = {
   title: "Arzu Amber",
@@ -48,19 +49,30 @@ export default async function RootLayout({
 
   return (
     <html lang="tr" suppressHydrationWarning={true}>
-      <head>
-        {/* Google Site Verification */}
-        <meta
+    <head>
+      {/* Google Site Verification */}
+      <meta
           name="google-site-verification"
           content="O-f3qbjISsw7TRWDMEfgudgwHkDyfpmrqfKP0TrUiTs"
-        />
-        <meta
+      />
+      <meta
           name="facebook-domain-verification"
           content="267es9z1tmrtsycw4r1ochkmcsrzpi"
-        />
-
-        {/* Facebook Pixel Script */}
-        <script
+      />
+      <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=AW-16907587292`}
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){window.dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'AW-16907587292');
+                    `}
+      </Script>
+      {/* Facebook Pixel Script */}
+      <script
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s) {
@@ -75,23 +87,23 @@ export default async function RootLayout({
                 fbq('track', 'PageView');
             `,
           }}
-        />
-        <noscript>
-          <Image
+      />
+      <noscript>
+        <Image
             src="https://www.facebook.com/tr?id=4029045750707210&ev=PageView&noscript=1"
             alt="Facebook Pixel"
             height={1}
             width={1}
-            style={{ display: "none" }}
-          />
-        </noscript>
-      </head>
-      <body className={`antialiased`} suppressHydrationWarning={true}>
-        <NextIntlClientProvider messages={messages}>
-          <StoreProvider>
-            <ReCaptchaProvider>
-              <LayoutProvider>{children}</LayoutProvider>
-            </ReCaptchaProvider>
+            style={{display: "none"}}
+        />
+      </noscript>
+    </head>
+    <body className={`antialiased`} suppressHydrationWarning={true}>
+    <NextIntlClientProvider messages={messages}>
+      <StoreProvider>
+        <ReCaptchaProvider>
+          <LayoutProvider>{children}</LayoutProvider>
+        </ReCaptchaProvider>
           </StoreProvider>
         </NextIntlClientProvider>
       </body>

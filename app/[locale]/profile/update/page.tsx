@@ -8,45 +8,21 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { toast } from "react-toastify";
 import { useUserUpdateAddressSchema } from "@/error/userUpdateAddressSchema";
 import { useUserUpdatePhoneSchema } from "@/error/userUpdatePhoneSchema";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
+import {editUserDetailsDispatch} from "@/store/userSlice";
 
 function UserUpdatePage() {
   const { data: session } = useSession();
+  const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
 
   // Telefon Formu
-  const phoneFormik = useFormik({
-    initialValues: { phone: "" },
+  const formik = useFormik({
+    initialValues: { phoneNumber: "",address: "", token: session?.accessToken, email: session?.user?.email },
     validationSchema: useUserUpdatePhoneSchema(),
-    onSubmit: async (values) => {
-      const response = await fetch("/api/update-phone", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, email: session?.user?.email }),
-      });
-      if (response.ok) {
-        toast.success(t("forgotPassForm.phoneSuccess"));
-      } else {
-        toast.error(t("forgotPassForm.phoneFail"));
-      }
-    },
-  });
-
-  // Adres Formu
-  const addressFormik = useFormik({
-    initialValues: { address: "" },
-    validationSchema: useUserUpdateAddressSchema(),
-
-    onSubmit: async (values) => {
-      const response = await fetch("/api/update-address", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, email: session?.user?.email }),
-      });
-      if (response.ok) {
-        toast.success(t("forgotPassForm.addressSuccess"));
-      } else {
-        toast.error(t("forgotPassForm.adressFail"));
-      }
+    onSubmit: async (values,{resetForm}) => {
+      dispatch(editUserDetailsDispatch(values,resetForm))
     },
   });
 
@@ -58,7 +34,7 @@ function UserUpdatePage() {
 
       {/* Telefon Güncelleme Formu */}
       <form
-        onSubmit={phoneFormik.handleSubmit}
+        onSubmit={formik.handleSubmit}
         className="w-full md:w-2/4 flex flex-col gap-4"
       >
         <label
@@ -68,65 +44,52 @@ function UserUpdatePage() {
           {t("profileUpdate.phone")}
         </label>
         <InputMask
-          id="phone"
-          name="phone"
+          id="phoneNumber"
+          name="phoneNumber"
           mask="(999) 999 9999"
           placeholder="(000) 000 0000"
-          value={phoneFormik.values.phone}
-          onChange={phoneFormik.handleChange}
-          onBlur={phoneFormik.handleBlur}
+          value={formik.values.phoneNumber}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           className={
-            phoneFormik.touched.phone && phoneFormik.errors.phone
+            formik.touched.phoneNumber && formik.errors.phoneNumber
               ? "p-invalid w-full"
               : "w-full"
           }
         />
-        {phoneFormik.touched.phone && phoneFormik.errors.phone && (
-          <small className="p-error">{phoneFormik.errors.phone}</small>
+        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+          <small className="p-error">{formik.errors.phoneNumber}</small>
+        )}
+        <label
+            htmlFor="address"
+            className="block text-sm font-medium text-gray-700"
+        >
+          {t("profileUpdate.address")}
+        </label>
+
+        <InputTextarea
+            id="address"
+            name="address"
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.address && formik.errors.address
+                  ? "p-invalid w-full"
+                  : "w-full"
+            }
+            rows={4} // Yüksekliği ayarlamak için
+            cols={30} // Genişliği ayarlamak için
+            placeholder="Adresinizi girin"
+        />
+        {formik.touched.address && formik.errors.address && (
+            <small className="p-error">{formik.errors.address}</small>
         )}
         <button
           type="submit"
           className="w-full bg-secondary text-white py-2 rounded-md hover:opacity-80 transition duration-300 outline-none focus:outline-none"
         >
           {t("profileUpdate.updatePhone")}
-        </button>
-      </form>
-
-      {/* Adres Güncelleme Formu */}
-      <form
-        onSubmit={addressFormik.handleSubmit}
-        className="w-full md:w-2/4 flex flex-col gap-4 mt-6"
-      >
-        <label
-          htmlFor="address"
-          className="block text-sm font-medium text-gray-700"
-        >
-          {t("profileUpdate.address")}
-        </label>
-
-        <InputTextarea
-          id="address"
-          name="address"
-          value={addressFormik.values.address}
-          onChange={addressFormik.handleChange}
-          onBlur={addressFormik.handleBlur}
-          className={
-            addressFormik.touched.address && addressFormik.errors.address
-              ? "p-invalid w-full"
-              : "w-full"
-          }
-          rows={4} // Yüksekliği ayarlamak için
-          cols={30} // Genişliği ayarlamak için
-          placeholder="Adresinizi girin"
-        />
-        {addressFormik.touched.address && addressFormik.errors.address && (
-          <small className="p-error">{addressFormik.errors.address}</small>
-        )}
-        <button
-          type="submit"
-          className="w-full bg-secondary text-white py-2 rounded-md hover:opacity-80 transition duration-300 outline-none focus:outline-none"
-        >
-          {t("profileUpdate.updateAddress")}
         </button>
       </form>
     </div>

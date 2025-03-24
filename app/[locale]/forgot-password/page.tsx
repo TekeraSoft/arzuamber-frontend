@@ -7,13 +7,17 @@ import { useFormik } from "formik";
 import { useNewPassSchema } from "@/error/newPassSchema";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useDispatch} from "react-redux";
+import {forgotPasswordDispatch} from "@/store/userSlice";
 
 const ForgotPasswordPage = () => {
   const t = useTranslations();
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const mail = searchParams.get("mail")
-  const token = searchParams.get("token")
+  const token = searchParams.get("_cpjwt")
 
   const formik = useFormik({
     initialValues: {
@@ -22,14 +26,7 @@ const ForgotPasswordPage = () => {
     },
     validationSchema: useNewPassSchema(),
     onSubmit: async (values) => {
-      try {
-        const response = await axios.post("/api/reset-password", {
-          password: values.newPassword,
-        });
-        toast.success(t("forgotPass.passUpdate"), response.data);
-      } catch (error) {
-        toast.error(t("forgotPass.passNotUpdate"), error);
-      }
+      dispatch(forgotPasswordDispatch(mail,token,values.newPassword,router));
     },
   });
 

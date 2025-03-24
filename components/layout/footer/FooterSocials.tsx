@@ -19,6 +19,7 @@ function FooterSocials() {
       >
         <FaFacebookF size={21} />
       </Link>
+
       <Link
         href={socialLinks?.instagram || "#"}
         target="_blank"
@@ -27,6 +28,7 @@ function FooterSocials() {
       >
         <FaInstagram size={23} />
       </Link>
+
       <Link
         href={socialLinks?.whatsapp || "#"}
         target="_blank"

@@ -32,6 +32,8 @@ const authOptions = {
                         name: decoded.nameSurname,
                         email: decoded.email,
                         role: decoded.role,
+                        address: decoded.address,
+                        phoneNumber: decoded.phoneNumber,
                         accessToken: data.accessToken,
                         refreshToken: data.refreshToken, // Refresh Token
                     };
@@ -55,6 +57,8 @@ const authOptions = {
                 name: decoded.nameSurname,
                 email: decoded.email,
                 role: decoded.role,
+                address: decoded.address,
+                phoneNumber: decoded.phoneNumber,
                 exp: decoded.exp, // Expiration süresi
             };
         },
@@ -93,6 +97,8 @@ const authOptions = {
                 id: token.id,
                 name: token.name,
                 email: token.email,
+                address: token.address,
+                phoneNumber: token.phoneNumber,
                 role: token.role,
             };
             return session;

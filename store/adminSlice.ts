@@ -84,7 +84,7 @@ export const adminSlice = createSlice({
       findOrder.status = action.payload.status;
     },
     setNewOrderToReturnWebsocket: (state, action) => {
-      state.orders = [...state.orders, action.payload];
+      state.orders = [action.payload,...state.orders];
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -92,8 +92,7 @@ export const adminSlice = createSlice({
   },
 });
 
-export const createProductDispatch =
-  (formData: FormData, resetForm: () => void) => async () => {
+export const createProductDispatch = (formData: FormData, resetForm: () => void) => async () => {
     postGuardRequest(
       { controller: "admin", action: "create-product" },
       formData
@@ -107,8 +106,7 @@ export const createProductDispatch =
       });
   };
 
-export const updateProductDispatch =
-  (formData: FormData) => async (dispatch) => {
+export const updateProductDispatch = (formData: FormData) => async (dispatch) => {
     dispatch(loading(true));
     putGuardRequest({ controller: "admin", action: "update-product" }, formData)
       .then((res) => {
@@ -142,8 +140,7 @@ export const updateActiveDispatch = (id, active) => async (dispatch) => {
     });
 };
 
-export const getAllProductDispatch =
-  (page: number, size: number) => async (dispatch) => {
+export const getAllProductDispatch = (page: number, size: number) => async (dispatch) => {
     dispatch(loading(true));
     getGuardRequest({
       controller: "admin",
@@ -233,8 +230,7 @@ export const getCategoriesDispatch = () => async (dispatch) => {
     });
 };
 
-export const updatePriceByPercentageDispatch =
-  (updatedValue: Number) => async (dispatch) => {
+export const updatePriceByPercentageDispatch = (updatedValue: Number) => async (dispatch) => {
     putGuardRequest(
       { controller: "admin", action: "update-price-by-percentage" },
       { percentage: updatedValue }

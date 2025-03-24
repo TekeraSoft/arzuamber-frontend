@@ -31,13 +31,13 @@ export const getRequest = async (requestParameter = RequestParameter) => {
   });
 };
 
-export const patchRequest = async (requestParameter = RequestParameter) => {
+export const patchRequest = async (requestParameter = RequestParameter,body:object) => {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/${
       requestParameter.controller
   }${requestParameter.action ? `/${requestParameter.action}` : ""}${
       requestParameter.id ? `/${requestParameter.id}` : ""
   }`;
-  return await axios.patch(url, null,{
+  return await axios.patch(url, body,{
     params: { ...requestParameter.params },
   });
 };

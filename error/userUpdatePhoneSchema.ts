@@ -5,6 +5,9 @@ export const useUserUpdatePhoneSchema = () => {
   const t = useTranslations();
 
   return Yup.object({
-    phone: Yup.string().required(t("paymentForm.buyer.gsmNumber")),
+    phoneNumber: Yup.string().required(t("paymentForm.buyer.gsmNumber")),
+    address: Yup.string()
+        .min(10, t("forgotPassForm.addressMin"))
+        .required(t("forgotPassForm.addressReq")),
   });
 };

@@ -406,11 +406,11 @@
       "loginButton": "Giriş Yap"
     },
     "statistics": {
-      "title": "Profil İstatistikleri",
+      "title": "Alışveriş Detayları",
       "totalOrders": "Toplam Sipariş",
       "totalSpent": "Toplam Harcama (₺)",
       "pendingOrders": "Bekleyen Siparişler",
-      "completedOrders": "Tamamlanan Siparişler",
+      "completedOrders": "Kargoya verilen.",
       "paidOrders": "Ödenen Siparişler",
       "canceledOrders": "İptal Edilen Siparişler"
     },
@@ -430,8 +430,7 @@
     "updateInfo": "Bilgilerinizi Güncelleyin",
     "address": "Detaylı Adres...",
     "phone": "Telefon Numarası",
-    "updateAddress": "E-posta Güncelle",
-    "updatePhone": "Telefon Güncelle"
+    "updatePhone": "Bilgileri Güncelle"
   },
 
   "ordersPage": {
