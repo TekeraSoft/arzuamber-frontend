@@ -60,8 +60,8 @@ function Navbar() {
       {/* <TopBar /> */}
 
       {/* Navbar */}
-      <nav className="bg-white  w-full  flex  ">
-        <div className="container mx-auto flex  items-center justify-between px-4 py-2">
+      <nav className="bg-white  w-full  flex justify-center  items-center  ">
+        <div className="navbarContainer flex  items-center justify-between px-4 py-2">
           {/* Logo */}
           <Logo setOpenMenu={setOpenMenu} openMenu={openMenu} />
 
@@ -123,7 +123,7 @@ function Navbar() {
 
             <li
               className={
-                "  text-secondary  flex justify-center items-center   "
+                "  text-secondary  flex justify-center items-center  z-50  "
               }
             >
               {!session ? (

@@ -3,8 +3,7 @@ import { Link } from "@/i18n/routing";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function WhatsAppButton() {
-  const phoneNumber =
-    "https://wa.me/message/5BSDWLJIL4BSL1";
+  const phoneNumber = "https://wa.me/905342608385";
 
   return (
     <Link

@@ -37,15 +37,15 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="md:mx-auto md:container m md:mt-24">
-      <div className="flex w-full h-full gap-2 items-start justify-center mt-4">
+    <main className="flex flex-col justify-center  items-center md:mt-20">
+      <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
         <Filter
           slug={slug}
           currnetPage={pageable.currentPage}
           pageSize={pageable.size}
         />
 
-        <div className="w-full  my-7 h-full overflow-x-hidden">
+        <div className="w-full  my-7 md:my-0 h-full overflow-x-hidden">
           <div
             className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 p-0.5 "
             style={{

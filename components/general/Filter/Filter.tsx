@@ -163,7 +163,7 @@ function Filter({
           className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col justify-center items-end  mt-20 w-full">
+          <div className="flex flex-col justify-center items-end  mt-[75px] w-full">
             <button
               onClick={toggleMenu}
               className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
