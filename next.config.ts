@@ -10,19 +10,19 @@ const nextConfig = {
     ignoreDuringBuilds: true, // ❌ ESLint hatalarını build sırasında engelle
   },
   images: {
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "arzuamber.com",
-    //     pathname: "/minio/**",
-    //   },
-    // ],
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost",
-      },
-    ],
+     remotePatterns: [
+       {
+         protocol: "https",
+         hostname: "arzuamber.com",
+         pathname: "/minio/**",
+       },
+     ],
+    //remotePatterns: [
+    //  {
+    //    protocol: "http",
+    //    hostname: "localhost",
+    //  },
+    //],
     domains: ["www.facebook.com"],
   },
 } as import("next").NextConfig;
