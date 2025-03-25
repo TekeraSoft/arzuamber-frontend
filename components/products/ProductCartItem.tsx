@@ -16,7 +16,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
 
   return (
     <div
-      className=" flex flex-col justify-between space-y-2 w-full   transition duration-300  relative h-[400px]
+      className=" flex flex-col justify-between space-y-2 w-full   transition duration-300  relative h-[450px]
     md:min-h-[550px]  md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
@@ -72,9 +72,9 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         </div>
       </Link>
 
-      <div className="px-3">
+      <div className="px-1">
         {/* Renk Seçenekleri */}
-        <div className="flex flex-row gap-x-3 w-full">
+        <div className="flex flex-row justify-start items-center flex-wrap gap-3 w-full">
           {product.colorSize.map((color, index) => (
             <Image
               key={index}

@@ -276,7 +276,8 @@ function Navbar() {
             {/*  )}*/}
             {/*</li>*/}
 
-            {/* <Link href={"/favs"} className="relative y">
+            {/* 
+            <Link href={"/favs"} className="relative y">
               <button className="flex justify-center items-center">
                 <FaHeart size={30} className="cursor-pointer text-secondary" />
                 <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">

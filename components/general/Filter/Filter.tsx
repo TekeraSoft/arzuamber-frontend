@@ -11,7 +11,12 @@ import {
   getAllColorsDispatch,
   getAllProductsDispatch,
 } from "@/store/productSlice";
-import {getCategoriesDispatch, resetFilters, setShortCategory} from "@/store/categorySlice";
+import {
+  getCategoriesDispatch,
+  resetFilters,
+  setShortCategory,
+} from "@/store/categorySlice";
+import { setFilterStatus } from "@/store/searchSlice";
 
 function Filter({
   currnetPage,
@@ -28,6 +33,7 @@ function Filter({
     (state: RootState) => state.category
   );
   const { colors } = useSelector((state: RootState) => state.products);
+  const { filterStatus } = useSelector((state: RootState) => state.search);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
 
   const [initialCategory] = useState(slug || null);
@@ -60,7 +66,6 @@ function Filter({
 
   // Filtre seçimlerini güncelleme işlevi
   useEffect(() => {
-
     const activeCategory = shortCategory
       ? shortCategory
       : selectedFilters.categories;
@@ -82,7 +87,8 @@ function Filter({
     if (hasFilterChanged) {
       // Burada eski ve yeni filtreleri karşılaştırabiliriz
 
-      dispatch(filterProductDispatch({
+      dispatch(
+        filterProductDispatch({
           size: selectedFilters.sizes,
           color: selectedFilters.colors,
           category: activeCategory,
@@ -112,8 +118,7 @@ function Filter({
     dispatch(getCategoriesDispatch());
     dispatch(getAllColorsDispatch());
 
-    return () => dispatch(resetFilters())
-
+    dispatch(resetFilters(""));
   }, [
     selectedFilters.sizes,
     selectedFilters.colors,
@@ -141,34 +146,34 @@ function Filter({
   };
 
   return (
-    <div className="relative md:w-1/4 z-40  ">
+    <div className="relative lg:w-1/4 z-40  ">
       {/* Mobil Menü Butonu */}
-      <button
-        onClick={toggleMenu}
+      {/* <button
+       onClick={() => dispatch(setFilterStatus(!filterStatus))}
         className={`${
           isMenuOpen ? "hidden" : "fixed"
-        }   top-40 right-3  md:hidden px-6 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
+        }   top-40 right-3  lg:hidden px-6 py-0.5 text-myblack  border  border-myblack rounded-md  flex justify-center items-center bg-transparent backdrop-blur-md  font-extrabold `}
       >
         {t("Filter.title")}
-      </button>
+      </button> */}
 
       {/* Açılır Menü */}
       <div
-        className={`fixed inset-0 backdrop-blur-sm z-50 md:hidden transform transition-transform   ${
-          isMenuOpen
+        className={`fixed inset-0 backdrop-blur-sm z-50 lg:hidden transform transition-transform   ${
+          filterStatus
             ? "translate-x-0 animate__fadeInLeft animate__animated animate__faster"
             : "-translate-x-full "
         }`}
-        onClick={toggleMenu}
+        onClick={() => dispatch(setFilterStatus(!filterStatus))}
       >
         <div
-          className="  bg-white flex flex-col gap-5  p-6 w-3/4 h-full z-2 overflow-y-auto "
+          className="  bg-white flex flex-col gap-5  p-6 w-3/4 max-w-96 h-full z-2 overflow-y-auto "
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col justify-center items-end  mt-[75px] w-full">
             <button
-              onClick={toggleMenu}
-              className=" w-6 h-6 md:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
+              onClick={() => dispatch(setFilterStatus(!filterStatus))}
+              className=" w-6 h-6 lg:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "
             >
               <FaTimes size={16} />
             </button>
@@ -522,7 +527,7 @@ function Filter({
       </div>
 
       {/* Desktop'ta sabit filtreler */}
-      <div className="hidden md:flex flex-col gap-4 w-3/4 min-h-96">
+      <div className="hidden lg:flex flex-col gap-4 w-3/4 min-h-96">
         <h3 className="text-center text-2xl font-bold text-primary border-b border-secondary">
           {t("Filter.title")}
         </h3>

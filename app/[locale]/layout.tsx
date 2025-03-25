@@ -12,21 +12,30 @@ import Image from "next/image";
 import Script from "next/script";
 
 export const metadata = {
-  title: "Arzu Amber",
-  description: "ARZUAMBER",
-  openGraph: {
-    title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
-    description:
-      "En yeni moda trendlerini keşfedin! ArzuAmber Butik ile tarzınızı tamamlayacak eşsiz kombinleri bulun.",
-    url: "https://www.arzuamber.com",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
-    description:
-      "Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!",
-  },
+    title: "Arzu Amber",
+    description: "ARZUAMBER",
+    openGraph: {
+        title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
+        description:
+            "En yeni moda trendlerini keşfedin! ArzuAmber Butik ile tarzınızı tamamlayacak eşsiz kombinleri bulun.",
+        url: "https://www.arzuamber.com",
+        type: "website",
+        images: [
+            {
+                url: "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+                width: 1200,
+                height: 630,
+                alt: "ArzuAmber Logo",
+            },
+        ],
+    },
+    twitter: {
+        card: "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+        image: "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+        title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
+        description:
+            "Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!",
+    },
 };
 
 // `locale` parametresinin tipi belirlenmeli

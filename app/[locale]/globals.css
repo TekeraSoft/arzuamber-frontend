@@ -38,7 +38,7 @@ body {
 .SliderContainer {
   @apply w-full 
          sm:w-full
-         md:w-[950px]
+         md:w-[870px]
          lg:w-[1250px] 
          xl:w-[1320px];
 }
