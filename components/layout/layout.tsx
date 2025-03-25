@@ -12,7 +12,7 @@ import AuthLayout from "@/components/auth/authLayout";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.css"; // PrimeReact stilleri
 import ScrollToTop from "../utils/ScrollToTop";
-import WhatsAppButton from "../utils/WhatsAppButton";
+import LayoutSocialButtons from "../utils/LayoutSocialButtons";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -37,7 +37,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
             {children}
             <ScrollToTop />
 
-            <WhatsAppButton />
+            <LayoutSocialButtons />
           </main>
           {path.startsWith("/admin") ? null : <Footer />}
         </GradientColorContainer>
