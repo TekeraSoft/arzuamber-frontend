@@ -22,7 +22,7 @@ function Category() {
   );
 
   return (
-    <div className=" flex justify-center items-center  w-full  mt-24 lg:mt-20  my-2 ">
+    <div className=" flex justify-center items-center  w-full mt-10 md:mt-12 lg:mt-0   my-2 ">
       {loading ? (
         <Loading />
       ) : (

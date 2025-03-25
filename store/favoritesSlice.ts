@@ -1,90 +1,111 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Ürün Tipi
 export interface FavItem {
   id: string;
   name: string;
-  description: string;
   price: number;
   quantity: number;
   image: string;
-  inStock: boolean;
-  discountPercent: number;
   size: string;
   color: string;
 }
 
-// Sepet Tipi
-export interface CartState {
-  favs: FavItem[];
-}
-
-// LocalStorage'dan sepete verileri çekme (İstemci tarafında çalıştırılacak)
-const fetchFromLocalStorage = (): FavItem[] => {
-  if (typeof window !== "undefined") {
-    const favorites = localStorage.getItem("favorites");
-    if (favorites) {
-      return JSON.parse(favorites);
-    }
+const getInitialState = () => {
+  if (typeof window === "undefined") {
+    // Eğer sunucu tarafında çalışıyorsa, sadece varsayılan initial state dönüyoruz
+    return {
+      favsProducts: [],
+      total: 0,
+      loading: false,
+    };
   }
-  return [];
-};
 
-// Başlangıç durumu (initialState)
-const initialState: CartState = {
-  favs: fetchFromLocalStorage(),
-};
-
-// LocalStorage'a veri kaydetme
-const storeInLocalStorage = (data: FavItem[]) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("favorites", JSON.stringify(data));
+  const savedFavs = localStorage.getItem("favs");
+  if (savedFavs) {
+    const parsedFavs = JSON.parse(savedFavs);
+    return {
+      favsProducts: parsedFavs.favsProducts || [],
+      total: parsedFavs.total || 0,
+    };
   }
+  return {
+    favsProducts: [],
+    total: 0,
+  };
 };
 
-export const cartSlice = createSlice({
-  name: "favorites",
+const initialState = getInitialState();
+
+export const favoritesSlice = createSlice({
+  name: "favs",
   initialState,
   reducers: {
-    // fav ürün ekleme işlemi
-    addToFav: (state, action: PayloadAction<FavItem>) => {
-      const isItemCart = state.favs.find((fav) => fav.id == action.payload.id);
-      if (isItemCart) {
-        const tempFav = state.favs.map((item) => {
-          if (item.id == action.payload.id) {
-            const tempQuantity = item.quantity + action.payload.quantity;
-            return {
-              ...item,
-              quantity: tempQuantity,
-            };
-          } else {
-            return item;
-          }
-        });
+    // Sepete ürün ekleme işlemi
+    AddToFav: (state, action) => {
+      state.loading = true;
+      const { size, color, id, quantity } = action.payload;
 
-        state.favs = tempFav;
-        storeInLocalStorage(state.favs);
+      const existingFavs = state.favsProducts.find(
+        (p) => p.id === id && p.color === color && p.size === size
+      );
+
+      if (existingFavs) {
+        // Mevcut ürün varsa, sadece miktarı artır
+        existingFavs.quantity += quantity;
       } else {
-        state.favs.push(action.payload);
-        storeInLocalStorage(state.favs);
+        // Ürün yoksa, yeni olarak ekle
+        state.favsProducts.push(action.payload);
       }
+
+      // Toplam fiyatı güncelle
+      state.total = state.favsProducts.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+
+      // localStorage güncelle
+      localStorage.setItem(
+        "favs",
+        JSON.stringify({ favsProducts: state.favsProducts, total: state.total })
+      );
+
+      state.loading = false;
     },
 
-    // Sepetten ürün silme işlemi
-    removeFromFav: (state, action: PayloadAction<string>) => {
-      const tempFav = state.favs.filter((item) => item.id != action.payload);
-      state.favs = tempFav;
-      storeInLocalStorage(state.favs);
+    //Sepetten ürün silme işlemi
+    removeFromFav: (state, action) => {
+      state.loading = true;
+      state.favsProducts = state.favsProducts.filter(
+        (item) =>
+          !(
+            item.id === action.payload.id &&
+            item.color === action.payload.color &&
+            item.size === action.payload.size
+          )
+      );
+      state.total = state.favsProducts.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      localStorage.setItem(
+        "favs",
+        JSON.stringify({ favsProducts: state.favsProducts, total: state.total })
+      );
+      state.loading = false;
     },
-    clearFav: (state) => {
-      state.favs = [];
-      storeInLocalStorage(state.favs);
-      // toast.warning(t("productDetail.productsClearedFav"));
+
+    clearFavs: (state) => {
+      state.loading = false;
+      state.favsProducts = [];
+      state.total = 0;
+      localStorage.removeItem("favs");
+      state.loading = false;
     },
   },
 });
 
 // Reducer'ları dışa aktarma
-export const { addToFav, removeFromFav, clearFav } = cartSlice.actions;
+export const { AddToFav, removeFromFav, clearFavs } = favoritesSlice.actions;
 
-export default cartSlice.reducer;
+export default favoritesSlice.reducer;

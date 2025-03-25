@@ -107,7 +107,7 @@ const DetailClient = ({ product }: productProps) => {
   }, [product]);
 
   return (
-    <div className="container mx-auto md:mt-24 ">
+    <div className="container mx-auto  mt-10 md:mt-10  ">
       <NextSeoHead
         name={product.name}
         description={product.description}
