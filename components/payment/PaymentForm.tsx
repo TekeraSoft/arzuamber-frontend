@@ -44,6 +44,10 @@ export default function PaymentForm() {
   const [loading, setLoading] = useState(false);
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [step, setStep] = useState(0);
+  const [paymentSelection, setPaymentSelection] = useState({
+    creditCard: true,
+    payAtDoor: false
+  })
   const t = useTranslations();
   const { data: session} = useSession();
 
