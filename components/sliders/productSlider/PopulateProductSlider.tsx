@@ -22,7 +22,7 @@ function PopulateProductSlider() {
     },
     tablet: {
       breakpoint: { max: 1024, min: 768 },
-      items: 2,
+      items: 3,
     },
     smallTablet: {
       breakpoint: { max: 768, min: 464 },

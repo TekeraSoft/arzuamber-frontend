@@ -28,7 +28,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
           {path.startsWith("/admin") ? null : <Navbar />}
           <ToastContainer position={"bottom-center"} autoClose={3000} />
           <main
-            className={`${
+            className={` overflow-x-hidden  ${
               path.startsWith("/admin") ? "" : "flex-grow mt-14 md:mt-[65px]"
             }`}
           >

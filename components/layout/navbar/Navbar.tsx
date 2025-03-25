@@ -18,6 +18,7 @@ import { useTranslations } from "next-intl";
 import { FaUserShield } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import { BiSearch } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -34,6 +35,7 @@ function Navbar() {
   const { data: session } = useSession();
 
   const { cartProducts } = useSelector((state: RootState) => state.cart);
+  const { favsProducts } = useSelector((state: RootState) => state.favs);
 
   // locale lang changes
   const supportedLocales = ["tr", "en"];
@@ -273,6 +275,15 @@ function Navbar() {
             {/*    </ul>*/}
             {/*  )}*/}
             {/*</li>*/}
+
+            {/* <Link href={"/favs"} className="relative y">
+              <button className="flex justify-center items-center">
+                <FaHeart size={30} className="cursor-pointer text-secondary" />
+                <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {favsProducts.length}
+                </span>
+              </button>
+            </Link> */}
 
             <li className="relative">
               <button

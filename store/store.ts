@@ -15,7 +15,7 @@ import searchSlice from "@/store/searchSlice";
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
-    favorites: favReducer,
+    favs: favReducer,
     products: productReducer,
     category: categoryReducer,
     general: generalReducer,
