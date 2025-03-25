@@ -59,6 +59,16 @@ export default async function RootLayout({
           name="facebook-domain-verification"
           content="267es9z1tmrtsycw4r1ochkmcsrzpi"
       />
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-04C3TF0J1S"/>
+      <Script>
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-04C3TF0J1S');
+        `}
+      </Script>
       <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=AW-16907587292`}
@@ -104,7 +114,7 @@ export default async function RootLayout({
         <ReCaptchaProvider>
           <LayoutProvider>{children}</LayoutProvider>
         </ReCaptchaProvider>
-          </StoreProvider>
+      </StoreProvider>
         </NextIntlClientProvider>
       </body>
     </html>
