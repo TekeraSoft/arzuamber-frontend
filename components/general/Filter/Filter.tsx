@@ -11,7 +11,7 @@ import {
   getAllColorsDispatch,
   getAllProductsDispatch,
 } from "@/store/productSlice";
-import { getCategoriesDispatch, setShortCategory } from "@/store/categorySlice";
+import {getCategoriesDispatch, resetFilters, setShortCategory} from "@/store/categorySlice";
 
 function Filter({
   currnetPage,
@@ -37,7 +37,6 @@ function Filter({
     colors: null,
     categories: initialCategory,
     lengths: null,
-    // subCategories: null,
     sortDirection: null,
     onlyDiscounted: false,
   });
@@ -61,6 +60,7 @@ function Filter({
 
   // Filtre seçimlerini güncelleme işlevi
   useEffect(() => {
+
     const activeCategory = shortCategory
       ? shortCategory
       : selectedFilters.categories;
@@ -82,8 +82,7 @@ function Filter({
     if (hasFilterChanged) {
       // Burada eski ve yeni filtreleri karşılaştırabiliriz
 
-      dispatch(
-        filterProductDispatch({
+      dispatch(filterProductDispatch({
           size: selectedFilters.sizes,
           color: selectedFilters.colors,
           category: activeCategory,
@@ -112,6 +111,9 @@ function Filter({
 
     dispatch(getCategoriesDispatch());
     dispatch(getAllColorsDispatch());
+
+    return () => dispatch(resetFilters())
+
   }, [
     selectedFilters.sizes,
     selectedFilters.colors,

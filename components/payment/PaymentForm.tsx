@@ -45,7 +45,63 @@ export default function PaymentForm() {
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [step, setStep] = useState(0);
   const t = useTranslations();
-  const session = useSession();
+  const { data: session} = useSession();
+
+  const [formValues, setFormValues] = useState<PaymentFormValues>({
+    paymentCard: {
+      cardHolderName: "",
+      cardNumber: "",
+      expireMonth: "",
+      expireYear: "",
+      cvc: "",
+    },
+    buyer: {
+      id: Math.random().toString(36).substring(2, 15),
+      name: session?.user?.name ? session.user.name.split(" ")[0] : "",
+      surname: session?.user?.name ? session.user.name.split(" ")[1] : "",
+      gsmNumber: session?.user?.phoneNumber || "",
+      email: session?.user?.email || "",
+      identityNumber: "55555555555",
+      ip: "",
+      lastLoginDate: "2024-03-25 20:28:29",
+      registrationDate: "2024-03-25 20:28:29",
+    },
+    shippingAddress: {
+      city: "",
+      state: "",
+      country: "Turkey",
+      address: session?.user?.address || "",
+      street: "",
+      zipCode: "",
+    },
+    billingAddress: {
+      city: "",
+      state: "",
+      country: "Turkey",
+      address: "",
+      street: "",
+      zipCode: "",
+    },
+  });
+
+  useEffect(() => {
+    if (session?.user) {
+      setFormValues((prev) => ({
+        ...prev,
+        buyer: {
+          ...prev.buyer,
+          name: session.user.name ? session.user.name.split(" ")[0] : "",
+          surname: session.user.name ? session.user.name.split(" ")[1] : "",
+          gsmNumber: session.user.phoneNumber || "",
+          email: session.user.email || "",
+        },
+        shippingAddress: {
+          ...prev.shippingAddress,
+          address: session.user.address || "",
+        },
+      }));
+    }
+  }, [session]);
 
   useEffect(() => {
     fetch("https://api.ipify.org?format=json")
@@ -161,13 +217,13 @@ export default function PaymentForm() {
   });
 
   useEffect(() => {
-    if (session.status === "authenticated") {
+    if (session?.status === "authenticated") {
       setCheckboxes({
         KVKK: false,
         MembershipAgreement: false,
       });
     }
-  }, [session.status]);
+  }, []);
 
   // Checkbox'ların durumunu değiştiren fonksiyon
   const handleCheckboxChange = (name) => {
@@ -192,44 +248,10 @@ export default function PaymentForm() {
       <>
         <FormStepper step={step} />
         <Formik<PaymentFormValues>
-          initialValues={{
-            paymentCard: {
-              cardHolderName: "",
-              cardNumber: "",
-              expireMonth: "",
-              expireYear: "",
-              cvc: "",
-            },
-            buyer: {
-              id: Math.random().toString(36).substring(2, 15),
-              name: "",
-              surname: "",
-              gsmNumber: "",
-              email: "",
-              identityNumber: "55555555555",
-              ip: "",
-              lastLoginDate: "2024-03-25 20:28:29",
-              registrationDate: "2024-03-25 20:28:29",
-            },
-            shippingAddress: {
-              city: "",
-              state: "",
-              country: "Turkey",
-              address: "",
-              street: "",
-              zipCode: "",
-            },
-            billingAddress: {
-              city: "",
-              state: "",
-              country: "Turkey",
-              address: "",
-              street: "",
-              zipCode: "",
-            },
-          }}
+            enableReinitialize
+          initialValues={formValues}
           onSubmit={_handleSubmit}
-          validationSchema={validationSchema}
+          //validationSchema={validationSchema}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
@@ -306,7 +328,7 @@ export default function PaymentForm() {
                             setFieldValue("buyer.gsmNumber", e.target.value)
                           }
                           id="phone"
-                          mask="(999) 999 9999"
+                          mask="(999) 999-99-99"
                           placeholder="(000) 000 0000"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         />
@@ -846,7 +868,7 @@ export default function PaymentForm() {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      {session.status === "authenticated" ? null : (
+                      {session?.status === "authenticated" ? null : (
                         <div className="w-full flex flex-col items-center justify-center gap-2 mt-1">
                           <div className="w-full flex items-center justify-start gap-2">
                             <input
@@ -909,7 +931,7 @@ export default function PaymentForm() {
                       )}
 
                       <div className="mt-2 bg-green-100 rounded-lg shadow p-2">
-                        {session.status === "authenticated" ? (
+                        {session?.status === "authenticated" ? (
                           <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-green-600">
                             <div className="flex items-center   rounded-full">
                               <FaExclamationCircle

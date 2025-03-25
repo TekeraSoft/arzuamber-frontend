@@ -37,6 +37,7 @@ export default function Home() {
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}
             textSize="xl"
+            font="bold"
             center={true}
           />
           <ProductSlider />

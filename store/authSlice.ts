@@ -18,6 +18,9 @@ export const authSlice = createSlice({
     setErrorState: (state, action) => {
       state.errorState = action.payload;
     },
+      discardErrorState: (state, action) => {
+        state.errorState = ""
+      }
   },
 });
 
@@ -37,5 +40,5 @@ export const registerUserDispatch =
   };
 
 // Reducer'ları dışa aktarma
-export const { setErrorState } = authSlice.actions;
+export const { setErrorState ,discardErrorState} = authSlice.actions;
 export default authSlice.reducer;

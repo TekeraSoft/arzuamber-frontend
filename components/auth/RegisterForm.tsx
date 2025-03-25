@@ -1,8 +1,8 @@
 "use client";
 
-import { registerUserDispatch } from "@/store/authSlice";
-import { AppDispatch } from "@/store/store";
-import { useDispatch } from "react-redux";
+import {discardErrorState, registerUserDispatch} from "@/store/authSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
 import {
   setRegisterModal,
   openDynamicModal,
@@ -18,8 +18,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {Message} from "primereact/message";
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
+  const {errorState} = useSelector((state:RootState) => state.auth);
   const t = useTranslations();
   const router = useRouter();
 
@@ -86,7 +88,20 @@ function RegisterForm() {
       <h2 className="text-2xl font-semibold my-2 text-center">
         {t("registerForm.createAccount")}
       </h2>
-
+      {errorState && (
+          <span className={"relative"}>
+          <Message
+              severity="error"
+              text={errorState}
+              className={"w-full my-2"}
+          />
+          <MdCancel
+              onClick={() => dispatch(discardErrorState())}
+              className={"text-red-600 absolute right-0 top-0 cursor-pointer"}
+              size={24}
+          />
+        </span>
+      )}
       <form
         onSubmit={formik.handleSubmit}
         className={"flex flex-col gap-2 w-full"}

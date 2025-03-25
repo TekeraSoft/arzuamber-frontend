@@ -36,6 +36,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
             <AuthLayout />
             {children}
             <ScrollToTop />
+
             <WhatsAppButton />
           </main>
           {path.startsWith("/admin") ? null : <Footer />}

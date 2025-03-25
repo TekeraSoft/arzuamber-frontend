@@ -100,7 +100,7 @@ export default function ProfilePage() {
             <span className="font-medium text-gray-800">
               <strong>{t("userInfo.phone")}: </strong>{" "}
               {session?.user?.phoneNumber ? (
-                session.user.phoneNumber
+                session?.user?.phoneNumber
               ) : (
                 <Link
                   href={"/profile/update"}

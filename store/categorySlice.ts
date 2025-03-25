@@ -28,6 +28,11 @@ export const categorySlice = createSlice({
     setShortCategory: (state, action) => {
       state.shortCategory = action.payload;
     },
+    resetFilters: (state, action) => {
+      state.loading = true;
+      state.shortCategory = ""
+      state.loading = false
+    }
   },
 });
 
@@ -47,7 +52,11 @@ export const getCategoriesDispatch = () => async (dispatch) => {
     });
 };
 
-export const { getCategories, loading, setShortCategory } =
+export const {
+  getCategories,
+  loading,
+  setShortCategory,
+  resetFilters} =
   categorySlice.actions;
 
 export default categorySlice.reducer;
