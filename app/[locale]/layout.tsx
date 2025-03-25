@@ -22,7 +22,7 @@ export const metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "https://arzuamber.com/images/logo/navbarlogo.svg",
     title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
     description:
       "Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!",
@@ -49,30 +49,30 @@ export default async function RootLayout({
 
   return (
     <html lang="tr" suppressHydrationWarning={true}>
-    <head>
-      {/* Google Site Verification */}
-      <meta
+      <head>
+        {/* Google Site Verification */}
+        <meta
           name="google-site-verification"
           content="O-f3qbjISsw7TRWDMEfgudgwHkDyfpmrqfKP0TrUiTs"
-      />
-      <meta
+        />
+        <meta
           name="facebook-domain-verification"
           content="267es9z1tmrtsycw4r1ochkmcsrzpi"
-      />
-      <Script
+        />
+        <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=AW-16907587292`}
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){window.dataLayer.push(arguments);}
                         gtag('js', new Date());
                         gtag('config', 'AW-16907587292');
                     `}
-      </Script>
-      {/* Facebook Pixel Script */}
-      <script
+        </Script>
+        {/* Facebook Pixel Script */}
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s) {
@@ -87,23 +87,23 @@ export default async function RootLayout({
                 fbq('track', 'PageView');
             `,
           }}
-      />
-      <noscript>
-        <Image
+        />
+        <noscript>
+          <Image
             src="https://www.facebook.com/tr?id=4029045750707210&ev=PageView&noscript=1"
             alt="Facebook Pixel"
             height={1}
             width={1}
-            style={{display: "none"}}
-        />
-      </noscript>
-    </head>
-    <body className={`antialiased`} suppressHydrationWarning={true}>
-    <NextIntlClientProvider messages={messages}>
-      <StoreProvider>
-        <ReCaptchaProvider>
-          <LayoutProvider>{children}</LayoutProvider>
-        </ReCaptchaProvider>
+            style={{ display: "none" }}
+          />
+        </noscript>
+      </head>
+      <body className={`antialiased`} suppressHydrationWarning={true}>
+        <NextIntlClientProvider messages={messages}>
+          <StoreProvider>
+            <ReCaptchaProvider>
+              <LayoutProvider>{children}</LayoutProvider>
+            </ReCaptchaProvider>
           </StoreProvider>
         </NextIntlClientProvider>
       </body>

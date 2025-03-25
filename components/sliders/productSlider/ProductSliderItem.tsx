@@ -121,7 +121,8 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           )}
         </div>
       </Link>
-      {/* <div
+      {/*       
+      <div
         className="absolute left-2 top-1 flex flex-col justify-center items-end gap-1 z-30"
         onClick={() => {
           openModal();
@@ -130,7 +131,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         <button className=" z-30 border rounded-full p-1.5 bg-primary text-white hover:bg-secondary focus:outline-none transition duration-300">
           <FaRegHeart className="text-base  md:text-lg" />
         </button>
-      </div> */}
+      </div>{" "} */}
 
       <div className=" flex flex-col  space-y-1 px-2 w-full pb-2">
         {/* Renk Seçenekleri */}
@@ -192,7 +193,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           </div>
         </div>
       </div>
-
       <Dialog
         header={"beden ve renkler"}
         visible={showModal}

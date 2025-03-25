@@ -4,7 +4,7 @@ import Loading from "@/components/utils/Loading";
 import { AppDispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import Filter from "@/components/general/Filter/Filter";
 import { Paginator } from "primereact/paginator";
@@ -15,7 +15,7 @@ import { setShortCategory } from "@/store/categorySlice";
 
 function CategoryFilteredProducts() {
   const params = useParams();
-  const t = useTranslations("");
+  // const t = useTranslations("");
   const dispatch = useDispatch<AppDispatch>();
   const { filterProducts, loading, page } = useSelector(
     (state: RootState) => state.products
@@ -37,8 +37,8 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="flex flex-col justify-center  items-center md:mt-20">
-      <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
+    <main className="flex flex-col justify-center  items-center  md:mt-10 lg:mt-0">
+      <div className="flex w-full h-full gap-2 items-start justify-center  SliderContainer">
         <Filter
           slug={slug}
           currnetPage={pageable.currentPage}
@@ -47,7 +47,8 @@ function CategoryFilteredProducts() {
 
         <div className="w-full  my-7 md:my-0 h-full overflow-x-hidden">
           <div
-            className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 p-0.5 "
+            className="flex items-center justify-between  overflow-x-auto space-x-4 my-2 
+            p-0.5"
             style={{
               scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
               msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için

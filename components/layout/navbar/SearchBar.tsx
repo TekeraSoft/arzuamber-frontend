@@ -2,17 +2,21 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { BiSearch } from "react-icons/bi";
-import { IoMdClose } from "react-icons/io";
+// import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import useDebounce from "@/hooks/debounceHook";
-import { clearState, searchProductsDispatch } from "@/store/searchSlice";
+import {
+  clearState,
+  searchProductsDispatch,
+  setFilterStatus,
+} from "@/store/searchSlice";
 import Image from "next/image";
 import { InputText } from "primereact/inputtext";
 import { SpinnerIcon } from "primereact/icons/spinner";
-import { useRouter } from "@/i18n/routing";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { MdCancel } from "react-icons/md";
 import textClip from "@/components/utils/TextClip";
 
@@ -22,7 +26,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   const locale = useLocale();
   const dispatch = useDispatch<AppDispatch>();
   const [searchTerm, setSearchTerm] = useState("");
-  const { searchProducts, loading } = useSelector(
+  const { searchProducts, filterStatus, loading } = useSelector(
     (state: RootState) => state.search
   );
   const [isMobile, setIsMobile] = useState(false);
@@ -78,6 +82,17 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
+
+  const [isVisible, setIsVisible] = useState(false);
+  const pathName = usePathname();
+
+  useEffect(() => {
+    if (pathName.startsWith("/category/") || pathName === "/products") {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  }, [pathName]);
 
   return (
     <div className="w-full flex justify-start lg:justify-end items-center">
@@ -146,12 +161,32 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                     }
                   >
                     <h4 className={"text-black font-semibold"}>{item.name}</h4>
-                    <strong>
-                      {item.price.toLocaleString("tr-TR", {
-                        style: "currency",
-                        currency: "TRY",
-                      })}
-                    </strong>
+                    <div className="flex justify-center items-center gap-2">
+                      {item.discountPrice > 0 &&
+                      item.discountPrice !== item.price ? (
+                        <>
+                          <span className="text-red-700 text-[10px] md:text-sm line-through">
+                            {item.price.toLocaleString("tr-TR", {
+                              style: "currency",
+                              currency: "TRY",
+                            })}
+                          </span>
+                          <p className="text-xs text-secondary md:text-sm font-extrabold">
+                            {item.discountPrice.toLocaleString("tr-TR", {
+                              style: "currency",
+                              currency: "TRY",
+                            })}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-xs text-secondary  md:text-sm font-extrabold">
+                          {item.price.toLocaleString("tr-TR", {
+                            style: "currency",
+                            currency: "TRY",
+                          })}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <span
                     className={"flex flex-row justify-start flex-wrap gap-x-4"}
@@ -195,6 +230,15 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
           >
             <IoMdClose className="text-sm" />
           </div> */}
+
+          <button
+            onClick={() => dispatch(setFilterStatus(!filterStatus))}
+            className={`${
+              isVisible ? "hidden" : "flex"
+            } lg:hidden px-6 py-0.5 text-myblack border border-myblack rounded-md justify-center items-center bg-transparent backdrop-blur-md font-extrabold`}
+          >
+            {t("Filter.title")}
+          </button>
 
           <div className="w-full  flex transition duration-300 !focus:outline-secondary">
             <span className="p-input-icon-right w-full">
@@ -257,12 +301,32 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                       <h4 className={"text-black truncate"}>
                         {textClip(item.name)}
                       </h4>
-                      <strong>
-                        {item.price.toLocaleString("tr-TR", {
-                          style: "currency",
-                          currency: "TRY",
-                        })}
-                      </strong>
+                      <div className="flex justify-center items-center gap-2">
+                        {item.discountPrice > 0 &&
+                        item.discountPrice !== item.price ? (
+                          <>
+                            <span className="text-red-700 text-[10px] md:text-sm line-through">
+                              {item.price.toLocaleString("tr-TR", {
+                                style: "currency",
+                                currency: "TRY",
+                              })}
+                            </span>
+                            <p className="text-xs text-secondary md:text-sm font-extrabold">
+                              {item.discountPrice.toLocaleString("tr-TR", {
+                                style: "currency",
+                                currency: "TRY",
+                              })}
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-xs text-secondary  md:text-sm font-extrabold">
+                            {item.price.toLocaleString("tr-TR", {
+                              style: "currency",
+                              currency: "TRY",
+                            })}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <span
                       className={"flex flex-row justify-start flex-wrap gap-2"}
