@@ -1,8 +1,8 @@
 "use client";
 
-import {discardErrorState, registerUserDispatch} from "@/store/authSlice";
-import {AppDispatch, RootState} from "@/store/store";
-import {useDispatch, useSelector} from "react-redux";
+import { discardErrorState, registerUserDispatch } from "@/store/authSlice";
+import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setRegisterModal,
   openDynamicModal,
@@ -13,15 +13,15 @@ import { InputText } from "primereact/inputtext";
 import { useTranslations } from "next-intl";
 import { MdCancel } from "react-icons/md";
 import { useRegisterValidationSchema } from "@/error/registerSchema";
-import DynamicModal from "../utils/DynamicModal";
+import DynamicModal from "../modals/DynamicModal";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {Message} from "primereact/message";
+import { Message } from "primereact/message";
 function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const {errorState} = useSelector((state:RootState) => state.auth);
+  const { errorState } = useSelector((state: RootState) => state.auth);
   const t = useTranslations();
   const router = useRouter();
 
@@ -89,16 +89,16 @@ function RegisterForm() {
         {t("registerForm.createAccount")}
       </h2>
       {errorState && (
-          <span className={"relative"}>
+        <span className={"relative"}>
           <Message
-              severity="error"
-              text={errorState}
-              className={"w-full my-2"}
+            severity="error"
+            text={errorState}
+            className={"w-full my-2"}
           />
           <MdCancel
-              onClick={() => dispatch(discardErrorState())}
-              className={"text-red-600 absolute right-0 top-0 cursor-pointer"}
-              size={24}
+            onClick={() => dispatch(discardErrorState())}
+            className={"text-red-600 absolute right-0 top-0 cursor-pointer"}
+            size={24}
           />
         </span>
       )}

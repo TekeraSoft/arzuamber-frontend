@@ -31,16 +31,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
     selectedColor?.stockSize?.length > 0 ? selectedColor.stockSize[0] : {}
   );
 
-  // Modal açma
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  // Modal kapama
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   const handleAddToFav = () => {
     if (!selectedColor || !selectedSize) {
       toast.error("Lütfen renk ve beden seçin.");

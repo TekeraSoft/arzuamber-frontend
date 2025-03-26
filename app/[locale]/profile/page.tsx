@@ -5,9 +5,7 @@ import {
   FaRegAddressCard,
   FaEnvelope,
   FaExclamationTriangle,
-  FaCheckCircle,
   FaCreditCard,
-  FaExclamationCircle,
   FaChartBar,
   FaShoppingCart,
   FaMoneyBillWave,
@@ -22,9 +20,9 @@ import { getUserOrdersDispatch } from "@/store/userSlice";
 import { useEffect } from "react";
 import { BiSolidDiscount } from "react-icons/bi";
 
-import { Link } from "@/i18n/routing";import { FaTruck } from "react-icons/fa";import { FaHouseChimney } from "react-icons/fa6";
-
-
+import { Link } from "@/i18n/routing";
+import { FaTruck } from "react-icons/fa";
+import { FaHouseChimney } from "react-icons/fa6";
 
 export default function ProfilePage() {
   const t = useTranslations();
@@ -44,8 +42,6 @@ export default function ProfilePage() {
   const completedOrders = orders.filter((order) => order.status === "SHIPPED");
   const paidOrders = orders.filter((order) => order.status === "PAID");
   const canceledOrders = orders.filter((order) => order.status === "CANCELLED");
-
-  console.log(orders);
 
   if (status === "loading" || loading) {
     return <Loading />;
@@ -113,21 +109,23 @@ export default function ProfilePage() {
           </div>
           {/* Adres Bölümü */}
           <div className="flex  items-center justify-start w-full gap-2">
-<div className="flex items-center space-x-3">  <FaHouseChimney className="text-primary text-xl" />
-  <h3 className="font-semibold text-primary">
-    {t("userInfo.address")}:
-  </h3>
-</div>
+            <div className="flex items-center space-x-3">
+              {" "}
+              <FaHouseChimney className="text-primary text-xl" />
+              <h3 className="font-semibold text-primary">
+                {t("userInfo.address")}:
+              </h3>
+            </div>
 
             {session?.user?.address ? (
-                <p className="text-sm">{session.user.address}</p>
+              <p className="text-sm">{session.user.address}</p>
             ) : (
-                <Link
-                    href={"/profile/update"}
-                    className="text-sm text-red-500 hover:underline"
-                >
-                  {t("profile.updateAddress")}
-                </Link>
+              <Link
+                href={"/profile/update"}
+                className="text-sm text-red-500 hover:underline"
+              >
+                {t("profile.updateAddress")}
+              </Link>
             )}
           </div>{" "}
         </div>
@@ -185,7 +183,6 @@ export default function ProfilePage() {
               <p className="text-sm text-gray-600 truncate">Kuponlarım</p>
             </div>
 
-
             {/* Ödenen Siparişler */}
             <div className="flex flex-col items-center bg-blue-100 p-4 rounded-lg shadow-md">
               <FaCreditCard className="text-blue-500 text-3xl" />
@@ -207,7 +204,6 @@ export default function ProfilePage() {
                 {t("profile.statistics.completedOrders")}
               </p>
             </div>
-
 
             {/* İptal Edilen Siparişler */}
             <div className="flex flex-col items-center bg-red-100 p-4 rounded-lg shadow-md">

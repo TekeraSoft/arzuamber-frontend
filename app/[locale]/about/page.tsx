@@ -8,7 +8,7 @@ function AboutPage() {
   const locale = useLocale();
 
   return (
-    <div className=" mt-24 text-center flex flex-col justify-center items-center animate__animated  animate__fadeIn mx-5 md:mx-0 ">
+    <div className="  text-center flex flex-col justify-center items-center animate__animated  animate__fadeIn mx-5 md:mx-0 ">
       <h2 className="text-4xl font-bold text-gray-800 mb-2">
         {t("AboutPage.aboutPageTitle")}
       </h2>

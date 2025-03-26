@@ -23,7 +23,7 @@ import { filterData } from "@/data/filterData";
 import FormStepper from "@/components/productDetail/utils/FormStepper";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import axios from "axios";
-import DynamicModal from "../utils/DynamicModal";
+import DynamicModal from "../modals/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -46,10 +46,10 @@ export default function PaymentForm() {
   const [step, setStep] = useState(0);
   const [paymentSelection, setPaymentSelection] = useState({
     creditCard: true,
-    payAtDoor: false
-  })
+    payAtDoor: false,
+  });
   const t = useTranslations();
-  const { data: session} = useSession();
+  const { data: session } = useSession();
 
   const [formValues, setFormValues] = useState<PaymentFormValues>({
     paymentCard: {
@@ -252,7 +252,7 @@ export default function PaymentForm() {
       <>
         <FormStepper step={step} />
         <Formik<PaymentFormValues>
-            enableReinitialize
+          enableReinitialize
           initialValues={formValues}
           onSubmit={_handleSubmit}
           //validationSchema={validationSchema}

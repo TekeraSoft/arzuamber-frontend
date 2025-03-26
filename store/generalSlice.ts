@@ -1,17 +1,38 @@
+import { helpItems } from "@/constans/Help";
+import { howToBuyList } from "@/constans/HowToBuy";
 import { getGuardRequest } from "@/services/requestservice";
 import { createSlice } from "@reduxjs/toolkit";
+import { IconType } from "react-icons";
 import { toast } from "react-toastify";
 
-// Sepet Tipi
-export interface CartState {
+interface Question {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+interface HelpCategory {
+  id: number;
+  title: string;
+  icon: IconType;
+  questions: Question[];
+}
+
+export interface GeneralState {
   homeSliderImages: [];
+  howToBuyImages: { id: string; url: string }[];
+  HowToBuyModalStatus: boolean;
   loading: boolean;
+  helpItems: HelpCategory[];
 }
 
 // Başlangıç durumu (initialState)
-const initialState: CartState = {
+const initialState: GeneralState = {
   homeSliderImages: [],
+  howToBuyImages: howToBuyList,
+  HowToBuyModalStatus: false,
   loading: false,
+  helpItems: helpItems,
 };
 
 export const generalSlice = createSlice({
@@ -23,6 +44,9 @@ export const generalSlice = createSlice({
     },
     loading: (state, action) => {
       state.loading = action.payload;
+    },
+    setHowToBuyModalStatus: (state, action) => {
+      state.HowToBuyModalStatus = action.payload;
     },
   },
 });
@@ -41,6 +65,7 @@ export const getAllHomeSliderImages = () => async (dispatch) => {
 };
 
 // Reducer'ları dışa aktarma
-export const { getHomeSliders, loading } = generalSlice.actions;
+export const { getHomeSliders, setHowToBuyModalStatus, loading } =
+  generalSlice.actions;
 
 export default generalSlice.reducer;

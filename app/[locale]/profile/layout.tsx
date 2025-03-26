@@ -19,7 +19,7 @@ export default function ProfileLayout({
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 w-full flex bg-white py-4 min-h-[400px] border-l px-2">
+        <div className="flex-1 w-full flex bg-white py-4 min-h-[70vh] border-l px-2">
           {children}
         </div>
       </div>

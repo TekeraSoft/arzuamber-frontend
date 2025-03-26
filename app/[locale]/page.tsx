@@ -12,6 +12,7 @@ import Category from "@/components/home/Category";
 
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import Map from "@/components/utils/Map";
 
 export default function Home() {
   const t = useTranslations();
@@ -74,6 +75,7 @@ export default function Home() {
         />
         <CategoryBrand />
       </BackGroundImageContainer>
+      <Map />
     </>
   );
 }

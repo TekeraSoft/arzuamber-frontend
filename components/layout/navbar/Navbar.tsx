@@ -4,7 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Logo from "./Logo";
-// import TopBar from "./TopBar";
+import TopBar from "./TopBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openCartModal,
@@ -59,7 +59,7 @@ function Navbar() {
 
   return (
     <header className="text-mywhite z-50 fixed w-full ">
-      {/* <TopBar /> */}
+      <TopBar />
 
       {/* Navbar */}
       <nav className="bg-white  w-full  flex justify-center  items-center  ">

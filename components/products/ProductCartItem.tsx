@@ -72,7 +72,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         </div>
       </Link>
 
-      <div className="px-1">
+      <div className="flex flex-col  space-y-1 px-2 w-full">
         {/* Renk Seçenekleri */}
         <div className="flex flex-row justify-start items-center flex-wrap gap-3 w-full">
           {product.colorSize.map((color, index) => (
