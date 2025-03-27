@@ -5,10 +5,10 @@ import { tr } from "date-fns/locale";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
-    changeOrderStatusDispatch,
-    deleteOrderDispatch,
-    getAllOrdersDispatch,
-    setNewOrderToReturnWebsocket
+  changeOrderStatusDispatch,
+  deleteOrderDispatch,
+  getAllOrdersDispatch,
+  setNewOrderToReturnWebsocket,
 } from "@/store/adminSlice";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -25,30 +25,36 @@ function AdminPage() {
 
   const imageUri = process.env.NEXT_PUBLIC_RESOURCE_API || "";
   const { orders, page, loading } = useSelector(
-    (state: RootState) => state.admin
+    (state: RootState) => state.admin,
   );
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
   const [expandedRows, setExpandedRows] = useState(null);
   //const { orders } = useWebSocket(pageable.currentPage,pageable.size);
 
+  const statusOptions = [
+    { label: "ÖDENDİ", value: "PAID" },
+    { label: "KARGOYA VERİLDİ", value: "SHIPPED" },
+    { label: "İPTAL ET", value: "CANCELLED" },
+    { label: "KAPIDA ÖDEME", value: "PAY_AT_DOOR" },
+  ];
+
   useEffect(() => {
     dispatch(getAllOrdersDispatch(pageable.currentPage, pageable.size));
-      const socket = new SockJS(process.env.NEXT_PUBLIC_SOCKET_URI);
-      const stompClient = Stomp.over(socket);
+    const socket = new SockJS(process.env.NEXT_PUBLIC_SOCKET_URI);
+    const stompClient = Stomp.over(socket);
 
-      stompClient.connect({}, function () {
-
-          // 🔔 Yeni siparişleri dinle
-          stompClient.subscribe("/topic/orders", function (res) {
-              const newOrder = JSON.parse(res.body);
-              playAudio()
-              dispatch(setNewOrderToReturnWebsocket(newOrder))
-          });
+    stompClient.connect({}, function () {
+      // 🔔 Yeni siparişleri dinle
+      stompClient.subscribe("/topic/orders", function (res) {
+        const newOrder = JSON.parse(res.body);
+        playAudio();
+        dispatch(setNewOrderToReturnWebsocket(newOrder));
       });
+    });
 
-      return () => {
-          stompClient.disconnect();
-      };
+    return () => {
+      stompClient.disconnect();
+    };
   }, [pageable.currentPage, pageable.size, dispatch]);
 
   const onPageChange = (event) => {
@@ -56,9 +62,9 @@ function AdminPage() {
   };
 
   const playAudio = () => {
-      const audio = new Audio("/audio/order-alert.mp3");
-      audio.play();
-  }
+    const audio = new Audio("/audio/order-alert.mp3");
+    audio.play();
+  };
 
   const allowExpansion = (rowData) => {
     return rowData.basketItems.length > 0;
@@ -160,7 +166,9 @@ function AdminPage() {
             <Dropdown
               value={row.status}
               className={"text-xs"}
-              options={["PAID", "SHIPPED", "CANCELLED"]}
+              options={statusOptions}
+              optionLabel="label" // Dropdown'da görünen değer
+              optionValue="value" // Dropdown'da kaydedilen değer
               onChange={(e) => {
                 dispatch(changeOrderStatusDispatch(row.id, e.target.value));
               }}
@@ -175,7 +183,7 @@ function AdminPage() {
               size={24}
               onClick={() => {
                 const isConfirmed = confirm(
-                  "Are you sure you want to delete this order?"
+                  "Are you sure you want to delete this order?",
                 );
                 if (isConfirmed) {
                   dispatch(deleteOrderDispatch(data.id));

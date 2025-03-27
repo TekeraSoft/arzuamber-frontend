@@ -11,6 +11,7 @@ import modalsSlice from "@/store/modalsSlice";
 import blogsReducer from "@/store/blogSlice";
 import userReducer from "@/store/userSlice";
 import searchSlice from "@/store/searchSlice";
+import orderSlice from "@/store/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     footer: footerReducer,
     modals: modalsSlice,
     search: searchSlice,
+    order: orderSlice,
   },
 });
 

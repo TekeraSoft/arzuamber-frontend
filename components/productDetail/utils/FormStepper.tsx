@@ -44,7 +44,7 @@ const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
         },
       },
     ],
-  })
+  }),
 );
 
 function QontoStepIcon(props: StepIconProps) {
@@ -141,7 +141,13 @@ function ColorlibStepIcon(props: StepIconProps) {
 
 const steps = ["Adres Bilgileri", "Ödeme Bilgileri", "Alışveriş Detayı"];
 
-export default function FormStepper({ step }: { step: number }) {
+export default function FormStepper({
+  step,
+  type,
+}: {
+  step: number;
+  type: string;
+}) {
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper
@@ -149,11 +155,21 @@ export default function FormStepper({ step }: { step: number }) {
         activeStep={step}
         connector={<ColorlibConnector />}
       >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
+        {type === "CREDIT_CARD"
+          ? steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  {label}
+                </StepLabel>
+              </Step>
+            ))
+          : steps.slice(0, 2).map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
       </Stepper>
     </Stack>
   );

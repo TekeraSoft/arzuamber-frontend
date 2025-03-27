@@ -27,11 +27,17 @@ import DynamicModal from "../utils/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
+import Image from "next/image";
+import { RadioButton } from "primereact/radiobutton";
+import { createPayAtDoor } from "@/store/orderSlice";
+import { useRouter } from "next/navigation";
 // import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
+  const { orderLoading } = useSelector((state: RootState) => state.order);
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
   >([]);
@@ -44,12 +50,9 @@ export default function PaymentForm() {
   const [loading, setLoading] = useState(false);
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [step, setStep] = useState(0);
-  const [paymentSelection, setPaymentSelection] = useState({
-    creditCard: true,
-    payAtDoor: false
-  })
+  const [paymentType, setPaymentType] = useState("CREDIT_CARD");
   const t = useTranslations();
-  const { data: session} = useSession();
+  const { data: session } = useSession();
 
   const [formValues, setFormValues] = useState<PaymentFormValues>({
     paymentCard: {
@@ -167,6 +170,39 @@ export default function PaymentForm() {
     }
   }, [threeDsModal]);
 
+  const handleSubmitPayAtDoor = () => {
+    dispatch(
+      createPayAtDoor(
+        {
+          shippingAddress: {
+            ...formValues.shippingAddress,
+            contactName: formValues.buyer.name,
+          },
+          billingAddress: openBillingAddress
+            ? {
+                ...formValues.billingAddress,
+                contactName: formValues.buyer.name,
+              }
+            : {
+                ...formValues.shippingAddress,
+                contactName: formValues.buyer.name,
+              },
+          buyer: {
+            ...formValues.buyer,
+            ip: ip,
+            registrationAddress: formValues.shippingAddress.address,
+            city: formValues.shippingAddress.city,
+            country: formValues.shippingAddress.country,
+          },
+          basketItems: basketItems,
+          shippingPrice:
+            total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
+        },
+        router,
+      ),
+    );
+  };
+
   const _handleSubmit = async (values) => {
     setLoading(true);
     await axios
@@ -250,12 +286,12 @@ export default function PaymentForm() {
   return (
     <div className="flex flex-col  gap-2 py-3 ">
       <>
-        <FormStepper step={step} />
+        <FormStepper step={step} type={paymentType} />
         <Formik<PaymentFormValues>
-            enableReinitialize
+          enableReinitialize
           initialValues={formValues}
           onSubmit={_handleSubmit}
-          //validationSchema={validationSchema}
+          validationSchema={validationSchema}
         >
           {({ values, touched, handleSubmit, setFieldValue, errors }) => (
             <Form onSubmit={handleSubmit}>
@@ -272,7 +308,7 @@ export default function PaymentForm() {
                           name="buyer.name"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.BuyerInfo.name"
+                            "paymentForm.PaymentLabels.BuyerInfo.name",
                           )}
                         />
                         {errors.buyer?.name && touched.buyer?.name && (
@@ -290,7 +326,7 @@ export default function PaymentForm() {
                           name="buyer.surname"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.BuyerInfo.surname"
+                            "paymentForm.PaymentLabels.BuyerInfo.surname",
                           )}
                         />
                         {errors.buyer?.surname && touched.buyer?.surname && (
@@ -310,7 +346,7 @@ export default function PaymentForm() {
                         name="buyer.email"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.BuyerInfo.email"
+                          "paymentForm.PaymentLabels.BuyerInfo.email",
                         )}
                       />
                       {errors.buyer?.email && touched.buyer?.email && (
@@ -354,12 +390,12 @@ export default function PaymentForm() {
                           onChange={(e) => {
                             const [id, name] = e.target.value.split(",") as [
                               string,
-                              string
+                              string,
                             ];
                             setFieldValue("shippingAddress.city", name);
                             setFieldValue("shippingAddress.state", "");
                             const selectedStates = ice.filter(
-                              (i) => i.il_id === id
+                              (i) => i.il_id === id,
                             );
                             setStates(selectedStates);
                           }}
@@ -422,7 +458,7 @@ export default function PaymentForm() {
                           name="shippingAddress.street"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.Adress.Neighborhood"
+                            "paymentForm.PaymentLabels.Adress.Neighborhood",
                           )}
                         />
                         {errors.shippingAddress?.street &&
@@ -442,7 +478,7 @@ export default function PaymentForm() {
                         name="shippingAddress.zipCode"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.Adress.zipcode"
+                          "paymentForm.PaymentLabels.Adress.zipcode",
                         )}
                       />
                     </div>
@@ -457,7 +493,7 @@ export default function PaymentForm() {
                         name="shippingAddress.address"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.Adress.DetailedAddress"
+                          "paymentForm.PaymentLabels.Adress.DetailedAddress",
                         )}
                       />
                       {errors.shippingAddress?.address &&
@@ -473,7 +509,7 @@ export default function PaymentForm() {
                       <div className="flex flex-row items-center   justify-start ">
                         <span className="text-xs md:text-sm font-semibold flex  justify-center items-center gap-1">
                           {t(
-                            "paymentForm.PaymentLabels.Adress.otherAdressLabel"
+                            "paymentForm.PaymentLabels.Adress.otherAdressLabel",
                           )}
                           <IoIosArrowRoundForward size={25} className="" />
                         </span>
@@ -500,12 +536,12 @@ export default function PaymentForm() {
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               onChange={(e) => {
                                 const [id, name] = e.target.value.split(
-                                  ","
+                                  ",",
                                 ) as [string, string];
                                 setFieldValue("billingAddress.city", name);
                                 setFieldValue("billingAddress.state", "");
                                 const selectedStates = ice.filter(
-                                  (i) => i.il_id === id
+                                  (i) => i.il_id === id,
                                 );
                                 setBillingStates(selectedStates);
                               }}
@@ -543,7 +579,7 @@ export default function PaymentForm() {
                               as="select"
                               className="w-full text-sm border py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.District"
+                                "paymentForm.PaymentLabels.Adress.District",
                               )}
                             >
                               <option value="" disabled>
@@ -561,7 +597,7 @@ export default function PaymentForm() {
                           <div className="flex flex-col gap-y-2">
                             <label className="text-sm">
                               {t(
-                                "paymentForm.PaymentLabels.Adress.Neighborhood"
+                                "paymentForm.PaymentLabels.Adress.Neighborhood",
                               )}
                               <span className="text-red-500">*</span>
                             </label>
@@ -569,7 +605,7 @@ export default function PaymentForm() {
                               name="billingAddress.street"
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.Neighborhood"
+                                "paymentForm.PaymentLabels.Adress.Neighborhood",
                               )}
                             />
                             {errors.billingAddress?.street &&
@@ -588,7 +624,7 @@ export default function PaymentForm() {
                               name="billingAddress.zipCode"
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.zipcode"
+                                "paymentForm.PaymentLabels.Adress.zipcode",
                               )}
                             />
                           </div>
@@ -596,7 +632,7 @@ export default function PaymentForm() {
                         <div className="flex flex-col gap-y-2">
                           <label className="text-sm">
                             {t(
-                              "paymentForm.PaymentLabels.Adress.DetailedAddress"
+                              "paymentForm.PaymentLabels.Adress.DetailedAddress",
                             )}{" "}
                             <span className="text-red-500">*</span>
                           </label>
@@ -606,7 +642,7 @@ export default function PaymentForm() {
                             name="billingAddress.address"
                             className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                             placeholder={t(
-                              "paymentForm.PaymentLabels.Adress.DetailedAddress"
+                              "paymentForm.PaymentLabels.Adress.DetailedAddress",
                             )}
                           />
                           {errors.billingAddress?.address &&
@@ -634,8 +670,8 @@ export default function PaymentForm() {
                             ) {
                               toast.info(
                                 t(
-                                  "paymentForm.PaymentLabels.Missingİnformation"
-                                )
+                                  "paymentForm.PaymentLabels.Missingİnformation",
+                                ),
                               );
                             } else {
                               setStep(1);
@@ -660,149 +696,418 @@ export default function PaymentForm() {
                     <div
                       className={`flex flex-col relative gap-y-6 rounded-lg px-2 py-8`}
                     >
-                      <div className="p-inputgroup flex-1 relative ">
-                        <span className="p-inputgroup-addon">
-                          <FaUser className="text-base md:text-xl" />
+                      <div className={"flex flex-row gap-x-4"}>
+                        <span
+                          onClick={() => setPaymentType("CREDIT_CARD")}
+                          className={`${paymentType === "CREDIT_CARD" ? "bg-green-500 text-white" : "bg-gray-50"} 
+                          flex md:flex-row flex-col items-center justify-center cursor-pointer hover:bg-green-500 
+                          gap-x-5 bg-gray-50 w-full border md:p-6 p-2 rounded hover:text-white`}
+                        >
+                          <Image
+                            src={"/images/utils/credit-card-pay.png"}
+                            alt={"credit-card-pay.png"}
+                            width={40}
+                            height={40}
+                          />
+                          <div className="flex items-center">
+                            <RadioButton
+                              inputId="ingredient1"
+                              name="CREDIT_CARD"
+                              value={"CREDIT_CARD"}
+                              checked={paymentType === "CREDIT_CARD"}
+                              onChange={(e) => setPaymentType(e.target.value)}
+                            />
+                            <label
+                              onClick={() => setPaymentType("CREDIT_CARD")}
+                              htmlFor="ingredient1"
+                              className="ml-2 md:text-xl text-md font-bold cursor-pointer"
+                            >
+                              Kart İle Öde
+                            </label>
+                          </div>
                         </span>
-                        <InputText
-                          value={values.paymentCard.cardHolderName}
-                          onChange={(e) =>
-                            setFieldValue(
-                              "paymentCard.cardHolderName",
-                              e.target.value
-                            )
-                          }
-                          className={`border  px-4 placeholder:text-md  ${
-                            errors.paymentCard?.cardHolderName &&
-                            touched.paymentCard?.cardHolderName &&
-                            "border-red-600"
-                          }`}
-                          placeholder={t(
-                            "paymentForm.PaymentLabels.cardHolderNameLabel"
-                          )}
-                        />
-                      </div>
-                      <div className="p-inputgroup flex-1 relative">
-                        <span className="p-inputgroup-addon">
-                          <BsCreditCard2Front size={24} />
+                        <span
+                          onClick={() => {
+                            setPaymentType("PAY_AT_DOOR");
+                          }}
+                          className={`${paymentType === "PAY_AT_DOOR" ? "bg-green-500 text-white" : "bg-gray-50"} 
+                          flex md:flex-row flex-col items-center justify-center gap-x-5 bg-gray-50 w-full border md:p-6 p-2 rounded hover:text-white 
+                          hover:bg-green-500 transition-all cursor-pointer`}
+                        >
+                          <Image
+                            src={"/images/utils/pay-at-door.png"}
+                            alt={"credit-card-pay.png"}
+                            width={40}
+                            height={40}
+                          />
+                          <div className="flex items-center">
+                            <RadioButton
+                              inputId="ingredient1"
+                              name="CREDIT_CARD"
+                              value={"PAY_AT_DOOR"}
+                              checked={paymentType === "PAY_AT_DOOR"}
+                              onChange={(e) => setPaymentType(e.target.value)}
+                            />
+                            <label
+                              onClick={() => setPaymentType("PAY_AT_DOOR")}
+                              htmlFor="ingredient1"
+                              className="ml-2 md:text-xl text-md font-bold cursor-pointer"
+                            >
+                              Kapıda Ödeyin
+                            </label>
+                          </div>
                         </span>
-                        <InputMask
-                          value={values.paymentCard.cardNumber}
-                          onChange={(e) =>
-                            setFieldValue(
-                              "paymentCard.cardNumber",
-                              e.target.value
-                            )
+                      </div>
+                      {paymentType === "CREDIT_CARD" && (
+                        <div className={"flex flex-col gap-y-4"}>
+                          <div className="p-inputgroup flex-1 relative ">
+                            <span className="p-inputgroup-addon">
+                              <FaUser className="text-base md:text-xl" />
+                            </span>
+                            <InputText
+                              value={values.paymentCard.cardHolderName}
+                              onChange={(e) =>
+                                setFieldValue(
+                                  "paymentCard.cardHolderName",
+                                  e.target.value,
+                                )
+                              }
+                              className={`border  px-4 placeholder:text-md  ${
+                                errors.paymentCard?.cardHolderName &&
+                                touched.paymentCard?.cardHolderName &&
+                                "border-red-600"
+                              }`}
+                              placeholder={t(
+                                "paymentForm.PaymentLabels.cardHolderNameLabel",
+                              )}
+                            />
+                          </div>
+                          <div className="p-inputgroup flex-1 relative">
+                            <span className="p-inputgroup-addon">
+                              <BsCreditCard2Front size={24} />
+                            </span>
+                            <InputMask
+                              value={values.paymentCard.cardNumber}
+                              onChange={(e) =>
+                                setFieldValue(
+                                  "paymentCard.cardNumber",
+                                  e.target.value,
+                                )
+                              }
+                              mask="9999-9999-9999-9999"
+                              className={`border px-4 placeholder:text-md ${
+                                errors.paymentCard?.cardNumber &&
+                                touched.paymentCard?.cardNumber &&
+                                "border-red-600"
+                              }`}
+                              placeholder={t(
+                                "paymentForm.PaymentLabels.cardNumberLabel",
+                              )}
+                            />
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 justify-between mb-4">
+                            <div className="p-inputgroup flex-1">
+                              <span className="p-inputgroup-addon">
+                                <VscCreditCard size={24} />
+                              </span>
+                              <InputMask
+                                onComplete={() => yearRef.current?.focus()}
+                                onChange={(e) =>
+                                  setFieldValue(
+                                    "paymentCard.expireMonth",
+                                    e.target.value,
+                                  )
+                                }
+                                mask="99"
+                                value={values.paymentCard.expireMonth}
+                                className={`border px-2 placeholder:text-md  ${
+                                  errors.paymentCard?.expireMonth &&
+                                  touched.paymentCard?.cardNumber &&
+                                  "border-red-600"
+                                }`}
+                                placeholder={t(
+                                  "paymentForm.PaymentLabels.CardDate.expireMonthLabel",
+                                )}
+                              />
+                              <InputMask
+                                ref={yearRef}
+                                onChange={(e) =>
+                                  setFieldValue(
+                                    "paymentCard.expireYear",
+                                    e.target.value,
+                                  )
+                                }
+                                onComplete={() => cvcRef.current?.focus()}
+                                value={values.paymentCard.expireYear}
+                                mask="99"
+                                className={`border px-2 placeholder:text-md ${
+                                  errors.paymentCard?.expireYear &&
+                                  touched.paymentCard?.cardNumber &&
+                                  "border-red-600"
+                                }`}
+                                placeholder={t(
+                                  "paymentForm.PaymentLabels.CardDate.expireYearLabel",
+                                )}
+                              />
+                            </div>
+                            <div className="p-inputgroup flex-1">
+                              <span className="p-inputgroup-addon">
+                                <ImCreditCard size={24} />
+                              </span>
+                              <InputMask
+                                ref={cvcRef}
+                                value={values.paymentCard.cvc}
+                                onChange={(e) =>
+                                  setFieldValue("paymentCard.cvc", e.value)
+                                }
+                                mask="999"
+                                className={`border px-2 placeholder:text-md ${
+                                  errors.paymentCard?.cvc &&
+                                  touched.paymentCard?.cardNumber &&
+                                  "border-red-600"
+                                }`}
+                                placeholder="CVC"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {paymentType === "PAY_AT_DOOR" && (
+                        <div className={"flex flex-col gap-y-4"}>
+                          <div
+                            className={"flex justify-between flex-col  gap-4"}
+                          >
+                            <span
+                              className={
+                                "bg-gray-100 p-4 rounded-lg break-words "
+                              }
+                            >
+                              <p className={"font-bold break-w"}>
+                                {t(
+                                  "paymentForm.PaymentLabels.paymentDetailAdress",
+                                )}
+                                :
+                              </p>
+                              <p className="text-sm">
+                                {values.shippingAddress.address}
+                              </p>
+                            </span>
+                            <span
+                              className={
+                                "bg-gray-100 p-4 rounded-lg  break-words"
+                              }
+                            >
+                              <p className={"font-bold"}>
+                                {t(
+                                  "paymentForm.PaymentLabels.PaymentDetailBillingAddress",
+                                )}
+                                :
+                              </p>
+                              <p className="text-sm">
+                                {values.billingAddress.address
+                                  ? values.billingAddress.address
+                                  : values.shippingAddress.address}
+                              </p>
+                            </span>
+                          </div>
+                          <div
+                            className={
+                              "flex flex-col gap-y-3 bg-gray-100 p-4 rounded-lg"
+                            }
+                          >
+                            <p className={"font-bold"}>
+                              {t("paymentForm.PaymentLabels.BuyerInfo.title")}
+                            </p>
+                            <span className={"flex flex-row gap-x-2"}>
+                              <p className={"font-semibold"}>
+                                {t("paymentForm.PaymentLabels.name")}:
+                              </p>
+                              {values.buyer.name}
+                            </span>
+                            <span className={"flex flex-row gap-x-2"}>
+                              <p className={"font-semibold"}>
+                                {t("paymentForm.PaymentLabels.surname")}:
+                              </p>
+                              {values.buyer.surname}
+                            </span>
+                            <span className={"flex flex-row gap-x-2"}>
+                              <p className={"font-semibold"}>
+                                {t("paymentForm.PaymentLabels.email")}:
+                              </p>
+                              {values.buyer.email}
+                            </span>
+                            <span className={"flex flex-row gap-x-2"}>
+                              <p className={"font-semibold"}>
+                                {" "}
+                                {t("paymentForm.PaymentLabels.phone")}:{" "}
+                              </p>
+                              {values.buyer.gsmNumber}
+                            </span>
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            {session?.status === "authenticated" ? null : (
+                              <div className="w-full flex flex-col items-center justify-center gap-2 mt-1">
+                                <div className="w-full flex items-center justify-start gap-2">
+                                  <input
+                                    type="checkbox"
+                                    checked={!checkboxes.KVKK}
+                                    onChange={() =>
+                                      handleCheckboxChange("KVKK")
+                                    }
+                                    className="accent-primary cursor-pointer"
+                                  />
+                                  <div
+                                    className="text-xs font-semibold underline cursor-pointer"
+                                    onClick={() =>
+                                      handleOpenModal(
+                                        t(
+                                          "registerForm.registerFormCheckBox.KVKK.title",
+                                        ),
+                                        t(
+                                          "registerForm.registerFormCheckBox.KVKK.content",
+                                        ),
+                                      )
+                                    }
+                                  >
+                                    <span className="text-red-600">*</span>{" "}
+                                    {t(
+                                      "registerForm.registerFormCheckBox.KVKK.title",
+                                    )}
+                                  </div>
+                                </div>
+
+                                <div className="w-full flex items-center justify-start gap-2">
+                                  <input
+                                    type="checkbox"
+                                    checked={!checkboxes.MembershipAgreement}
+                                    onChange={() =>
+                                      handleCheckboxChange(
+                                        "MembershipAgreement",
+                                      )
+                                    }
+                                    className="accent-primary cursor-pointer"
+                                  />
+                                  <div
+                                    className="text-xs font-semibold underline cursor-pointer"
+                                    onClick={() =>
+                                      handleOpenModal(
+                                        t(
+                                          "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                        ),
+                                        t(
+                                          "registerForm.registerFormCheckBox.MembershipAgreement.content",
+                                        ),
+                                      )
+                                    }
+                                  >
+                                    <span className="text-red-600">*</span>{" "}
+                                    {t(
+                                      "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                    )}
+                                  </div>
+                                </div>
+
+                                <DynamicModal />
+                              </div>
+                            )}
+
+                            <div className="mt-2 bg-green-100 rounded-lg shadow p-2">
+                              {session?.status === "authenticated" ? (
+                                <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-green-600">
+                                  <div className="flex items-center   rounded-full">
+                                    <FaExclamationCircle
+                                      size={22}
+                                      className="text-green-600"
+                                    />
+                                  </div>
+                                  <span className="font-semibold">
+                                    {t("paymentForm.authenticatedOrderInfo")}
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="flex justify-start items-center gap-2 text-xs md:text-sm text-red-600">
+                                  <div className="flex items-center bg-green-100p-2 rounded-full">
+                                    <FaExclamationCircle
+                                      size={22}
+                                      className="text-green-600"
+                                    />
+                                  </div>
+                                  <span className="font-semibold">
+                                    *{" "}
+                                    {t("paymentForm.unauthenticatedOrderInfo")}*
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            <ReCAPTCHA
+                              sitekey={
+                                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                              }
+                              onChange={setRecaptcha}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    {paymentType === "CREDIT_CARD" ? (
+                      <div
+                        className={"flex flex-row w-full justify-between px-4"}
+                      >
+                        <Button
+                          onClick={() => {
+                            setStep(0);
+                            window.scrollTo({
+                              top: 0,
+                              behavior: "smooth",
+                            });
+                          }}
+                          size={"small"}
+                          className={"!p-1 !px-4"}
+                          icon={<MdArrowLeft size={32} />}
+                        >
+                          {t("paymentForm.PaymentLabels.Back")}
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setStep(2);
+                            window.scrollTo({
+                              top: 0,
+                              behavior: "smooth",
+                            });
+                          }}
+                          size={"small"}
+                          className={"!p-1 !px-4"}
+                          icon={<MdArrowRight size={32} />}
+                        >
+                          {t("paymentForm.PaymentLabels.ShoppingDoorContinue")}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className={"flex flex-col gap-y-4"}>
+                        <Button
+                          loading={loading}
+                          onClick={() => {
+                            setStep(0);
+                          }}
+                          type={"button"}
+                          className={
+                            "flex justify-center w-full !font-bold !bg-green-500 !border-none !outline-none !shadow-none"
                           }
-                          mask="9999-9999-9999-9999"
-                          className={`border px-4 placeholder:text-md ${
-                            errors.paymentCard?.cardNumber &&
-                            touched.paymentCard?.cardNumber &&
-                            "border-red-600"
-                          }`}
-                          placeholder={t(
-                            "paymentForm.PaymentLabels.cardNumberLabel"
-                          )}
-                        />
+                        >
+                          Bilgileri Düzenle
+                        </Button>
+                        <Button
+                          onClick={() => handleSubmitPayAtDoor()}
+                          loading={orderLoading}
+                          disabled={orderLoading || isButtonDisabled}
+                          type={"button"}
+                          className={"flex justify-center w-full !font-bold"}
+                        >
+                          SİPARİŞİ TAMAMLA
+                        </Button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 justify-between mb-4">
-                        <div className="p-inputgroup flex-1">
-                          <span className="p-inputgroup-addon">
-                            <VscCreditCard size={24} />
-                          </span>
-                          <InputMask
-                            onComplete={() => yearRef.current?.focus()}
-                            onChange={(e) =>
-                              setFieldValue(
-                                "paymentCard.expireMonth",
-                                e.target.value
-                              )
-                            }
-                            mask="99"
-                            value={values.paymentCard.expireMonth}
-                            className={`border px-2 placeholder:text-md  ${
-                              errors.paymentCard?.expireMonth &&
-                              touched.paymentCard?.cardNumber &&
-                              "border-red-600"
-                            }`}
-                            placeholder={t(
-                              "paymentForm.PaymentLabels.CardDate.expireMonthLabel"
-                            )}
-                          />
-                          <InputMask
-                            ref={yearRef}
-                            onChange={(e) =>
-                              setFieldValue(
-                                "paymentCard.expireYear",
-                                e.target.value
-                              )
-                            }
-                            onComplete={() => cvcRef.current?.focus()}
-                            value={values.paymentCard.expireYear}
-                            mask="99"
-                            className={`border px-2 placeholder:text-md ${
-                              errors.paymentCard?.expireYear &&
-                              touched.paymentCard?.cardNumber &&
-                              "border-red-600"
-                            }`}
-                            placeholder={t(
-                              "paymentForm.PaymentLabels.CardDate.expireYearLabel"
-                            )}
-                          />
-                        </div>
-                        <div className="p-inputgroup flex-1">
-                          <span className="p-inputgroup-addon">
-                            <ImCreditCard size={24} />
-                          </span>
-                          <InputMask
-                            ref={cvcRef}
-                            value={values.paymentCard.cvc}
-                            onChange={(e) =>
-                              setFieldValue("paymentCard.cvc", e.value)
-                            }
-                            mask="999"
-                            className={`border px-2 placeholder:text-md ${
-                              errors.paymentCard?.cvc &&
-                              touched.paymentCard?.cardNumber &&
-                              "border-red-600"
-                            }`}
-                            placeholder="CVC"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={"flex flex-row w-full justify-between px-4"}
-                    >
-                      <Button
-                        onClick={() => {
-                          setStep(0);
-                          window.scrollTo({
-                            top: 0,
-                            behavior: "smooth",
-                          });
-                        }}
-                        size={"small"}
-                        className={"!p-1 !px-4"}
-                        icon={<MdArrowLeft size={32} />}
-                      >
-                        {t("paymentForm.PaymentLabels.Back")}
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setStep(2);
-                          window.scrollTo({
-                            top: 0,
-                            behavior: "smooth",
-                          });
-                        }}
-                        size={"small"}
-                        className={"!p-1 !px-4"}
-                        icon={<MdArrowRight size={32} />}
-                      >
-                        {t("paymentForm.PaymentLabels.ShoppingDetail")}
-                      </Button>
-                    </div>
+                    )}
                   </>
                 )}
                 {step === 2 && (
@@ -825,7 +1130,7 @@ export default function PaymentForm() {
                       >
                         <p className={"font-bold"}>
                           {t(
-                            "paymentForm.PaymentLabels.PaymentDetailBillingAddress"
+                            "paymentForm.PaymentLabels.PaymentDetailBillingAddress",
                           )}
                           :
                         </p>
@@ -886,17 +1191,17 @@ export default function PaymentForm() {
                               onClick={() =>
                                 handleOpenModal(
                                   t(
-                                    "registerForm.registerFormCheckBox.KVKK.title"
+                                    "registerForm.registerFormCheckBox.KVKK.title",
                                   ),
                                   t(
-                                    "registerForm.registerFormCheckBox.KVKK.content"
-                                  )
+                                    "registerForm.registerFormCheckBox.KVKK.content",
+                                  ),
                                 )
                               }
                             >
                               <span className="text-red-600">*</span>{" "}
                               {t(
-                                "registerForm.registerFormCheckBox.KVKK.title"
+                                "registerForm.registerFormCheckBox.KVKK.title",
                               )}
                             </div>
                           </div>
@@ -915,17 +1220,17 @@ export default function PaymentForm() {
                               onClick={() =>
                                 handleOpenModal(
                                   t(
-                                    "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.title",
                                   ),
                                   t(
-                                    "registerForm.registerFormCheckBox.MembershipAgreement.content"
-                                  )
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.content",
+                                  ),
                                 )
                               }
                             >
                               <span className="text-red-600">*</span>{" "}
                               {t(
-                                "registerForm.registerFormCheckBox.MembershipAgreement.title"
+                                "registerForm.registerFormCheckBox.MembershipAgreement.title",
                               )}
                             </div>
                           </div>
