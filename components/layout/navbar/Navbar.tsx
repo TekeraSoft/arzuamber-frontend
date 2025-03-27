@@ -19,6 +19,14 @@ import { FaUserShield } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import { BiSearch } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa";
+import {
+  FaHome,
+  FaBoxOpen,
+  FaBlog,
+  FaInfoCircle,
+  FaEnvelope,
+} from "react-icons/fa";
+import Timer from "./Timer";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -46,11 +54,11 @@ function Navbar() {
   };
 
   const navLinks = [
-    { name: t("navLinks.home"), url: "/" },
-    { name: t("navLinks.products"), url: "/products" },
-    { name: t("navLinks.blogs"), url: "/blogs" },
-    { name: t("navLinks.about"), url: "/about" },
-    { name: t("navLinks.contact"), url: "/contact" },
+    { name: t("navLinks.home"), url: "/", icon: <FaHome /> },
+    { name: t("navLinks.products"), url: "/products", icon: <FaBoxOpen /> },
+    { name: t("navLinks.blogs"), url: "/blogs", icon: <FaBlog /> },
+    { name: t("navLinks.about"), url: "/about", icon: <FaInfoCircle /> },
+    { name: t("navLinks.contact"), url: "/contact", icon: <FaEnvelope /> },
   ];
 
   const openCart = () => {
@@ -58,7 +66,8 @@ function Navbar() {
   };
 
   return (
-    <header className="text-mywhite z-50 fixed w-full ">
+    <header className="text-mywhite z-50 fixed w-full  ">
+      <Timer />
       <TopBar />
 
       {/* Navbar */}
@@ -245,36 +254,37 @@ function Navbar() {
 
           {/* Icons */}
           <ul className="hidden lg:flex items-center justify-center gap-x-6">
-            {/*<li*/}
-            {/*  className="relative z-50"*/}
-            {/*  onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
-            {/*>*/}
-            {/*  <button*/}
-            {/*    className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"*/}
-            {/*    onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}*/}
-            {/*    onMouseLeave={() => setIsLangDropdownOpen(false)}*/}
-            {/*    onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
-            {/*  >*/}
-            {/*    {locale}*/}
-            {/*  </button>*/}
-            {/*  {isLangDropdownOpen && (*/}
-            {/*    <ul*/}
-            {/*      className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"*/}
-            {/*      onMouseEnter={() => setIsLangDropdownOpen(true)}*/}
-            {/*    >*/}
-            {/*      {supportedLocales.map((lang) => (*/}
-            {/*        <li key={lang}>*/}
-            {/*          <button*/}
-            {/*            onClick={() => changeLanguage(lang)}*/}
-            {/*            className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"*/}
-            {/*          >*/}
-            {/*            {lang === "tr" ? "TR" : "EN"}*/}
-            {/*          </button>*/}
-            {/*        </li>*/}
-            {/*      ))}*/}
-            {/*    </ul>*/}
-            {/*  )}*/}
-            {/*</li>*/}
+            {/* ul className="hidden lg:flex items-center justify-center gap-x-6">
+           <li
+             className="relative z-50"
+             onMouseLeave={() => setIsLangDropdownOpen(false)}
+           >
+             <button
+               className="w-10 h-8 flex items-center justify-center border border-slate-300  rounded-md text-secondary text-xs font-semibold uppercase transition duration-500 hover:bg-secondary hover:text-white"
+               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+               onMouseLeave={() => setIsLangDropdownOpen(false)}
+               onMouseEnter={() => setIsLangDropdownOpen(true)}
+             >
+               {locale}
+             </button>
+             {isLangDropdownOpen && (
+               <ul
+                 className=" absolute  top-8 w-10  bg-white border rounded shadow-md text-sm"
+                 onMouseEnter={() => setIsLangDropdownOpen(true)}
+               >
+                 {supportedLocales.map((lang) => (
+                   <li key={lang}>
+                     <button
+                       onClick={() => changeLanguage(lang)}
+                       className="block w-full  py-1 text-center rounded text-secondary  hover:bg-secondary hover:text-white  transition-all duration-300"
+                     >
+                       {lang === "tr" ? "TR" : "EN"}
+                     </button>
+                   </li>
+                 ))}
+               </ul>
+             )}
+           </li>*/}
 
             {/* 
             <Link href={"/favs"} className="relative y">
@@ -427,9 +437,9 @@ function Navbar() {
                 >
                   <li
                     onClick={() => setOpenMenu(false)}
-                    className={`flex flex-col text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start items-start p-1 w-full rounded-lg 
-              }`}
+                    className="flex items-center gap-2 text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start p-2 w-full rounded-lg"
                   >
+                    {link.icon}
                     {link.name}
                   </li>
                 </Link>

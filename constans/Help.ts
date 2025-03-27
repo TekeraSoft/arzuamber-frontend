@@ -1,18 +1,9 @@
-import { BiShieldAlt } from "react-icons/bi";
-import {
-  FaCreditCard,
-  FaMoneyBillWave,
-  FaShippingFast,
-  FaStar,
-  FaUndoAlt,
-} from "react-icons/fa";
-
 // JSON verisini TypeScript olarak tanımla
 export const helpItems = [
   {
     id: 1,
     title: "Popüler Sorular",
-    icon: FaStar,
+    icon: "FaStar",
     questions: [
       {
         id: 101,
@@ -127,7 +118,7 @@ export const helpItems = [
   {
     id: 2,
     title: "Alışveriş",
-    icon: FaMoneyBillWave,
+    icon: "FaMoneyBillWave",
     questions: [
       {
         id: 1,
@@ -175,7 +166,7 @@ export const helpItems = [
   {
     id: 3,
     title: "Ödeme",
-    icon: FaCreditCard,
+    icon: "FaCreditCard",
     questions: [
       {
         id: 1,
@@ -202,7 +193,7 @@ export const helpItems = [
   {
     id: 4,
     title: "Kargo & Teslimat",
-    icon: FaShippingFast,
+    icon: "FaShippingFast",
     questions: [
       {
         id: 1,
@@ -255,13 +246,13 @@ export const helpItems = [
   {
     id: 5,
     title: "İptal & İade & Değişim",
-    icon: FaUndoAlt,
+    icon: "FaUndoAlt",
     questions: [
       {
         id: 1,
         question: "Değişim ve İade politika ve prosedürleriniz nelerdir?",
         answer:
-          "Deniz Butik müşterisiyseniz değerlisiniz çünkü müşterilerimizin memnuniyeti ve beklentileri bizim için önemlidir. Bu nedenle değişim ve iade güvenceniz bulunmaktadır. Herhangi bir nedenle siparişinizden memnun kalmazsanız, satın aldığınız ürün ya da ürünlerinizi, orijinal ambalajında, kullanılmamış ve etiketleri çıkarılmamış olması koşuluyla teslim aldığınız tarihten itibaren 14 gün içinde değişim ve iade işlemi için geri gönderebilirsiniz. Değişim işlemleriniz için gönderdiğiniz ürünün faturadaki satın alım fiyatı kadar hesabınıza bakiye tanımlanır. Bakiyeniz ile tekrardan sipariş verebilirsiniz. İade işlemlerinde, siparişin size ulaşması için kargo firmasına ödenen kargo bedeli iade edilememektedir.",
+          "Arzuamber müşterisiyseniz değerlisiniz çünkü müşterilerimizin memnuniyeti ve beklentileri bizim için önemlidir. Bu nedenle değişim ve iade güvenceniz bulunmaktadır. Herhangi bir nedenle siparişinizden memnun kalmazsanız, satın aldığınız ürün ya da ürünlerinizi, orijinal ambalajında, kullanılmamış ve etiketleri çıkarılmamış olması koşuluyla teslim aldığınız tarihten itibaren 14 gün içinde değişim ve iade işlemi için geri gönderebilirsiniz. Değişim işlemleriniz için gönderdiğiniz ürünün faturadaki satın alım fiyatı kadar hesabınıza bakiye tanımlanır. Bakiyeniz ile tekrardan sipariş verebilirsiniz. İade işlemlerinde, siparişin size ulaşması için kargo firmasına ödenen kargo bedeli iade edilememektedir.",
       },
       {
         id: 2,
@@ -286,52 +277,52 @@ export const helpItems = [
   {
     id: 6,
     title: "Gizlilik & Güvenlik",
-    icon: BiShieldAlt,
+    icon: "BiShieldAlt",
     questions: [
       {
         id: 1,
         question:
-          "Deniz Butik'in kişisel verileri toplamasının yasal dayanağı nedir?",
+          "Arzuamber'in kişisel verileri toplamasının yasal dayanağı nedir?",
         answer:
           "Müşterilerimizin kişisel verilerinin kullanılması konusunda çeşitli kanunlarda düzenlemeler bulunmaktadır. En başta KVKK ile kişisel verilerin korunması esasları belirlenmiştir. Ayrıca 6563 Sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun da kişisel verilerin korunmasına ilişkin hüküm içermektedir. 5237 Sayılı Türk Ceza Kanunu hükümleri yoluyla da kişisel verilerin korunması için bazı hallerde cezai yaptırımlar öngörülmüştür. Diğer yandan, 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği'nden doğan yükümlülüklerimizin ifası amacıyla verilerin toplanması ve kullanılması gerekmektedir.",
       },
       {
         id: 2,
         question:
-          "Deniz Butik kişisel verilerin toplanmasında hangi yöntemleri kullanıyor?",
+          "Arzuamber kişisel verilerin toplanmasında hangi yöntemleri kullanıyor?",
         answer:
-          "www.denizbutik.com web sitesinden veya mobil uygulamalardan işlem yapan müşterilerimizin verdikleri veriler, müşterilerimizin rızaları ve mevzuat hükümleri uyarınca Deniz Butik tarafından işlenmektedir. Deniz Butik'e ait olan www.denizbutik.com web sitesi çerez (cookie) kullanan bir sitedir. Çerez; kullanılmakta olan cihazın internet tarayıcısına ya da sabit diskine depolanarak söz konusu cihazın tespit edilmesine olanak tanıyan, çoğunlukla harf ve sayılardan oluşan bir dosyadır. www.denizbutik.com ziyaretçilerine daha iyi hizmet verebilmek amacıyla ve yasal yükümlülüğü çerçevesinde, işbu Kişisel Verilerin Korunması Hakkında Açıklama metninde belirlenen amaçlar ve kapsam dışında kullanılmamak kaydı ile gezinme bilgilerinizi toplayacak, işleyecek, üçüncü kişilerle paylaşacak ve güvenli olarak saklayacaktır.",
+          "www.arzuamber.com web sitesinden veya mobil uygulamalardan işlem yapan müşterilerimizin verdikleri veriler, müşterilerimizin rızaları ve mevzuat hükümleri uyarınca Arzuamber tarafından işlenmektedir. Arzuamber'e ait olan www.arzuamber.com web sitesi çerez (cookie) kullanan bir sitedir. Çerez; kullanılmakta olan cihazın internet tarayıcısına ya da sabit diskine depolanarak söz konusu cihazın tespit edilmesine olanak tanıyan, çoğunlukla harf ve sayılardan oluşan bir dosyadır. www.arzuamber.com ziyaretçilerine daha iyi hizmet verebilmek amacıyla ve yasal yükümlülüğü çerçevesinde, işbu Kişisel Verilerin Korunması Hakkında Açıklama metninde belirlenen amaçlar ve kapsam dışında kullanılmamak kaydı ile gezinme bilgilerinizi toplayacak, işleyecek, üçüncü kişilerle paylaşacak ve güvenli olarak saklayacaktır.",
       },
       {
         id: 3,
         question: "İnternet Sitesi Çerezleri Nasıl Kullanılmaktadır?",
         answer:
-          "www.denizbutik.com çerezleri; yaptığınız tercihleri hatırlamak ve web sitesi/mobil uygulama kullanımınızı kişiselleştirmek için kullanır. Bu kullanım parolanızı kaydeden ve web sitesi/mobil uygulama oturumunuzun sürekli açık kalmasını sağlayan, böylece her ziyaretinizde birden fazla kez parola girme zahmetinden kurtaran çerezleri ve web sitesi/mobil uygulamaya daha sonraki ziyaretlerinizde sizi hatırlayan ve tanıyan çerezleri içerir.",
+          "www.arzuamber.com çerezleri; yaptığınız tercihleri hatırlamak ve web sitesi/mobil uygulama kullanımınızı kişiselleştirmek için kullanır. Bu kullanım parolanızı kaydeden ve web sitesi/mobil uygulama oturumunuzun sürekli açık kalmasını sağlayan, böylece her ziyaretinizde birden fazla kez parola girme zahmetinden kurtaran çerezleri ve web sitesi/mobil uygulamaya daha sonraki ziyaretlerinizde sizi hatırlayan ve tanıyan çerezleri içerir.",
       },
       {
         id: 4,
         question:
           "İnternet Sitesi üçüncü taraf çerezlerini reklam ve yeniden hedefleme için nasıl kullanmaktadır?",
         answer:
-          "www.denizbutik.com web sitesi çerezleri ayrıca; arama motorlarını, web sitesi, mobil uygulamasını ve/veya web sitesinin reklam verdiği internet sitelerini ziyaret ettiğinizde ilginizi çekebileceğini düşündüğü reklamları size sunabilmek için 'reklam teknolojisini' devreye sokmak amacıyla kullanabilir. Reklam teknolojisi, size özel reklamlar sunabilmek için web sitesine/mobil uygulamaya ve web sitesinin reklam verdiği web sitelerine/mobil uygulamalarına yaptığınız önceki ziyaretlerle ilgili bilgileri kullanır.",
+          "www.arzuamber.com web sitesi çerezleri ayrıca; arama motorlarını, web sitesi, mobil uygulamasını ve/veya web sitesinin reklam verdiği internet sitelerini ziyaret ettiğinizde ilginizi çekebileceğini düşündüğü reklamları size sunabilmek için 'reklam teknolojisini' devreye sokmak amacıyla kullanabilir. Reklam teknolojisi, size özel reklamlar sunabilmek için web sitesine/mobil uygulamaya ve web sitesinin reklam verdiği web sitelerine/mobil uygulamalarına yaptığınız önceki ziyaretlerle ilgili bilgileri kullanır.",
       },
       {
         id: 5,
-        question: "Deniz Butik kişisel verileri hangi amaçlarla kullanıyor?",
+        question: "Arzuamber kişisel verileri hangi amaçlarla kullanıyor?",
         answer:
-          "Deniz Butik, mevzuatın izin verdiği durumlarda ve ölçüde kişisel bilgilerinizi kaydedebilecek, saklayabilecek, güncelleyebilecek, üçüncü kişilere açıklayabilecek, devredebilecek, sınıflandırabilecek ve işleyebilecektir. Kişisel verileriniz şu amaçlarla kullanılmaktadır: Web sitesi/mobil uygulamalar üzerinden alışveriş yapanın/yaptıranın kimlik bilgilerini teyit etmek, iletişim için adres ve diğer gerekli bilgileri kaydetmek, mesafeli satış sözleşmesi ve Tüketicinin Korunması Hakkında Kanun'un ilgili maddeleri tahtında akdettiğimiz sözleşmelerin koşulları, güncel durumu ve güncellemeler ile ilgili müşterilerimiz ile iletişime geçmek, gerekli bilgilendirmeleri yapabilmek.",
+          "Arzuamber, mevzuatın izin verdiği durumlarda ve ölçüde kişisel bilgilerinizi kaydedebilecek, saklayabilecek, güncelleyebilecek, üçüncü kişilere açıklayabilecek, devredebilecek, sınıflandırabilecek ve işleyebilecektir. Kişisel verileriniz şu amaçlarla kullanılmaktadır: Web sitesi/mobil uygulamalar üzerinden alışveriş yapanın/yaptıranın kimlik bilgilerini teyit etmek, iletişim için adres ve diğer gerekli bilgileri kaydetmek, mesafeli satış sözleşmesi ve Tüketicinin Korunması Hakkında Kanun'un ilgili maddeleri tahtında akdettiğimiz sözleşmelerin koşulları, güncel durumu ve güncellemeler ile ilgili müşterilerimiz ile iletişime geçmek, gerekli bilgilendirmeleri yapabilmek.",
       },
       {
         id: 6,
-        question: "Deniz Butik kişisel verilerinizi nasıl koruyor?",
+        question: "Arzuamber kişisel verilerinizi nasıl koruyor?",
         answer:
-          "Deniz Butik, kişisel verilerinizin gizliliğini ve bütünlüğünü korumak için gerekli tüm organizasyonu kurmuş ve teknik önlemleri almıştır. Periyodik olarak sızma testleri yapılmakta ve veri işleme politikaları sürekli güncellenmektedir.",
+          "Arzuamber, kişisel verilerinizin gizliliğini ve bütünlüğünü korumak için gerekli tüm organizasyonu kurmuş ve teknik önlemleri almıştır. Periyodik olarak sızma testleri yapılmakta ve veri işleme politikaları sürekli güncellenmektedir.",
       },
       {
         id: 7,
-        question: "Deniz Butik kişisel verilerinizi paylaşıyor mu?",
+        question: "Arzuamber kişisel verilerinizi paylaşıyor mu?",
         answer:
-          "Deniz Butik, kişisel verilerinizi üçüncü kişilerle sadece sizin izninizle ve yasal yükümlülükler çerçevesinde paylaşır. Verileriniz, anlaşmalı kurumlar ve yasal zorunluluklar nedeniyle üçüncü şahıslarla paylaşılabilir.",
+          "Arzuamber, kişisel verilerinizi üçüncü kişilerle sadece sizin izninizle ve yasal yükümlülükler çerçevesinde paylaşır. Verileriniz, anlaşmalı kurumlar ve yasal zorunluluklar nedeniyle üçüncü şahıslarla paylaşılabilir.",
       },
       {
         id: 8,
@@ -345,21 +336,21 @@ export const helpItems = [
         question:
           "Kişisel verilerle ilgili mevzuat değişikliklerinden nasıl haberdar olabilirim?",
         answer:
-          "Deniz Butik, KVKK'ya uygun olarak kişisel verilerinizi işler ve mevzuat değişikliklerinden haberdar olmak için bu sayfada sürekli güncellemeler yapar. Yapılan değişiklikleri buradan takip edebilirsiniz.",
+          "Arzuamber, KVKK'ya uygun olarak kişisel verilerinizi işler ve mevzuat değişikliklerinden haberdar olmak için bu sayfada sürekli güncellemeler yapar. Yapılan değişiklikleri buradan takip edebilirsiniz.",
       },
       {
         id: 10,
         question:
           "Verinin güncel ve doğru tutulduğundan nasıl emin olabilirim?",
         answer:
-          "KVKK'nın gerektirdiği şekilde, Deniz Butik kişisel verilerinizi doğru ve güncel tutmakla yükümlüdür. Verilerinizde bir değişiklik olduğunda, bizimle iletişime geçerek güncelleyebilirsiniz.",
+          "KVKK'nın gerektirdiği şekilde, Arzuamber kişisel verilerinizi doğru ve güncel tutmakla yükümlüdür. Verilerinizde bir değişiklik olduğunda, bizimle iletişime geçerek güncelleyebilirsiniz.",
       },
       {
         id: 11,
         question:
-          "Deniz Butik'e kişisel verilerinizle ilgili soru sormak ister misiniz?",
+          "Arzuamber'e kişisel verilerinizle ilgili soru sormak ister misiniz?",
         answer:
-          "Kişisel verilerinizle ilgili sorularınız için destek@denizbutik.com e-posta adresine dilediğiniz zaman ulaşabilirsiniz.",
+          "Kişisel verilerinizle ilgili sorularınız için destek@arzuamber.com e-posta adresine dilediğiniz zaman ulaşabilirsiniz.",
       },
     ],
   },

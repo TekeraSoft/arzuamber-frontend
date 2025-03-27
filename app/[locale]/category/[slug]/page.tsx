@@ -37,7 +37,7 @@ function CategoryFilteredProducts() {
   };
 
   return (
-    <main className="flex flex-col justify-center  items-center  md:mt-10 lg:mt-0">
+    <main className="flex flex-col justify-center  items-center  md:mt-10 lg:mt-2">
       <div className="flex w-full h-full gap-2 items-start justify-center  SliderContainer">
         <Filter
           slug={slug}
@@ -100,7 +100,7 @@ function CategoryFilteredProducts() {
               </div>
 
               <Paginator
-                className={"my-12 "}
+                className={"my-4 "}
                 first={pageable.currentPage * pageable.size}
                 rows={pageable.size}
                 totalRecords={page.totalElements}

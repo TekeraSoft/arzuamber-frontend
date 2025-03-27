@@ -2,7 +2,6 @@ import { helpItems } from "@/constans/Help";
 import { howToBuyList } from "@/constans/HowToBuy";
 import { getGuardRequest } from "@/services/requestservice";
 import { createSlice } from "@reduxjs/toolkit";
-import { IconType } from "react-icons";
 import { toast } from "react-toastify";
 
 interface Question {
@@ -14,8 +13,15 @@ interface Question {
 interface HelpCategory {
   id: number;
   title: string;
-  icon: IconType;
+  icon: string;
   questions: Question[];
+}
+
+interface SpecialDayTimer {
+  discountTitle: string;
+  discountDescription: string;
+  discountEndTime: number;
+  specialDayTimerStatus: boolean;
 }
 
 export interface GeneralState {
@@ -24,6 +30,7 @@ export interface GeneralState {
   HowToBuyModalStatus: boolean;
   loading: boolean;
   helpItems: HelpCategory[];
+  specialDayTimer: SpecialDayTimer;
 }
 
 // Başlangıç durumu (initialState)
@@ -33,6 +40,12 @@ const initialState: GeneralState = {
   HowToBuyModalStatus: false,
   loading: false,
   helpItems: helpItems,
+  specialDayTimer: {
+    discountTitle: "Bayram İndirimi Başladı!",
+    discountDescription: "Kaçırmayın! Bu fırsat kısa süreliğine geçerli 🎉",
+    discountEndTime: new Date("2025-04-03T00:00:00").getTime(),
+    specialDayTimerStatus: true,
+  },
 };
 
 export const generalSlice = createSlice({
@@ -47,6 +60,12 @@ export const generalSlice = createSlice({
     },
     setHowToBuyModalStatus: (state, action) => {
       state.HowToBuyModalStatus = action.payload;
+    },
+    setSpecialDayTimer(state, action) {
+      state.specialDayTimer = action.payload;
+    },
+    setSpecialDayTimerStatus(state, action) {
+      state.specialDayTimer.specialDayTimerStatus = action.payload;
     },
   },
 });
@@ -65,7 +84,12 @@ export const getAllHomeSliderImages = () => async (dispatch) => {
 };
 
 // Reducer'ları dışa aktarma
-export const { getHomeSliders, setHowToBuyModalStatus, loading } =
-  generalSlice.actions;
+export const {
+  getHomeSliders,
+  setHowToBuyModalStatus,
+  setSpecialDayTimer,
+  setSpecialDayTimerStatus,
+  loading,
+} = generalSlice.actions;
 
 export default generalSlice.reducer;

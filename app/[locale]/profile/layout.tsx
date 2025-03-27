@@ -11,7 +11,7 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="md:container w-full mt-20 mb-5 bg-white md:rounded-lg">
+    <div className="md:container w-full mt-5 mb-5 bg-white md:rounded-lg">
       <div className="flex flex-col md:flex-row gap-2 w-full">
         {/* Sidebar (Desktop) */}
         <div className="md:block md:w-1/4 lg:w-1/5 bg-white p-4 mt-5 h-full">
