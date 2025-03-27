@@ -30,7 +30,7 @@ function Filter({
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
   const { categories, shortCategory } = useSelector(
-    (state: RootState) => state.category
+    (state: RootState) => state.category,
   );
   const { colors } = useSelector((state: RootState) => state.products);
   const { filterStatus } = useSelector((state: RootState) => state.search);
@@ -94,7 +94,7 @@ function Filter({
           onlyDiscounted: selectedFilters.onlyDiscounted,
           page: currnetPage,
           pageSize: pageSize,
-        })
+        }),
       );
     } else {
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
@@ -108,7 +108,7 @@ function Filter({
           onlyDiscounted: selectedFilters.onlyDiscounted,
           page: currnetPage,
           pageSize: pageSize,
-        })
+        }),
       );
     }
 
@@ -162,7 +162,7 @@ function Filter({
           className="  bg-white flex flex-col gap-5  p-6 w-3/4 max-w-96 h-full z-2 overflow-y-auto "
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col justify-center items-end  mt-[75px] w-full">
+          <div className="flex flex-col justify-center items-end  mt-40 w-full">
             <button
               onClick={() => dispatch(setFilterStatus(!filterStatus))}
               className=" w-6 h-6 lg:hidden p-1 text-primary  border  border-primary rounded-md   flex justify-center items-center  bg-mywhite transition-all duration-500 hover:scale-105 "

@@ -23,7 +23,7 @@ import { filterData } from "@/data/filterData";
 import FormStepper from "@/components/productDetail/utils/FormStepper";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import axios from "axios";
-import DynamicModal from "../utils/DynamicModal";
+import DynamicModal from "@/components/modals/DynamicModal";
 import { openDynamicModal } from "@/store/modalsSlice";
 import { useSession } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";

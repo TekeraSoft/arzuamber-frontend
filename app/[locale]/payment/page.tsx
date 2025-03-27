@@ -28,11 +28,11 @@ const PaymentPage = () => {
         {/* Sol taraftaki içerik */}
 
         {/* Sağ taraftaki içerik */}
-        <div className="md:w-2/3 w-full  border rounded-lg animate__animated animate__fadeIn md:mt-0 mt-6 bg-white px-3">
+        <div className="md:w-2/3 w-full  border rounded-lg md:mt-0 mt-6 bg-white px-3">
           <PaymentForm />
         </div>
 
-        <div className="w-full md:w-1/3 relative bg-white py-1 border border-gray-200 px-4 rounded-lg animate__animated animate__fadeIn">
+        <div className="w-full md:w-1/3 relative bg-white py-1 border border-gray-200 px-4 rounded-lg">
           {cartProducts.map((item, index) => (
             <div
               key={index}
