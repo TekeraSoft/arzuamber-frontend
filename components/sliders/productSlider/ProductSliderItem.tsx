@@ -31,16 +31,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
     selectedColor?.stockSize?.length > 0 ? selectedColor.stockSize[0] : {}
   );
 
-  // Modal açma
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  // Modal kapama
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   const handleAddToFav = () => {
     if (!selectedColor || !selectedSize) {
       toast.error("Lütfen renk ve beden seçin.");
@@ -66,7 +56,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
     );
 
     toast.success("Ürün favorilere eklendi.");
-    closeModal();
+    // closeModal();
   };
 
   return (
@@ -196,7 +186,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
       <Dialog
         header={"beden ve renkler"}
         visible={showModal}
-        onHide={closeModal}
+        // onHide={closeModal}
         className="w-[300px] md:w-[400px]  p-3"
       >
         <div className="flex flex-col gap-3 w-f">
@@ -238,7 +228,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           </button>
           <button
             className="p-2 bg-secondary text-white rounded"
-            onClick={closeModal}
+            // onClick={closeModal}
           >
             kapat
           </button>

@@ -54,9 +54,6 @@ function Filter({
     });
   };
 
-  // Menü görünürlüğünü kontrol etmek için
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [openState, setOpenState] = useState({
     size: false,
     color: false,
@@ -132,11 +129,6 @@ function Filter({
     selectedFilters,
     shortCategory,
   ]);
-
-  // Menü açma / kapama işlemi
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const handleSortingChange = (order) => {
     setSelectedFilters((prev) => ({

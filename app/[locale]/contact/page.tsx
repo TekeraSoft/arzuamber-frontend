@@ -61,7 +61,7 @@ function ContactPage() {
               </p>
             </div>
 
-            <div className="max-w-6xl mx-auto mt-5 grid gap-4">
+            <div className=" w-full mx-auto mt-5 grid gap-4">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d797.7763359713855!2d30.69932672850806!3d36.88782807088876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c391433f5d9d85%3A0xf088a952b396c64c!2sARZUAMBER%20MODA!5e0!3m2!1str!2str!4v1742284399531!5m2!1str!2str"
                 className="w-full  h-[400px] border-0 rounded-lg"

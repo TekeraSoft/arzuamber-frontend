@@ -13,6 +13,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.css"; // PrimeReact stilleri
 import ScrollToTop from "../utils/ScrollToTop";
 import LayoutSocialButtons from "../utils/LayoutSocialButtons";
+import HowToBuyModal from "../modals/HowToBuyModal";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -29,10 +30,11 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
           <ToastContainer position={"bottom-center"} autoClose={3000} />
           <main
             className={` overflow-x-hidden overflow-y-hidden  ${
-              path.startsWith("/admin") ? "" : "flex-grow mt-14 md:mt-[65px]"
+              path.startsWith("/admin") ? "" : "flex-grow mt-36 md:mt-40"
             }`}
           >
             <CartSidebar />
+            <HowToBuyModal />
             <AuthLayout />
             {children}
             <ScrollToTop />

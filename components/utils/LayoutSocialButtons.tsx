@@ -11,7 +11,8 @@ export default function LayoutSocialButtons() {
   const pathName = usePathname();
 
   useEffect(() => {
-    if (pathName === "/admin") {
+    // Eğer pathName '/admin' ile başlıyorsa butonları gizle
+    if (pathName.startsWith("/admin")) {
       setIsVisible(false);
     } else {
       setIsVisible(true);

@@ -39,7 +39,7 @@ function Products() {
   const { categories } = useSelector((state: RootState) => state.category);
 
   return (
-    <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-0 ">
+    <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
@@ -83,8 +83,7 @@ function Products() {
 
           {/* <h2 className="text-center my-3 text-3xl pb-2 font-semibold ">
             {t("allProduct.allProducts")}
-          </h2>
- */}
+          </h2>*/}
           {loading ? (
             <Loading />
           ) : // Ürünler var mı? Ve undefined/null değilse.
@@ -101,7 +100,7 @@ function Products() {
               </div>
 
               <Paginator
-                className={"my-12 "}
+                className={"my-4 "}
                 first={pageable.currentPage * pageable.size}
                 rows={pageable.size}
                 totalRecords={page.totalElements}

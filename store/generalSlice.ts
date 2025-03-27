@@ -1,17 +1,51 @@
+import { helpItems } from "@/constans/Help";
+import { howToBuyList } from "@/constans/HowToBuy";
 import { getGuardRequest } from "@/services/requestservice";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-// Sepet Tipi
-export interface CartState {
+interface Question {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+interface HelpCategory {
+  id: number;
+  title: string;
+  icon: string;
+  questions: Question[];
+}
+
+interface SpecialDayTimer {
+  discountTitle: string;
+  discountDescription: string;
+  discountEndTime: number;
+  specialDayTimerStatus: boolean;
+}
+
+export interface GeneralState {
   homeSliderImages: [];
+  howToBuyImages: { id: string; url: string }[];
+  HowToBuyModalStatus: boolean;
   loading: boolean;
+  helpItems: HelpCategory[];
+  specialDayTimer: SpecialDayTimer;
 }
 
 // Başlangıç durumu (initialState)
-const initialState: CartState = {
+const initialState: GeneralState = {
   homeSliderImages: [],
+  howToBuyImages: howToBuyList,
+  HowToBuyModalStatus: false,
   loading: false,
+  helpItems: helpItems,
+  specialDayTimer: {
+    discountTitle: "Bayram İndirimi Başladı!",
+    discountDescription: "Kaçırmayın! Bu fırsat kısa süreliğine geçerli 🎉",
+    discountEndTime: new Date("2025-04-03T00:00:00").getTime(),
+    specialDayTimerStatus: true,
+  },
 };
 
 export const generalSlice = createSlice({
@@ -23,6 +57,15 @@ export const generalSlice = createSlice({
     },
     loading: (state, action) => {
       state.loading = action.payload;
+    },
+    setHowToBuyModalStatus: (state, action) => {
+      state.HowToBuyModalStatus = action.payload;
+    },
+    setSpecialDayTimer(state, action) {
+      state.specialDayTimer = action.payload;
+    },
+    setSpecialDayTimerStatus(state, action) {
+      state.specialDayTimer.specialDayTimerStatus = action.payload;
     },
   },
 });
@@ -41,6 +84,12 @@ export const getAllHomeSliderImages = () => async (dispatch) => {
 };
 
 // Reducer'ları dışa aktarma
-export const { getHomeSliders, loading } = generalSlice.actions;
+export const {
+  getHomeSliders,
+  setHowToBuyModalStatus,
+  setSpecialDayTimer,
+  setSpecialDayTimerStatus,
+  loading,
+} = generalSlice.actions;
 
 export default generalSlice.reducer;

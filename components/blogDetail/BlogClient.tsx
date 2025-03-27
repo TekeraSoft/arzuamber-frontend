@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Snackbar, SnackbarContent } from "@mui/material";
 import Button from "../general/Button";
 import { useTranslations } from "next-intl";
-import NextSeoHead from "../utils/NextSeoHead";
+// import NextSeoHead from "../utils/NextSeoHead";
 
 function BlogClient({ blog }: { blog: BlogProps }) {
   const t = useTranslations();
@@ -27,11 +27,11 @@ function BlogClient({ blog }: { blog: BlogProps }) {
 
   return (
     <PageContainer>
-      <NextSeoHead
+      {/* <NextSeoHead
         name={blog.title}
         description={blog.content}
         image={blog.image}
-      />
+      /> */}
 
       <div className=" shadow-lg rounded-lg h-full py-5 mb-5 ">
         {/* Blog Image */}

@@ -452,7 +452,8 @@
       "CANCELED": "İptal Edildi",
       "OTHER": "Bilinmeyen Durum",
       "SHIPPED": "Kargoya verildi",
-      "DELIVERED": "Teslim edildi"
+      "DELIVERED": "Teslim edildi",
+      "PAY_AT_DOOR": "Kapıda Ödeme"
     },
     "orderDate": "Sipariş Tarihi",
     "totalPrice": "Toplam Fiyat",

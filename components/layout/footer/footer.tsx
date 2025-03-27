@@ -27,7 +27,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6">
           {/* Top Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7 md:gap-4 items-center">
-            <div className="flex flex-col items-center justify-center lg:justify-start">
+            <div className="flex flex-col items-center justify-center lg:justify-start gap-0.5">
               <Image
                 src={`/images/logo/footerlogo.png`}
                 width={200}
@@ -40,6 +40,14 @@ const Footer = () => {
                 {t("footer.companyName")}
               </p>
               <p className="text-xs">{t("footer.phone")} : +90-534-260-8385</p>
+              <div className=" text-xs ">
+                {t("ContactPage.address.street")},
+                {t("ContactPage.address.building")},
+                {t("ContactPage.address.number")},
+                {t("ContactPage.address.floor")},{t("ContactPage.address.city")}
+                ,{t("ContactPage.address.district")},
+                {t("ContactPage.address.country")}
+              </div>
             </div>
 
             {/* About Us */}

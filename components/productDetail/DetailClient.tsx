@@ -13,10 +13,11 @@ import { addToCart } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
-import NextSeoHead from "../utils/NextSeoHead";
+// import NextSeoHead from "../utils/NextSeoHead";
 import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
+// import Tabs from "./utils/ProductTabs/Tabs";
 
 const responsive = {
   superLargeDesktop: {
@@ -108,11 +109,11 @@ const DetailClient = ({ product }: productProps) => {
 
   return (
     <div className="container mx-auto  mt-10 md:mt-10  ">
-      <NextSeoHead
+      {/* <NextSeoHead
         name={product.name}
         description={product.description}
         image={product.colorSize[0].images[0]}
-      />
+      /> */}
 
       <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
@@ -522,6 +523,7 @@ const DetailClient = ({ product }: productProps) => {
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         />
       </div>
+      {/* {<Tabs description={product.description} />} */}
     </div>
   );
 };

@@ -40,6 +40,10 @@ function OrderPage() {
   // Sayfalama için gösterilecek siparişleri belirle
   const displayedOrders = orders.slice(first, first + rows);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className=" flex flex-col justify-center items-center w-full px-2   ">
       {/* Show message if there are no orders */}
@@ -50,11 +54,14 @@ function OrderPage() {
           <p className="text-gray-500">{t("ordersPage.startShopping")}</p>
         </div>
       ) : (
-        <div>
+        <div className="flex flex-col justify-center items-center gap-4">
           {/* Orders List */}
           {displayedOrders.map((order, index) => (
-            <div key={index} className=" border-y  w-full  ">
-              <div className="flex  justify-between items-center gap-1 mb-4 px-1 py-1">
+            <div
+              key={index}
+              className=" border flex flex-col rounded-lg  w-full shadow-sm  "
+            >
+              <div className="flex  justify-between items-center gap-1 mb-4 px-2 py-1 ">
                 <h3 className="text-base md:text-lg font-semibold">
                   {t("ordersPage.order")} #{order.paymentId}
                 </h3>
@@ -67,7 +74,9 @@ function OrderPage() {
                       : order.status === "FAILED"
                       ? "bg-red-500 text-mywhite"
                       : order.status === "CANCELED"
-                      ? "bg-gray-500 text-mywhite"
+                      ? "bg-orange-500 text-mywhite"
+                      : order.status === "PAY_AT_DOOR"
+                      ? "bg-yellow-500 text-mywhite"
                       : "bg-blue-500 text-mywhite"
                   }  px-2 rounded-md`}
                 >
@@ -76,7 +85,7 @@ function OrderPage() {
                     t("ordersPage.statuses.OTHER")}
                 </span>
               </div>
-              <div className="flex justify-between items-center  px-1">
+              <div className="flex justify-between items-center  px-2 border-b">
                 <div className="text-xs md:text-sm text-gray-500 mb-4">
                   <span className="font-semibold">
                     {t("ordersPage.orderDate")}
@@ -102,7 +111,7 @@ function OrderPage() {
                 {order.basketItems.map((product, index) => (
                   <div
                     key={index}
-                    className="flex gap-3 md:mb-6 p-2  rounded-lg w-full border "
+                    className="  flex gap-3 md:mb-6 p-2   w-full  border-b "
                   >
                     <div className="flex justify-between items-center  gap-2 w-full ">
                       <div className="flex gap-2 justify-center items-center ">
@@ -159,11 +168,11 @@ function OrderPage() {
                   </div>
                 ))}
 
-                <div className="w-full p-2 rounded-lg ">
-                  <h4 className="text-lg font-semibold mb-3 text-center border-b">
+                <div className="w-full  rounded-lg ">
+                  <h4 className="text-lg font-semibold mb-2 text-center ">
                     {t("ordersPage.shippingAddress")}
                   </h4>
-                  <div className="grid grid-cols-3  gap-4 text-sm text-gray-700 w-full">
+                  <div className="grid grid-cols-3 p-2 border-t  gap-4 text-sm text-gray-700 w-full">
                     <p className="capitalize">
                       <span className="font-semibold ">
                         {t("ordersPage.contactName")}:
@@ -196,10 +205,10 @@ function OrderPage() {
                       {order.shippingAddress.street}
                     </p>
                   </div>
-                  <div className=" my-2">
-                    <span className="font-semibold text-sm">
+                  <div className=" my-2 text-sm px-2">
+                    <span className="font-semibold text-sm mr-1">
                       {t("ordersPage.DetailAdres")}:
-                    </span>{" "}
+                    </span>
                     {order.shippingAddress.address}
                   </div>
                 </div>
@@ -214,6 +223,7 @@ function OrderPage() {
                 totalRecords={orders.length}
                 rowsPerPageOptions={[5, 10, 20]}
                 onPageChange={onPageChange}
+                onClick={scrollToTop}
               />
             </div>
           )}
