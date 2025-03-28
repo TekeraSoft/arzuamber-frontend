@@ -449,7 +449,7 @@
       "PAID": "Ödendi",
       "PENDING": "Beklemede",
       "FAILED": "Başarısız",
-      "CANCELED": "İptal Edildi",
+      "CANCELLED": "İptal Edildi",
       "OTHER": "Bilinmeyen Durum",
       "SHIPPED": "Kargoya verildi",
       "DELIVERED": "Teslim edildi",
