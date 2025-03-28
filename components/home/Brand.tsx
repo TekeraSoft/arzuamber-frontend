@@ -56,7 +56,7 @@ function Brand({
         <h2 className="text-sm md:text-4xl font-bold mb-2">{title}</h2>
         <p className="text-xs md:text-lg text-center mb-4">{description}</p>
         <Link href={link || `/products`}>
-          <button className="bg-secondary text-xs md:text-base text-white rounded-lg px-4 py-1">
+          <button className="bg-secondary text-xs md:text-base text-white rounded-lg px-4 py-1 hover:scale-105 transition duration-300">
             {buttonText || t("brand.buttonText")}
           </button>
         </Link>

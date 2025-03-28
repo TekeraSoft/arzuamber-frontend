@@ -6,7 +6,7 @@ function Map() {
   const t = useTranslations();
 
   return (
-    <div className="flex flex-col justify-center items-center w-full my-8 px-4">
+    <div className="flex flex-col justify-center items-center gap-3 w-full my-8 px-4">
       {/* Başlık */}
       <div className="flex items-center gap-1 animate__animated animate__fadeInDown">
         <FaMapMarkerAlt className="text-primary text-3xl" />
@@ -16,7 +16,7 @@ function Map() {
       </div>
 
       {/* Adres Bilgisi */}
-      <div className="text-sm md:text-lg text-gray-600 my-3 font-semibold text-center animate__animated animate__fadeInUp">
+      <div className="text-sm md:text-lg text-gray-600  font-semibold text-center animate__animated animate__fadeInUp">
         {t("ContactPage.address.street")},{t("ContactPage.address.building")},
         {t("ContactPage.address.number")},{t("ContactPage.address.floor")},
         {t("ContactPage.address.city")},{t("ContactPage.address.district")},

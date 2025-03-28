@@ -37,7 +37,7 @@ function Tabs({ description }) {
   ];
 
   return (
-    <div className="card mb-3">
+    <div className="mb-3">
       <TabView>
         {tabItems.map((tab) => (
           <TabPanel key={tab.key} header={tab.label}>

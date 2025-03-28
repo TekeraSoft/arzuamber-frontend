@@ -17,7 +17,7 @@ import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
-// import Tabs from "./utils/ProductTabs/Tabs";
+import Tabs from "./utils/ProductTabs/Tabs";
 
 const responsive = {
   superLargeDesktop: {
@@ -108,14 +108,14 @@ const DetailClient = ({ product }: productProps) => {
   }, [product]);
 
   return (
-    <div className="container mx-auto  mt-10 md:mt-10  ">
+    <div className="md:container md:mx-auto  mt-10 md:mt-5  ">
       {/* <NextSeoHead
         name={product.name}
         description={product.description}
         image={product.colorSize[0].images[0]}
       /> */}
 
-      <div className="flex flex-col lg:flex-row md:gap-x-7 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
+      <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
         <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 md:h-full ">
@@ -225,7 +225,7 @@ const DetailClient = ({ product }: productProps) => {
           </div>
         </div>
 
-        <div className=" w-full md:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg min-h-[800px] ">
+        <div className=" w-full md:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg md:min-h-[800px] mb-5 ">
           <div className="w-full flex flex-col  justify-between items-start  gap-2">
             <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full">
               {product.name}
@@ -480,7 +480,7 @@ const DetailClient = ({ product }: productProps) => {
             />
           </div>
 
-          <div className="mt-2">
+          {/* <div className="mt-2">
             <div className="col-span-full sm:col-span-2 lg:col-span-3">
               <h3 className="text-xl text-secondary font-semibold">
                 {t("productDetail.productDescription")}:
@@ -503,7 +503,7 @@ const DetailClient = ({ product }: productProps) => {
                   : t("productDetail.readLess")}
               </button>
             )}
-          </div>
+          </div> */}
         </div>
         <Lightbox
           open={isModalOpen}
@@ -523,7 +523,7 @@ const DetailClient = ({ product }: productProps) => {
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         />
       </div>
-      {/* {<Tabs description={product.description} />} */}
+      {<Tabs description={product.description} />}
     </div>
   );
 };
