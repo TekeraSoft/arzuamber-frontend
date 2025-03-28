@@ -19,7 +19,7 @@ export default function Home() {
 
   const CategoryBrand = dynamic(
     () => import("@/components/home/CategoryBrand"),
-    { ssr: false }
+    { ssr: false },
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Home() {
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}
             textSize="xl"
-            font="bold"
+            font="extrabold"
             center={true}
           />
           <ProductSlider />

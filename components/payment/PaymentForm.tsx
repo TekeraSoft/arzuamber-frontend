@@ -723,6 +723,13 @@ export default function PaymentForm() {
                           onClick={() => {
                             if (
                               values.buyer.name === "" ||
+                              values.buyer.surname === "" ||
+                              values.buyer.email === "" ||
+                              values.buyer.gsmNumber === "" ||
+                              values.shippingAddress?.city === "" ||
+                              values.shippingAddress?.state === "" ||
+                              values.shippingAddress?.street === "" ||
+                              values.shippingAddress?.address === "" ||
                               errors.buyer?.name ||
                               errors.buyer?.surname ||
                               errors.buyer?.email ||
