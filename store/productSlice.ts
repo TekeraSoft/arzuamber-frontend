@@ -13,6 +13,7 @@ export interface CartState {
   page: {};
   loading: boolean;
   colors: [];
+  FilteredProductsOnly: boolean;
 }
 
 const initialState: CartState = {
@@ -24,6 +25,7 @@ const initialState: CartState = {
   product: null,
   loading: false,
   colors: [],
+  FilteredProductsOnly: false,
 };
 
 export const productSlice = createSlice({
@@ -49,6 +51,9 @@ export const productSlice = createSlice({
     },
     getColors: (state, action) => {
       state.colors = action.payload;
+    },
+    setFilteredProductsOnly: (state, action) => {
+      state.FilteredProductsOnly = action.payload;
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -174,6 +179,7 @@ export const {
   getFilterProducts,
   getColors,
   getPopulateProducts,
+  setFilteredProductsOnly,
 } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -19,7 +19,7 @@ const Heading = ({
 }: HeadingProps) => {
   return (
     <div className="mt-7 mb-4 md:mb-8 flex items-center justify-center flex-col">
-      <div
+      <h3
         className={`px-3 md:px-10
           ${center ? "text-center" : "text-start"}
           ${hr ? "mb-5" : "mb-0"}
@@ -28,8 +28,8 @@ const Heading = ({
             font === "extrabold"
               ? "font-extrabold"
               : font === "semibold"
-              ? "font-semibold"
-              : "font-bold"
+                ? "font-semibold"
+                : "font-bold"
           }
           text-${textSize}
           
@@ -38,7 +38,7 @@ const Heading = ({
         `}
       >
         {text}
-      </div>
+      </h3>
       {hr ? (
         <hr
           className={`  text-center w-3/4 md:w-full

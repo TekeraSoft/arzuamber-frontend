@@ -42,7 +42,7 @@
     "checkItOut": "Hemen İncele!"
   },
   "HomePage": {
-    "sliderFeaturedTitle": "YENİ SEZON ÜRÜNLER",
+    "sliderFeaturedTitle": "RAMAZAN BAYRAMI'NA ÖZEL ÜRÜNLER",
     "sliderPopulateTitle": "ÖNE ÇIKAN ÜRÜNLER",
     "sliderAllProduct": "Tüm Ürünler"
   },
@@ -449,7 +449,7 @@
       "PAID": "Ödendi",
       "PENDING": "Beklemede",
       "FAILED": "Başarısız",
-      "CANCELED": "İptal Edildi",
+      "CANCELLED": "İptal Edildi",
       "OTHER": "Bilinmeyen Durum",
       "SHIPPED": "Kargoya verildi",
       "DELIVERED": "Teslim edildi",

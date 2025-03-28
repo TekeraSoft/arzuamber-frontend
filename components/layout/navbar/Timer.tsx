@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { setSpecialDayTimerStatus } from "@/store/generalSlice";
 import { FaBell, FaExclamationCircle } from "react-icons/fa"; // React Icons'dan ikon
-import { motion } from "framer-motion"; // Framer Motion
+import { motion } from "framer-motion";
+import { setFilteredProductsOnly } from "@/store/productSlice";
+import { Link } from "@/i18n/routing";
 
 function Timer() {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,6 +52,10 @@ function Timer() {
     return () => clearInterval(timer);
   }, [calculateTimeLeft]);
 
+  const timerFilterProcuts = () => {
+    dispatch(setFilteredProductsOnly(true));
+  };
+
   // Eğer status false ise, farklı bir topbar göstereceğiz.
   if (!specialDayTimerStatus) {
     return (
@@ -88,12 +94,16 @@ function Timer() {
   }
 
   return (
-    <div className="w-full flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 shadow-md">
+    <Link
+      href={"/products"}
+      onClick={() => timerFilterProcuts()}
+      className="w-full flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 shadow-md"
+    >
       <div className="navbarContainer flex justify-between items-center gap-4 px-2 md:px-4 text-center">
         {/* Kampanya Başlığı */}
-        <p className="bg-white text-primary px-4 py-1 rounded-md text-xs md:text-lg whitespace-nowrap font-semibold shadow-sm">
+        <h3 className="bg-white text-primary px-4 py-1 rounded-md text-xs md:text-lg whitespace-nowrap font-semibold shadow-sm">
           {discountTitle}
-        </p>
+        </h3>
 
         {/* Açıklama */}
         <p className=" hidden md:flex text-xs  opacity-80">
@@ -125,7 +135,7 @@ function Timer() {
           })}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

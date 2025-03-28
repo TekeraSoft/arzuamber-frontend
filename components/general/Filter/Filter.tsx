@@ -32,11 +32,13 @@ function Filter({
   const { categories, shortCategory } = useSelector(
     (state: RootState) => state.category,
   );
-  const { colors } = useSelector((state: RootState) => state.products);
+  const { colors, FilteredProductsOnly } = useSelector(
+    (state: RootState) => state.products,
+  );
   const { filterStatus } = useSelector((state: RootState) => state.search);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
 
-  const [initialCategory] = useState(slug || null);
+  const [initialCategory, setInitialCategory] = useState(slug || null);
 
   const [selectedFilters, setSelectedFilters] = useState({
     sizes: null,
@@ -44,7 +46,7 @@ function Filter({
     categories: initialCategory,
     lengths: null,
     sortDirection: null,
-    onlyDiscounted: false,
+    onlyDiscounted: FilteredProductsOnly ? true : false,
   });
 
   const handleCheckboxChange = (e) => {
@@ -566,13 +568,13 @@ function Filter({
           <div className="flex justify-start items-center gap-2">
             <input
               type="checkbox"
-              checked={selectedFilters.discountedProduct}
+              checked={selectedFilters.onlyDiscounted}
               onChange={handleCheckboxChange}
               className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
             />
             <label
               className={`font-medium text-sm ${
-                selectedFilters.discountedProduct == true
+                selectedFilters.onlyDiscounted == true
                   ? "text-primary font-bold"
                   : "text-gray-500 font-thin"
               }`}

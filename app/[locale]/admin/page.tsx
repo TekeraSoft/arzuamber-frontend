@@ -142,7 +142,7 @@ function AdminPage() {
           )}
         />
         <Column
-          header={"Payment Status"}
+          header={"Created At"}
           body={(data) => (
             <span>
               {format(data.createdAt, "dd.MM.yyyy | HH:mm:ss", { locale: tr })}

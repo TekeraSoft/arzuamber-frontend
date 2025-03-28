@@ -54,61 +54,24 @@ export default function PaymentForm() {
   const t = useTranslations();
   const { data: session } = useSession();
 
-  const [formValues, setFormValues] = useState<PaymentFormValues>({
-    paymentCard: {
-      cardHolderName: "",
-      cardNumber: "",
-      expireMonth: "",
-      expireYear: "",
-      cvc: "",
-    },
-    buyer: {
-      id: Math.random().toString(36).substring(2, 15),
-      name: session?.user?.name ? session.user.name.split(" ")[0] : "",
-      surname: session?.user?.name ? session.user.name.split(" ")[1] : "",
-      gsmNumber: session?.user?.phoneNumber || "",
-      email: session?.user?.email || "",
-      identityNumber: "55555555555",
-      ip: "",
-      lastLoginDate: "2024-03-25 20:28:29",
-      registrationDate: "2024-03-25 20:28:29",
-    },
-    shippingAddress: {
-      city: "",
-      state: "",
-      country: "Turkey",
-      address: session?.user?.address || "",
-      street: "",
-      zipCode: "",
-    },
-    billingAddress: {
-      city: "",
-      state: "",
-      country: "Turkey",
-      address: "",
-      street: "",
-      zipCode: "",
-    },
-  });
-
-  useEffect(() => {
-    if (session?.user) {
-      setFormValues((prev) => ({
-        ...prev,
-        buyer: {
-          ...prev.buyer,
-          name: session.user.name ? session.user.name.split(" ")[0] : "",
-          surname: session.user.name ? session.user.name.split(" ")[1] : "",
-          gsmNumber: session.user.phoneNumber || "",
-          email: session.user.email || "",
-        },
-        shippingAddress: {
-          ...prev.shippingAddress,
-          address: session.user.address || "",
-        },
-      }));
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     setFormValues((prev) => ({
+  //       ...prev,
+  //       buyer: {
+  //         ...prev.buyer,
+  //         name: session.user.name ? session.user.name.split(" ")[0] : "",
+  //         surname: session.user.name ? session.user.name.split(" ")[1] : "",
+  //         gsmNumber: session.user.phoneNumber || "",
+  //         email: session.user.email || "",
+  //       },
+  //       shippingAddress: {
+  //         ...prev.shippingAddress,
+  //         address: session.user.address || "",
+  //       },
+  //     }));
+  //   }
+  // }, [session]);
 
   useEffect(() => {
     fetch("https://api.ipify.org?format=json")
@@ -170,82 +133,147 @@ export default function PaymentForm() {
     }
   }, [threeDsModal]);
 
-  const handleSubmitPayAtDoor = () => {
-    dispatch(
-      createPayAtDoor(
-        {
-          shippingAddress: {
-            ...formValues.shippingAddress,
-            contactName: formValues.buyer.name,
+  const handleSubmitPayAtDoor = (values) => {
+    console.log({
+      shippingAddress: {
+        ...values.shippingAddress,
+        contactName: values.buyer.name,
+      },
+      billingAddress: openBillingAddress
+        ? {
+            ...values.billingAddress,
+            contactName: values.buyer.name,
+          }
+        : {
+            ...values.shippingAddress,
+            contactName: values.buyer.name,
           },
-          billingAddress: openBillingAddress
-            ? {
-                ...formValues.billingAddress,
-                contactName: formValues.buyer.name,
-              }
-            : {
-                ...formValues.shippingAddress,
-                contactName: formValues.buyer.name,
-              },
-          buyer: {
-            ...formValues.buyer,
-            ip: ip,
-            registrationAddress: formValues.shippingAddress.address,
-            city: formValues.shippingAddress.city,
-            country: formValues.shippingAddress.country,
-          },
-          basketItems: basketItems,
-          shippingPrice:
-            total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
-        },
-        router,
-      ),
-    );
+      buyer: {
+        ...values.buyer,
+        ip: ip,
+        registrationAddress: values.shippingAddress.address,
+        city: values.shippingAddress.city,
+        country: values.shippingAddress.country,
+      },
+      basketItems: basketItems,
+      shippingPrice:
+        total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
+    });
+    // dispatch(
+    //   createPayAtDoor(
+    //     {
+    //       shippingAddress: {
+    //         ...values.shippingAddress,
+    //         contactName: values.buyer.name,
+    //       },
+    //       billingAddress: openBillingAddress
+    //         ? {
+    //             ...values.billingAddress,
+    //             contactName: values.buyer.name,
+    //           }
+    //         : {
+    //             ...values.shippingAddress,
+    //             contactName: values.buyer.name,
+    //           },
+    //       buyer: {
+    //         ...values.buyer,
+    //         ip: ip,
+    //         registrationAddress: values.shippingAddress.address,
+    //         city: values.shippingAddress.city,
+    //         country: values.shippingAddress.country,
+    //       },
+    //       basketItems: basketItems,
+    //       shippingPrice:
+    //         total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
+    //     },
+    //     router,
+    //   ),
+    // );
   };
 
   const _handleSubmit = async (values) => {
     setLoading(true);
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`, {
-        ...values,
-        shippingAddress: {
-          ...values.shippingAddress,
-          contactName: values.buyer.name,
-        },
-        billingAddress: openBillingAddress
-          ? { ...values.billingAddress, contactName: values.buyer.name }
-          : { ...values.shippingAddress, contactName: values.buyer.name },
-        buyer: {
-          ...values.buyer,
-          ip: ip,
-          registrationAddress: values.shippingAddress.address,
-          city: values.shippingAddress.city,
-          country: values.shippingAddress.country,
-        },
-        paymentCard: {
-          ...values.paymentCard,
-          cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
-        },
-        basketItems: basketItems,
-        shippingPrice:
-          total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
-      })
-      .then((res) => {
-        if (res.data.status === "success") {
+    if (paymentType === "CREDIT_CARD") {
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/order/pay`, {
+          ...values,
+          shippingAddress: {
+            ...values.shippingAddress,
+            contactName: values.buyer.name,
+          },
+          billingAddress: openBillingAddress
+            ? { ...values.billingAddress, contactName: values.buyer.name }
+            : { ...values.shippingAddress, contactName: values.buyer.name },
+          buyer: {
+            ...values.buyer,
+            ip: ip,
+            registrationAddress: values.shippingAddress.address,
+            city: values.shippingAddress.city,
+            country: values.shippingAddress.country,
+          },
+          ...(paymentType === "CREDIT_CARD" && {
+            paymentCard: {
+              ...values.paymentCard,
+              cardNumber: values.paymentCard.cardNumber.replace(/\D/g, ""),
+            },
+          }),
+          basketItems: basketItems,
+          shippingPrice:
+            total > filterData.maxShippingPrice ? 0 : filterData.shippingPrice,
+        })
+        .then((res) => {
+          if (res.data.status === "success") {
+            setLoading(false);
+            setThreeDsModal(res.data.htmlContent);
+          } else {
+            toast.error(res.data.errorMessage);
+          }
+        })
+        .catch((err) => {
           setLoading(false);
-          setThreeDsModal(res.data.htmlContent);
-        } else {
-          toast.error(res.data.errorMessage);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err.response.data);
-      })
-      .finally(() => setLoading(false));
+          toast.error(err.response.data);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      dispatch(
+        createPayAtDoor(
+          {
+            shippingAddress: {
+              ...values.shippingAddress,
+              contactName: values.buyer.name,
+            },
+            billingAddress: openBillingAddress
+              ? {
+                  ...values.billingAddress,
+                  contactName: values.buyer.name,
+                }
+              : {
+                  ...values.shippingAddress,
+                  contactName: values.buyer.name,
+                },
+            buyer: {
+              ...values.buyer,
+              ip: ip,
+              registrationAddress: values.shippingAddress.address,
+              city: values.shippingAddress.city,
+              country: values.shippingAddress.country,
+            },
+            basketItems: basketItems,
+            shippingPrice:
+              total > filterData.maxShippingPrice
+                ? 0
+                : filterData.shippingPrice,
+          },
+          router,
+        ),
+      );
+    }
   };
 
-  const validationSchema = useOrderValidationSchema(openBillingAddress);
+  const validationSchema = useOrderValidationSchema(
+    openBillingAddress,
+    paymentType,
+  );
 
   const handleOpenModal = (title: string, content: string) => {
     dispatch(openDynamicModal({ title, content }));
@@ -287,9 +315,45 @@ export default function PaymentForm() {
     <div className="flex flex-col  gap-2 py-3 ">
       <>
         <FormStepper step={step} type={paymentType} />
-        <Formik<PaymentFormValues>
-          enableReinitialize
-          initialValues={formValues}
+        <Formik
+          initialValues={{
+            paymentCard: {
+              cardHolderName: "",
+              cardNumber: "",
+              expireMonth: "",
+              expireYear: "",
+              cvc: "",
+            },
+            buyer: {
+              id: Math.random().toString(36).substring(2, 15),
+              name: session?.user?.name ? session.user.name.split(" ")[0] : "",
+              surname: session?.user?.name
+                ? session.user.name.split(" ")[1]
+                : "",
+              gsmNumber: session?.user?.phoneNumber || "",
+              email: session?.user?.email || "",
+              identityNumber: "55555555555",
+              ip: "",
+              lastLoginDate: "2024-03-25 20:28:29",
+              registrationDate: "2024-03-25 20:28:29",
+            },
+            shippingAddress: {
+              city: "",
+              state: "",
+              country: "Turkey",
+              address: session?.user?.address || "",
+              street: "",
+              zipCode: "",
+            },
+            billingAddress: {
+              city: "",
+              state: "",
+              country: "Turkey",
+              address: "",
+              street: "",
+              zipCode: "",
+            },
+          }}
           onSubmit={_handleSubmit}
           validationSchema={validationSchema}
         >
@@ -659,6 +723,13 @@ export default function PaymentForm() {
                           onClick={() => {
                             if (
                               values.buyer.name === "" ||
+                              values.buyer.surname === "" ||
+                              values.buyer.email === "" ||
+                              values.buyer.gsmNumber === "" ||
+                              values.shippingAddress?.city === "" ||
+                              values.shippingAddress?.state === "" ||
+                              values.shippingAddress?.street === "" ||
+                              values.shippingAddress?.address === "" ||
                               errors.buyer?.name ||
                               errors.buyer?.surname ||
                               errors.buyer?.email ||
@@ -1098,10 +1169,9 @@ export default function PaymentForm() {
                           Bilgileri Düzenle
                         </Button>
                         <Button
-                          onClick={() => handleSubmitPayAtDoor()}
-                          loading={orderLoading}
-                          disabled={orderLoading || isButtonDisabled}
-                          type={"button"}
+                          loading={loading}
+                          disabled={loading || isButtonDisabled}
+                          type={"submit"}
                           className={"flex justify-center w-full !font-bold"}
                         >
                           SİPARİŞİ TAMAMLA
