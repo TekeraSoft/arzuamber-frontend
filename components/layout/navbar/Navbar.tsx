@@ -134,7 +134,7 @@ function Navbar() {
 
             <li
               className={
-                "  text-secondary  flex justify-center items-center  z-50  "
+                "  text-secondary  flex justify-center items-center relative  z-50  "
               }
             >
               {!session ? (
@@ -158,7 +158,7 @@ function Navbar() {
                       <span> {t("menuItems.signup")}</span>
                     </div>
                     {loginRegisterMenu == true && (
-                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-20 border rounded-md top-full  px-0.5  py-1">
+                      <div className="absolute flex flex-col justify-center items-center gap-1  bg-gray-50 w-20 border rounded-md  px-0.5  py-1">
                         <span
                           className="w-full text-xs md:text-sm hover:bg-secondary hover:text-mywhite rounded-md "
                           onClick={() => {
@@ -208,7 +208,7 @@ function Navbar() {
               <span
                 className={`${
                   openUserDropdown ? "block" : "hidden"
-                } flex flex-col border rounded absolute  top-6  w-20  bg-white`}
+                } flex flex-col border rounded absolute  top-5   w-20  bg-white`}
                 onMouseEnter={() => setOpenUserDropdown(true)}
                 onMouseLeave={() => setOpenUserDropdown(false)}
               >

@@ -6,7 +6,7 @@ import { Product } from "@/types";
 import { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { addToCart } from "@/store/cartSlice";
@@ -17,7 +17,8 @@ import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
-import Tabs from "./utils/ProductTabs/Tabs";
+import OrderButtons from "./utils/OrderButtons";
+// import Tabs from "./utils/ProductTabs/Tabs";
 
 const responsive = {
   superLargeDesktop: {
@@ -118,7 +119,7 @@ const DetailClient = ({ product }: productProps) => {
       <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
         {/* Image Section with Carousel */}
 
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 md:h-full ">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 md:h-full ">
           <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
@@ -225,7 +226,7 @@ const DetailClient = ({ product }: productProps) => {
           </div>
         </div>
 
-        <div className=" w-full md:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-1 rounded-lg md:min-h-[800px] mb-5 ">
+        <div className=" w-full md:w-4/6 lg:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-2 rounded-lg md:min-h-[800px] mb-5 ">
           <div className="w-full flex flex-col  justify-between items-start  gap-2">
             <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full">
               {product.name}
@@ -433,42 +434,53 @@ const DetailClient = ({ product }: productProps) => {
             />
           </span>
 
-          <div className="flex justify-start items-center gap-2 h-12">
-            <Button
-              loading={loading}
-              onClick={() => {
-                if (!stateProduct.size) {
-                  setErrorState({ ...errorState, sizeError: true });
-                  toast.error(t("productDetail.sizeError"));
-                } else {
-                  dispatch(
-                    addToCart({
-                      id: product.id,
-                      name: product.name,
-                      category1: product.category,
-                      category2: product.subCategory,
-                      color: stateProduct.color,
-                      image: stockSizeState?.images[0],
-                      size: stateProduct.size,
-                      stockSizeId: stateProduct?.stockSizeId,
-                      stockCode: stockSizeState?.stockCode,
-                      quantity: stateProduct.quantity,
-                      price:
-                        product.discountPrice !== 0 && product.discountPrice
-                          ? product.discountPrice
-                          : product.price,
-                    })
-                  );
-                  toast.success(t("productDetail.productAddedCartSuccess"));
-                  openCart();
+          <div className="flex flex-col justify-start items-start gap-2 ">
+            <div className="w-full flex justify-center items-center gap-5">
+              <Button
+                loading={loading}
+                onClick={() => {
+                  if (!stateProduct.size) {
+                    setErrorState({ ...errorState, sizeError: true });
+                    toast.error(t("productDetail.sizeError"));
+                  } else {
+                    dispatch(
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        category1: product.category,
+                        category2: product.subCategory,
+                        color: stateProduct.color,
+                        image: stockSizeState?.images[0],
+                        size: stateProduct.size,
+                        stockSizeId: stateProduct?.stockSizeId,
+                        stockCode: stockSizeState?.stockCode,
+                        quantity: stateProduct.quantity,
+                        price:
+                          product.discountPrice !== 0 && product.discountPrice
+                            ? product.discountPrice
+                            : product.price,
+                      })
+                    );
+                    toast.success(t("productDetail.productAddedCartSuccess"));
+                    openCart();
+                  }
+                }}
+                className={
+                  "!bg-secondary h-12 w-10/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  transition-all duration-300"
                 }
-              }}
-              className={
-                "!bg-secondary h-12 w-3/4 !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85  transition-all duration-300"
-              }
-            >
-              {t("productDetail.productAddCart")}
-            </Button>
+              >
+                {t("productDetail.productAddCart")}
+              </Button>
+              <button className="  w-2/12  flex justify-center items-center  border border-secondary  h-12 rounded-lg bg-secondary hover:scale-105 hover:opacity-85 transition duration-300 ">
+                <FaHeart className="  text-black" />
+              </button>
+            </div>
+            <OrderButtons
+              productName={product.name}
+              productLink={product.slug}
+              productColor={stateProduct.color}
+              productSize={stateProduct.size}
+            />
           </div>
 
           <div className="w-full flex  justify-center items-center">
@@ -480,7 +492,7 @@ const DetailClient = ({ product }: productProps) => {
             />
           </div>
 
-          {/* <div className="mt-2">
+          <div className="mt-2">
             <div className="col-span-full sm:col-span-2 lg:col-span-3">
               <h3 className="text-xl text-secondary font-semibold">
                 {t("productDetail.productDescription")}:
@@ -503,7 +515,7 @@ const DetailClient = ({ product }: productProps) => {
                   : t("productDetail.readLess")}
               </button>
             )}
-          </div> */}
+          </div>
         </div>
         <Lightbox
           open={isModalOpen}
@@ -523,7 +535,7 @@ const DetailClient = ({ product }: productProps) => {
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         />
       </div>
-      {<Tabs description={product.description} />}
+      {/* {<Tabs description={product.description} />} */}
     </div>
   );
 };
