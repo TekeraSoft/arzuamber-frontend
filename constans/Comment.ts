@@ -7,7 +7,6 @@ export const comments = [
     productImages: [
       "https://res.cloudinary.com/dgoothqal/image/upload/v1737120070/3_dmvmig.webp",
       "https://res.cloudinary.com/dgoothqal/image/upload/v1737120072/4_nuwp0q.webp",
-      "https://res.cloudinary.com/dgoothqal/image/upload/v1737120069/2_gfa1mp.webp",
     ],
   },
   {
@@ -17,8 +16,6 @@ export const comments = [
     createdAt: new Date("2025-03-21T09:10:00").toISOString(),
     productImages: [
       "https://res.cloudinary.com/dgoothqal/image/upload/v1737120070/3_dmvmig.webp",
-      "https://res.cloudinary.com/dgoothqal/image/upload/v1737120072/4_nuwp0q.webp",
-      "https://res.cloudinary.com/dgoothqal/image/upload/v1737120069/2_gfa1mp.webp",
     ],
   },
   {

@@ -414,6 +414,7 @@ function Navbar() {
 
         {/* Mobile Menu */}
       </nav>
+
       <div className="flex flex-col justify-center items-center w-full border-t">
         <div
           className="bg-black bg-opacity-40 w-full"

@@ -41,10 +41,10 @@ function Comments() {
   return (
     <div className=" w-full mx-auto md:p-4">
       <div className="space-y-4">
-        {comments.map((comment) => (
+        {comments.map((comment, index) => (
           <div
-            key={comment.id}
-            className="flex flex-col bg-white rounded-lg shadow-md gap-4 px-4 py-1.5"
+            key={index}
+            className="flex flex-col bg-white rounded-lg  gap-4 px-4 py-1.5 border"
           >
             <div className="flex flex-row justify-between items-start gap-3">
               <div className="flex flex-col items-start justify-start gap-3 w-full">
@@ -56,8 +56,8 @@ function Comments() {
                           <Image
                             src={image}
                             alt={`Ürün Resmi ${index + 1}`}
-                            width={50}
-                            height={50}
+                            width={60}
+                            height={60}
                             className="rounded-md shadow-sm cursor-pointer border hover:border-black transition duration-500"
                             onClick={() => {
                               setPhotoIndex(index);
@@ -70,11 +70,16 @@ function Comments() {
                 )}
 
                 <div className="flex flex-col w-full">
-                  <div className="font-semibold text-gray-800">
-                    {comment.author}
+                  <div className="flex justify-start items-center gap-4">
+                    <p className="font-semibold text-gray-800">
+                      {comment.author}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </p>
                   </div>
                   <p
-                    className={`text-secondary text-base ${
+                    className={`text-gray-500 text-base ${
                       lineClamp ? "line-clamp-3" : "line-clamp-none"
                     }`}
                   >
@@ -90,9 +95,6 @@ function Comments() {
                         : t("productDetail.readLess")}
                     </button>
                   )}
-                  <div className="text-xs text-gray-400 mt-1">
-                    {new Date(comment.createdAt).toLocaleString()}
-                  </div>
                 </div>
               </div>
 
@@ -100,7 +102,7 @@ function Comments() {
                 <button
                   id={`delete-btn-${comment.id}`}
                   className="bg-red-500 border-none text-white p-2 rounded-md hover:opacity-85 transition-all"
-                  onClick={() => handleOpenPopUpModal(comment.id)}
+                  onClick={() => handleOpenPopUpModal()}
                 >
                   <IoMdClose />
                 </button>
@@ -110,10 +112,12 @@ function Comments() {
                   <ConfirmDialog
                     visible={popUpModal}
                     onHide={() => setPopUpModal(false)}
-                    message="Are you sure you want to delete this comment?"
+                    message="Bu yorumu silmek istediğinizden emin misiniz ?"
                     accept={handleDelete.bind(null, comment.id)}
                     reject={() => setPopUpModal(false)}
-                    header="Confirm Delete"
+                    header="Yorumu Sil"
+                    acceptLabel="Evet"
+                    rejectLabel="Hayır"
                   />
                 )}
               </div>
@@ -140,6 +144,9 @@ function Comments() {
         on={{ view: updateIndex }}
         animation={{ fade: 0 }}
         controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
+        styles={{
+          container: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+        }}
       />
     </div>
   );

@@ -21,18 +21,18 @@ function ProductDescriptions({ description }: { description: string }) {
   }
 
   return (
-    <div>
+    <div className="bg-white rounded-lg ">
       <p
         className={`text-secondary text-base ${
           lineClamp ? "line-clamp-3" : "line-clamp-none"
-        }`}
+        } mb-3`}
       >
         {description}
       </p>
       {description.length > 250 && (
         <button
           onClick={toggleClamp}
-          className="text-secondary font-semibold text-end mt-1 hover:underline"
+          className="text-secondary font-semibold mt-1 hover:underline focus:outline-none"
         >
           {lineClamp
             ? t("productDetail.readMore")

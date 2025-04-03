@@ -14,6 +14,9 @@ import Script from "next/script";
 export const metadata = {
   title: "Arzu Amber",
   description: "ARZUAMBER",
+  alternates: {
+    canonical: "https://www.arzuamber.com/",
+  },
   openGraph: {
     title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
     description:
@@ -22,7 +25,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+        url: "https://res.cloudinary.com/dgoothqal/image/upload/v1743583349/link_g%C3%B6rsel_ndu2ez.jpg",
         width: 1200,
         height: 630,
         alt: "ArzuAmber Logo",
@@ -30,9 +33,9 @@ export const metadata = {
     ],
   },
   twitter: {
-    card: "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+    card: "https://res.cloudinary.com/dgoothqal/image/upload/v1743583349/link_g%C3%B6rsel_ndu2ez.jpg",
     image:
-      "https://res.cloudinary.com/dgoothqal/image/upload/v1742384766/Arzu_Amber_Yeni_Logolar_nfchtb.png",
+      "https://res.cloudinary.com/dgoothqal/image/upload/v1743583349/link_g%C3%B6rsel_ndu2ez.jpg",
     title: "ArzuAmber | Moda, Butik ve Şıklıkta Son Trendler",
     description:
       "Kadın giyim ve butik modasında trendleri yakalayın. ArzuAmber Butik ile tarzınızı keşfedin!",

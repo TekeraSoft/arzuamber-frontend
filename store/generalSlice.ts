@@ -43,7 +43,7 @@ const initialState: GeneralState = {
   specialDayTimer: {
     discountTitle: "Bayram İndirimi Başladı!",
     discountDescription: "Kaçırmayın! Bu fırsat kısa süreliğine geçerli 🎉",
-    discountEndTime: new Date("2025-04-03T00:00:00").getTime(),
+    discountEndTime: new Date("2025-04-03T10:28:00").getTime(),
     specialDayTimerStatus: true,
   },
 };

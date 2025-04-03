@@ -52,7 +52,7 @@ function HelpPage() {
                     <AccordionTab
                       key={q.id}
                       header={q.question}
-                      className="text-xs md:text-sm"
+                      className="text-[10px] md:text-sm"
                     >
                       <p className="text-start text-xs md:text-sm">
                         {q.answer}

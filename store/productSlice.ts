@@ -4,7 +4,14 @@ import { getGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
 import { comments } from "@/constans/Comment";
 
-// Sepet Tipi
+export interface Comment {
+  id: number;
+  author: string;
+  text: string;
+  createdAt: string;
+  productImages: string[];
+}
+
 export interface CartState {
   products: Product[];
   newSeasonProducts: Product[];

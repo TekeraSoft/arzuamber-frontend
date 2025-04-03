@@ -100,7 +100,7 @@ function HowToBuyModal() {
               alt={`Image ${currentImageIndex + 1}`}
               fill
               className="rounded-lg object-cover w-auto h-auto"
-              layout="fill"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
 

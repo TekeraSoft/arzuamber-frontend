@@ -32,7 +32,6 @@ function Timer() {
         seconds: Math.floor((difference / 1000) % 60),
       };
     } else {
-      dispatch(setSpecialDayTimerStatus(true));
       return {
         days: 0,
         hours: 0,
@@ -40,9 +39,21 @@ function Timer() {
         seconds: 0,
       };
     }
-  }, [discountEndTime, dispatch]);
+  }, [discountEndTime]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  // Eğer süre bittiyse, Redux state'i değiştirmek için ayrı bir useEffect kullan
+  useEffect(() => {
+    if (
+      timeLeft.days === 0 &&
+      timeLeft.hours === 0 &&
+      timeLeft.minutes === 0 &&
+      timeLeft.seconds === 0
+    ) {
+      dispatch(setSpecialDayTimerStatus(false));
+    }
+  }, [timeLeft, dispatch]);
 
   useEffect(() => {
     const timer = setInterval(() => {

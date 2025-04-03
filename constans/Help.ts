@@ -9,7 +9,7 @@ export const helpItems = [
         id: 101,
         question: "Siparişimi nasıl takip ederim?",
         answer:
-          "Siparişinizin durumunu;\n\n- Üye girişi yaptıktan sonra, ana sayfada sağ üst köşede bulunan hesabım ikonuna tıklayarak; 'Siparişlerim' bölümünden,\n\n- Ana sayfada bulunan 'Kargom Nerede' butonuna tıklayarak,\n\n- Siparişiniz kargo firmasına teslim edildiğinde size gönderilecek e-posta ve SMS bilgilendirmelerinde yer alan 'Kargo Takip Kodu’nuzla birlikte ilgili kargo firmasıyla iletişime geçerek veya websitesini ziyaret ederek,\n\nöğrenebilirsiniz...",
+          "Siparişinizin durumunu;\n\n- Üye girişi yaptıktan sonra, ana sayfada sağ üst köşede bulunan hesabım ikonuna tıklayarak; 'Siparişlerim' bölümünden,\n\n- butonuna tıklayarak,\n\n- Siparişiniz kargo firmasına teslim edildiğinde size gönderilecek e-posta ve SMS bilgilendirmelerinde yer alan 'Kargo Takip Kodu’nuzla birlikte ilgili kargo firmasıyla iletişime geçerek veya websitesini ziyaret ederek,\n\nöğrenebilirsiniz...",
       },
       {
         id: 102,
@@ -20,13 +20,13 @@ export const helpItems = [
         id: 103,
         question: "Değişim ve İade politika ve prosedürleriniz nelerdir?",
         answer:
-          "Arzuamber müşterisiyseniz değerlisiniz çünkü müşterilerimizin memnuniyeti ve beklentileri bizim için önemlidir bu nedenle değişim ve iade güvenceniz bulunmaktadır. Herhangi bir nedenle siparişinizden memnun kalmazsanız, satın aldığınız ürün ya da ürünlerinizi, orijinal ambalajında, kullanılmamış ve etiketleri çıkarılmamış olması koşuluyla teslim aldığınız tarihten itibaren 14 gün içinde değişim ve iade işlemi için geri gönderebilirsiniz. \n\nDeğişim işlemleriniz için gönderdiğiniz ürünün faturadaki satın alım fiyatı kadar hesabınıza bakiye tanımlanır. Bakiyeniz ile tekrardan sipariş verebilirsiniz. İade işlemlerinde, siparişin size ulaşması için kargo firmasına ödenen kargo bedeli iade edilememektedir.\n\nİade sürecinizi, hesabınıza giriş yaptıktan sonra 'İade Taleplerim' alanından ilgili siparişe ulaşarak veya anasayfada bulunan 'Kolay İade' sayfamızı ziyaret ederek gerçekleştirebilirsiniz. İade işlemlerinizde bu sayfadan alacağınız iade kodu ile kargonuzu 'Sürat Kargo' aracılığıyla ücretsiz olarak gönderebilirsiniz. Değişim veya iade kargonuzu başka bir kargo firması ile göndermek isterseniz kargo ücretinin sizin tarafınızdan karşılanması gerektiğini unutmayınız.\n\nTürkiye’den yapacağınız değişim ve iade gönderilerinde Sürat Kargo'yu tercih ederseniz gönderim ücreti alınmamaktadır. Yurtdışından verdiğiniz siparişlerinizin değişim ve iade işlemleri tarafınıza aittir. Etiketi koparılmış, kullanılmış, tekrar satışa sunulamayacak şekilde zarar görmüş ürünlerin değişim ve iade işlemi gerçekleştirilememektedir.",
+          "Arzuamber müşterisiyseniz değerlisiniz çünkü müşterilerimizin memnuniyeti ve beklentileri bizim için önemlidir bu nedenle değişim ve iade güvenceniz bulunmaktadır. Herhangi bir nedenle siparişinizden memnun kalmazsanız, satın aldığınız ürün ya da ürünlerinizi, orijinal ambalajında, kullanılmamış ve etiketleri çıkarılmamış olması koşuluyla teslim aldığınız tarihten itibaren 15 gün içinde değişim ve iade işlemi için geri gönderebilirsiniz. \n\nDeğişim işlemleriniz için gönderdiğiniz ürünün faturadaki satın alım fiyatı kadar hesabınıza bakiye tanımlanır. Bakiyeniz ile tekrardan sipariş verebilirsiniz. İade işlemlerinde, siparişin size ulaşması için kargo firmasına ödenen kargo bedeli iade edilememektedir.\n\nİade sürecinizi, hesabınıza giriş yaptıktan sonra 'İade Taleplerim' alanından ilgili siparişe ulaşarak veya anasayfada bulunan 'Kolay İade' sayfamızı ziyaret ederek gerçekleştirebilirsiniz. İade işlemlerinizde bu sayfadan alacağınız iade kodu ile kargonuzu 'MNG Kargo' aracılığıyla ücretsiz olarak gönderebilirsiniz. Değişim veya iade kargonuzu başka bir kargo firması ile göndermek isterseniz kargo ücretinin sizin tarafınızdan karşılanması gerektiğini unutmayınız.\n\nTürkiye’den yapacağınız değişim ve iade gönderilerinde MNG Kargo'yu tercih ederseniz gönderim ücreti alınmamaktadır. Yurtdışından verdiğiniz siparişlerinizin değişim ve iade işlemleri tarafınıza aittir. Etiketi koparılmış, kullanılmış, tekrar satışa sunulamayacak şekilde zarar görmüş ürünlerin değişim ve iade işlemi gerçekleştirilememektedir.",
       },
       {
         id: 104,
         question: "Kapıda ödeme yapabilir miyim?",
         answer:
-          "Rahat ve kolay bir şekilde alışverişinizi hızlıca tamamlamanız için Kapıda Nakit ve Kapıda Kartlı ödeme hizmetimiz bulunmaktadır. Türkiye'nin her yerine Kapıda Ödemeli gönderim yapmaktayız.\n\n*Kapıda ödeme hizmeti Sürat Kargo ile vereceğiniz siparişlerinizde geçerlidir ve 24,99 TL tutarında hizmet bedeli talep edilmektedir.",
+          "Rahat ve kolay bir şekilde alışverişinizi hızlıca tamamlamanız için Kapıda Nakit ve Kapıda Kartlı ödeme hizmetimiz bulunmaktadır. Türkiye'nin her yerine Kapıda Ödemeli gönderim yapmaktayız.\n\n*Kapıda ödeme hizmeti MNG Kargo ile vereceğiniz siparişlerinizde geçerlidir.",
       },
       {
         id: 105,
@@ -171,7 +171,7 @@ export const helpItems = [
       {
         id: 1,
         question: "Kapıda ödeme seçeneğiniz var mı?",
-        answer: `Elbette, kapıda ödeme seçeneği müşterilerimize sunuyoruz. Rahat ve kolay bir şekilde alışverişinizi hızlıca tamamlamanız için 'Kapıda Nakit ve Kapıda Kartlı' ödeme hizmetimizi tercih edebilirsiniz. Türkiye'nin her yerine Kapıda Ödemeli gönderim yapmaktayız. Kapıda ödeme hizmetimiz Sürat Kargo ile vereceğiniz siparişlerinizde geçerlidir ve kargo firması tarafından 24,99 TL tutarında hizmet bedeli talep edilmektedir.`,
+        answer: `Elbette, kapıda ödeme seçeneği müşterilerimize sunuyoruz. Rahat ve kolay bir şekilde alışverişinizi hızlıca tamamlamanız için 'Kapıda Nakit ve Kapıda Kartlı' ödeme hizmetimizi tercih edebilirsiniz. Türkiye'nin her yerine Kapıda Ödemeli gönderim yapmaktayız. Kapıda ödeme hizmetimiz MNG Kargo ile vereceğiniz siparişlerinizde geçerlidir ve kargo firması tarafından 24,99 TL tutarında hizmet bedeli talep edilmektedir.`,
       },
       {
         id: 2,
@@ -234,7 +234,7 @@ export const helpItems = [
       {
         id: 8,
         question: "Hangi kargo firmalarıyla çalışıyorsunuz?",
-        answer: `Türkiye gönderilerimizde sözleşmeli olduğumuz kargo firmalarımız:\n\n-Sürat Kargo\n-Kargoist\n-Scotty\n-Sendeo\n-Cartell Kargo (Aynı gün teslimat servis ücreti 49.99 TL'dir)`,
+        answer: `Türkiye gönderilerimizde sözleşmeli olduğumuz kargo firmalarımız:\n\n-MNG Kargo\n-Kargoist\n-Scotty\n-Sendeo\n-Cartell Kargo (Aynı gün teslimat servis ücreti 49.99 TL'dir)`,
       },
       {
         id: 9,
@@ -264,7 +264,7 @@ export const helpItems = [
         id: 3,
         question: "Değişim ve İade kargo masraflarını ben mi ödeyeceğim?",
         answer:
-          "'Kolay İade' sayfasından alacağınız iade kodu ile kargonuzu 'Sürat Kargo' aracılığıyla ücretsiz olarak gönderebilirsiniz. Değişim veya iade kargonuzu başka bir kargo firması ile göndermek isterseniz kargo ücretinin sizin tarafınızdan karşılanması gerektiğini unutmayınız. Yurt dışından verdiğiniz siparişlerinizin değişim ve iade işlemleri tarafınıza aittir. Etiketi koparılmış, kullanılmış, tekrar satışa sunulamayacak şekilde zarar görmüş ürünlerin değişim ve iade işlemi gerçekleştirilmemektedir.",
+          "'Kolay İade' sayfasından alacağınız iade kodu ile kargonuzu 'MNG Kargo' aracılığıyla ücretsiz olarak gönderebilirsiniz. Değişim veya iade kargonuzu başka bir kargo firması ile göndermek isterseniz kargo ücretinin sizin tarafınızdan karşılanması gerektiğini unutmayınız. Yurt dışından verdiğiniz siparişlerinizin değişim ve iade işlemleri tarafınıza aittir. Etiketi koparılmış, kullanılmış, tekrar satışa sunulamayacak şekilde zarar görmüş ürünlerin değişim ve iade işlemi gerçekleştirilmemektedir.",
       },
       {
         id: 4,

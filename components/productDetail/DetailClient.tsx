@@ -14,11 +14,12 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 // import NextSeoHead from "../utils/NextSeoHead";
-import ShareButtons from "../utils/ShareButtons";
 import { openCartModal } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
-import OrderButtons from "./utils/OrderButtons";
-// import Tabs from "./utils/ProductTabs/Tabs";
+import OrderButtons from "./utils/OrderButtons/OrderButtons";
+import Tabs from "./utils/ProductTabs/Tabs";
+import ShareButtons from "./utils/ShareButtons";
+import PaymentShippingCards from "./utils/PaymentShippingCards";
 
 const responsive = {
   superLargeDesktop: {
@@ -55,6 +56,7 @@ const DetailClient = ({ product }: productProps) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lineClamp, setLineClamp] = useState(true);
+
   const [photoIndex, setPhotoIndex] = useState(1);
   const [stateProduct, setStateProduct] = useState<{
     size: string;
@@ -109,17 +111,17 @@ const DetailClient = ({ product }: productProps) => {
   }, [product]);
 
   return (
-    <div className="md:container md:mx-auto  mt-10 md:mt-5  ">
+    <div className="md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
         name={product.name}
         description={product.description}
         image={product.colorSize[0].images[0]}
       /> */}
 
-      <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full border-y md:border-none">
+      <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
         {/* Image Section with Carousel */}
 
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 md:h-full ">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 md:h-full">
           <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
@@ -127,9 +129,9 @@ const DetailClient = ({ product }: productProps) => {
                 className="flex justify-center items-center w-full h-full"
               >
                 <Image
-                  className=" w-full h-full object-cover rounded-lg "
+                  className=" w-full h-full object-cover rounded-lg cursor-pointer "
                   onClick={() => {
-                    setPhotoIndex(0);
+                    setPhotoIndex(index);
                     setIsModalOpen(true);
                   }}
                   src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
@@ -174,7 +176,7 @@ const DetailClient = ({ product }: productProps) => {
           </Carousel>
         </div>
 
-        <h3 className=" md:hidden sm:mt-3 mt-0 text-start text-lg font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
+        <h3 className=" md:hidden my-1 text-start text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
           {product.name}
         </h3>
 
@@ -226,18 +228,18 @@ const DetailClient = ({ product }: productProps) => {
           </div>
         </div>
 
-        <div className=" w-full md:w-4/6 lg:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-2 rounded-lg md:min-h-[800px] mb-5 ">
+        <div className=" w-full md:w-4/6 lg:w-3/6 mt-2  lg:mt-0 flex flex-col gap-4  border-secondary h-full px-2 rounded-lg md:min-h-[800px]  ">
           <div className="w-full flex flex-col  justify-between items-start  gap-2">
             <h3 className=" hidden md:flex text-xl md:text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full">
               {product.name}
             </h3>
-            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 py-1 rounded-md  w-1/2">
+            <p className="bg-secondary text-sm flex justify-center items-start text-mywhite px-2 py-1 rounded-md  w-full">
               {t("productDetail.stockCode")} {stockSizeState.stockCode}
             </p>
           </div>
 
-          <div className="w-full flex  items-start justify-between gap-x-1">
-            <span className={"flex flex-col gap-x-4 "}>
+          <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2  ">
+            <span className={"flex  gap-x-4 "}>
               {product.discountPrice !== 0 &&
                 product.discountPrice !== product.price && (
                   <p
@@ -272,7 +274,11 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col justify-center items-start gap-3 py-4">
+          <div className="grid md:grid-cols-3 gap-2">
+            <PaymentShippingCards />
+          </div>
+
+          <div className="w-full flex flex-col justify-center items-start gap-3">
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
                 {t("productDetail.productCategory")}: {product.category}
@@ -392,47 +398,49 @@ const DetailClient = ({ product }: productProps) => {
             </small>
           </div>
 
-          <p className="text-lg text-secondaryDark font-semibold my-2">
-            {t("productDetail.quantity")}:
-          </p>
-          <span className="py-3 px-4 flex w-64 gap-x-8 flex-row items-center justify-between border border-secondary rounded">
-            {/* Azaltma butonu */}
-            <FaMinus
-              className={`${
-                stateProduct?.quantity <= 1
-                  ? "text-gray-300 cursor-not-allowed"
-                  : "cursor-pointer hover:scale-110 transition-all duration-300"
-              }`}
-              onClick={() => {
-                if (stateProduct?.quantity > 1) {
-                  setStateProduct({
-                    ...stateProduct,
-                    quantity: stateProduct.quantity - 1,
-                  });
-                }
-              }}
-            />
+          <div className="flex justify-start items-center gap-4">
+            <p className="text-lg text-secondaryDark font-semibold my-2">
+              {t("productDetail.quantity")}:
+            </p>
+            <span className="py-3 px-4 flex w-64 gap-x-8 flex-row items-center justify-between border border-secondary rounded">
+              {/* Azaltma butonu */}
+              <FaMinus
+                className={`${
+                  stateProduct?.quantity <= 1
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "cursor-pointer hover:scale-110 transition-all duration-300"
+                }`}
+                onClick={() => {
+                  if (stateProduct?.quantity > 1) {
+                    setStateProduct({
+                      ...stateProduct,
+                      quantity: stateProduct.quantity - 1,
+                    });
+                  }
+                }}
+              />
 
-            {/* Miktar */}
-            <p className="text-xl font-semibold">{stateProduct?.quantity}</p>
+              {/* Miktar */}
+              <p className="text-xl font-semibold">{stateProduct?.quantity}</p>
 
-            {/* Arttırma butonu */}
-            <FaPlus
-              className={`${
-                stateProduct?.quantity >= stateProduct?.totalStock
-                  ? "text-gray-300 cursor-not-allowed"
-                  : "cursor-pointer hover:scale-110 transition-all duration-300"
-              } `}
-              onClick={() => {
-                if (stateProduct?.quantity < stateProduct?.totalStock) {
-                  setStateProduct({
-                    ...stateProduct,
-                    quantity: stateProduct.quantity + 1,
-                  });
-                }
-              }}
-            />
-          </span>
+              {/* Arttırma butonu */}
+              <FaPlus
+                className={`${
+                  stateProduct?.quantity >= stateProduct?.totalStock
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "cursor-pointer hover:scale-110 transition-all duration-300"
+                } `}
+                onClick={() => {
+                  if (stateProduct?.quantity < stateProduct?.totalStock) {
+                    setStateProduct({
+                      ...stateProduct,
+                      quantity: stateProduct.quantity + 1,
+                    });
+                  }
+                }}
+              />
+            </span>
+          </div>
 
           <div className="flex flex-col justify-start items-start gap-2 ">
             <div className="w-full flex justify-center items-center gap-5">
@@ -466,7 +474,7 @@ const DetailClient = ({ product }: productProps) => {
                   }
                 }}
                 className={
-                  "!bg-secondary h-12 w-10/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  transition-all duration-300"
+                  "!bg-secondary h-12 w-10/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
                 }
               >
                 {t("productDetail.productAddCart")}
@@ -491,7 +499,7 @@ const DetailClient = ({ product }: productProps) => {
               description={product.description}
             />
           </div>
-
+          {/* 
           <div className="mt-2">
             <div className="col-span-full sm:col-span-2 lg:col-span-3">
               <h3 className="text-xl text-secondary font-semibold">
@@ -515,7 +523,7 @@ const DetailClient = ({ product }: productProps) => {
                   : t("productDetail.readLess")}
               </button>
             )}
-          </div>
+          </div> */}
         </div>
         <Lightbox
           open={isModalOpen}
@@ -533,9 +541,12 @@ const DetailClient = ({ product }: productProps) => {
           on={{ view: updateIndex }}
           animation={{ fade: 0 }}
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
+          styles={{
+            container: { backgroundColor: "rgba(0, 0, 0, 0.5)" }, // Arka planı daha şeffaf yap
+          }}
         />
       </div>
-      {/* {<Tabs description={product.description} />} */}
+      {<Tabs description={product.description} />}
     </div>
   );
 };
