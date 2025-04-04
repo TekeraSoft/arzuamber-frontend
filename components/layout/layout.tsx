@@ -12,6 +12,9 @@ import AuthLayout from "@/components/auth/authLayout";
 import ScrollToTop from "../utils/ScrollToTop";
 import LayoutSocialButtons from "../utils/LayoutSocialButtons";
 import HowToBuyModal from "../modals/HowToBuyModal";
+import Cookies from "@/components/layout/Cookies/Cookies";
+import "primereact/resources/themes/lara-light-purple/theme.css";
+import "primereact/resources/primereact.css";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;

@@ -109,8 +109,8 @@ const SideBar = () => {
               </div>
             </div>
           </li>
-          {adminPanel.map((menu) => (
-            <li key={menu.name}>
+          {adminPanel.map((menu, index) => (
+            <li key={index}>
               <div
                 className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-"
                 onClick={() => toggleMenu(menu.name)}
