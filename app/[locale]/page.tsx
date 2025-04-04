@@ -13,13 +13,14 @@ import Category from "@/components/home/Category";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import Map from "@/components/utils/Map";
+import SpecialCarts from "@/components/home/SpecialCarts";
 
 export default function Home() {
   const t = useTranslations();
 
   const CategoryBrand = dynamic(
     () => import("@/components/home/CategoryBrand"),
-    { ssr: false },
+    { ssr: false }
   );
 
   useEffect(() => {
@@ -32,6 +33,8 @@ export default function Home() {
     <>
       <Category />
       <HomeSlider />
+
+      <SpecialCarts />
 
       <BackGroundImageContainer>
         <HomeContainer>

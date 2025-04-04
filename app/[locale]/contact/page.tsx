@@ -1,7 +1,5 @@
 "use client";
 
-import Head from "next/head";
-import PageContainer from "@/components/Containers/PageContainer";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
@@ -42,10 +40,10 @@ function ContactPage() {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{t("ContactPage.title")}</title>
         <meta name="description" content={t("ContactPage.metaDescription")} />
-      </Head>
+      </Head> */}
 
       <Category />
       <hr className="w-full border-secondary mx-auto container" />

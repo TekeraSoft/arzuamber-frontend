@@ -3,10 +3,10 @@ import { Readable } from "stream";
 
 export async function GET(req) {
   const links = [
-    { url: "/", changefreq: "daily", priority: 0.3 },
-    { url: "/contact", changefreq: "daily", priority: 0.3 },
+    { url: "/", changefreq: "daily", priority: 1.0 },
+    { url: "/contact", changefreq: "daily", priority: 0.5 },
     { url: "/about", changefreq: "daily", priority: 0.3 },
-    { url: "/products", changefreq: "daily", priority: 0.3 },
+    { url: "/products", changefreq: "daily", priority: 0.7 },
     { url: "/blogs", changefreq: "daily", priority: 0.3 },
     { url: "/payment", changefreq: "daily", priority: 0.3 },
     { url: "/kvkk", changefreq: "daily", priority: 0.3 },

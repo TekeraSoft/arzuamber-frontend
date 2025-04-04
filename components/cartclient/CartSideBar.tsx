@@ -6,14 +6,13 @@ import { removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import Loading from "../utils/Loading";
-import Heading from "../general/Heading";
 import CartSummary from "./CartSummary";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useTranslations } from "next-intl";
-import Button from "../general/Button";
 import { closeCartModal } from "@/store/modalsSlice";
 import EmptyCart from "./EmptyCart";
 import { IoIosClose } from "react-icons/io";
+import PaymentShippingCards from "../productDetail/utils/PaymentShippingCards";
+import { IoClose } from "react-icons/io5";
 
 function CartSidebar() {
   const dispatch = useDispatch();
@@ -65,10 +64,10 @@ function CartSidebar() {
   return (
     <div>
       {isCartModalOpen && (
-        <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex justify-end items-start ">
+        <div className="fixed inset-0 z-[999] bg-gray-500 bg-opacity-50 flex justify-end items-start overflow-y-auto ">
           <div
             ref={modalRef}
-            className={`w-96  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-5 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
+            className={`w-[360px]  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-2 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
             {loading && (
               <div
@@ -88,19 +87,14 @@ function CartSidebar() {
               </button>
             </div>
 
-            <Heading
-              text={t("CartPage.heading")}
-              center
-              textSize="4xl"
-              font="bold"
-            />
+            <h2 className="mt-5 text-3xl ">{t("CartPage.heading")}</h2>
 
             {!cartProducts || cartProducts.length === 0 ? (
               <EmptyCart />
             ) : (
               <>
-                <div className="flex flex-col gap-5 w-full">
-                  <div className="w-full max-h-72 md:max-h-96 overflow-y-auto border px-2 rounded-lg">
+                <div className="flex flex-col gap-3 w-full">
+                  <div className="w-full max-h-52 md:max-h-96  overflow-y-auto border px-2 rounded-lg">
                     {cartProducts.map((cart, index) => {
                       return (
                         <div
@@ -137,9 +131,8 @@ function CartSidebar() {
                             </div>
                           </div>
 
-                          <div className="w-16 flex justify-center items-center">
-                            <Button
-                              type="button"
+                          <div className=" flex justify-center items-center">
+                            <button
                               onClick={() =>
                                 removeItemFromCart({
                                   id: cart.id,
@@ -147,17 +140,20 @@ function CartSidebar() {
                                   size: cart.size,
                                 })
                               }
-                              icon={MdOutlineDeleteOutline}
-                              iconSize={18}
-                              color="third"
-                              className="w-full sm:w-auto h-8"
-                            />
+                              className="bg-fourth text-white p-1 rounded-lg flex justify-center items-center hover:scale-105 transition duration-300"
+                            >
+                              <IoClose size={20} />
+                            </button>
                           </div>
                         </div>
                       );
                     })}
                   </div>
                   <CartSummary total={total} />
+                </div>
+
+                <div className="grid grid-cols-1  gap-2 w-full">
+                  <PaymentShippingCards />
                 </div>
               </>
             )}

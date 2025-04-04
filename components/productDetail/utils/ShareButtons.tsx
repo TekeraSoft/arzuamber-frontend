@@ -23,8 +23,7 @@ interface ShareButtonsProps {
 function ShareButtons({
   shareUrl,
   title,
-  imageUrl,
-  description,
+
   hashtag, // Props olarak hashtag ekliyoruz
 }: ShareButtonsProps) {
   const locale = useLocale();
@@ -32,7 +31,6 @@ function ShareButtons({
 
   // Locale'e göre URL'yi düzenleme
   const editedShareUrl = `https://www.arzuamber.com/${locale}/` + shareUrl;
-  const editImageUrl = `${process.env.NEXT_PUBLIC_RESOURCE_API}${imageUrl}`;
 
   // Kopyalama işlemi için fonksiyon
   const handleCopy = () => {
@@ -45,61 +43,50 @@ function ShareButtons({
   const fullTitle = `${title}${separator}`;
 
   return (
-    <>
-      <meta property="og:image" content={editImageUrl} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-
-      <div className="flex space-x-4 justify-start items-center mt-4 w-full flex-wrap">
+    <div className="flex flex-col justify-start w-full items-start">
+      <h2 className="text-lg font-semibold text-secondary mb-2">Paylaş</h2>
+      <div className="flex flex-wrap gap-3 justify-start items-center w-full">
         {/* Copy Butonu */}
         <button
           onClick={handleCopy}
-          className="text-gray-500 hover:text-gray-700 transition-colors duration-300 p-1 rounded-full border border-gray-400 hover:border-gray-500 focus:outline-none flex justify-center items-center"
+          className="p-3 rounded-full border border-gray-400 bg-gray-100 text-gray-600 hover:bg-gray-200 hover:border-gray-500 hover:text-gray-800 transition duration-300 shadow-sm transform hover:scale-105"
         >
-          <BsLink45Deg size={24} />
+          <BsLink45Deg size={20} />
         </button>
 
         {/* WhatsApp */}
         <WhatsappShareButton url={editedShareUrl} title={fullTitle}>
-          <FaWhatsapp
-            size={26}
-            className="text-primary hover:text-secondary transition-colors duration-300"
-          />
+          <div className="p-3 rounded-full bg-green-500 text-white hover:bg-green-600 transition duration-300 shadow-md transform hover:scale-105">
+            <FaWhatsapp size={20} />
+          </div>
         </WhatsappShareButton>
 
         {/* Facebook */}
         <FacebookShareButton
           url={editedShareUrl}
           quote={fullTitle}
-          hashtag={hashtag} // Hashtag parametresini burada ekliyoruz
+          hashtag={hashtag}
         >
-          <FaFacebook
-            size={26}
-            className="text-primary hover:text-secondary transition-colors duration-300"
-          />
+          <div className="p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-105">
+            <FaFacebook size={20} />
+          </div>
         </FacebookShareButton>
 
-        {/* Twitter */}
-        <TwitterShareButton
-          url={editedShareUrl}
-          title={title}
-          via={fullTitle} // Twitter paylaşımında başlık ve URL
-        >
-          <FaXTwitter
-            size={26}
-            className="text-primary hover:text-secondary transition-colors duration-300"
-          />
+        {/* Twitter (X) */}
+        <TwitterShareButton url={editedShareUrl} title={title} via={fullTitle}>
+          <div className="p-3 rounded-full bg-black text-white hover:bg-gray-900 transition duration-300 shadow-md transform hover:scale-105">
+            <FaXTwitter size={20} />
+          </div>
         </TwitterShareButton>
 
         {/* Telegram */}
         <TelegramShareButton url={editedShareUrl}>
-          <FaTelegram
-            size={26}
-            className="text-primary hover:text-secondary transition-colors duration-300"
-          />
+          <div className="p-3 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition duration-300 shadow-md transform hover:scale-105">
+            <FaTelegram size={20} />
+          </div>
         </TelegramShareButton>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -10,6 +10,8 @@ export interface Filter {
   colors: FilterOption;
   categories: FilterOption;
   lengths: FilterOption;
+  shippingPrice?: number;
+  maxShippingPrice?: number;
 }
 
 export const filterData: Filter = {
@@ -76,5 +78,5 @@ export const filterData: Filter = {
     values: ["Mini", "Midi", "Maxi"],
   },
   shippingPrice: 90,
-  maxShippingPrice: 2000,
+  maxShippingPrice: 500,
 };

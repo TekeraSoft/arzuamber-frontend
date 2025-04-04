@@ -2,17 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "@/types";
 import { getGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
+import { comments } from "@/constans/Comment";
 
-// Sepet Tipi
+export interface Comment {
+  id: number;
+  author: string;
+  text: string;
+  createdAt: string;
+  productImages: string[];
+}
+
 export interface CartState {
   products: Product[];
   newSeasonProducts: Product[];
   populateProducts: Product[];
   filterProducts: Product[];
   product: Product | null;
-  page: {};
+  page: object;
   loading: boolean;
   colors: [];
+  comments: Comment[];
   FilteredProductsOnly: boolean;
 }
 
@@ -25,6 +34,7 @@ const initialState: CartState = {
   product: null,
   loading: false,
   colors: [],
+  comments: comments,
   FilteredProductsOnly: false,
 };
 
