@@ -443,7 +443,7 @@ const DetailClient = ({ product }: productProps) => {
           </div>
 
           <div className="flex flex-col justify-start items-start gap-2 ">
-            <div className="w-full flex justify-center items-center gap-5">
+            <div className="w-full flex justify-start items-center gap-5">
               <Button
                 loading={loading}
                 onClick={() => {
@@ -473,15 +473,16 @@ const DetailClient = ({ product }: productProps) => {
                     openCart();
                   }
                 }}
+                //w-10/12
                 className={
-                  "!bg-secondary h-12 w-10/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
+                  "!bg-secondary h-12 w-full  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
                 }
               >
                 {t("productDetail.productAddCart")}
               </Button>
-              <button className="  w-2/12  flex justify-center items-center  border border-secondary  h-12 rounded-lg bg-secondary hover:scale-105 hover:opacity-85 transition duration-300 ">
+              {/* <button className="  w-2/12  flex justify-center items-center  border border-secondary  h-12 rounded-lg bg-secondary hover:scale-105 hover:opacity-85 transition duration-300 ">
                 <FaHeart className="  text-black" />
-              </button>
+              </button> */}
             </div>
             <OrderButtons
               productName={product.name}

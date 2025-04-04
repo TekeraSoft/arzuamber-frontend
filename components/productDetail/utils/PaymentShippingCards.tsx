@@ -7,7 +7,8 @@ function PaymentShippingCards() {
       id: 1,
       icon: <FaShippingFast className="text-3xl text-green-600" />,
       title: "Kargo Ücretsiz",
-      description: "Ücretsiz kargo ile siparişinizi teslim alın.",
+      description:
+        "500 ₺ ve üzerine ücretsiz kargo ile siparişinizi teslim alın.",
       color: "text-green-600",
     },
     {
@@ -49,7 +50,7 @@ function PaymentShippingCards() {
           <p
             className={`${
               card.color ? card.color : "text-gray-600"
-            } text-xs text-center w-full `}
+            } text-[11px] text-center w-full `}
           >
             {card.description}
           </p>

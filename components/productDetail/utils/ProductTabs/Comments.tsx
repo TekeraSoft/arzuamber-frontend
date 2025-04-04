@@ -7,8 +7,11 @@ import { IoMdClose } from "react-icons/io";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { useSession } from "next-auth/react";
 
 function Comments() {
+  const { data: session } = useSession();
+
   const t = useTranslations();
 
   const { comments } = useSelector((state: RootState) => state.products);
@@ -72,7 +75,7 @@ function Comments() {
                 <div className="flex flex-col w-full">
                   <div className="flex justify-start items-center gap-4">
                     <p className="font-semibold text-gray-800">
-                      {comment.author}
+                      {comment.author.name}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       {new Date(comment.createdAt).toLocaleString()}
@@ -98,29 +101,32 @@ function Comments() {
                 </div>
               </div>
 
-              <div>
-                <button
-                  id={`delete-btn-${comment.id}`}
-                  className="bg-red-500 border-none text-white p-2 rounded-md hover:opacity-85 transition-all"
-                  onClick={() => handleOpenPopUpModal()}
-                >
-                  <IoMdClose />
-                </button>
+              {session?.user?.role.includes("ADMIN") ||
+                (session?.user?.email == comment.author.email && (
+                  <div>
+                    <button
+                      id={`delete-btn-${comment.id}`}
+                      className="bg-red-500 border-none text-white p-2 rounded-md hover:opacity-85 transition-all"
+                      onClick={() => handleOpenPopUpModal()}
+                    >
+                      <IoMdClose />
+                    </button>
 
-                {/* Pop-Up Modal */}
-                {popUpModal && (
-                  <ConfirmDialog
-                    visible={popUpModal}
-                    onHide={() => setPopUpModal(false)}
-                    message="Bu yorumu silmek istediğinizden emin misiniz ?"
-                    accept={handleDelete.bind(null, comment.id)}
-                    reject={() => setPopUpModal(false)}
-                    header="Yorumu Sil"
-                    acceptLabel="Evet"
-                    rejectLabel="Hayır"
-                  />
-                )}
-              </div>
+                    {/* Pop-Up Modal */}
+                    {popUpModal && (
+                      <ConfirmDialog
+                        visible={popUpModal}
+                        onHide={() => setPopUpModal(false)}
+                        message="Bu yorumu silmek istediğinizden emin misiniz ?"
+                        accept={handleDelete.bind(null, comment.id)}
+                        reject={() => setPopUpModal(false)}
+                        header="Yorumu Sil"
+                        acceptLabel="Evet"
+                        rejectLabel="Hayır"
+                      />
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
         ))}

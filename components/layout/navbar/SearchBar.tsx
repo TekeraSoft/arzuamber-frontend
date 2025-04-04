@@ -223,6 +223,8 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
           className={`${
             SearchOpen ? "flex" : "hidden"
           } relative bg-mywhite justify-center items-center text-black px-4 py-1 border-b md:border-none min-w-full gap-2`}
+          onMouseLeave={() => setIsFocused(false)}
+          onMouseDown={() => setIsFocused(true)}
         >
           {/* <div
             className="lg:hidden flex justify-center items-center bg-secondary text-mywhite p-1  rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
@@ -267,12 +269,10 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               />
             </span>
           </div>
-          {isFocused && searchProducts.length > 0 && (
+          {isFocused && searchProducts.length > 0 ? (
             <div
               ref={searchResultsRef}
-              className={
-                "bg-white border-t md:border max-h-[345px] flex flex-col gap-y-3 overflow-y-auto md:rounded-lg top-10  w-full p-3 absolute z-40 animate__animated animate__fadeIn   "
-              }
+              className="bg-white border max-h-[345px] w-full flex flex-col gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-40 animate__animated animate__fadeIn"
             >
               {searchProducts.map((item, index) => (
                 <button
@@ -281,26 +281,18 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                     router.push(`/product/${item.slug}`);
                     setIsFocused(false);
                   }}
-                  className={
-                    "flex flex-row gap-x-4 pb-2 border-b hover:bg-gray-100 cursor-pointer transition-all p-1"
-                  }
+                  className="flex flex-row gap-x-4 pb-2 border-b hover:bg-gray-100 cursor-pointer transition-all p-1"
                 >
                   <Image
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.colorSize[0].images[0]}`}
                     width={40}
                     height={40}
                     alt={item.colorSize[0].images[0]}
-                    className={"rounded"}
+                    className="rounded"
                   />
-                  <span className={"flex flex-col items gap-y-2 w-full"}>
-                    <div
-                      className={
-                        "flex flex-row items-center justify-between w-full"
-                      }
-                    >
-                      <h4 className={"text-black truncate"}>
-                        {textClip(item.name)}
-                      </h4>
+                  <span className="flex flex-col items gap-y-2 w-full">
+                    <div className="flex flex-row items-center justify-between w-full">
+                      <h4 className="text-black font-semibold">{item.name}</h4>
                       <div className="flex justify-center items-center gap-2">
                         {item.discountPrice > 0 &&
                         item.discountPrice !== item.price ? (
@@ -319,7 +311,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                             </p>
                           </>
                         ) : (
-                          <p className="text-xs text-secondary  md:text-sm font-extrabold">
+                          <p className="text-xs text-secondary md:text-sm font-extrabold">
                             {item.price.toLocaleString("tr-TR", {
                               style: "currency",
                               currency: "TRY",
@@ -328,11 +320,9 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                         )}
                       </div>
                     </div>
-                    <span
-                      className={"flex flex-row justify-start flex-wrap gap-2"}
-                    >
+                    <span className="flex flex-row justify-start flex-wrap gap-x-4">
                       {item.colorSize.flatMap((cs, index) => (
-                        <span key={index} className={"flex flex-row gap-x-1"}>
+                        <span key={index} className="flex flex-row gap-x-2">
                           <p>{cs.color}</p>:{" "}
                           {cs.stockSize.map((ss, index) => (
                             <span
@@ -351,7 +341,16 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                 </button>
               ))}
             </div>
-          )}
+          ) : isFocused && searchProducts.length === 0 ? (
+            <div className="bg-white border border-slate-300 max-h-[345px] w-full   flex flex-col items-center justify-center gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-40 animate__animated animate__fadeIn">
+              <div className="flex items-center justify-center gap-2">
+                <BiSearch size={20} className="text-gray-400" />
+                <p className="text-gray-500 text-sm">
+                  Aradığınız ürün bulunamadı.
+                </p>
+              </div>
+            </div>
+          ) : null}
         </motion.div>
       )}
     </div>
