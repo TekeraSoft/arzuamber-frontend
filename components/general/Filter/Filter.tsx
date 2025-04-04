@@ -30,10 +30,10 @@ function Filter({
   const t = useTranslations();
   const dispatch = useDispatch<AppDispatch>();
   const { categories, shortCategory } = useSelector(
-    (state: RootState) => state.category
+    (state: RootState) => state.category,
   );
   const { colors, FilteredProductsOnly } = useSelector(
-    (state: RootState) => state.products
+    (state: RootState) => state.products,
   );
   const { filterStatus } = useSelector((state: RootState) => state.search);
   // Durum yönetimi: Kullanıcı seçimlerini saklamak için
@@ -96,7 +96,7 @@ function Filter({
           onlyDiscounted: selectedFilters.onlyDiscounted,
           page: currnetPage,
           pageSize: pageSize,
-        })
+        }),
       );
     } else {
       dispatch(getAllProductsDispatch(currnetPage, pageSize));
@@ -110,7 +110,7 @@ function Filter({
           onlyDiscounted: selectedFilters.onlyDiscounted,
           page: currnetPage,
           pageSize: pageSize,
-        })
+        }),
       );
     }
 
@@ -194,7 +194,7 @@ function Filter({
                     : "text-gray-500 font-normal"
                 }`}
               >
-                {t("Filter.lowToHigh")}
+                {t("Filter.highToLow")}
               </label>
             </div>
 
@@ -212,7 +212,7 @@ function Filter({
                     : "text-gray-500 font-normal"
                 }`}
               >
-                {t("Filter.highToLow")}
+                {t("Filter.lowToHigh")}
               </label>
             </div>
 

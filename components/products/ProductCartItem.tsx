@@ -17,7 +17,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
   return (
     <div
       className=" flex flex-col justify-between space-y-2 w-full   transition duration-300  relative h-[450px]
-    md:min-h-[575px]   md:border-none shadow-md  bg-slate-50 rounded-lg"
+    md:min-h-[575px] pb-0.5 md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
       <Link
@@ -53,7 +53,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
             <div className="  w-16 h-4 md:w-16 md:h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px]  shadow-md  px-1">
               %
               {Math.round(
-                ((product.price - product.discountPrice) / product.price) * 100
+                ((product.price - product.discountPrice) / product.price) * 100,
               )}
             </div>
           )}
