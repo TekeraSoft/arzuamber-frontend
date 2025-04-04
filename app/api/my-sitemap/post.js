@@ -9,7 +9,6 @@ const fetchProducts = async () => {
       action: "products",
       params: { page: 1, size: 100 },
     });
-    console.log(response); // API yanıtını kontrol et
     return response.data || [];
   } catch (error) {
     console.error("Ürünleri alırken hata oluştu:", error);
@@ -38,7 +37,7 @@ const generateSitemapPosts = async (req, res) => {
     }));
 
     const xmlString = await streamToPromise(
-      Readable.from(links).pipe(smStream)
+      Readable.from(links).pipe(smStream),
     ).then((data) => data.toString());
 
     res.setHeader("Content-Type", "application/xml");

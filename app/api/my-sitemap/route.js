@@ -20,7 +20,7 @@ export async function GET(req) {
 
   try {
     const xmlString = await streamToPromise(
-      Readable.from(links).pipe(stream)
+      Readable.from(links).pipe(stream),
     ).then((data) => data.toString());
 
     return new Response(xmlString, {
@@ -28,6 +28,5 @@ export async function GET(req) {
     });
   } catch (error) {
     return new Response("Sitemap generation failed", { status: 500 });
-    console.log(error);
   }
 }

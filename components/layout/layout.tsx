@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./footer/footer";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./navbar/Navbar";
@@ -14,6 +14,7 @@ import "primereact/resources/primereact.css"; // PrimeReact stilleri
 import ScrollToTop from "../utils/ScrollToTop";
 import LayoutSocialButtons from "../utils/LayoutSocialButtons";
 import HowToBuyModal from "../modals/HowToBuyModal";
+import { useSession } from "next-auth/react";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ interface RoutesLayoutProps {
 
 function LayoutProvider({ children }: RoutesLayoutProps) {
   const path = usePathname();
+  const { data: session } = useSession();
 
   return (
     <div className={`flex flex-col `}>

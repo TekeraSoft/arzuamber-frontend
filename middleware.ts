@@ -18,6 +18,7 @@ export default async function middleware(req) {
   const locale = req.cookies.get("NEXT_LOCALE")?.value;
 
   const decodedToken = token ? jwtDecode(token) : undefined;
+
   // Admin route koruma
   const isAdminRoute = req.nextUrl.pathname.startsWith(`/${locale}/admin`);
   const isProfileRoute = req.nextUrl.pathname.startsWith(`/${locale}/profile`);

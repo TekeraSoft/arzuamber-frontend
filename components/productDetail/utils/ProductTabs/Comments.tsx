@@ -49,7 +49,6 @@ function Comments() {
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         setComments(comments.filter((comment) => comment.id !== id));
-        console.log(`Yorum ${id} silindi.`);
       },
       reject: () => {
         console.log("Yorum silme işlemi iptal edildi.");

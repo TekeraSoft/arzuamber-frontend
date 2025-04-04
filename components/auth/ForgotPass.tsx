@@ -1,13 +1,13 @@
 "use client";
 
 import { setLoginModal, setForgotPassModal } from "@/store/modalsSlice";
-import {AppDispatch, RootState} from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MdCancel } from "react-icons/md";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "use-intl";
 import Button from "../general/Button";
 import { useForgotPassValidationSchema } from "@/error/forgotPassSchema";
@@ -28,15 +28,21 @@ function ForgotPasswordModal() {
     onSubmit: async (values) => {
       try {
         setLoadin(true);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API}/user/forgot-password-mail`, {
-          params: {email: values.forgotEmail},
-        }).then(res=> {
-          dispatch(setForgotPassModal(false));
-          toast.success("Yeni şifrenizi belirlemek için mail adresinizi kontrol ediniz");
-          setLoadin(false);
-        })
+        const response = await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BACKEND_API}/user/forgot-password-mail`,
+            {
+              params: { email: values.forgotEmail },
+            },
+          )
+          .then((res) => {
+            dispatch(setForgotPassModal(false));
+            toast.success(
+              "Yeni şifrenizi belirlemek için mail adresinizi kontrol ediniz",
+            );
+            setLoadin(false);
+          });
       } catch (error) {
-        console.log(error);
         setLoadin(false);
       }
     },
@@ -101,7 +107,7 @@ function ForgotPasswordModal() {
 
         <div className="flex flex-col justify-center items-center w-full ">
           <Button
-              loading={loadin}
+            loading={loadin}
             text={t("forgotPassForm.submit")}
             type="submit"
             color="primary"

@@ -59,6 +59,14 @@ const SideBar = () => {
       ],
     },
     {
+      name: "Settings",
+      icon: TbSettingsCog,
+      options: [
+        { name: "Color", url: "/admin/settings/product-colors" },
+        { name: "Home Slider", url: "/admin/settings/sliders/home-slider" },
+      ],
+    },
+    {
       name: "Forms",
       icon: RiMailSendLine,
       options: [{ name: "Customer Messages", url: "/admin/contact-messages" }],
