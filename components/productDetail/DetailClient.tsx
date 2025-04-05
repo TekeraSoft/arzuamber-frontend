@@ -547,7 +547,7 @@ const DetailClient = ({ product }: productProps) => {
           }}
         />
       </div>
-      {<Tabs description={product.description} />}
+      {<Tabs description={product.description} productId={product.id} />}
     </div>
   );
 };

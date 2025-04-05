@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setLoginModal, setRegisterModal } from "@/store/modalsSlice";
 import { motion } from "framer-motion";
 
-function CommentCreate() {
+function CommentCreate({ productId }) {
   const { data: session } = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +34,8 @@ function CommentCreate() {
     comment: "",
     images: [],
     rating: null,
-    authoauthorMail: session?.user?.email,
+    authorMail: session?.user?.email,
+    productId: productId,
   };
 
   const handleImageChange = async (e, setFieldValue, values) => {
