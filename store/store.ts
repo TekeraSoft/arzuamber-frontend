@@ -12,6 +12,7 @@ import blogsReducer from "@/store/blogSlice";
 import userReducer from "@/store/userSlice";
 import searchSlice from "@/store/searchSlice";
 import orderSlice from "@/store/orderSlice";
+import superAdminSlice from "@/store/superAdminSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     user: userReducer,
     auth: authReducer,
     admin: adminSlice,
+    superAdmin: superAdminSlice,
     footer: footerReducer,
     modals: modalsSlice,
     search: searchSlice,

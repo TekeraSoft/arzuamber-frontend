@@ -6,13 +6,16 @@ import { FaRegListAlt, FaPlus, FaMinus, FaTimes, FaBars } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { MdCategory } from "react-icons/md";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
-import { BiSolidDiscount } from "react-icons/bi";
+import { BiSolidDiscount, BiUser } from "react-icons/bi";
 import { TbSettingsCog } from "react-icons/tb";
 import { RiMailSendLine } from "react-icons/ri";
+import { useSession } from "next-auth/react";
 
 const SideBar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: session } = useSession();
 
   const adminPanel = [
     {
@@ -59,19 +62,19 @@ const SideBar = () => {
       ],
     },
     {
-      name: "Settings",
-      icon: TbSettingsCog,
-      options: [
-        { name: "Color", url: "/admin/settings/product-colors" },
-        { name: "Home Slider", url: "/admin/settings/sliders/home-slider" },
-      ],
-    },
-    {
       name: "Forms",
       icon: RiMailSendLine,
       options: [{ name: "Customer Messages", url: "/admin/contact-messages" }],
     },
   ];
+
+  if (session?.user.role[0] === "SUPER_ADMIN") {
+    adminPanel.push({
+      name: "User Management",
+      icon: BiUser,
+      options: [{ name: "Manage Users", url: "/admin/user-management" }],
+    });
+  }
 
   const toggleMenu = (menuName: string) => {
     setOpenMenu((prevMenu) => (prevMenu === menuName ? null : menuName));
@@ -122,7 +125,7 @@ const SideBar = () => {
                 <span>
                   {openMenu === menu.name ? (
                     <FaMinus size={10} />
-                  ) : (
+                  ) : menu.name === "User Management" ? null : (
                     <FaPlus size={10} />
                   )}
                 </span>

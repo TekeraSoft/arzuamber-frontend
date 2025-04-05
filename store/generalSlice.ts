@@ -41,9 +41,9 @@ const initialState: GeneralState = {
   loading: false,
   helpItems: helpItems,
   specialDayTimer: {
-    discountTitle: "Bayram İndirimi Başladı!",
+    discountTitle: "500 ₺ Ve Üzeri Alışverilerde Bluz Hediye!",
     discountDescription: "Kaçırmayın! Bu fırsat kısa süreliğine geçerli 🎉",
-    discountEndTime: new Date("2025-04-03T10:28:00").getTime(),
+    discountEndTime: new Date("2025-04-12T00:00:00").getTime(),
     specialDayTimerStatus: true,
   },
 };

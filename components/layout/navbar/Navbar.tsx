@@ -180,7 +180,8 @@ function Navbar() {
                     )}
                   </div>
                 </button>
-              ) : session?.user.role[0] === "ADMIN" ? (
+              ) : session?.user.role[0] === "ADMIN" ||
+                session?.user.role[0] === "SUPER_ADMIN" ? (
                 <button
                   className={
                     " flex flex-row  justify-center items-center   text-sm relative"
@@ -220,10 +221,14 @@ function Navbar() {
                     "hover:bg-gray-200 px-2 py-1 text-xs md:text-sm text-center"
                   }
                   href={
-                    session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
+                    session?.user.role[0] === "ADMIN" ||
+                    session?.user.role[0] === "SUPER_ADMIN"
+                      ? "/admin"
+                      : "/profile"
                   }
                 >
-                  {session?.user.role[0] === "ADMIN"
+                  {session?.user.role[0] === "ADMIN" ||
+                  session?.user.role[0] === "SUPER_ADMIN"
                     ? "Admin"
                     : t("menuItems.profile")}
                 </Link>
@@ -355,7 +360,8 @@ function Navbar() {
                       )}
                     </div>
                   </button>
-                ) : session?.user.role[0] === "ADMIN" ? (
+                ) : session?.user.role[0] === "ADMIN" ||
+                  session?.user.role[0] === "SUPER_ADMIN" ? (
                   <button
                     className={"text-xl flex flex-row items-center gap-x-1"}
                     onClick={() => setOpenUserDropdown(!openUserDropdown)}
@@ -387,10 +393,14 @@ function Navbar() {
                     }}
                     className="hover:bg-gray-200 px-2 py-1 text-sm flex justify-center items-center"
                     href={
-                      session?.user.role[0] === "ADMIN" ? "/admin" : "/profile"
+                      session?.user.role[0] === "ADMIN" ||
+                      session?.user.role[0] === "SUPER_ADMIN"
+                        ? "/admin"
+                        : "/profile"
                     }
                   >
-                    {session?.user.role[0] === "ADMIN"
+                    {session?.user.role[0] === "ADMIN" ||
+                    session?.user.role[0] === "SUPER_ADMIN"
                       ? "Admin"
                       : t("menuItems.myAccount")}
                   </Link>
