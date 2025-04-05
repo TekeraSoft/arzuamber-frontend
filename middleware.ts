@@ -28,7 +28,10 @@ export default async function middleware(req) {
     return NextResponse.redirect(baseUrl);
   }
 
-  if (isAdminRoute && (!token || decodedToken.role[0] !== "ADMIN")) {
+  if (
+    isAdminRoute &&
+    (!token || !["ADMIN", "SUPER_ADMIN"].includes(decodedToken.role[0]))
+  ) {
     const baseUrl = new URL("/", req.url);
     return NextResponse.redirect(baseUrl);
   }

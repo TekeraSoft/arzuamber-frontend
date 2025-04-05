@@ -112,7 +112,7 @@ function Timer() {
     >
       <div className="navbarContainer flex justify-between items-center gap-4 px-2 md:px-4 text-center">
         {/* Kampanya Başlığı */}
-        <h3 className="bg-white text-primary px-4 py-1 rounded-md text-xs md:text-lg whitespace-nowrap font-semibold shadow-sm">
+        <h3 className="bg-white text-primary px-4 py-1 rounded-md text-[11px] md:text-lg whitespace-nowrap font-semibold shadow-sm">
           {discountTitle}
         </h3>
 
@@ -122,7 +122,7 @@ function Timer() {
         </p>
 
         {/* Geri Sayım Zamanlayıcı */}
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           {["Gün", "Saat", "Dakika", "Saniye"].map((label, index) => {
             const values = [
               timeLeft.days,

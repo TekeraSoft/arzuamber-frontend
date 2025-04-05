@@ -18,11 +18,13 @@ import { MdDelete } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
 import { Link } from "@/i18n/routing";
 import { Checkbox } from "primereact/checkbox";
+import { useSession } from "next-auth/react";
 
 function AllProductAdminPage() {
   const { products, loading, page } = useSelector(
-    (state: RootState) => state.admin
+    (state: RootState) => state.admin,
   );
+  const { data: session } = useSession();
   const [expandedRows, setExpandedRows] = useState(null);
   const dispatch = useDispatch<AppDispatch>();
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
@@ -138,35 +140,37 @@ function AllProductAdminPage() {
         header={() => (
           <span className={"flex flex-row items-center gap-x-2"}>
             <h2>Fiyat</h2>
-            <span className={"w-full flex flex-row items-center gap-x-2"}>
-              <InputNumber
-                value={percentageValue}
-                onChange={(e) => setPercentageValue(e.value)}
-                className={"w-16 h-10"}
-              />
-              <button
-                onClick={() => {
-                  const isConfirm = confirm(
-                    "Are you sure you want to apply to all prices?"
-                  );
-                  if (isConfirm) {
-                    dispatch(
-                      updatePriceByPercentageDispatch(
-                        parseFloat(
-                          parseFloat(String(percentageValue)).toFixed(1)
-                        )
-                      )
+            {session?.user.role[0] === "SUPER_ADMIN" && (
+              <span className={"w-full flex flex-row items-center gap-x-2"}>
+                <InputNumber
+                  value={percentageValue}
+                  onChange={(e) => setPercentageValue(e.value)}
+                  className={"w-16 h-10"}
+                />
+                <button
+                  onClick={() => {
+                    const isConfirm = confirm(
+                      "Are you sure you want to apply to all prices?",
                     );
-                    setPercentageValue(0);
-                  } else {
-                    setPercentageValue(0);
-                  }
-                }}
-                className={"bg-blue-600 rounded-full p-2 text-white"}
-              >
-                <FaPercent />
-              </button>
-            </span>
+                    if (isConfirm) {
+                      dispatch(
+                        updatePriceByPercentageDispatch(
+                          parseFloat(
+                            parseFloat(String(percentageValue)).toFixed(1),
+                          ),
+                        ),
+                      );
+                      setPercentageValue(0);
+                    } else {
+                      setPercentageValue(0);
+                    }
+                  }}
+                  className={"bg-blue-600 rounded-full p-2 text-white"}
+                >
+                  <FaPercent />
+                </button>
+              </span>
+            )}
           </span>
         )}
       />
