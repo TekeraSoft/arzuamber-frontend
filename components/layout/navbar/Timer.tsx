@@ -110,9 +110,9 @@ function Timer() {
       onClick={() => timerFilterProcuts()}
       className="w-full flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 shadow-md"
     >
-      <div className="navbarContainer flex justify-between items-center gap-4 px-2 md:px-4 text-center">
+      <div className="navbarContainer flex justify-between items-center gap-2 px-2 md:px-4 text-center">
         {/* Kampanya Başlığı */}
-        <h3 className="bg-white text-primary px-4 py-1 rounded-md text-[11px] md:text-lg whitespace-nowrap font-semibold shadow-sm">
+        <h3 className="bg-white text-primary px-4 py-1 rounded-md text-[10px] md:text-lg whitespace-nowrap font-semibold shadow-sm">
           {discountTitle}
         </h3>
 
@@ -133,12 +133,12 @@ function Timer() {
             return (
               <div
                 key={index}
-                className="flex flex-col items-center bg-black bg-opacity-25 md:px-2 md:first-letter py-1 rounded-md shadow-sm min-w-10 md:min-w-[50px]"
+                className="flex flex-col items-center bg-black bg-opacity-25 md:px-2 md:first-letter py-1 rounded-md shadow-sm min-w-9 md:min-w-[50px]"
               >
-                <span className="text-[10px] md:text-base font-bold">
+                <span className="text-[9px] md:text-base font-bold">
                   {values[index]}
                 </span>
-                <span className="text-[10px] md:text-xs opacity-75">
+                <span className="text-[9px] md:text-xs opacity-75">
                   {label}
                 </span>
               </div>
