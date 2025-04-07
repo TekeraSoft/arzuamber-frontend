@@ -20,6 +20,7 @@ import OrderButtons from "./utils/OrderButtons/OrderButtons";
 import Tabs from "./utils/ProductTabs/Tabs";
 import ShareButtons from "./utils/ShareButtons";
 import PaymentShippingCards from "./utils/PaymentShippingCards";
+import { Skeleton } from "primereact/skeleton";
 
 const responsive = {
   superLargeDesktop: {
@@ -110,6 +111,14 @@ const DetailClient = ({ product }: productProps) => {
     }
   }, [product]);
 
+  // const [skeletonLoading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 3000);
+  // }, []);
+
   return (
     <div className="md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
@@ -128,18 +137,23 @@ const DetailClient = ({ product }: productProps) => {
                 key={index}
                 className="flex justify-center items-center w-full h-full"
               >
-                <Image
-                  className=" w-full h-full object-cover rounded-lg cursor-pointer "
-                  onClick={() => {
-                    setPhotoIndex(index);
-                    setIsModalOpen(true);
-                  }}
-                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
-                  alt={product.name}
-                  width={300}
-                  height={500}
-                  priority
-                />
+                {loading ? (
+                  // Skeleton resim yüklenene kadar gösterilecek
+                  <Skeleton className="w-full min-h-28 " />
+                ) : (
+                  // Gerçek resim yüklendiğinde gösterilecek
+                  <Image
+                    className="w-full h-full object-cover rounded-lg cursor-pointer"
+                    onClick={() => {
+                      // Resme tıklama fonksiyonu
+                    }}
+                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
+                    alt={product.name}
+                    width={300}
+                    height={500}
+                    priority
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -154,25 +168,31 @@ const DetailClient = ({ product }: productProps) => {
             customRightArrow={<CustomRightArrow />}
             className="w-full rounded-lg h-full"
           >
-            {stockSizeState?.images?.map((img, index) => (
-              <div
-                key={index}
-                className="flex justify-center items-center w-full h-full rounded-lg mb-5"
-              >
-                <Image
-                  className="cursor-zoom-in w-full h-full object-cover rounded-lg "
-                  onClick={() => {
-                    setPhotoIndex(index);
-                    setIsModalOpen(true);
-                  }}
-                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
-                  alt={product.name}
-                  width={1000}
-                  height={1000}
-                  priority
-                />
+            {stockSizeState?.images?.length === 0 || loading ? (
+              <div className="flex justify-center items-center w-full h-full rounded-lg mb-5">
+                <Skeleton className="w-full min-h-[750px]" />
               </div>
-            ))}
+            ) : (
+              stockSizeState?.images?.map((img, index) => (
+                <div
+                  key={index}
+                  className="flex justify-center items-center w-full h-full rounded-lg mb-5"
+                >
+                  <Image
+                    className="cursor-zoom-in w-full h-full object-cover rounded-lg"
+                    onClick={() => {
+                      setPhotoIndex(index);
+                      setIsModalOpen(true);
+                    }}
+                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
+                    alt={product.name}
+                    width={1000}
+                    height={1000}
+                    priority
+                  />
+                </div>
+              ))
+            )}
           </Carousel>
         </div>
 
@@ -274,7 +294,7 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-2">
+          <div className="grid lg:grid-cols-3 gap-2">
             <PaymentShippingCards />
           </div>
 
@@ -547,7 +567,13 @@ const DetailClient = ({ product }: productProps) => {
           }}
         />
       </div>
-      {<Tabs description={product.description} />}
+      {
+        <Tabs
+          description={product.description}
+          productId={product.id}
+          productComments={product.comments}
+        />
+      }
     </div>
   );
 };

@@ -24,11 +24,11 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const [showModal, setShowModal] = useState(false);
 
   const [selectedColor, setSelectedColor] = useState(
-    product?.colorSize?.length > 0 ? product.colorSize[0] : {},
+    product?.colorSize?.length > 0 ? product.colorSize[0] : {}
   );
 
   const [selectedSize, setSelectedSize] = useState(
-    selectedColor?.stockSize?.length > 0 ? selectedColor.stockSize[0] : {},
+    selectedColor?.stockSize?.length > 0 ? selectedColor.stockSize[0] : {}
   );
 
   const handleAddToFav = () => {
@@ -52,7 +52,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
         quantity: 1,
         price:
           product.discountPrice !== 0 ? product.discountPrice : product.price,
-      }),
+      })
     );
 
     toast.success("Ürün favorilere eklendi.");
@@ -93,7 +93,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
             <div className="  w-10 h-4 md:w-16 md:h-6  flex justify-center items-center bg-red-600 text-mywhite rounded  text-[7px] md:text-[10px] md:text-xs shadow-md ">
               %
               {Math.round(
-                ((product.price - product.discountPrice) / product.price) * 100,
+                ((product.price - product.discountPrice) / product.price) * 100
               )}
             </div>
           )}

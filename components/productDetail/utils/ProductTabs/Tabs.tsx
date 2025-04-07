@@ -7,7 +7,7 @@ import Comments from "./Comments";
 import CommentCreate from "./CommentCreate";
 import SizeTable from "./SizeTable";
 
-function Tabs({ description }) {
+function Tabs({ description, productId, productComments }) {
   const t = useTranslations();
 
   // Dinamik sekme listesi
@@ -16,13 +16,13 @@ function Tabs({ description }) {
       label: "Yorumlar",
       //   label: t("productDetail.reviews"),
       key: "reviews",
-      content: <Comments />,
+      content: <Comments productComments={productComments} />,
     },
     {
       label: "Yorum Ekle",
       //   label: t("productDetail.addReview"),
       key: "addReview",
-      content: <CommentCreate />,
+      content: <CommentCreate productId={productId} />,
     },
     {
       label: t("productDetail.productDescription"),
@@ -41,7 +41,11 @@ function Tabs({ description }) {
     <div className="mb-3">
       <TabView>
         {tabItems.map((tab) => (
-          <TabPanel key={tab.key} header={tab.label}>
+          <TabPanel
+            key={tab.key}
+            header={tab.label}
+            className="text-xs md:text-sm"
+          >
             {tab.content}
           </TabPanel>
         ))}

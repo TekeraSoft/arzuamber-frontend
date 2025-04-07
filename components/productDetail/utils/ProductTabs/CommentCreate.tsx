@@ -13,8 +13,9 @@ import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { setLoginModal, setRegisterModal } from "@/store/modalsSlice";
 import { motion } from "framer-motion";
+import { createCommentDispatch } from "@/store/productSlice";
 
-function CommentCreate() {
+function CommentCreate({ productId }) {
   const { data: session } = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +26,7 @@ function CommentCreate() {
       .min(5, "Yorum en az 5 karakter olmalı")
       .required("Yorum alanı boş bırakılamaz"),
     images: Yup.array().max(3, "En fazla 3 resim yükleyebilirsiniz."),
-    rating: Yup.number()
+    rate: Yup.number()
       .min(1, "Lütfen bir puan verin")
       .required("Puan vermeniz gereklidir"),
   });
@@ -33,8 +34,10 @@ function CommentCreate() {
   const initialValues = {
     comment: "",
     images: [],
-    rating: null,
-    authoauthorMail: session?.user?.email,
+    rate: null,
+    userMail: session?.user?.email,
+    productId: productId,
+    userName: session?.user?.name,
   };
 
   const handleImageChange = async (e, setFieldValue, values) => {
@@ -80,6 +83,8 @@ function CommentCreate() {
 
   const handleSubmit = (values, { resetForm, setFieldValue }) => {
     console.log(values);
+
+    dispatch(createCommentDispatch(values));
 
     resetForm();
     setImagePreviews([]);
@@ -161,17 +166,17 @@ function CommentCreate() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Puanınız:
               </label>
-              <Field name="rating">
+              <Field name="rate">
                 {({ field, form }) => (
                   <div>
                     <Rating
                       value={field.value}
-                      onChange={(e) => form.setFieldValue("rating", e.value)}
+                      onChange={(e) => form.setFieldValue("rate", e.value)}
                       cancel={false}
                     />
-                    {form.errors.rating && form.touched.rating && (
+                    {form.errors.rate && form.touched.rate && (
                       <div className="text-red-500 text-sm mt-2">
-                        {form.errors.rating}
+                        {form.errors.rate}
                       </div>
                     )}
                   </div>

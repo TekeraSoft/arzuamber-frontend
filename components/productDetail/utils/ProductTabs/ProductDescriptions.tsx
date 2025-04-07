@@ -15,15 +15,15 @@ function ProductDescriptions({ description }: { description: string }) {
     return (
       <div className="flex items-center justify-center text-gray-500 space-x-2 min-h-12">
         <FaRegComment size={24} />
-        <p>Henüz hiç açıklama mevcut değil.</p>
+        <p>Henüz açıklama mevcut değil.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg ">
+    <div className="bg-white rounded-lg flex  flex-col justify-start items-end gap-2 p-4 border">
       <p
-        className={`text-secondary text-base ${
+        className={`text-secondary text-sm md:text-base ${
           lineClamp ? "line-clamp-3" : "line-clamp-none"
         } mb-3`}
       >
@@ -32,7 +32,7 @@ function ProductDescriptions({ description }: { description: string }) {
       {description.length > 250 && (
         <button
           onClick={toggleClamp}
-          className="text-secondary font-semibold mt-1 hover:underline focus:outline-none"
+          className="text-secondary  text-sm md:text-base font-semibold mt-1 hover:underline focus:outline-none"
         >
           {lineClamp
             ? t("productDetail.readMore")

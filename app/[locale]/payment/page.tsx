@@ -22,7 +22,7 @@ const PaymentPage = () => {
   }, [cartProducts, navigation]);
 
   return (
-    <div className="lg:mx-32 mx-4 rounded-lg my-20">
+    <div className="lg:mx-32 mx-4 rounded-lg  my-5">
       {/* İçerikler için container */}
       <div className="  flex flex-col-reverse md:flex-row w-full md:gap-x-4 items-start justify-center rounded-lg">
         {/* Sol taraftaki içerik */}

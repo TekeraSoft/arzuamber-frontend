@@ -4,6 +4,8 @@ import { DataTable } from "primereact/datatable";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
+  AcceptComment,
+  deleteProductCommet,
   deleteProductDispatch,
   getAllProductDispatch,
   updateActiveDispatch,
@@ -11,7 +13,7 @@ import {
 } from "@/store/adminSlice";
 import { Column } from "primereact/column";
 import { InputNumber } from "primereact/inputnumber";
-import { FaPercent } from "react-icons/fa";
+import { FaCheck, FaPercent } from "react-icons/fa";
 import Image from "next/image";
 import { BiCheck, BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
@@ -19,16 +21,20 @@ import { CgClose } from "react-icons/cg";
 import { Link } from "@/i18n/routing";
 import { Checkbox } from "primereact/checkbox";
 import { useSession } from "next-auth/react";
+import { TbMessageCircleUser } from "react-icons/tb";
+import { Dialog } from "primereact/dialog";
 
 function AllProductAdminPage() {
   const { products, loading, page } = useSelector(
-    (state: RootState) => state.admin,
+    (state: RootState) => state.admin
   );
   const { data: session } = useSession();
   const [expandedRows, setExpandedRows] = useState(null);
   const dispatch = useDispatch<AppDispatch>();
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
   const [percentageValue, setPercentageValue] = useState(0);
+  // Modal kontrolü için state
+  const [showCommentModal, setShowCommentModal] = useState(false);
 
   useEffect(() => {
     dispatch(getAllProductDispatch(pageable.currentPage, pageable.size));
@@ -104,153 +110,289 @@ function AllProductAdminPage() {
     setPageable({ size: event.rows, currentPage: event.page });
   };
 
+  // Modal durumları
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showAcceptDialog, setShowAcceptDialog] = useState(false);
+  const [currentProductId, setCurrentProductId] = useState<string | null>(null);
+  const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
+
+  // Yorum silme işlemi için açılacak dialog
+  const deleteCommentHandler = (productId: string, commentId: string) => {
+    setCurrentProductId(productId);
+    setCurrentCommentId(commentId);
+    setShowDeleteDialog(true); // Silme onay pop-up'ını göster
+  };
+
+  const acceptCommentHandler = (productId: string, commentId: string) => {
+    setCurrentProductId(productId);
+    setCurrentCommentId(commentId);
+    setShowAcceptDialog(true); // Onaylama pop-up'ını göster
+  };
+
+  const confirmDelete = () => {
+    if (currentProductId && currentCommentId) {
+      dispatch(deleteProductCommet(currentProductId, currentCommentId));
+    }
+    setShowDeleteDialog(false); // Modalı kapat
+  };
+
+  const confirmAccept = () => {
+    if (currentProductId && currentCommentId) {
+      dispatch(AcceptComment(currentProductId, currentCommentId));
+    }
+    setShowAcceptDialog(false); // Modalı kapat
+  };
+
   return (
-    <DataTable
-      size={"small"}
-      value={products}
-      className={"rounded-lg"}
-      tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
-      paginator
-      lazy={true}
-      first={pageable.currentPage * pageable.size}
-      rows={pageable.size}
-      rowsPerPageOptions={[15, 30, 50, 70]}
-      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-      currentPageReportTemplate="{first} to {last} of {totalRecords}"
-      totalRecords={page.totalElements}
-      onPage={onPageChange}
-      loading={loading}
-      rowExpansionTemplate={rowExpansionTemplate}
-      expandedRows={expandedRows}
-      onRowToggle={(e) => setExpandedRows(e.data)}
-    >
-      <Column expander={allowExpansion} style={{ width: "5rem" }} />
-      <Column header={"Resimler"} body={imageBodyTemplate} />
-      <Column field="name" header="Ürün Adı" />
-      <Column field="category" header="Kategori" />
-      <Column
-        field="price"
-        bodyStyle={{ fontWeight: "bold" }}
-        body={(row) =>
-          row.price.toLocaleString("tr-TR", {
-            style: "currency",
-            currency: "TRY",
-          })
-        }
-        header={() => (
-          <span className={"flex flex-row items-center gap-x-2"}>
-            <h2>Fiyat</h2>
-            {session?.user.role[0] === "SUPER_ADMIN" && (
-              <span className={"w-full flex flex-row items-center gap-x-2"}>
-                <InputNumber
-                  value={percentageValue}
-                  onChange={(e) => setPercentageValue(e.value)}
-                  className={"w-16 h-10"}
-                />
-                <button
-                  onClick={() => {
-                    const isConfirm = confirm(
-                      "Are you sure you want to apply to all prices?",
-                    );
-                    if (isConfirm) {
-                      dispatch(
-                        updatePriceByPercentageDispatch(
-                          parseFloat(
-                            parseFloat(String(percentageValue)).toFixed(1),
-                          ),
-                        ),
+    <div>
+      <DataTable
+        size={"small"}
+        value={products}
+        className={"rounded-lg"}
+        tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
+        paginator
+        lazy={true}
+        first={pageable.currentPage * pageable.size}
+        rows={pageable.size}
+        rowsPerPageOptions={[15, 30, 50, 70]}
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}"
+        totalRecords={page.totalElements}
+        onPage={onPageChange}
+        loading={loading}
+        rowExpansionTemplate={rowExpansionTemplate}
+        expandedRows={expandedRows}
+        onRowToggle={(e) => setExpandedRows(e.data)}
+      >
+        <Column expander={allowExpansion} style={{ width: "5rem" }} />
+        <Column header={"Resimler"} body={imageBodyTemplate} />
+        <Column field="name" header="Ürün Adı" />
+        <Column field="category" header="Kategori" />
+        <Column
+          field="price"
+          bodyStyle={{ fontWeight: "bold" }}
+          body={(row) =>
+            row.price.toLocaleString("tr-TR", {
+              style: "currency",
+              currency: "TRY",
+            })
+          }
+          header={() => (
+            <span className={"flex flex-row items-center gap-x-2"}>
+              <h2>Fiyat</h2>
+              {session?.user.role[0] === "SUPER_ADMIN" && (
+                <span className={"w-full flex flex-row items-center gap-x-2"}>
+                  <InputNumber
+                    value={percentageValue}
+                    onChange={(e) => setPercentageValue(e.value)}
+                    className={"w-16 h-10"}
+                  />
+                  <button
+                    onClick={() => {
+                      const isConfirm = confirm(
+                        "Are you sure you want to apply to all prices?"
                       );
-                      setPercentageValue(0);
-                    } else {
-                      setPercentageValue(0);
-                    }
-                  }}
-                  className={"bg-blue-600 rounded-full p-2 text-white"}
+                      if (isConfirm) {
+                        dispatch(
+                          updatePriceByPercentageDispatch(
+                            parseFloat(
+                              parseFloat(String(percentageValue)).toFixed(1)
+                            )
+                          )
+                        );
+                        setPercentageValue(0);
+                      } else {
+                        setPercentageValue(0);
+                      }
+                    }}
+                    className={"bg-blue-600 rounded-full p-2 text-white"}
+                  >
+                    <FaPercent />
+                  </button>
+                </span>
+              )}
+            </span>
+          )}
+        />
+        <Column
+          field={"purchasePrice"}
+          header={"Satın Alım"}
+          body={(row) =>
+            row.purchasePrice.toLocaleString("tr-TR", {
+              style: "currency",
+              currency: "TRY",
+            })
+          }
+        />
+        <Column
+          field={"purchasePrice"}
+          header={"İndirimli Fiyat"}
+          body={(row) =>
+            row.discountPrice.toLocaleString("tr-TR", {
+              style: "currency",
+              currency: "TRY",
+            })
+          }
+        />
+        <Column
+          field={"populate"}
+          header={"Popular"}
+          body={(row) =>
+            row.populate === true ? (
+              <BiCheck size={20} color={"green"} />
+            ) : (
+              <CgClose size={20} color={"red"} />
+            )
+          }
+        />
+        <Column
+          field={"newSeason"}
+          header={"New Season"}
+          body={(row) =>
+            row.newSeason === true ? (
+              <BiCheck size={20} color={"green"} />
+            ) : (
+              <CgClose size={20} color={"red"} />
+            )
+          }
+        />
+
+        <Column
+          field={"newSeason"}
+          header={"Is Active"}
+          body={(row) => (
+            <Checkbox
+              id={"populate"}
+              value={row.isActive}
+              onChange={(e) =>
+                dispatch(updateActiveDispatch(row.id, e.checked))
+              }
+              checked={row.isActive === true}
+            />
+          )}
+        />
+        <Column
+          field={"id"}
+          header={"Actions"}
+          body={(opt) => (
+            <span className={"flex flex-row gap-x-1"}>
+              <Link href={`/admin/product/update/${opt.id}`}>
+                <BiEdit size={24} color={"blue"} />
+              </Link>
+              <button
+                onClick={() => {
+                  const confRes = confirm("Are you sure delete this product?");
+                  if (confRes) dispatch(deleteProductDispatch(opt.id));
+                }}
+              >
+                <MdDelete size={24} color={"red"} />
+              </button>
+              <button
+                onClick={() => {
+                  setShowCommentModal(true);
+                }}
+                className="relative"
+              >
+                <TbMessageCircleUser size={24} />
+                {/* Yorum sayısını ürünün yorumlarından alıyoruz */}
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] rounded-full w-4 h-4 flex items-center justify-center">
+                  {opt.comments?.length ? opt.comments.length : 0}
+                </span>
+              </button>
+            </span>
+          )}
+        />
+      </DataTable>
+
+      {/* Modal */}
+      <Dialog
+        header="Yorumlar"
+        visible={showCommentModal}
+        style={{ width: "50vw" }}
+        onHide={() => {
+          if (!showCommentModal) return;
+          setShowCommentModal(false);
+        }}
+      >
+        <DataTable value={products.comments} tableStyle={{ minWidth: "50rem" }}>
+          <Column field="author" header="Kullanıcı"></Column>
+          <Column field="createDate" header="Kullanıcı"></Column>
+          <Column field="rate" header="Puan"></Column>
+          <Column field="comment" header="Yorum"></Column>
+          <Column field="images" header="Resim"></Column>
+          <Column
+            field={"id"}
+            header={"Actions"}
+            body={(row) => (
+              <span className={"flex flex-row gap-x-1"}>
+                <button
+                  onClick={() => deleteCommentHandler(row.productId, row.id)}
                 >
-                  <FaPercent />
+                  <MdDelete size={24} color={"red"} />
+                </button>
+                <button
+                  onClick={() => acceptCommentHandler(row.productId, row.id)}
+                >
+                  <FaCheck size={24} color="green" />
                 </button>
               </span>
             )}
-          </span>
-        )}
-      />
-      <Column
-        field={"purchasePrice"}
-        header={"Satın Alım"}
-        body={(row) =>
-          row.purchasePrice.toLocaleString("tr-TR", {
-            style: "currency",
-            currency: "TRY",
-          })
-        }
-      />
-      <Column
-        field={"purchasePrice"}
-        header={"İndirimli Fiyat"}
-        body={(row) =>
-          row.discountPrice.toLocaleString("tr-TR", {
-            style: "currency",
-            currency: "TRY",
-          })
-        }
-      />
-      <Column
-        field={"populate"}
-        header={"Popular"}
-        body={(row) =>
-          row.populate === true ? (
-            <BiCheck size={20} color={"green"} />
-          ) : (
-            <CgClose size={20} color={"red"} />
-          )
-        }
-      />
-      <Column
-        field={"newSeason"}
-        header={"New Season"}
-        body={(row) =>
-          row.newSeason === true ? (
-            <BiCheck size={20} color={"green"} />
-          ) : (
-            <CgClose size={20} color={"red"} />
-          )
-        }
-      />
-
-      <Column
-        field={"newSeason"}
-        header={"Is Active"}
-        body={(row) => (
-          <Checkbox
-            id={"populate"}
-            value={row.isActive}
-            onChange={(e) => dispatch(updateActiveDispatch(row.id, e.checked))}
-            checked={row.isActive === true}
           />
-        )}
-      />
+        </DataTable>
+      </Dialog>
 
-      <Column
-        field={"id"}
-        header={"Actions"}
-        body={(opt) => (
-          <span className={"flex flex-row gap-x-1"}>
-            <Link href={`/admin/product/update/${opt.id}`} className={"p-2"}>
-              <BiEdit size={24} color={"blue"} />
-            </Link>
+      {/* Yorum Silme onayı için Dialog */}
+      <Dialog
+        header="Yorum Silme"
+        visible={showDeleteDialog}
+        style={{ width: "50vw" }}
+        onHide={() => setShowDeleteDialog(false)}
+        footer={
+          <div>
             <button
-              onClick={() => {
-                const confRes = confirm("Are you sure delete this product?");
-                if (confRes) dispatch(deleteProductDispatch(opt.id));
-              }}
-              className={"p-2"}
+              onClick={confirmDelete}
+              className="p-button p-button-danger"
             >
-              <MdDelete size={24} color={"red"} />
+              Sil
             </button>
-          </span>
-        )}
-      />
-    </DataTable>
+            <button
+              onClick={() => setShowDeleteDialog(false)}
+              className="p-button p-button-secondary"
+            >
+              Kapat
+            </button>
+          </div>
+        }
+      >
+        <p>Bu yorumu silmek istediğinizden emin misiniz?</p>
+      </Dialog>
+
+      {/* Yorum Onaylama için Dialog */}
+      <Dialog
+        header="Yorum Onaylama"
+        visible={showAcceptDialog}
+        style={{ width: "50vw" }}
+        onHide={() => setShowAcceptDialog(false)}
+        footer={
+          <div>
+            <button
+              onClick={confirmAccept}
+              className="p-button p-button-success"
+            >
+              Onayla
+            </button>
+            <button
+              onClick={() => setShowAcceptDialog(false)}
+              className="p-button p-button-secondary"
+            >
+              Kapat
+            </button>
+          </div>
+        }
+      >
+        <p>Bu yorumu onaylamak istediğinizden emin misiniz?</p>
+      </Dialog>
+    </div>
   );
 }
 

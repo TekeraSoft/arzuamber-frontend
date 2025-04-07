@@ -7,7 +7,7 @@ import { getCategoriesDispatch } from "@/store/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { motion } from "framer-motion"; // Animasyonlar için
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 export default function CategoryBrand() {

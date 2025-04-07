@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
 import { IoMdClose } from "react-icons/io";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { useSession } from "next-auth/react";
+import { Rating } from "primereact/rating";
+import { FaCommentSlash } from "react-icons/fa";
 
-function Comments() {
+function Comments({ productComments }) {
   const { data: session } = useSession();
-
   const t = useTranslations();
 
-  const { comments } = useSelector((state: RootState) => state.products);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [lineClamp, setLineClamp] = useState(true);
@@ -41,63 +39,85 @@ function Comments() {
     setPopUpModal(true);
   };
 
+  if (!productComments || productComments.length === 0) {
+    return (
+      <div className="flex  items-center justify-center gap-2   ">
+        <FaCommentSlash className="text-xl md:text-3xl" />
+
+        <p className="text-sm md:text-xl font-medium text-gray-600">
+          Henüz yorum yapılmamış.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className=" w-full mx-auto md:p-4">
       <div className="space-y-4">
-        {comments.map((comment, index) => (
+        {productComments.map((comment, index) => (
           <div
             key={index}
             className="flex flex-col bg-white rounded-lg  gap-4 px-4 py-1.5 border"
           >
             <div className="flex flex-row justify-between items-start gap-3">
               <div className="flex flex-col items-start justify-start gap-3 w-full">
-                {comment.productImages && (
-                  <div className="flex justify-start items-center gap-2 ">
-                    {Array.isArray(comment.productImages) &&
-                      comment.productImages.map((image, index) => (
-                        <div key={index}>
-                          <Image
-                            src={image}
-                            alt={`Ürün Resmi ${index + 1}`}
-                            width={60}
-                            height={60}
-                            className="rounded-md shadow-sm cursor-pointer border hover:border-black transition duration-500"
-                            onClick={() => {
-                              setPhotoIndex(index);
-                              setIsModalOpen(true);
-                            }}
-                          />
-                        </div>
-                      ))}
-                  </div>
-                )}
-
-                <div className="flex flex-col w-full">
+                <div className="flex justify-between items-center gap-3 w-full">
+                  {comment.productImages && (
+                    <div className="flex justify-start items-center gap-2 ">
+                      {Array.isArray(comment.productImages) &&
+                        comment.productImages.map((image, index) => (
+                          <div key={index}>
+                            <Image
+                              src={image}
+                              alt={`Ürün Resmi ${index + 1}`}
+                              width={60}
+                              height={60}
+                              className="rounded-md shadow-sm cursor-pointer border hover:border-black transition duration-500"
+                              onClick={() => {
+                                setPhotoIndex(index);
+                                setIsModalOpen(true);
+                              }}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col w-full gap-1">
                   <div className="flex justify-start items-center gap-4">
                     <p className="font-semibold text-gray-800">
                       {comment.author.name}
                     </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {new Date(comment.createdAt).toLocaleString()}
-                    </p>
+
+                    <Rating
+                      value={comment.rating}
+                      readOnly
+                      cancel={false}
+                      stars={5}
+                    />
                   </div>
                   <p
-                    className={`text-gray-500 text-base ${
+                    className={`text-gray-500 text-xs  md:text-base ${
                       lineClamp ? "line-clamp-3" : "line-clamp-none"
                     }`}
                   >
                     {comment.text}
                   </p>
-                  {comment.text.length > 250 && (
-                    <button
-                      onClick={toggleClamp}
-                      className="text-secondary font-semibold text-end mt-1 hover:underline"
-                    >
-                      {lineClamp
-                        ? t("productDetail.readMore")
-                        : t("productDetail.readLess")}
-                    </button>
-                  )}
+                  <div className="flex  justify-between items-center mt-1">
+                    <p className="text-xs text-gray-400 ">
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </p>
+                    {comment.text.length > 250 && (
+                      <button
+                        onClick={toggleClamp}
+                        className="text-secondary font-semibold text-end  text-sm md:text-base hover:underline"
+                      >
+                        {lineClamp
+                          ? t("productDetail.readMore")
+                          : t("productDetail.readLess")}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -142,7 +162,7 @@ function Comments() {
           zoomInMultiplier: 2,
           doubleTapDelay: 300,
         }}
-        slides={comments
+        slides={productComments
           .flatMap((comment) => comment.productImages)
           .map((img) => ({
             src: img,

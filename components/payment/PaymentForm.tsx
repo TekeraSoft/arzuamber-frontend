@@ -31,6 +31,7 @@ import Image from "next/image";
 import { RadioButton } from "primereact/radiobutton";
 import { createPayAtDoor } from "@/store/orderSlice";
 import { useRouter } from "next/navigation";
+import sendWhatsappMessage from "./SendWhatsappMessage";
 // import { clearCart } from "@/store/cartSlice";
 
 export default function PaymentForm() {
@@ -225,6 +226,7 @@ export default function PaymentForm() {
           if (res.data.status === "success") {
             setLoading(false);
             setThreeDsModal(res.data.htmlContent);
+            // sendWhatsappMessage(values.buyer.gsmNumber, basketItems);
           } else {
             toast.error(res.data.errorMessage);
           }
@@ -264,15 +266,15 @@ export default function PaymentForm() {
                 ? 0
                 : filterData.shippingPrice,
           },
-          router,
-        ),
+          router
+        )
       );
     }
   };
 
   const validationSchema = useOrderValidationSchema(
     openBillingAddress,
-    paymentType,
+    paymentType
   );
 
   const handleOpenModal = (title: string, content: string) => {
@@ -291,7 +293,7 @@ export default function PaymentForm() {
         MembershipAgreement: false,
       });
     }
-  }, []);
+  }, [session?.status]);
 
   // Checkbox'ların durumunu değiştiren fonksiyon
   const handleCheckboxChange = (name) => {
@@ -372,7 +374,7 @@ export default function PaymentForm() {
                           name="buyer.name"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.BuyerInfo.name",
+                            "paymentForm.PaymentLabels.BuyerInfo.name"
                           )}
                         />
                         {errors.buyer?.name && touched.buyer?.name && (
@@ -390,7 +392,7 @@ export default function PaymentForm() {
                           name="buyer.surname"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.BuyerInfo.surname",
+                            "paymentForm.PaymentLabels.BuyerInfo.surname"
                           )}
                         />
                         {errors.buyer?.surname && touched.buyer?.surname && (
@@ -410,7 +412,7 @@ export default function PaymentForm() {
                         name="buyer.email"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.BuyerInfo.email",
+                          "paymentForm.PaymentLabels.BuyerInfo.email"
                         )}
                       />
                       {errors.buyer?.email && touched.buyer?.email && (
@@ -454,12 +456,12 @@ export default function PaymentForm() {
                           onChange={(e) => {
                             const [id, name] = e.target.value.split(",") as [
                               string,
-                              string,
+                              string
                             ];
                             setFieldValue("shippingAddress.city", name);
                             setFieldValue("shippingAddress.state", "");
                             const selectedStates = ice.filter(
-                              (i) => i.il_id === id,
+                              (i) => i.il_id === id
                             );
                             setStates(selectedStates);
                           }}
@@ -522,7 +524,7 @@ export default function PaymentForm() {
                           name="shippingAddress.street"
                           className="w-full border py-3 px-2 placeholder:text-sm rounded"
                           placeholder={t(
-                            "paymentForm.PaymentLabels.Adress.Neighborhood",
+                            "paymentForm.PaymentLabels.Adress.Neighborhood"
                           )}
                         />
                         {errors.shippingAddress?.street &&
@@ -542,7 +544,7 @@ export default function PaymentForm() {
                         name="shippingAddress.zipCode"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.Adress.zipcode",
+                          "paymentForm.PaymentLabels.Adress.zipcode"
                         )}
                       />
                     </div>
@@ -557,7 +559,7 @@ export default function PaymentForm() {
                         name="shippingAddress.address"
                         className="w-full border py-3 px-2 placeholder:text-sm rounded"
                         placeholder={t(
-                          "paymentForm.PaymentLabels.Adress.DetailedAddress",
+                          "paymentForm.PaymentLabels.Adress.DetailedAddress"
                         )}
                       />
                       {errors.shippingAddress?.address &&
@@ -573,7 +575,7 @@ export default function PaymentForm() {
                       <div className="flex flex-row items-center   justify-start ">
                         <span className="text-xs md:text-sm font-semibold flex  justify-center items-center gap-1">
                           {t(
-                            "paymentForm.PaymentLabels.Adress.otherAdressLabel",
+                            "paymentForm.PaymentLabels.Adress.otherAdressLabel"
                           )}
                           <IoIosArrowRoundForward size={25} className="" />
                         </span>
@@ -600,12 +602,12 @@ export default function PaymentForm() {
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               onChange={(e) => {
                                 const [id, name] = e.target.value.split(
-                                  ",",
+                                  ","
                                 ) as [string, string];
                                 setFieldValue("billingAddress.city", name);
                                 setFieldValue("billingAddress.state", "");
                                 const selectedStates = ice.filter(
-                                  (i) => i.il_id === id,
+                                  (i) => i.il_id === id
                                 );
                                 setBillingStates(selectedStates);
                               }}
@@ -643,7 +645,7 @@ export default function PaymentForm() {
                               as="select"
                               className="w-full text-sm border py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.District",
+                                "paymentForm.PaymentLabels.Adress.District"
                               )}
                             >
                               <option value="" disabled>
@@ -661,7 +663,7 @@ export default function PaymentForm() {
                           <div className="flex flex-col gap-y-2">
                             <label className="text-sm">
                               {t(
-                                "paymentForm.PaymentLabels.Adress.Neighborhood",
+                                "paymentForm.PaymentLabels.Adress.Neighborhood"
                               )}
                               <span className="text-red-500">*</span>
                             </label>
@@ -669,7 +671,7 @@ export default function PaymentForm() {
                               name="billingAddress.street"
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.Neighborhood",
+                                "paymentForm.PaymentLabels.Adress.Neighborhood"
                               )}
                             />
                             {errors.billingAddress?.street &&
@@ -688,7 +690,7 @@ export default function PaymentForm() {
                               name="billingAddress.zipCode"
                               className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                               placeholder={t(
-                                "paymentForm.PaymentLabels.Adress.zipcode",
+                                "paymentForm.PaymentLabels.Adress.zipcode"
                               )}
                             />
                           </div>
@@ -696,7 +698,7 @@ export default function PaymentForm() {
                         <div className="flex flex-col gap-y-2">
                           <label className="text-sm">
                             {t(
-                              "paymentForm.PaymentLabels.Adress.DetailedAddress",
+                              "paymentForm.PaymentLabels.Adress.DetailedAddress"
                             )}{" "}
                             <span className="text-red-500">*</span>
                           </label>
@@ -706,7 +708,7 @@ export default function PaymentForm() {
                             name="billingAddress.address"
                             className="w-full border text-sm py-3 px-2 placeholder:text-sm rounded"
                             placeholder={t(
-                              "paymentForm.PaymentLabels.Adress.DetailedAddress",
+                              "paymentForm.PaymentLabels.Adress.DetailedAddress"
                             )}
                           />
                           {errors.billingAddress?.address &&
@@ -741,8 +743,8 @@ export default function PaymentForm() {
                             ) {
                               toast.info(
                                 t(
-                                  "paymentForm.PaymentLabels.Missingİnformation",
-                                ),
+                                  "paymentForm.PaymentLabels.Missingİnformation"
+                                )
                               );
                             } else {
                               setStep(1);
@@ -770,7 +772,11 @@ export default function PaymentForm() {
                       <div className={"flex flex-row gap-x-4"}>
                         <span
                           onClick={() => setPaymentType("CREDIT_CARD")}
-                          className={`${paymentType === "CREDIT_CARD" ? "bg-green-500 text-white" : "bg-gray-50"} 
+                          className={`${
+                            paymentType === "CREDIT_CARD"
+                              ? "bg-green-500 text-white"
+                              : "bg-gray-50"
+                          } 
                           flex md:flex-row flex-col items-center justify-center cursor-pointer hover:bg-green-500 
                           gap-x-5 bg-gray-50 w-full border md:p-6 p-2 rounded hover:text-white`}
                         >
@@ -801,7 +807,11 @@ export default function PaymentForm() {
                           onClick={() => {
                             setPaymentType("PAY_AT_DOOR");
                           }}
-                          className={`${paymentType === "PAY_AT_DOOR" ? "bg-green-500 text-white" : "bg-gray-50"} 
+                          className={`${
+                            paymentType === "PAY_AT_DOOR"
+                              ? "bg-green-500 text-white"
+                              : "bg-gray-50"
+                          } 
                           flex md:flex-row flex-col items-center justify-center gap-x-5 bg-gray-50 w-full border md:p-6 p-2 rounded hover:text-white 
                           hover:bg-green-500 transition-all cursor-pointer`}
                         >
@@ -840,7 +850,7 @@ export default function PaymentForm() {
                               onChange={(e) =>
                                 setFieldValue(
                                   "paymentCard.cardHolderName",
-                                  e.target.value,
+                                  e.target.value
                                 )
                               }
                               className={`border  px-4 placeholder:text-md  ${
@@ -849,7 +859,7 @@ export default function PaymentForm() {
                                 "border-red-600"
                               }`}
                               placeholder={t(
-                                "paymentForm.PaymentLabels.cardHolderNameLabel",
+                                "paymentForm.PaymentLabels.cardHolderNameLabel"
                               )}
                             />
                           </div>
@@ -862,7 +872,7 @@ export default function PaymentForm() {
                               onChange={(e) =>
                                 setFieldValue(
                                   "paymentCard.cardNumber",
-                                  e.target.value,
+                                  e.target.value
                                 )
                               }
                               mask="9999-9999-9999-9999"
@@ -872,7 +882,7 @@ export default function PaymentForm() {
                                 "border-red-600"
                               }`}
                               placeholder={t(
-                                "paymentForm.PaymentLabels.cardNumberLabel",
+                                "paymentForm.PaymentLabels.cardNumberLabel"
                               )}
                             />
                           </div>
@@ -886,7 +896,7 @@ export default function PaymentForm() {
                                 onChange={(e) =>
                                   setFieldValue(
                                     "paymentCard.expireMonth",
-                                    e.target.value,
+                                    e.target.value
                                   )
                                 }
                                 mask="99"
@@ -897,7 +907,7 @@ export default function PaymentForm() {
                                   "border-red-600"
                                 }`}
                                 placeholder={t(
-                                  "paymentForm.PaymentLabels.CardDate.expireMonthLabel",
+                                  "paymentForm.PaymentLabels.CardDate.expireMonthLabel"
                                 )}
                               />
                               <InputMask
@@ -905,7 +915,7 @@ export default function PaymentForm() {
                                 onChange={(e) =>
                                   setFieldValue(
                                     "paymentCard.expireYear",
-                                    e.target.value,
+                                    e.target.value
                                   )
                                 }
                                 onComplete={() => cvcRef.current?.focus()}
@@ -917,7 +927,7 @@ export default function PaymentForm() {
                                   "border-red-600"
                                 }`}
                                 placeholder={t(
-                                  "paymentForm.PaymentLabels.CardDate.expireYearLabel",
+                                  "paymentForm.PaymentLabels.CardDate.expireYearLabel"
                                 )}
                               />
                             </div>
@@ -955,7 +965,7 @@ export default function PaymentForm() {
                             >
                               <p className={"font-bold break-w"}>
                                 {t(
-                                  "paymentForm.PaymentLabels.paymentDetailAdress",
+                                  "paymentForm.PaymentLabels.paymentDetailAdress"
                                 )}
                                 :
                               </p>
@@ -970,7 +980,7 @@ export default function PaymentForm() {
                             >
                               <p className={"font-bold"}>
                                 {t(
-                                  "paymentForm.PaymentLabels.PaymentDetailBillingAddress",
+                                  "paymentForm.PaymentLabels.PaymentDetailBillingAddress"
                                 )}
                                 :
                               </p>
@@ -1032,17 +1042,17 @@ export default function PaymentForm() {
                                     onClick={() =>
                                       handleOpenModal(
                                         t(
-                                          "registerForm.registerFormCheckBox.KVKK.title",
+                                          "registerForm.registerFormCheckBox.KVKK.title"
                                         ),
                                         t(
-                                          "registerForm.registerFormCheckBox.KVKK.content",
-                                        ),
+                                          "registerForm.registerFormCheckBox.KVKK.content"
+                                        )
                                       )
                                     }
                                   >
                                     <span className="text-red-600">*</span>{" "}
                                     {t(
-                                      "registerForm.registerFormCheckBox.KVKK.title",
+                                      "registerForm.registerFormCheckBox.KVKK.title"
                                     )}
                                   </div>
                                 </div>
@@ -1053,7 +1063,7 @@ export default function PaymentForm() {
                                     checked={!checkboxes.MembershipAgreement}
                                     onChange={() =>
                                       handleCheckboxChange(
-                                        "MembershipAgreement",
+                                        "MembershipAgreement"
                                       )
                                     }
                                     className="accent-primary cursor-pointer"
@@ -1063,17 +1073,17 @@ export default function PaymentForm() {
                                     onClick={() =>
                                       handleOpenModal(
                                         t(
-                                          "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                          "registerForm.registerFormCheckBox.MembershipAgreement.title"
                                         ),
                                         t(
-                                          "registerForm.registerFormCheckBox.MembershipAgreement.content",
-                                        ),
+                                          "registerForm.registerFormCheckBox.MembershipAgreement.content"
+                                        )
                                       )
                                     }
                                   >
                                     <span className="text-red-600">*</span>{" "}
                                     {t(
-                                      "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                      "registerForm.registerFormCheckBox.MembershipAgreement.title"
                                     )}
                                   </div>
                                 </div>
@@ -1200,7 +1210,7 @@ export default function PaymentForm() {
                       >
                         <p className={"font-bold"}>
                           {t(
-                            "paymentForm.PaymentLabels.PaymentDetailBillingAddress",
+                            "paymentForm.PaymentLabels.PaymentDetailBillingAddress"
                           )}
                           :
                         </p>
@@ -1261,17 +1271,17 @@ export default function PaymentForm() {
                               onClick={() =>
                                 handleOpenModal(
                                   t(
-                                    "registerForm.registerFormCheckBox.KVKK.title",
+                                    "registerForm.registerFormCheckBox.KVKK.title"
                                   ),
                                   t(
-                                    "registerForm.registerFormCheckBox.KVKK.content",
-                                  ),
+                                    "registerForm.registerFormCheckBox.KVKK.content"
+                                  )
                                 )
                               }
                             >
                               <span className="text-red-600">*</span>{" "}
                               {t(
-                                "registerForm.registerFormCheckBox.KVKK.title",
+                                "registerForm.registerFormCheckBox.KVKK.title"
                               )}
                             </div>
                           </div>
@@ -1290,17 +1300,17 @@ export default function PaymentForm() {
                               onClick={() =>
                                 handleOpenModal(
                                   t(
-                                    "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.title"
                                   ),
                                   t(
-                                    "registerForm.registerFormCheckBox.MembershipAgreement.content",
-                                  ),
+                                    "registerForm.registerFormCheckBox.MembershipAgreement.content"
+                                  )
                                 )
                               }
                             >
                               <span className="text-red-600">*</span>{" "}
                               {t(
-                                "registerForm.registerFormCheckBox.MembershipAgreement.title",
+                                "registerForm.registerFormCheckBox.MembershipAgreement.title"
                               )}
                             </div>
                           </div>
