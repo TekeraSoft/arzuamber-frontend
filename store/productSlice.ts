@@ -99,7 +99,7 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
   // dispatch(loading(true));
   getGuardRequest({
     controller: "product",
-    action: "get-product-comments",
+    action: "create-comment",
     params: { id },
   })
     .then((res) => {
