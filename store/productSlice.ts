@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "@/types";
-import { getGuardRequest } from "@/services/requestservice";
+import { getGuardRequest, postGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
-import { comments } from "@/constans/Comment";
 
 export interface Comment {
-  id: number;
-  author: string;
+  id: string;
   text: string;
   createdAt: string;
-  productImages: string[];
+  productImages?: string[];
+  rating?: number;
+  author: {
+    name: string;
+    email: string;
+  };
 }
 
 export interface CartState {
@@ -34,7 +37,7 @@ const initialState: CartState = {
   product: null,
   loading: false,
   colors: [],
-  comments: comments,
+  comments: [],
   FilteredProductsOnly: false,
 };
 
@@ -44,6 +47,9 @@ export const productSlice = createSlice({
   reducers: {
     getNewSeasonProducts: (state, action) => {
       state.newSeasonProducts = action.payload;
+    },
+    getProductComments: (state, action) => {
+      state.comments = action.payload;
     },
     getPopulateProducts: (state, action) => {
       state.populateProducts = action.payload;
@@ -70,6 +76,44 @@ export const productSlice = createSlice({
     },
   },
 });
+
+export const createCommentDispatch = (values) => async (dispatch) => {
+  try {
+    dispatch(loading(true));
+
+    const res = await postGuardRequest({
+      controller: "user",
+      action: "create-comment",
+      params: { ...values },
+    });
+
+    toast.success(res.data?.message);
+  } catch (err) {
+    toast.error(err.response?.data || "Bir hata oluştu.");
+  } finally {
+    dispatch(loading(false));
+  }
+};
+
+export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
+  // dispatch(loading(true));
+  getGuardRequest({
+    controller: "product",
+    action: "get-product-comments",
+    params: { id },
+  })
+    .then((res) => {
+      dispatch(getProductComments(res.data));
+      dispatch(loading(false));
+    })
+    .catch((err) => {
+      dispatch(loading(false));
+      console.log(err);
+    })
+    .finally(() => {
+      dispatch(loading(false));
+    });
+};
 
 export const getNewSeasonProductsDispatch =
   (page: number, size: number) => async (dispatch) => {
@@ -190,6 +234,7 @@ export const {
   getColors,
   getPopulateProducts,
   setFilteredProductsOnly,
+  getProductComments,
 } = productSlice.actions;
 
 export default productSlice.reducer;

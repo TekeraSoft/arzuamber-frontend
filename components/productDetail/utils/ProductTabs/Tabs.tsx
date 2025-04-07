@@ -16,7 +16,7 @@ function Tabs({ description, productId }) {
       label: "Yorumlar",
       //   label: t("productDetail.reviews"),
       key: "reviews",
-      content: <Comments />,
+      content: <Comments productId={productId} />,
     },
     {
       label: "Yorum Ekle",
@@ -41,7 +41,11 @@ function Tabs({ description, productId }) {
     <div className="mb-3">
       <TabView>
         {tabItems.map((tab) => (
-          <TabPanel key={tab.key} header={tab.label}>
+          <TabPanel
+            key={tab.key}
+            header={tab.label}
+            className="text-xs md:text-sm"
+          >
             {tab.content}
           </TabPanel>
         ))}

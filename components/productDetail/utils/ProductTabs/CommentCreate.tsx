@@ -13,6 +13,7 @@ import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { setLoginModal, setRegisterModal } from "@/store/modalsSlice";
 import { motion } from "framer-motion";
+import { createCommentDispatch } from "@/store/productSlice";
 
 function CommentCreate({ productId }) {
   const { data: session } = useSession();
@@ -81,6 +82,8 @@ function CommentCreate({ productId }) {
 
   const handleSubmit = (values, { resetForm, setFieldValue }) => {
     console.log(values);
+
+    dispatch(createCommentDispatch(values));
 
     resetForm();
     setImagePreviews([]);
