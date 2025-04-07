@@ -131,6 +131,7 @@ export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
   })
     .then((res) => {
       dispatch(getProduct(res.data));
+      console.log(res.data);
       dispatch(loading(false));
     })
     .finally(() => {

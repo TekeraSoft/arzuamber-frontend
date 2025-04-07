@@ -45,7 +45,6 @@ function LoginForm() {
           if (res.status === 200) {
             toast.success("Login successfully");
             dispatch(setLoginModal(false));
-            router.push("/");
           } else {
             if (res.status === 401) {
               setErrorState("Email or password is incorrect");

@@ -68,7 +68,7 @@ const SideBar = () => {
     },
   ];
 
-  if (session?.user.role[0] === "SUPER_ADMIN") {
+  if (session?.user.role.includes("SUPER_ADMIN")) {
     adminPanel.push({
       name: "User Management",
       icon: BiUser,
