@@ -111,13 +111,13 @@ const DetailClient = ({ product }: productProps) => {
     }
   }, [product]);
 
-  const [skeletonLoading, setLoading] = useState(true);
+  // const [skeletonLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 3000);
+  // }, []);
 
   return (
     <div className="md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -294,7 +294,7 @@ const DetailClient = ({ product }: productProps) => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-2">
+          <div className="grid lg:grid-cols-3 gap-2">
             <PaymentShippingCards />
           </div>
 
@@ -567,7 +567,13 @@ const DetailClient = ({ product }: productProps) => {
           }}
         />
       </div>
-      {<Tabs description={product.description} productId={product.id} />}
+      {
+        <Tabs
+          description={product.description}
+          productId={product.id}
+          productComments={product.comments}
+        />
+      }
     </div>
   );
 };

@@ -16,16 +16,16 @@ function SizeTable() {
       </div>
 
       {/* Metin kısmı */}
-      <div className="text-left max-w-md lg:max-w-lg">
+      <div className=" max-w-md lg:max-w-lg">
         <h2 className="text-2xl font-semibold mb-4 text-center lg:text-left">
           Beden Tablosu
         </h2>
-        <p className="text-lg mb-4 text-center lg:text-left">
+        <p className="text-sm md:text-lg mb-4 text-center lg:text-left">
           Aşağıdaki beden tablosunu inceleyerek, ürünün hangi bedeni size uygun
           olduğunu öğrenebilirsiniz. Her ürün farklı olabilir, bu nedenle
           ölçülerde küçük farklılıklar olabilir.
         </p>
-        <p className="text-sm text-gray-500 text-center lg:text-left">
+        <p className="text-xs md:text-sm text-gray-500 text-center lg:text-left">
           Tabloyu doğru şekilde inceleyerek, ihtiyacınıza uygun bedeni
           seçebilirsiniz. Eğer hala emin değilseniz, müşteri hizmetlerimizden
           destek alabilirsiniz.

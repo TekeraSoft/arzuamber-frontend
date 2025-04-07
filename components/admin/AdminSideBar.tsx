@@ -68,7 +68,7 @@ const SideBar = () => {
     },
   ];
 
-  if (session?.user.role[0] === "SUPER_ADMIN") {
+  if (session?.user.role.includes("SUPER_ADMIN")) {
     adminPanel.push({
       name: "User Management",
       icon: BiUser,
@@ -85,7 +85,7 @@ const SideBar = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
@@ -98,7 +98,7 @@ const SideBar = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed lg:sticky top-0 left-0 bg-secondary md:w-52 text-mywhite h-screen p-4 z-50 transition-transform 
+        } fixed lg:sticky top-0 left-0 bg-secondary md:w-52 text-mywhite  h-full p-4 z-50 transition-transform 
         duration-300 ease-in-out lg:translate-x-0 md:border-r lg:border-none  lg:w-72`}
       >
         <Heading text="Admin Panel" color="white" hr />

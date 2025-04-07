@@ -15,7 +15,7 @@ function ProductDescriptions({ description }: { description: string }) {
     return (
       <div className="flex items-center justify-center text-gray-500 space-x-2 min-h-12">
         <FaRegComment size={24} />
-        <p>Henüz hiç açıklama mevcut değil.</p>
+        <p>Henüz açıklama mevcut değil.</p>
       </div>
     );
   }

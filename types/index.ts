@@ -20,7 +20,7 @@ export interface AdminProps {
     totalElements: number;
     totalPages: number;
     number: number;
-  }
+  };
   page: {
     size: number;
     totalElements: number;
@@ -28,6 +28,7 @@ export interface AdminProps {
     number: number;
   };
   contactForms: [];
+  CustomerCommets: [];
 }
 
 export type Slider = {

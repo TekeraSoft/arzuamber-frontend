@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
 import { IoMdClose } from "react-icons/io";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { useSession } from "next-auth/react";
 import { Rating } from "primereact/rating";
-import { getProductCommentsDispatch } from "@/store/productSlice";
 import { FaCommentSlash } from "react-icons/fa";
 
-function Comments({ productId }: { productId: string }) {
+function Comments({ productComments }) {
   const { data: session } = useSession();
-  const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
 
-  const { comments } = useSelector((state: RootState) => state.products);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [lineClamp, setLineClamp] = useState(true);
   const [popUpModal, setPopUpModal] = useState(false);
-
-  useEffect(() => {
-    dispatch(getProductCommentsDispatch(productId));
-  }, [dispatch, productId]);
 
   const toggleClamp = () => {
     setLineClamp(!lineClamp);
@@ -48,7 +39,7 @@ function Comments({ productId }: { productId: string }) {
     setPopUpModal(true);
   };
 
-  if (!comments || comments.length === 0) {
+  if (!productComments || productComments.length === 0) {
     return (
       <div className="flex  items-center justify-center gap-2   ">
         <FaCommentSlash className="text-xl md:text-3xl" />
@@ -63,7 +54,7 @@ function Comments({ productId }: { productId: string }) {
   return (
     <div className=" w-full mx-auto md:p-4">
       <div className="space-y-4">
-        {comments.map((comment, index) => (
+        {productComments.map((comment, index) => (
           <div
             key={index}
             className="flex flex-col bg-white rounded-lg  gap-4 px-4 py-1.5 border"
@@ -171,7 +162,7 @@ function Comments({ productId }: { productId: string }) {
           zoomInMultiplier: 2,
           doubleTapDelay: 300,
         }}
-        slides={comments
+        slides={productComments
           .flatMap((comment) => comment.productImages)
           .map((img) => ({
             src: img,
