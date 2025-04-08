@@ -82,7 +82,7 @@ export const createCommentDispatch = (values) => async (dispatch) => {
     dispatch(loading(true));
 
     const res = await postGuardRequest({
-      controller: "user",
+      controller: "comment",
       action: "create-comment",
       params: { ...values },
     });
@@ -99,7 +99,7 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
   // dispatch(loading(true));
   getGuardRequest({
     controller: "product",
-    action: "create-comment",
+    action: "get-comment",
     params: { id },
   })
     .then((res) => {
@@ -108,7 +108,6 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
     })
     .catch((err) => {
       dispatch(loading(false));
-      console.log(err);
     })
     .finally(() => {
       dispatch(loading(false));

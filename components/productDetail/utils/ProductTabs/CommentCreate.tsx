@@ -65,10 +65,10 @@ function CommentCreate({ productId }) {
                 });
                 resolve(newFile);
               },
-              "file"
+              "file",
             );
-          })
-      )
+          }),
+      ),
     );
 
     const updatedFiles = [...values.images, ...resizedFiles];
@@ -84,11 +84,11 @@ function CommentCreate({ productId }) {
   const handleSubmit = (values, { resetForm, setFieldValue }) => {
     console.log(values);
 
-    dispatch(createCommentDispatch(values));
+    //dispatch(createCommentDispatch(values));
 
-    resetForm();
-    setImagePreviews([]);
-    setFieldValue("images", []);
+    //resetForm();
+    //setImagePreviews([]);
+    //setFieldValue("images", []);
   };
 
   if (!session) {
@@ -203,10 +203,10 @@ function CommentCreate({ productId }) {
                       className="absolute top-0 right-0 text-white bg-red-500 p-0.5 rounded-lg"
                       onClick={() => {
                         const updatedPreviews = imagePreviews.filter(
-                          (_, i) => i !== index
+                          (_, i) => i !== index,
                         );
                         const updatedFiles = values.images.filter(
-                          (_, i) => i !== index
+                          (_, i) => i !== index,
                         );
                         setImagePreviews(updatedPreviews);
                         setFieldValue("images", updatedFiles);
