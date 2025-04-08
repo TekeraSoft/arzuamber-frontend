@@ -1,8 +1,6 @@
 import axios from "axios";
 
 export default async function sendWhatsappMessage({ gsmNumber, basketItems }) {
-  console.log(basketItems);
-
   try {
     const formattedNumber = gsmNumber.replace(/\D/g, ""); // + ve boşluklardan kurtul
 

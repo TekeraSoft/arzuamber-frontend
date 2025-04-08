@@ -8,10 +8,15 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { useSession } from "next-auth/react";
 import { Rating } from "primereact/rating";
 import { FaCommentSlash } from "react-icons/fa";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import { FaUserShield, FaUser } from "react-icons/fa";
 
 function Comments({ productComments }) {
   const { data: session } = useSession();
   const t = useTranslations();
+
+  const { comments } = useSelector((state: RootState) => state.products);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -39,7 +44,7 @@ function Comments({ productComments }) {
     setPopUpModal(true);
   };
 
-  if (!productComments || productComments.length === 0) {
+  if (!comments || comments.length === 0) {
     return (
       <div className="flex  items-center justify-center gap-2   ">
         <FaCommentSlash className="text-xl md:text-3xl" />
@@ -54,7 +59,7 @@ function Comments({ productComments }) {
   return (
     <div className=" w-full mx-auto md:p-4">
       <div className="space-y-4">
-        {productComments.map((comment, index) => (
+        {comments.map((comment, index) => (
           <div
             key={index}
             className="flex flex-col bg-white rounded-lg  gap-4 px-4 py-1.5 border"
@@ -85,10 +90,12 @@ function Comments({ productComments }) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                   <div className="flex justify-start items-center gap-4">
-                    <p className="font-semibold text-gray-800">
-                      {comment.author.name}
-                    </p>
-
+                    <div className="flex justify-center items-center gap-2 ">
+                      <FaUser size={18} />
+                      <p className="font-semibold text-gray-800">
+                        {comment.userName}
+                      </p>
+                    </div>
                     <Rating
                       value={comment.rating}
                       readOnly
@@ -121,33 +128,47 @@ function Comments({ productComments }) {
                 </div>
               </div>
 
-              {session?.user?.role.includes("ADMIN") ||
-                (session?.user?.email == comment.author.email && (
-                  <div>
-                    <button
-                      id={`delete-btn-${comment.id}`}
-                      className="bg-red-500 border-none text-white p-2 rounded-md hover:opacity-85 transition-all"
-                      onClick={() => handleOpenPopUpModal()}
-                    >
-                      <IoMdClose />
-                    </button>
+              {(session?.user?.role.includes("ADMIN") ||
+                session?.user?.role.includes("SUPER_ADMIN") ||
+                session?.user?.email === comment?.userMail) && (
+                <div>
+                  <button
+                    id={`delete-btn-${comment.id}`}
+                    className="bg-red-500 border-none text-white p-2 rounded-md hover:opacity-85 transition-all"
+                    onClick={() => handleOpenPopUpModal()}
+                  >
+                    <IoMdClose />
+                  </button>
 
-                    {/* Pop-Up Modal */}
-                    {popUpModal && (
-                      <ConfirmDialog
-                        visible={popUpModal}
-                        onHide={() => setPopUpModal(false)}
-                        message="Bu yorumu silmek istediğinizden emin misiniz ?"
-                        accept={handleDelete.bind(null, comment.id)}
-                        reject={() => setPopUpModal(false)}
-                        header="Yorumu Sil"
-                        acceptLabel="Evet"
-                        rejectLabel="Hayır"
-                      />
-                    )}
-                  </div>
-                ))}
+                  {/* Pop-Up Modal */}
+                  {popUpModal && (
+                    <ConfirmDialog
+                      visible={popUpModal}
+                      onHide={() => setPopUpModal(false)}
+                      message="Bu yorumu silmek istediğinizden emin misiniz ?"
+                      accept={handleDelete.bind(null, comment.id)}
+                      reject={() => setPopUpModal(false)}
+                      header="Yorumu Sil"
+                      acceptLabel="Evet"
+                      rejectLabel="Hayır"
+                    />
+                  )}
+                </div>
+              )}
             </div>
+
+            {/* Admin yanıtı varsa göster */}
+            {comment.adminResponse && (
+              <div className="w-full  bg-gray-50 border-l-4 border-secondary p-3 rounded-md">
+                <div className="flex items-center gap-2 ">
+                  <FaUserShield size={20} className="text-secondary" />
+                  <p className="text-sm font-semibold text-secondary ">
+                    Arzuamber Moda
+                  </p>
+                </div>
+                <p className="text-sm text-gray-700">{comment.adminResponse}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>

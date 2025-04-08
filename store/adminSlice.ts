@@ -134,6 +134,22 @@ export const AcceptComment =
       });
   };
 
+export const createCommentAdminResponse =
+  (values, resetForm: () => void) => async () => {
+    postGuardRequest({
+      controller: "admin",
+      action: "create-adminresponse",
+      values,
+    })
+      .then((res) => {
+        toast.success(res.data.message);
+        resetForm();
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      });
+  };
+
 export const createProductDispatch =
   (formData: FormData, resetForm: () => void) => async () => {
     postGuardRequest(

@@ -13,10 +13,10 @@ import { format } from "date-fns/format";
 import { tr } from "date-fns/locale";
 import { Dropdown } from "primereact/dropdown";
 
-function Page(props) {
+function Page() {
   const dispatch = useDispatch<AppDispatch>();
   const { users, page, loading } = useSelector(
-    (state: RootState) => state.superAdmin,
+    (state: RootState) => state.superAdmin
   );
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
 
@@ -28,13 +28,11 @@ function Page(props) {
 
   useEffect(() => {
     dispatch(getUsersDispatch(pageable.currentPage, pageable.size));
-  }, [pageable.currentPage, pageable.size]);
+  }, [dispatch, pageable.currentPage, pageable.size]);
 
   const onPageChange = (event) => {
     setPageable({ size: event.rows, currentPage: event.page });
   };
-
-  console.log(users);
 
   return (
     <DataTable

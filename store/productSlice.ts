@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "@/types";
 import { getGuardRequest, postGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
+import { comments } from "@/constans/Comment";
 
 export interface Comment {
   id: string;
@@ -82,7 +83,7 @@ export const createCommentDispatch = (values) => async (dispatch) => {
     dispatch(loading(true));
 
     const res = await postGuardRequest({
-      controller: "user",
+      controller: "product",
       action: "create-comment",
       params: { ...values },
     });
@@ -99,7 +100,7 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
   // dispatch(loading(true));
   getGuardRequest({
     controller: "product",
-    action: "create-comment",
+    action: "get-product-comment",
     params: { id },
   })
     .then((res) => {
