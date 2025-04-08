@@ -403,7 +403,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -487,7 +487,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      })
+                      }),
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
@@ -572,6 +572,7 @@ const DetailClient = ({ product }: productProps) => {
           description={product.description}
           productId={product.id}
           productComments={product.comments}
+          rates={product?.rates}
         />
       }
     </div>

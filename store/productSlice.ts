@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "@/types";
-import { getGuardRequest, postGuardRequest } from "@/services/requestservice";
+import {
+  deleteGuardRequest,
+  getGuardRequest,
+  postGuardRequest,
+} from "@/services/requestservice";
 import { toast } from "react-toastify";
 import { comments } from "@/constans/Comment";
 
@@ -72,29 +76,40 @@ export const productSlice = createSlice({
     setFilteredProductsOnly: (state, action) => {
       state.FilteredProductsOnly = action.payload;
     },
+    setNewCommentList: (state, action) => {
+      state.product.comments = state.product.comments.filter(
+        (c) => c.id !== action.payload.id,
+      );
+    },
     loading: (state, action) => {
       state.loading = action.payload;
     },
   },
 });
 
-export const createCommentDispatch = (values) => async (dispatch) => {
-  try {
+export const createCommentDispatch =
+  (productId: string, formData) => async (dispatch) => {
     dispatch(loading(true));
-
-    const res = await postGuardRequest({
-      controller: "product",
-      action: "create-comment",
-      params: { ...values },
-    });
-
-    toast.success(res.data?.message);
-  } catch (err) {
-    toast.error(err.response?.data || "Bir hata oluştu.");
-  } finally {
-    dispatch(loading(false));
-  }
-};
+    postGuardRequest(
+      {
+        controller: "comment",
+        action: "create-comment",
+        params: { productId: productId },
+      },
+      formData,
+    )
+      .then((res) => {
+        dispatch(loading(false));
+        toast.success(res?.data.message);
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        toast.error(err.response?.data);
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
 export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
   // dispatch(loading(true));
@@ -176,6 +191,7 @@ export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
   })
     .then((res) => {
       dispatch(getProduct(res.data));
+      console.log(res.data);
       dispatch(loading(false));
     })
     .finally(() => {
@@ -225,6 +241,24 @@ export const getAllColorsDispatch = () => async (dispatch) => {
     });
 };
 
+export const deleteCommentDispatch = (id: string) => async (dispatch) => {
+  dispatch(loading(true));
+  deleteGuardRequest({
+    controller: "comment",
+    action: "delete-comment",
+    params: { commentId: id },
+  })
+    .then((res) => {
+      dispatch(loading(false));
+      dispatch(setNewCommentList({ id: id }));
+      toast.success(res.data?.message);
+    })
+    .catch((err) => {
+      dispatch(loading(false));
+      toast.error(err.response?.data);
+    });
+};
+
 // Reducer'ları dışa aktarma
 export const {
   loading,
@@ -236,6 +270,7 @@ export const {
   getPopulateProducts,
   setFilteredProductsOnly,
   getProductComments,
+  setNewCommentList,
 } = productSlice.actions;
 
 export default productSlice.reducer;

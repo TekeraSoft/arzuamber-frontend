@@ -24,7 +24,7 @@ function CommentCreate({ productId }) {
   const [recaptcha, setRecaptcha] = useState<string | null>(null);
 
   const validationSchema = Yup.object({
-    comment: Yup.string()
+    message: Yup.string()
       .min(5, "Yorum en az 5 karakter olmalı")
       .required("Yorum alanı boş bırakılamaz"),
     images: Yup.array().max(3, "En fazla 3 resim yükleyebilirsiniz."),
@@ -32,15 +32,6 @@ function CommentCreate({ productId }) {
       .min(1, "Lütfen bir puan verin")
       .required("Puan vermeniz gereklidir"),
   });
-
-  const initialValues = {
-    comment: "",
-    images: [],
-    rate: null,
-    userMail: session?.user?.email,
-    productId: productId,
-    userName: session?.user?.name,
-  };
 
   // Butonun devre dışı kalma durumunu kontrol et
   const isButtonDisabled = recaptcha == null ? true : false;
@@ -86,10 +77,55 @@ function CommentCreate({ productId }) {
     setFieldValue("images", updatedFiles);
   };
 
-  const handleSubmit = (values, { resetForm, setFieldValue }) => {
-    console.log(values);
+  const initialValues = {
+    message: "",
+    images: [],
+    rate: null,
+    userId: session?.user?.id,
+    productId: productId,
+    userName: session?.user?.name,
+  };
 
-    //dispatch(createCommentDispatch(values));
+  const handleSubmit = (values, { resetForm, setFieldValue }) => {
+    const formData = new FormData();
+
+    for (const image of values.images) {
+      formData.append("images", image);
+    }
+
+    formData.append(
+      "data",
+      new Blob(
+        [
+          JSON.stringify({
+            content: {
+              userName: values.userName,
+              message: values.message,
+            },
+            rate: {
+              id: null,
+              userName: values.userName,
+              userId: values.userId,
+              rate: values.rate,
+            },
+          }),
+        ],
+        { type: "application/json" },
+      ),
+    );
+    console.log({
+      content: {
+        userName: values.userName,
+        message: values.message,
+      },
+      rate: {
+        id: null,
+        userName: values.userName,
+        userId: values.userId,
+        rate: values.rate,
+      },
+    });
+    dispatch(createCommentDispatch(values.productId, formData));
 
     //resetForm();
     //setImagePreviews([]);
@@ -154,13 +190,13 @@ function CommentCreate({ productId }) {
             <div className="mb-4">
               <Field
                 as="textarea"
-                name="comment"
+                name="message"
                 rows="4"
                 placeholder="Yorumunuzu buraya yazın..."
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               <ErrorMessage
-                name="comment"
+                name="message"
                 component="div"
                 className="text-red-500 text-sm mt-2"
               />
@@ -191,6 +227,7 @@ function CommentCreate({ productId }) {
 
             {/* Resim Yükleme Alanı */}
             <div className="mb-4">
+              <p className={"my-1 text-red-600"}>*Görsel yükleyebilirsiniz.*</p>
               <div className="flex space-x-4">
                 {imagePreviews.map((preview, index) => (
                   <div
@@ -262,7 +299,7 @@ function CommentCreate({ productId }) {
                 type="submit"
                 className={` ${
                   isSubmitting ||
-                  !values.comment ||
+                  !values.message ||
                   !values.rate ||
                   isButtonDisabled
                     ? "opacity-60 cursor-not-allowed"
@@ -270,7 +307,7 @@ function CommentCreate({ productId }) {
                 } bg-secondary max-w-96 w-full text-white py-2 px-6 rounded-lg `}
                 disabled={
                   isSubmitting ||
-                  !values.comment ||
+                  !values.message ||
                   !values.rate ||
                   isButtonDisabled
                 }
