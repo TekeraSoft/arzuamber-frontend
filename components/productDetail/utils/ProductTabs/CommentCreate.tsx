@@ -14,12 +14,14 @@ import { useDispatch } from "react-redux";
 import { setLoginModal, setRegisterModal } from "@/store/modalsSlice";
 import { motion } from "framer-motion";
 import { createCommentDispatch } from "@/store/productSlice";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function CommentCreate({ productId }) {
   const { data: session } = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]);
+  const [recaptcha, setRecaptcha] = useState<string | null>(null);
 
   const validationSchema = Yup.object({
     comment: Yup.string()
@@ -39,6 +41,9 @@ function CommentCreate({ productId }) {
     productId: productId,
     userName: session?.user?.name,
   };
+
+  // Butonun devre dışı kalma durumunu kontrol et
+  const isButtonDisabled = recaptcha == null ? true : false;
 
   const handleImageChange = async (e, setFieldValue, values) => {
     const files = Array.from(e.target.files);
@@ -252,14 +257,30 @@ function CommentCreate({ productId }) {
               )}
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex flex-col gap-2 justify-center items-center">
               <button
                 type="submit"
-                className="bg-secondary text-white py-2 px-6 rounded-lg hover:opacity-85 transition duration-300"
-                disabled={isSubmitting}
+                className={` ${
+                  isSubmitting ||
+                  !values.comment ||
+                  !values.rate ||
+                  isButtonDisabled
+                    ? "opacity-60 cursor-not-allowed"
+                    : "hover:opacity-85 transition duration-300"
+                } bg-secondary max-w-96 w-full text-white py-2 px-6 rounded-lg `}
+                disabled={
+                  isSubmitting ||
+                  !values.comment ||
+                  !values.rate ||
+                  isButtonDisabled
+                }
               >
                 Yorum Gönder
               </button>
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                onChange={setRecaptcha}
+              />
             </div>
           </Form>
         )}

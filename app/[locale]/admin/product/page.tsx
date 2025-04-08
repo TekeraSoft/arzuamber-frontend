@@ -4,8 +4,6 @@ import { DataTable } from "primereact/datatable";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
-  AcceptComment,
-  deleteProductCommet,
   deleteProductDispatch,
   getAllProductDispatch,
   updateActiveDispatch,
@@ -13,7 +11,7 @@ import {
 } from "@/store/adminSlice";
 import { Column } from "primereact/column";
 import { InputNumber } from "primereact/inputnumber";
-import { FaCheck, FaPercent } from "react-icons/fa";
+import { FaPercent } from "react-icons/fa";
 import Image from "next/image";
 import { BiCheck, BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
@@ -22,19 +20,24 @@ import { Link } from "@/i18n/routing";
 import { Checkbox } from "primereact/checkbox";
 import { useSession } from "next-auth/react";
 import { TbMessageCircleUser } from "react-icons/tb";
-import { Dialog } from "primereact/dialog";
+import AdminResponse from "@/components/admin/Product/Comments/AdminResponse";
 
 function AllProductAdminPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: session } = useSession();
+
   const { products, loading, page } = useSelector(
     (state: RootState) => state.admin
   );
-  const { data: session } = useSession();
   const [expandedRows, setExpandedRows] = useState(null);
-  const dispatch = useDispatch<AppDispatch>();
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
   const [percentageValue, setPercentageValue] = useState(0);
+
   // Modal kontrolü için state
   const [showCommentModal, setShowCommentModal] = useState(false);
+
+  // Ürün yorumları için state
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     dispatch(getAllProductDispatch(pageable.currentPage, pageable.size));
@@ -108,39 +111,6 @@ function AllProductAdminPage() {
 
   const onPageChange = (event) => {
     setPageable({ size: event.rows, currentPage: event.page });
-  };
-
-  // Modal durumları
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showAcceptDialog, setShowAcceptDialog] = useState(false);
-  const [currentProductId, setCurrentProductId] = useState<string | null>(null);
-  const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
-
-  // Yorum silme işlemi için açılacak dialog
-  const deleteCommentHandler = (productId: string, commentId: string) => {
-    setCurrentProductId(productId);
-    setCurrentCommentId(commentId);
-    setShowDeleteDialog(true); // Silme onay pop-up'ını göster
-  };
-
-  const acceptCommentHandler = (productId: string, commentId: string) => {
-    setCurrentProductId(productId);
-    setCurrentCommentId(commentId);
-    setShowAcceptDialog(true); // Onaylama pop-up'ını göster
-  };
-
-  const confirmDelete = () => {
-    if (currentProductId && currentCommentId) {
-      dispatch(deleteProductCommet(currentProductId, currentCommentId));
-    }
-    setShowDeleteDialog(false); // Modalı kapat
-  };
-
-  const confirmAccept = () => {
-    if (currentProductId && currentCommentId) {
-      dispatch(AcceptComment(currentProductId, currentCommentId));
-    }
-    setShowAcceptDialog(false); // Modalı kapat
   };
 
   return (
@@ -289,14 +259,16 @@ function AllProductAdminPage() {
               </button>
               <button
                 onClick={() => {
+                  setSelectedProduct(opt); // Seçilen ürünü set et
                   setShowCommentModal(true);
                 }}
                 className="relative"
               >
                 <TbMessageCircleUser size={24} />
-                {/* Yorum sayısını ürünün yorumlarından alıyoruz */}
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] rounded-full w-4 h-4 flex items-center justify-center">
-                  {opt.comments?.length ? opt.comments.length : 0}
+                  {opt.comments && opt.comments.length
+                    ? opt.comments.length
+                    : 0}
                 </span>
               </button>
             </span>
@@ -304,94 +276,11 @@ function AllProductAdminPage() {
         />
       </DataTable>
 
-      {/* Modal */}
-      <Dialog
-        header="Yorumlar"
-        visible={showCommentModal}
-        style={{ width: "50vw" }}
-        onHide={() => {
-          if (!showCommentModal) return;
-          setShowCommentModal(false);
-        }}
-      >
-        <DataTable value={products.comments} tableStyle={{ minWidth: "50rem" }}>
-          <Column field="author" header="Kullanıcı"></Column>
-          <Column field="createDate" header="Kullanıcı"></Column>
-          <Column field="rate" header="Puan"></Column>
-          <Column field="comment" header="Yorum"></Column>
-          <Column field="images" header="Resim"></Column>
-          <Column
-            field={"id"}
-            header={"Actions"}
-            body={(row) => (
-              <span className={"flex flex-row gap-x-1"}>
-                <button
-                  onClick={() => deleteCommentHandler(row.productId, row.id)}
-                >
-                  <MdDelete size={24} color={"red"} />
-                </button>
-                <button
-                  onClick={() => acceptCommentHandler(row.productId, row.id)}
-                >
-                  <FaCheck size={24} color="green" />
-                </button>
-              </span>
-            )}
-          />
-        </DataTable>
-      </Dialog>
-
-      {/* Yorum Silme onayı için Dialog */}
-      <Dialog
-        header="Yorum Silme"
-        visible={showDeleteDialog}
-        style={{ width: "50vw" }}
-        onHide={() => setShowDeleteDialog(false)}
-        footer={
-          <div>
-            <button
-              onClick={confirmDelete}
-              className="p-button p-button-danger"
-            >
-              Sil
-            </button>
-            <button
-              onClick={() => setShowDeleteDialog(false)}
-              className="p-button p-button-secondary"
-            >
-              Kapat
-            </button>
-          </div>
-        }
-      >
-        <p>Bu yorumu silmek istediğinizden emin misiniz?</p>
-      </Dialog>
-
-      {/* Yorum Onaylama için Dialog */}
-      <Dialog
-        header="Yorum Onaylama"
-        visible={showAcceptDialog}
-        style={{ width: "50vw" }}
-        onHide={() => setShowAcceptDialog(false)}
-        footer={
-          <div>
-            <button
-              onClick={confirmAccept}
-              className="p-button p-button-success"
-            >
-              Onayla
-            </button>
-            <button
-              onClick={() => setShowAcceptDialog(false)}
-              className="p-button p-button-secondary"
-            >
-              Kapat
-            </button>
-          </div>
-        }
-      >
-        <p>Bu yorumu onaylamak istediğinizden emin misiniz?</p>
-      </Dialog>
+      <AdminResponse
+        showCommentModal={showCommentModal}
+        setShowCommentModal={setShowCommentModal}
+        product={selectedProduct}
+      />
     </div>
   );
 }
