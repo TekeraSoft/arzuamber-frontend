@@ -15,6 +15,7 @@ import HowToBuyModal from "../modals/HowToBuyModal";
 import Cookies from "@/components/layout/Cookies/Cookies";
 import "primereact/resources/themes/lara-light-purple/theme.css";
 import "primereact/resources/primereact.css";
+import FavWarningModal from "../modals/FavWarningModal";
 
 interface RoutesLayoutProps {
   children: React.ReactNode;
@@ -24,19 +25,20 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
   const path = usePathname();
 
   return (
-    <div className={`flex flex-col  `}>
+    <div className={`flex flex-col overflow-hidden `}>
       <PrimeReactProvider>
         <GradientColorContainer>
           {path.startsWith("/admin") ? null : <Navbar />}
           <ToastContainer position={"bottom-center"} autoClose={3000} />
           <main
-            className={` overflow-x-hidden overflow-y-hidden  ${
+            className={` overflow-hidden  ${
               path.startsWith("/admin") ? "" : "flex-grow mt-36 md:mt-40"
             }`}
           >
             <CartSidebar />
             <HowToBuyModal />
             <AuthLayout />
+            <FavWarningModal />
             {children}
             <ScrollToTop />
             <LayoutSocialButtons />

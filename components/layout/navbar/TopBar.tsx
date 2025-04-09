@@ -34,7 +34,7 @@ function TopBar() {
           <GoDotFill size={14} className=" hidden md:block" />
           <BiLogoWhatsapp size={14} className="  block  md:hidden" />
           <span className="flex gap-1 text-[9px] md:text-xs whitespace-nowrap">
-            +90 (534) 260 8385 -{" "}
+            +90 (534) 260 8385 -
             <span className=" hidden md:grid">Destek Hattı</span> (10:00 -
             18:00)
           </span>

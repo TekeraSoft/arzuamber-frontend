@@ -62,11 +62,11 @@ function OrderPage() {
               className=" border flex flex-col rounded-lg  w-full shadow-sm  "
             >
               <div className="flex  justify-between items-center gap-1 mb-4 px-2 py-1 ">
-                <h3 className="text-base md:text-lg font-semibold">
+                <h3 className="text-sm md:text-lg font-semibold">
                   {t("ordersPage.order")} #{order.paymentId}
                 </h3>
                 <span
-                  className={`font-semibold text-sm md:text-sm p-2 ${
+                  className={`font-semibold text-xs md:text-sm p-2 ${
                     order.status === "PAID"
                       ? "bg-green-500 text-mywhite"
                       : order.status === "PENDING"

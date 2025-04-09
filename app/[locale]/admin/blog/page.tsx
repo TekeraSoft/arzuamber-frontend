@@ -13,7 +13,7 @@ import { FaTimes } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import NotFoundBlogs from "@/components/error/NotFoundBlogs";
 import Image from "next/image";
-import {deleteBlogDispatch, getAllBlogDispatch} from "@/store/adminSlice";
+import { deleteBlogDispatch, getAllBlogDispatch } from "@/store/adminSlice";
 
 function AdminAllBlogPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -107,7 +107,7 @@ function AdminAllBlogPage() {
               header={t("adminTranslate.blogs.content")}
               className="whitespace-nowrap"
               body={(rowData) => (
-                <div className="line-clamp-2">{rowData.content}</div>
+                <div className="line-clamp-4 max-w-48">{rowData.content}</div>
               )}
             />
 

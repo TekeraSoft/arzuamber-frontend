@@ -64,10 +64,10 @@ function CartSidebar() {
   return (
     <div>
       {isCartModalOpen && (
-        <div className="fixed inset-0 z-[999] bg-gray-500 bg-opacity-50 flex justify-end items-start overflow-y-auto ">
+        <div className="fixed inset-0 z-[999] bg-gray-500 bg-opacity-50 flex justify-end items-start overflow-y-auto overflow-x-hidden ">
           <div
             ref={modalRef}
-            className={`w-[360px]  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-2 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
+            className={`w-[360px] overflow-x-hidden  md:w-2/4 lg:w-2/5 xl:w-1/4 h-full flex flex-col justify-start items-center gap-2 bg-white border border-gray-200 overflow-hidden px-6 animate__animated animate__fadeInRight animate__faster`}
           >
             {loading && (
               <div
@@ -93,7 +93,7 @@ function CartSidebar() {
               <EmptyCart />
             ) : (
               <>
-                <div className="flex flex-col gap-3 w-full">
+                <div className="flex flex-col gap-3 w-full  overflow-x-hidden">
                   <div className="w-full max-h-52 md:max-h-96  overflow-y-auto border px-2 rounded-lg">
                     {cartProducts.map((cart, index) => {
                       return (

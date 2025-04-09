@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "../general/Button";
-import Heading from "../general/Heading";
 import { useTranslations } from "next-intl";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaRegCreditCard } from "react-icons/fa";
@@ -59,18 +58,6 @@ const CartSummary = ({ total }: CartSummaryProps) => {
         mt-2"
         >
           <div className="flex flex-col  w-full justify-center items-center gap-2 mb-3 mt-2">
-            <Link href={`/products`} className="w-full">
-              <Button
-                text={t("CartPage.cartSummary.continueShopping")}
-                color="primary"
-                size="large"
-                icon={FaArrowRightLong}
-                iconSize={15}
-                animation
-                className="text-xs"
-                onClick={handleCloseModal}
-              />
-            </Link>
             <Link href={`/payment`} className="w-full ">
               <Button
                 animation
@@ -79,6 +66,18 @@ const CartSummary = ({ total }: CartSummaryProps) => {
                 size="large"
                 icon={FaRegCreditCard}
                 iconSize={15}
+                className="text-xs"
+                onClick={handleCloseModal}
+              />
+            </Link>
+            <Link href={`/products`} className="w-full">
+              <Button
+                text={t("CartPage.cartSummary.continueShopping")}
+                color="primary"
+                size="large"
+                icon={FaArrowRightLong}
+                iconSize={15}
+                animation
                 className="text-xs"
                 onClick={handleCloseModal}
               />

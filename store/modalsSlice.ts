@@ -6,6 +6,7 @@ export interface ModalState {
   isCartModalOpen: boolean;
   isForgotPassModalOpen: boolean;
   activeModal: { isOpen: boolean; title: string; content: string };
+  FavWarningModalStatus: boolean;
 }
 
 const initialState: ModalState = {
@@ -14,6 +15,7 @@ const initialState: ModalState = {
   isCartModalOpen: false,
   isForgotPassModalOpen: false,
   activeModal: { isOpen: false, title: "", content: "" },
+  FavWarningModalStatus: false,
 };
 
 export const modalsSlice = createSlice({
@@ -38,6 +40,9 @@ export const modalsSlice = createSlice({
       state.isForgotPassModalOpen = action.payload;
     },
 
+    setFavWarningModalStatus(state, action) {
+      state.FavWarningModalStatus = action.payload;
+    },
     openDynamicModal(
       state,
       action: PayloadAction<{ title: string; content: string }>
@@ -64,6 +69,7 @@ export const {
   openDynamicModal,
   closeDynamicModal,
   setForgotPassModal,
+  setFavWarningModalStatus,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

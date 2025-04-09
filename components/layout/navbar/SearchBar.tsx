@@ -223,8 +223,6 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
           className={`${
             SearchOpen ? "flex" : "hidden"
           } relative bg-mywhite justify-center items-center text-black px-4 py-1 border-b md:border-none min-w-full gap-2`}
-          onMouseLeave={() => setIsFocused(false)}
-          onMouseDown={() => setIsFocused(true)}
         >
           {/* <div
             className="lg:hidden flex justify-center items-center bg-secondary text-mywhite p-1  rounded-full cursor-pointer hover:bg-secondaryDark transition duration-300"
@@ -242,7 +240,11 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             {t("Filter.title")}
           </button>
 
-          <div className="w-full  flex transition duration-300 !focus:outline-secondary">
+          <div
+            className="w-full  flex transition duration-300 !focus:outline-secondary"
+            onMouseLeave={() => setIsFocused(false)}
+            onMouseDown={() => setIsFocused(true)}
+          >
             <span className="p-input-icon-right w-full">
               {loading ? (
                 <SpinnerIcon />
@@ -342,7 +344,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               ))}
             </div>
           ) : isFocused && searchProducts.length === 0 ? (
-            <div className="bg-white border border-slate-300 max-h-[345px] w-full   flex flex-col items-center justify-center gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-40 animate__animated animate__fadeIn">
+            <div className="bg-white border border-slate-300 max-h-[345px] w-full   flex flex-col items-center justify-center gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-10 animate__animated animate__fadeIn">
               <div className="flex items-center justify-center gap-2">
                 <BiSearch size={20} className="text-gray-400" />
                 <p className="text-gray-500 text-sm">
