@@ -5,3 +5,28 @@
   //     setLoading(false);
   //   }, 3000);
   // }, []);
+
+
+
+
+           <button
+                onClick={handleAddToFav}
+                className="w-full md:w-3/12 text-white flex justify-center items-center gap-2 y h-10 md:h-12 rounded-lg bg-fourth hover:scale-105 hover:opacity-85 transition duration-300"
+              >
+                <FaHeart className="text-white" />
+                <span className="text-sm font-medium">Favorilere Ekle</span>
+              </button>
+
+
+                const handleAddToFav = () => {
+    if (!session?.user) {
+      dispatch(setFavWarningModalStatus(true));
+      return;
+    }
+    dispatch(
+      addToFav({
+        productId: product.id,
+        userId: session.user.id,
+      })
+    );
+  };
