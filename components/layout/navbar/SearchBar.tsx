@@ -27,7 +27,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   const dispatch = useDispatch<AppDispatch>();
   const [searchTerm, setSearchTerm] = useState("");
   const { searchProducts, filterStatus, loading } = useSelector(
-    (state: RootState) => state.search,
+    (state: RootState) => state.search
   );
   const [isMobile, setIsMobile] = useState(false);
   const searchResultsRef = useRef(null);
@@ -122,8 +122,10 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               <BiSearch size={18} />
             )}
             <InputText
+              onFocus={() => setIsFocused(true)}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={"w-full rounded !shadow-none !outline-none !h-10"}
+              onBlur={() => setIsFocused(false)} // bu satırı ekle!
+              className={"w-full rounded !shadow-none !outline-none !h-8"}
               placeholder={t("SearchBar.placeHolder")}
             />
           </span>
@@ -239,11 +241,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             {t("Filter.title")}
           </button>
 
-          <div
-            className="w-full  flex transition duration-300 !focus:outline-secondary"
-            onMouseLeave={() => setIsFocused(false)}
-            onMouseDown={() => setIsFocused(true)}
-          >
+          <div className="w-full  flex transition duration-300 !focus:outline-secondary">
             <span className="p-input-icon-right w-full">
               {loading ? (
                 <SpinnerIcon />
@@ -262,6 +260,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               )}
               <InputText
                 onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)} // bu satırı ekle!
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={
                   "w-full rounded !shadow-none !outline-none !hover:shadow-none !hover:outline-none !h-8 shadow-secondary "

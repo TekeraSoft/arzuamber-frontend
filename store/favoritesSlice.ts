@@ -1,14 +1,9 @@
-import {
-  deleteGuardRequest,
-  getGuardRequest,
-  postGuardRequest,
-} from "@/services/requestservice";
+import { deleteGuardRequest, getGuardRequest } from "@/services/requestservice";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
   favorites: [],
-  // favorites: favProduct,
   loading: false,
 };
 
@@ -18,6 +13,15 @@ export const favoritesSlice = createSlice({
   reducers: {
     getAllFavoritesDispatch: (state, action) => {
       state.favorites = action.payload;
+    },
+    updateFavoritesDispatch: (state, action) => {
+      // Eğer aynı ürün daha önce eklenmişse tekrar ekleme (opsiyonel kontrol)
+      const exists = state.favorites.some(
+        (item) => item.id === action.payload.id
+      );
+      if (!exists) {
+        state.favorites.push(action.payload);
+      }
     },
     deleteFavorite: (state, action) => {
       state.favorites = state.favorites.filter(
@@ -29,19 +33,6 @@ export const favoritesSlice = createSlice({
     },
   },
 });
-
-export const addToFav = (value: object) => async (dispatch) => {
-  dispatch(loading(true));
-  postGuardRequest({ controller: "fav", action: "add-to-fav" }, value)
-    .then((res) => {
-      dispatch(loading(false));
-      toast.success(res.data?.message);
-    })
-    .catch((err) => {
-      dispatch(loading(false));
-      toast.error(err.response?.data);
-    });
-};
 
 export const deleteToFav =
   (productId: string, userId: string) => async (dispatch) => {
@@ -86,7 +77,11 @@ export const getAllFavorites = (userId: string) => async (dispatch) => {
 };
 
 // Reducer'ları dışa aktarma
-export const { getAllFavoritesDispatch, deleteFavorite, loading } =
-  favoritesSlice.actions;
+export const {
+  getAllFavoritesDispatch,
+  deleteFavorite,
+  updateFavoritesDispatch,
+  loading,
+} = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
