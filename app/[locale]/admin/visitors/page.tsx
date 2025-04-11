@@ -8,9 +8,10 @@ import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { BiCart, BiComment } from "react-icons/bi";
+import { BiCart, BiComment, BiHeart } from "react-icons/bi";
 import { format } from "date-fns/format";
 import { tr } from "date-fns/locale";
+import { AiFillHeart } from "react-icons/ai";
 
 function Page() {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,7 +47,10 @@ function Page() {
                 {(notification?.type === "ADD_TO_CART" && (
                   <BiCart size={24} />
                 )) ||
-                  (notification?.type === "COMMENT" && <BiComment size={24} />)}
+                  (notification?.type === "COMMENT" && (
+                    <BiComment size={24} />
+                  )) ||
+                  (notification?.type === "FAV" && <BiHeart size={24} />)}
                 <span className={"flex flex-col gap-y-1"}>
                   <h3>{notification?.head}</h3>
                   <p className={"text-gray-500"}>{notification?.content}</p>
