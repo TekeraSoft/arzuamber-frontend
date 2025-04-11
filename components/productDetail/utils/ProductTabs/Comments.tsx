@@ -8,12 +8,12 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { useSession } from "next-auth/react";
 import { Rating } from "primereact/rating";
 import { FaCommentSlash } from "react-icons/fa";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
 import { FaUserShield, FaUser } from "react-icons/fa";
 import { deleteCommentDispatch } from "@/store/productSlice";
 
-function Comments({ productComments, rates }) {
+function Comments({ productComments }) {
   const { data: session } = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
@@ -35,8 +35,8 @@ function Comments({ productComments, rates }) {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteCommentDispatch(id));
+  const handleDelete = (id, rateId) => {
+    dispatch(deleteCommentDispatch(id, rateId));
     setPopUpModal(false);
   };
 
@@ -59,9 +59,9 @@ function Comments({ productComments, rates }) {
   return (
     <div className=" w-full mx-auto md:p-4">
       <div className="space-y-4">
-        {productComments.flatMap((comment, index) => (
+        {productComments.flatMap((comment, commentIndex) => (
           <div
-            key={index}
+            key={commentIndex}
             className="flex flex-col bg-white rounded-lg  gap-4 px-4 py-1.5 border"
           >
             <div className="flex flex-row justify-between items-start gap-3">
@@ -89,13 +89,30 @@ function Comments({ productComments, rates }) {
                   )}
                 </div>
                 {comment.content.map((content, index) => (
-                  <div className="flex flex-col w-full gap-1">
+                  <div
+                    key={index}
+                    className={`flex flex-col w-full gap-1 ${index !== 0 ? "ml-6 border-spacing-1 pl-2 border-l-4 rounded-lg border-secondary" : ""}`}
+                  >
                     <div className="flex justify-start items-center gap-4">
-                      <div className="flex justify-center items-center gap-2 ">
-                        <FaUser size={18} />
-                        <p className="font-semibold text-gray-800">
-                          {content.userName}
-                        </p>
+                      <div className=" flex justify-center items-center gap-2 ">
+                        {index !== 0 ? (
+                          <FaUserShield size={20} className="text-secondary" />
+                        ) : (
+                          <FaUser size={18} />
+                        )}
+                        <span className={"flex flex-row items-center gap-x-4"}>
+                          <p className="  font-semibold text-gray-800">
+                            {content.userName}
+                          </p>
+                          {index === 0 && (
+                            <Rating
+                              value={comment?.rate?.rate}
+                              readOnly
+                              cancel={false}
+                              stars={5}
+                            />
+                          )}
+                        </span>
                       </div>
                     </div>
                     <p
@@ -122,16 +139,9 @@ function Comments({ productComments, rates }) {
                     </div>
                   </div>
                 ))}
-
-                <Rating
-                  value={rates[index].rate}
-                  readOnly
-                  cancel={false}
-                  stars={5}
-                />
               </div>
 
-              {session?.user?.id === rates[index].userId && (
+              {session?.user?.id === comment?.rate?.userId && (
                 <div>
                   <button
                     id={`delete-btn-${comment.id}`}
@@ -147,7 +157,11 @@ function Comments({ productComments, rates }) {
                       visible={popUpModal}
                       onHide={() => setPopUpModal(false)}
                       message="Bu yorumu silmek istediğinizden emin misiniz ?"
-                      accept={handleDelete.bind(null, comment.id)}
+                      accept={handleDelete.bind(
+                        null,
+                        comment.id,
+                        comment.rate.id,
+                      )}
                       reject={() => setPopUpModal(false)}
                       header="Yorumu Sil"
                       acceptLabel="Evet"
@@ -157,19 +171,6 @@ function Comments({ productComments, rates }) {
                 </div>
               )}
             </div>
-
-            {/* Admin yanıtı varsa göster */}
-            {comment.adminResponse && (
-              <div className="w-full  bg-gray-50 border-l-4 border-secondary p-3 rounded-md">
-                <div className="flex items-center gap-2 ">
-                  <FaUserShield size={20} className="text-secondary" />
-                  <p className="text-sm font-semibold text-secondary ">
-                    Arzuamber Moda
-                  </p>
-                </div>
-                <p className="text-sm text-gray-700">{comment.adminResponse}</p>
-              </div>
-            )}
           </div>
         ))}
       </div>

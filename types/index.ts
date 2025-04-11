@@ -8,6 +8,7 @@ export type RequestOptions = {
 
 export interface AdminProps {
   product: Product;
+  commentProduct: Product;
   products: Product[];
   categories: Category[];
   colors: Color[];
@@ -167,6 +168,15 @@ export interface PaymentFormValues {
     apartment?: string;
   };
 }
+
+export type Notification = {
+  notificationType: string;
+  head: string;
+  content: string;
+  createdAt: Date;
+  isActive: boolean;
+  id: string;
+};
 
 export interface CarouselType {
   id: string;

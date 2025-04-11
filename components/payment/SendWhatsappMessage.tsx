@@ -7,7 +7,7 @@ export default async function sendWhatsappMessage({ gsmNumber, basketItems }) {
     // Sepet içeriğini formatla
     const itemsText = basketItems
       .map(
-        (item) => `- ${item.name} | Beden: ${item.size} | Renk: ${item.color}`
+        (item) => `- ${item.name} | Beden: ${item.size} | Renk: ${item.color}`,
       )
       .join("\n");
 
@@ -30,14 +30,12 @@ export default async function sendWhatsappMessage({ gsmNumber, basketItems }) {
           Authorization: `Bearer YOUR_ACCESS_TOKEN`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
-
-    console.log("Mesaj başarıyla gönderildi.");
   } catch (error) {
     console.error(
       "Mesaj gönderilemedi:",
-      error?.response?.data || error.message
+      error?.response?.data || error.message,
     );
   }
 }

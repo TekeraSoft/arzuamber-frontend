@@ -3,6 +3,7 @@ import { Product } from "@/types";
 import {
   deleteGuardRequest,
   getGuardRequest,
+  patchRequest,
   postGuardRequest,
 } from "@/services/requestservice";
 import { toast } from "react-toastify";
@@ -112,7 +113,7 @@ export const createCommentDispatch =
   };
 
 export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
-  // dispatch(loading(true));
+  dispatch(loading(true));
   getGuardRequest({
     controller: "product",
     action: "get-product-comment",
@@ -124,7 +125,6 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
     })
     .catch((err) => {
       dispatch(loading(false));
-      console.log(err);
     })
     .finally(() => {
       dispatch(loading(false));
@@ -191,7 +191,6 @@ export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
   })
     .then((res) => {
       dispatch(getProduct(res.data));
-      console.log(res.data);
       dispatch(loading(false));
     })
     .finally(() => {
@@ -241,23 +240,24 @@ export const getAllColorsDispatch = () => async (dispatch) => {
     });
 };
 
-export const deleteCommentDispatch = (id: string) => async (dispatch) => {
-  dispatch(loading(true));
-  deleteGuardRequest({
-    controller: "comment",
-    action: "delete-comment",
-    params: { commentId: id },
-  })
-    .then((res) => {
-      dispatch(loading(false));
-      dispatch(setNewCommentList({ id: id }));
-      toast.success(res.data?.message);
+export const deleteCommentDispatch =
+  (id: string, rateId: string) => async (dispatch) => {
+    dispatch(loading(true));
+    deleteGuardRequest({
+      controller: "comment",
+      action: "delete-comment",
+      params: { commentId: id, rateId: rateId },
     })
-    .catch((err) => {
-      dispatch(loading(false));
-      toast.error(err.response?.data);
-    });
-};
+      .then((res) => {
+        dispatch(loading(false));
+        dispatch(setNewCommentList({ id: id }));
+        toast.success(res.data?.message);
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        toast.error(err.response?.data);
+      });
+  };
 
 // Reducer'ları dışa aktarma
 export const {

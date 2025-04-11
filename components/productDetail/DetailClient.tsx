@@ -572,7 +572,6 @@ const DetailClient = ({ product }: productProps) => {
           description={product.description}
           productId={product.id}
           productComments={product.comments}
-          rates={product?.rates}
         />
       }
     </div>

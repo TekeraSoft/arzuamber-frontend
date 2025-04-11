@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
+  clearStateAdminSearchProducts,
   deleteProductDispatch,
   getAllProductDispatch,
+  searchAdminProductDispatch,
+  setCommentProduct,
   updateActiveDispatch,
   updatePriceByPercentageDispatch,
 } from "@/store/adminSlice";
@@ -13,21 +16,30 @@ import { Column } from "primereact/column";
 import { InputNumber } from "primereact/inputnumber";
 import { FaPercent } from "react-icons/fa";
 import Image from "next/image";
-import { BiCheck, BiEdit } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import {
+  BiCheck,
+  BiEdit,
+  BiSearch,
+  BiSolidMessageSquareDetail,
+} from "react-icons/bi";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
 import { Link } from "@/i18n/routing";
 import { Checkbox } from "primereact/checkbox";
 import { useSession } from "next-auth/react";
 import { TbMessageCircleUser } from "react-icons/tb";
 import AdminResponse from "@/components/admin/Product/Comments/AdminResponse";
+import { SpinnerIcon } from "primereact/icons/spinner";
+import { InputText } from "primereact/inputtext";
+import useDebounce from "@/hooks/debounceHook";
 
 function AllProductAdminPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { data: session } = useSession();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const { products, loading, page } = useSelector(
-    (state: RootState) => state.admin
+  const { products, loading, page, searchAdminProducts } = useSelector(
+    (state: RootState) => state.admin,
   );
   const [expandedRows, setExpandedRows] = useState(null);
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
@@ -39,9 +51,19 @@ function AllProductAdminPage() {
   // Ürün yorumları için state
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   useEffect(() => {
     dispatch(getAllProductDispatch(pageable.currentPage, pageable.size));
   }, [pageable.currentPage, pageable.size, dispatch]);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      dispatch(searchAdminProductDispatch(debouncedSearchTerm));
+    } else {
+      dispatch(clearStateAdminSearchProducts());
+    }
+  }, [debouncedSearchTerm, dispatch]);
 
   const allowExpansion = (rowData) => {
     return rowData.colorSize.length > 0;
@@ -117,7 +139,7 @@ function AllProductAdminPage() {
     <div>
       <DataTable
         size={"small"}
-        value={products}
+        value={searchAdminProducts?.length > 0 ? searchAdminProducts : products}
         className={"rounded-lg"}
         tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
         paginator
@@ -136,7 +158,34 @@ function AllProductAdminPage() {
       >
         <Column expander={allowExpansion} style={{ width: "5rem" }} />
         <Column header={"Resimler"} body={imageBodyTemplate} />
-        <Column field="name" header="Ürün Adı" />
+        <Column
+          field="name"
+          header={() => (
+            <div className={"flex w-full flex-row items-center gap-x-2"}>
+              <h3 className={"w-full"}>Product Name</h3>
+              <span className="p-input-icon-right w-full">
+                {loading ? (
+                  <SpinnerIcon />
+                ) : searchAdminProducts.length > 0 ? (
+                  <MdCancel
+                    onClick={() => {
+                      dispatch(clearStateAdminSearchProducts());
+                      setSearchTerm("");
+                    }}
+                    size={18}
+                    className={"cursor-pointer"}
+                  />
+                ) : (
+                  <BiSearch size={18} />
+                )}
+                <InputText
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={"w-44 rounded !shadow-none !outline-none !h-10"}
+                />
+              </span>
+            </div>
+          )}
+        />
         <Column field="category" header="Kategori" />
         <Column
           field="price"
@@ -160,15 +209,15 @@ function AllProductAdminPage() {
                   <button
                     onClick={() => {
                       const isConfirm = confirm(
-                        "Are you sure you want to apply to all prices?"
+                        "Are you sure you want to apply to all prices?",
                       );
                       if (isConfirm) {
                         dispatch(
                           updatePriceByPercentageDispatch(
                             parseFloat(
-                              parseFloat(String(percentageValue)).toFixed(1)
-                            )
-                          )
+                              parseFloat(String(percentageValue)).toFixed(1),
+                            ),
+                          ),
                         );
                         setPercentageValue(0);
                       } else {
@@ -245,7 +294,13 @@ function AllProductAdminPage() {
           field={"id"}
           header={"Actions"}
           body={(opt) => (
-            <span className={"flex flex-row gap-x-1"}>
+            <span className={"flex flex-row gap-x-3"}>
+              <Link target={"_blank"} href={`/product/${opt.slug}`}>
+                <BiSolidMessageSquareDetail
+                  size={24}
+                  className={"text-teal-200"}
+                />
+              </Link>
               <Link href={`/admin/product/update/${opt.id}`}>
                 <BiEdit size={24} color={"blue"} />
               </Link>
@@ -260,15 +315,14 @@ function AllProductAdminPage() {
               <button
                 onClick={() => {
                   setSelectedProduct(opt); // Seçilen ürünü set et
+                  dispatch(setCommentProduct(opt));
                   setShowCommentModal(true);
                 }}
                 className="relative"
               >
                 <TbMessageCircleUser size={24} />
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] rounded-full w-4 h-4 flex items-center justify-center">
-                  {opt.comments && opt.comments.length
-                    ? opt.comments.length
-                    : 0}
+                  {opt.comments.length}
                 </span>
               </button>
             </span>
@@ -279,7 +333,6 @@ function AllProductAdminPage() {
       <AdminResponse
         showCommentModal={showCommentModal}
         setShowCommentModal={setShowCommentModal}
-        product={selectedProduct}
       />
     </div>
   );

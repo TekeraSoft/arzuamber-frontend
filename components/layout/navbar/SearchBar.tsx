@@ -27,7 +27,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   const dispatch = useDispatch<AppDispatch>();
   const [searchTerm, setSearchTerm] = useState("");
   const { searchProducts, filterStatus, loading } = useSelector(
-    (state: RootState) => state.search
+    (state: RootState) => state.search,
   );
   const [isMobile, setIsMobile] = useState(false);
   const searchResultsRef = useRef(null);
@@ -122,7 +122,6 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               <BiSearch size={18} />
             )}
             <InputText
-              onFocus={() => setIsFocused(true)}
               onChange={(e) => setSearchTerm(e.target.value)}
               className={"w-full rounded !shadow-none !outline-none !h-10"}
               placeholder={t("SearchBar.placeHolder")}

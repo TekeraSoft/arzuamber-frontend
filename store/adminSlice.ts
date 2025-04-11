@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 const initialState: AdminProps = {
   products: [],
   product: null,
+  commentProduct: null,
+  searchAdminProducts: [],
   categories: [],
   sliders: [],
   page: {},
@@ -23,6 +25,7 @@ const initialState: AdminProps = {
   blogs: [],
   loading: false,
   contactForms: [],
+  notifications: [],
 };
 
 export const adminSlice = createSlice({
@@ -42,7 +45,7 @@ export const adminSlice = createSlice({
     },
     reduceOrders: (state, action) => {
       state.orders = state.orders.filter(
-        (order) => order.id !== action.payload
+        (order) => order.id !== action.payload,
       );
     },
     getCategories: (state, action) => {
@@ -53,7 +56,7 @@ export const adminSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     getColors: (state, action) => {
@@ -64,13 +67,13 @@ export const adminSlice = createSlice({
     },
     updatedSlider: (state, action) => {
       state.sliders = state.sliders.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     deleteContactMessage: (state, action) => {
       state.contactForms._embedded.contactDtoes =
         state.contactForms._embedded.contactDtoes.filter(
-          (item) => item.id !== action.payload
+          (item) => item.id !== action.payload,
         );
     },
     deleteBlog: (state, action) => {
@@ -82,12 +85,47 @@ export const adminSlice = createSlice({
     },
     setOrderStatus: (state, action) => {
       let findOrder = state.orders.find(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload.id,
       );
       findOrder.status = action.payload.status;
     },
     setNewOrderToReturnWebsocket: (state, action) => {
       state.orders = [action.payload, ...state.orders];
+    },
+    setReplyList: (state, action) => {
+      const comment = state.commentProduct.comments.find(
+        (c) => c.id === action.payload.commentId,
+      );
+      comment.content.push({
+        userName: action.payload.userName,
+        message: action.payload.message,
+      });
+    },
+    changeCommentStatus: (state, action) => {
+      const comment = state.commentProduct.comments.find(
+        (c) => c.id === action.payload.commentId,
+      );
+      comment.isActive = action.payload.status;
+    },
+    setCommentProduct: (state, action) => {
+      state.commentProduct = action.payload;
+    },
+    setNewAdminCommentList: (state, action) => {
+      state.commentProduct.comments = state.commentProduct.comments.filter(
+        (c) => c.id !== action.payload.id,
+      );
+    },
+    getNotifications: (state, action) => {
+      state.notifications = action.payload._embedded.notifications;
+    },
+    setNewNotificationToReturnWebsocket: (state, action) => {
+      state.notifications = [action.payload, ...state.notifications];
+    },
+    setAdminSearchProducts: (state, action) => {
+      state.searchAdminProducts = action.payload;
+    },
+    clearStateAdminSearchProducts: (state) => {
+      state.searchAdminProducts = [];
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -154,7 +192,7 @@ export const createProductDispatch =
   (formData: FormData, resetForm: () => void) => async () => {
     postGuardRequest(
       { controller: "admin", action: "create-product" },
-      formData
+      formData,
     )
       .then((res) => {
         toast.success(res.data.message);
@@ -260,7 +298,7 @@ export const createCategoryDispatch = (value: object) => async (dispatch) => {
   dispatch(loading(true));
   postGuardRequestMultipart(
     { controller: "admin", action: "create-category" },
-    value
+    value,
   )
     .then((res) => {
       dispatch(loading(false));
@@ -295,7 +333,7 @@ export const updatePriceByPercentageDispatch =
   (updatedValue: Number) => async (dispatch) => {
     putGuardRequest(
       { controller: "admin", action: "update-price-by-percentage" },
-      { percentage: updatedValue }
+      { percentage: updatedValue },
     )
       .then((res) => {
         dispatch(loading(true));
@@ -536,6 +574,101 @@ export const adminDeleteContactMessage = (id: string) => async (dispatch) => {
     });
 };
 
+export const replyCommentDispatch =
+  (replyData: object, setMessages) => async (dispatch) => {
+    dispatch(loading(true));
+    patchRequest({ controller: "admin", action: "reply-comment" }, replyData)
+      .then((res) => {
+        dispatch(loading(false));
+        toast.success(res.data?.message);
+        setMessages({});
+        dispatch(
+          setReplyList({
+            commentId: replyData.commentId,
+            userName: "Arzuamber Moda",
+            message: replyData.message,
+          }),
+        );
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        toast.error(err.response?.data);
+      });
+  };
+
+export const deleteAdminCommentDispatch =
+  (id: string, rateId: string) => async (dispatch) => {
+    dispatch(loading(true));
+    deleteGuardRequest({
+      controller: "admin",
+      action: "delete-comment",
+      params: { commentId: id, rateId: rateId },
+    })
+      .then((res) => {
+        dispatch(loading(false));
+        dispatch(setNewAdminCommentList({ id: id }));
+        toast.success(res.data?.message);
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        toast.error(err.response?.data);
+      });
+  };
+
+export const changeCommentStatusDispatch =
+  (id: string, status: boolean) => async (dispatch) => {
+    dispatch(loading(true));
+    patchRequest({
+      controller: "admin",
+      action: "change-comment-status",
+      params: { commentId: id, status: status },
+    })
+      .then((res) => {
+        dispatch(loading(false));
+        toast.success(res.data?.message);
+        dispatch(changeCommentStatus({ commentId: id, status: status }));
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        toast.error(err.response?.data);
+      });
+  };
+
+export const getNotificationsDispatch =
+  (page: number, size: number) => async (dispatch) => {
+    getGuardRequest({
+      controller: "admin",
+      action: "get-notifications",
+      params: { page: page, size: size },
+    })
+      .then((res) => {
+        dispatch(getNotifications(res?.data));
+      })
+      .catch((err) => {
+        toast.error(err.response?.data);
+      });
+  };
+
+export const searchAdminProductDispatch =
+  (searchTerm: string) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "admin",
+      action: "search-product",
+      params: { searchTerm: searchTerm },
+    })
+      .then((res) => {
+        dispatch(loading(false));
+        dispatch(setAdminSearchProducts(res?.data));
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
+
 export const {
   loading,
   deleteProduct,
@@ -553,5 +686,13 @@ export const {
   getBlogs,
   setOrderStatus,
   setNewOrderToReturnWebsocket,
+  setCommentProduct,
+  setReplyList,
+  changeCommentStatus,
+  setNewAdminCommentList,
+  getNotifications,
+  setNewNotificationToReturnWebsocket,
+  setAdminSearchProducts,
+  clearStateAdminSearchProducts,
 } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import { Link } from "@/i18n/routing";
 import Heading from "../general/Heading";
-import { FaRegListAlt, FaPlus, FaMinus, FaTimes, FaBars } from "react-icons/fa";
+import {
+  FaRegListAlt,
+  FaPlus,
+  FaMinus,
+  FaTimes,
+  FaBars,
+  FaUsers,
+} from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { MdCategory } from "react-icons/md";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
@@ -146,6 +153,14 @@ const SideBar = () => {
               )}
             </li>
           ))}
+          <li>
+            <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
+              <div className="flex items-center gap-3">
+                <FaUsers size={20} />
+                <Link href={"/admin"}>Visitors</Link>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

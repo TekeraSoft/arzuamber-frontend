@@ -2,30 +2,33 @@
 
 import {
   AcceptComment,
+  changeCommentStatusDispatch,
   createCommentAdminResponse,
+  deleteAdminCommentDispatch,
   deleteProductCommet,
 } from "@/store/adminSlice";
-import { AppDispatch } from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
 import { useFormik } from "formik";
 import Image from "next/image";
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { InputTextarea } from "primereact/inputtextarea";
 import React, { useState } from "react";
-import { FaCheck, FaCommentSlash } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
+import { Button } from "primereact/button";
+import { Rating } from "primereact/rating";
+import { replyCommentDispatch } from "@/store/adminSlice";
+import { MdDelete } from "react-icons/md";
+import { Checkbox } from "primereact/checkbox";
 
-function AdminResponse({ showCommentModal, setShowCommentModal, product }) {
+function AdminResponse({ showCommentModal, setShowCommentModal }) {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { commentProduct } = useSelector((state: RootState) => state.admin);
   // Modal durumları
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
   const [currentProductId, setCurrentProductId] = useState<string | null>(null);
   const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
+  const [messages, setMessages] = useState({});
 
   // Yorum silme işlemi için açılacak dialog
   const deleteCommentHandler = (productId: string, commentId: string) => {
@@ -66,131 +69,132 @@ function AdminResponse({ showCommentModal, setShowCommentModal, product }) {
         .min(5, "Yanıt en az 5 karakter olmalıdır"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-
       if (currentProductId && currentCommentId) {
         // Admin yanıtını gönder
         dispatch(createCommentAdminResponse(values, resetForm));
       }
     },
   });
+
   return (
     <div>
       {/* Modal */}
       <Dialog
         header="Yorumlar"
         visible={showCommentModal}
+        className="h-[800px]"
         style={{ width: "50vw", zIndex: "999" }}
-        onHide={() => {
-          setShowCommentModal(false);
-        }}
+        onHide={() => setShowCommentModal(false)}
       >
-        {!product?.comments || product?.comments.length === 0 ? (
-          <div className="w-full flex flex-col items-center justify-center text-center bg-gradient-to-r from-primary  to-secondary text-white rounded-xl shadow-2xl  py-5 mx-auto transition-all  transform duration-300 ease-in-out">
-            <span className="text-4xl mb-4">
-              <FaCommentSlash className="inline-block" />
-            </span>
-            <p className="text-lg font-semibold">
-              Henüz bu ürüne ait yorum bulunmamaktadır.
-            </p>
-          </div>
-        ) : (
-          <DataTable
-            value={product?.comments}
-            tableStyle={{ minWidth: "50rem" }}
-            scrollable
-            scrollHeight="flex"
-            className="w-full"
-            responsiveLayout="scroll"
-          >
-            <Column
-              field="userName"
-              header="Kullanıcı"
-              style={{ minWidth: "120px" }}
-            />
-
-            <Column
-              field="message"
-              header="Yorum"
-              body={(rowData) => (
-                <div className="line-clamp-3 overflow-hidden text-ellipsis max-h-[6rem]">
-                  {rowData.message}
-                </div>
-              )}
-            />
-
-            {/* Admin cevap alanı ayrı kolon olarak */}
-            <Column
-              header="Yorum Ekle"
-              style={{ minWidth: "250px" }}
-              body={() => (
-                <div className="flex flex-col gap-1">
-                  <InputTextarea
-                    rows={3}
-                    autoResize
-                    placeholder="Yoruma cevap yazın..."
-                    className="p-inputtext-sm"
-                    value={formik.values.adminResponse} // Formik'in değerini alıyoruz
-                    onChange={formik.handleChange} // handleChange fonksiyonu ile değeri güncelliyoruz
-                    name="adminResponse" // Formik ile eşleşmesi için name ekliyoruz
-                  />
-                  <button
-                    className="bg-blue-500 text-white text-sm rounded px-2 py-1 hover:bg-blue-600 transition"
-                    onClick={() => {
-                      formik.handleSubmit(); // Formu göndermek için handleSubmit fonksiyonunu çağırıyoruz
+        <div className="flex flex-col gap-y-4">
+          {commentProduct?.comments.map((comment, commentIndex) => (
+            <div
+              key={comment.id}
+              className="flex flex-col gap-y-4 border p-3 rounded w-full relative"
+            >
+              <span
+                className={
+                  "flex flex-row items-center gap-x-4 absolute right-4 top-1"
+                }
+              >
+                <Rating value={comment.rate.rate} readOnly cancel={false} />
+                <div className="flex align-items-center">
+                  <Checkbox
+                    inputId={`inputId-${comment.id}`}
+                    checked={comment.isActive === true}
+                    onChange={(e) => {
+                      const newStatus = e.checked;
+                      dispatch(
+                        changeCommentStatusDispatch(comment.id, newStatus),
+                      );
                     }}
-                  >
-                    Yanıtla
-                  </button>
+                  />
+                  <label htmlFor="ingredient1" className="ml-2">
+                    Is Active?
+                  </label>
                 </div>
-              )}
-            />
+                <MdDelete
+                  size={24}
+                  color={"red"}
+                  className={"cursor-pointer"}
+                  onClick={() =>
+                    dispatch(
+                      deleteAdminCommentDispatch(
+                        comment.id,
+                        commentProduct.rates[commentIndex]?.id,
+                      ),
+                    )
+                  }
+                />
+              </span>
+              {/* Tüm içerikleri sırayla göster */}
+              {comment.content.map((content, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-y-1 w-full border-b pb-2"
+                >
+                  <div className="flex flex-row items-center justify-between">
+                    <span className="font-bold text-sm">
+                      {content.userName}
+                    </span>
+                  </div>
+                  <small className="text-gray-600 text-xs">
+                    {content.message}
+                  </small>
+                </div>
+              ))}
 
-            <Column field="rate" header="Puan" />
-
-            <Column
-              field="productImages"
-              header="Resim"
-              body={(rowData) => (
-                <div className="flex gap-2 flex-wrap">
-                  {rowData.productImages.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="relative w-16 h-16 rounded overflow-hidden"
-                    >
-                      <Image
-                        src={img}
-                        alt="product"
-                        layout="fill"
-                        objectFit="cover"
-                        unoptimized // next/image optimizasyonunu kapatıyoruz hız için
-                      />
-                    </div>
+              {/* Görseller */}
+              {comment.images.length > 0 && (
+                <div className="grid grid-cols-3 gap-2 my-2">
+                  {comment.images.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${image}`}
+                      alt={image}
+                      width={60}
+                      height={60}
+                      className="rounded object-cover"
+                    />
                   ))}
                 </div>
               )}
-            />
 
-            <Column
-              field="id"
-              header="Aksiyonlar"
-              body={(row) => (
-                <div className="flex flex-row justify-center items-center gap-3">
-                  <button
-                    onClick={() => deleteCommentHandler(row.productId, row.id)}
-                  >
-                    <MdDelete size={24} color="red" />
-                  </button>
-                  <button
-                    onClick={() => acceptCommentHandler(row.productId, row.id)}
-                  >
-                    <FaCheck size={24} color="green" />
-                  </button>
-                </div>
-              )}
-            />
-          </DataTable>
-        )}
+              {/* Cevap textarea ve gönderme butonu */}
+              <div className="flex flex-row gap-x-4 items-center mt-2">
+                <textarea
+                  value={messages[comment.id] || ""}
+                  onChange={(e) =>
+                    setMessages({
+                      ...messages,
+                      [comment.id]: e.target.value,
+                    })
+                  }
+                  rows={3}
+                  className="border placeholder:text-xs w-52 text-xs p-1 rounded"
+                  placeholder="Enter your answer"
+                />
+                <Button
+                  size="small"
+                  className="!p-1 text-xs"
+                  onClick={() =>
+                    dispatch(
+                      replyCommentDispatch(
+                        {
+                          commentId: comment.id,
+                          message: messages[comment.id] || "",
+                        },
+                        setMessages,
+                      ),
+                    )
+                  }
+                >
+                  Reply
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </Dialog>
 
       {/* Yorum Silme onayı için Dialog */}

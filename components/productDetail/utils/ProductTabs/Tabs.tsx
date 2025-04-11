@@ -7,7 +7,7 @@ import Comments from "./Comments";
 import CommentCreate from "./CommentCreate";
 import SizeTable from "./SizeTable";
 
-function Tabs({ description, productId, productComments, rates }) {
+function Tabs({ description, productId, productComments }) {
   const t = useTranslations();
 
   // Dinamik sekme listesi
@@ -16,7 +16,7 @@ function Tabs({ description, productId, productComments, rates }) {
       label: "Yorumlar",
       //   label: t("productDetail.reviews"),
       key: "reviews",
-      content: <Comments productComments={productComments} rates={rates} />,
+      content: <Comments productComments={productComments} />,
     },
     {
       label: "Yorum Ekle",

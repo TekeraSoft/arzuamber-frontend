@@ -7,6 +7,7 @@ import { useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { FaUserShield } from "react-icons/fa";
 import { Toolbar } from "primereact/toolbar";
+import Alert from "@/components/admin/Alert";
 
 function Layout({ children }) {
   const locale = useLocale();
@@ -39,6 +40,7 @@ function Layout({ children }) {
           end={() => (
             <span className={"flex flex-row items-center gap-x-4"}>
               <span className={"flex flex-row items-center gap-x-2"}>
+                <Alert />
                 <Link
                   href={path}
                   locale={"tr"}
