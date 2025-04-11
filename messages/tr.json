@@ -42,8 +42,8 @@
     "checkItOut": "Hemen İncele!"
   },
   "HomePage": {
-    "sliderFeaturedTitle": "POPÜLER ÜRÜNLER",
-    "sliderPopulateTitle": "ÖNE ÇIKAN ÜRÜNLER",
+    "sliderFeaturedTitle": "YENİ SEZON ÜRÜNLER",
+    "sliderPopulateTitle": "POPÜLER ÜRÜNLER ",
     "sliderAllProduct": "Tüm Ürünler"
   },
   "brand": {
@@ -358,7 +358,7 @@
       "savings": "Toplam Kazanç:",
       "discountCodePlaceholder": "İndirim Kodu",
       "submitDiscountCode": "Kodu Gönder",
-      "continueShopping": "Alışverişe Devam Et",
+      "continueShopping": "Diğer Ürünleri İncele",
       "proceedToPayment": "Ödeme Yap",
       "symbol": "₺"
     }
@@ -398,6 +398,7 @@
     "profile": "Profil",
     "orders": "Siparişler",
     "update": "Güncelle",
+    "favorites": "Favoriler",
     "passchange": "Şifre değiştir",
     "submitting": "Gönderiliyor...",
     "notLoggedIn": {

@@ -5,14 +5,36 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Product } from "@/types";
 import { useTranslations } from "next-intl";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { setFavWarningModalStatus } from "@/store/modalsSlice";
+import { addToFav } from "@/store/favoritesSlice";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
 
 interface ProductsSliderItemProps {
   product: Product;
 }
 
 function ProductCartItem({ product }: ProductsSliderItemProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: session } = useSession();
   const t = useTranslations();
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleAddToFav = () => {
+    if (!session?.user) {
+      dispatch(setFavWarningModalStatus(true));
+      return;
+    }
+    dispatch(
+      addToFav({
+        productId: product.id,
+        userId: session.user.id,
+      })
+    );
+  };
 
   return (
     <div
@@ -53,7 +75,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
             <div className="  w-16 h-4 md:w-16 md:h-6  flex justify-center items-center bg-red-600 text-mywhite rounded text-[10px]  shadow-md  px-1">
               %
               {Math.round(
-                ((product.price - product.discountPrice) / product.price) * 100,
+                ((product.price - product.discountPrice) / product.price) * 100
               )}
             </div>
           )}
@@ -71,6 +93,15 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
           )}
         </div>
       </Link>
+
+      <div
+        className="absolute left-1 md:left-3 md:top-3 flex flex-col justify-center items-end gap-1 z-30"
+        onClick={handleAddToFav}
+      >
+        <button className=" border rounded-lg p-2 bg-primaryLight text-white hover:bg-secondary focus:outline-none transition duration-300">
+          <FaRegHeart className="text-base  md:text-lg" />
+        </button>
+      </div>
 
       <div className="flex flex-col  space-y-1 px-2 w-full">
         {/* Renk Seçenekleri */}

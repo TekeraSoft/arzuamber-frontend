@@ -2,7 +2,7 @@
 
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { FaUser, FaBoxOpen, FaCogs, FaKey } from "react-icons/fa";
+import { FaUser, FaBoxOpen, FaCogs, FaKey, FaRegHeart } from "react-icons/fa";
 import "animate.css";
 
 export default function ProfileLayout({
@@ -33,7 +33,13 @@ function SidebarMenu() {
   /* Menü Öğeleri */
   const menuItems = [
     { href: "/profile", icon: FaUser, label: "profile.profile" },
+
     { href: "/profile/orders", icon: FaBoxOpen, label: "profile.orders" },
+    {
+      href: "/profile/favorites",
+      icon: FaRegHeart,
+      label: "profile.favorites",
+    },
     { href: "/profile/update", icon: FaCogs, label: "profile.update" },
     {
       href: "/profile/password-change",

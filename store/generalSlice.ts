@@ -41,7 +41,7 @@ const initialState: GeneralState = {
   loading: false,
   helpItems: helpItems,
   specialDayTimer: {
-    discountTitle: "500 ₺ Ve Üzeri Alışverilere Bluz Hediye!",
+    discountTitle: "500 ₺ Ve Üzeri Alışverişlerde Bluz Hediye!",
     discountDescription: "Kaçırmayın! Bu fırsat kısa süreliğine geçerli 🎉",
     discountEndTime: new Date("2025-04-12T00:00:00").getTime(),
     specialDayTimerStatus: true,

@@ -6,12 +6,11 @@ import { Link } from "@/i18n/routing";
 import { Product } from "@/types";
 import { useTranslations } from "next-intl";
 import { FaRegHeart } from "react-icons/fa";
-import { toast } from "react-toastify";
-import { AddToFav } from "@/store/favoritesSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
-import { Dialog } from "primereact/dialog"; // PrimeReact Modal
-import { Dropdown } from "primereact/dropdown"; // PrimeReact Dropdown
+import { useSession } from "next-auth/react";
+import { addToFav } from "@/store/favoritesSlice";
+import { setFavWarningModalStatus } from "@/store/modalsSlice";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -19,44 +18,23 @@ interface ProductsSliderItemProps {
 
 function ProductsSliderItem({ product }: ProductsSliderItemProps) {
   const dispatch = useDispatch<AppDispatch>();
+  const { data: session } = useSession();
   const t = useTranslations();
+
   const [isHovered, setIsHovered] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
-  const [selectedColor, setSelectedColor] = useState(
-    product?.colorSize?.length > 0 ? product.colorSize[0] : {}
-  );
-
-  const [selectedSize, setSelectedSize] = useState(
-    selectedColor?.stockSize?.length > 0 ? selectedColor.stockSize[0] : {}
-  );
 
   const handleAddToFav = () => {
-    if (!selectedColor || !selectedSize) {
-      toast.error("Lütfen renk ve beden seçin.");
+    if (!session?.user) {
+      dispatch(setFavWarningModalStatus(true));
       return;
     }
 
     dispatch(
-      AddToFav({
-        id: product.id,
-        name: product.name,
-        category: product.category,
-        subCategory: product.subCategory,
-        slug: product.slug,
-        color: selectedColor?.color,
-        image: selectedColor?.images?.[0],
-        size: selectedSize?.size,
-        stockSizeId: selectedSize?.stockSizeId,
-        stockCode: selectedSize?.stockCode,
-        quantity: 1,
-        price:
-          product.discountPrice !== 0 ? product.discountPrice : product.price,
+      addToFav({
+        productId: product.id,
+        userId: session.user.id,
       })
     );
-
-    toast.success("Ürün favorilere eklendi.");
-    // closeModal();
   };
 
   return (
@@ -111,17 +89,15 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           )}
         </div>
       </Link>
-      {/*       
+
       <div
         className="absolute left-2 top-1 flex flex-col justify-center items-end gap-1 z-30"
-        onClick={() => {
-          openModal();
-        }}
+        onClick={handleAddToFav}
       >
-        <button className=" z-30 border rounded-full p-1.5 bg-primary text-white hover:bg-secondary focus:outline-none transition duration-300">
+        <button className=" border rounded-lg p-2 bg-primaryLight text-white hover:bg-secondary focus:outline-none transition duration-300">
           <FaRegHeart className="text-base  md:text-lg" />
         </button>
-      </div>{" "} */}
+      </div>
 
       <div className=" flex flex-col  space-y-1 px-2 w-full pb-2">
         {/* Renk Seçenekleri */}
@@ -183,57 +159,6 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           </div>
         </div>
       </div>
-      <Dialog
-        header={"beden ve renkler"}
-        visible={showModal}
-        // onHide={closeModal}
-        className="w-[300px] md:w-[400px]  p-3"
-      >
-        <div className="flex flex-col gap-3 w-f">
-          {/* Renk Seçimi */}
-          <Dropdown
-            value={selectedColor}
-            options={product.colorSize}
-            onChange={(e) => {
-              setSelectedColor(e.value);
-              setSelectedSize(e.value.stockSize?.[0] || {}); // Yeni rengi seçince ilk bedeni ata
-            }}
-            optionLabel="color"
-            placeholder="Renk"
-          />
-
-          {/* Beden Seçimi */}
-          <Dropdown
-            value={selectedSize}
-            options={
-              selectedColor?.stockSize?.map((size) => ({
-                label: size.size, // UI'de görünen değer
-                value: size, // Seçildiğinde dönen obje
-              })) || []
-            }
-            onChange={(e) => {
-              setSelectedSize(e.value);
-            }}
-            optionLabel="label"
-            placeholder="Beden"
-          />
-        </div>
-
-        <div className="flex justify-end gap-3 mt-3">
-          <button
-            className="p-2 bg-primary text-white rounded"
-            onClick={handleAddToFav}
-          >
-            Favoriye ekle
-          </button>
-          <button
-            className="p-2 bg-secondary text-white rounded"
-            // onClick={closeModal}
-          >
-            kapat
-          </button>
-        </div>
-      </Dialog>
     </div>
   );
 }

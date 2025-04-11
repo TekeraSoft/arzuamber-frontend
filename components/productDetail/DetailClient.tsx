@@ -14,13 +14,15 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
 // import NextSeoHead from "../utils/NextSeoHead";
-import { openCartModal } from "@/store/modalsSlice";
+import { openCartModal, setFavWarningModalStatus } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
 import OrderButtons from "./utils/OrderButtons/OrderButtons";
 import Tabs from "./utils/ProductTabs/Tabs";
 import ShareButtons from "./utils/ShareButtons";
 import PaymentShippingCards from "./utils/PaymentShippingCards";
 import { Skeleton } from "primereact/skeleton";
+import { addToFav } from "@/store/favoritesSlice";
+import { useSession } from "next-auth/react";
 
 const responsive = {
   superLargeDesktop: {
@@ -48,15 +50,16 @@ interface productProps {
 const DetailClient = ({ product }: productProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
+  const { data: session } = useSession();
+
+  const { loading } = useSelector((state: RootState) => state.cart);
 
   const [stockSizeState, setStockSizeState] = useState(product.colorSize[0]);
-  const { loading } = useSelector((state: RootState) => state.cart);
   const [errorState, setErrorState] = useState({
     sizeError: false,
     colorError: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lineClamp, setLineClamp] = useState(true);
 
   const [photoIndex, setPhotoIndex] = useState(1);
   const [stateProduct, setStateProduct] = useState<{
@@ -84,10 +87,6 @@ const DetailClient = ({ product }: productProps) => {
     setPhotoIndex(current);
   };
 
-  const toggleClamp = () => {
-    setLineClamp(!lineClamp);
-  };
-
   const openCart = () => {
     dispatch(openCartModal());
   };
@@ -111,16 +110,21 @@ const DetailClient = ({ product }: productProps) => {
     }
   }, [product]);
 
-  // const [skeletonLoading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 3000);
-  // }, []);
+  const handleAddToFav = () => {
+    if (!session?.user) {
+      dispatch(setFavWarningModalStatus(true));
+      return;
+    }
+    dispatch(
+      addToFav({
+        productId: product.id,
+        userId: session.user.id,
+      })
+    );
+  };
 
   return (
-    <div className="md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
+    <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
         name={product.name}
         description={product.description}
@@ -258,7 +262,7 @@ const DetailClient = ({ product }: productProps) => {
             </p>
           </div>
 
-          <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2  ">
+          <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2 py-2 md:py-1  ">
             <span className={"flex  gap-x-4 "}>
               {product.discountPrice !== 0 &&
                 product.discountPrice !== product.price && (
@@ -403,7 +407,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  ),
+                  )
                 )}
               </div>
             </div>
@@ -463,7 +467,7 @@ const DetailClient = ({ product }: productProps) => {
           </div>
 
           <div className="flex flex-col justify-start items-start gap-2 ">
-            <div className="w-full flex justify-start items-center gap-5">
+            <div className="w-full flex  flex-col md:flex-row justify-start items-center gap-2 md:gap-5">
               <Button
                 loading={loading}
                 onClick={() => {
@@ -487,7 +491,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      }),
+                      })
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
@@ -495,15 +499,21 @@ const DetailClient = ({ product }: productProps) => {
                 }}
                 //w-10/12
                 className={
-                  "!bg-secondary h-12 w-full  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
+                  "!bg-secondary h-12 w-full md:w-9/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
                 }
               >
                 {t("productDetail.productAddCart")}
               </Button>
-              {/* <button className="  w-2/12  flex justify-center items-center  border border-secondary  h-12 rounded-lg bg-secondary hover:scale-105 hover:opacity-85 transition duration-300 ">
-                <FaHeart className="  text-black" />
-              </button> */}
+
+              <button
+                onClick={handleAddToFav}
+                className="w-full md:w-3/12 text-white flex justify-center items-center gap-2 y h-10 md:h-12 rounded-lg bg-fourth hover:scale-105 hover:opacity-85 transition duration-300"
+              >
+                <FaHeart className="text-white" />
+                <span className="text-sm font-medium">Favorilere Ekle</span>
+              </button>
             </div>
+
             <OrderButtons
               productName={product.name}
               productLink={product.slug}
@@ -520,31 +530,6 @@ const DetailClient = ({ product }: productProps) => {
               description={product.description}
             />
           </div>
-          {/* 
-          <div className="mt-2">
-            <div className="col-span-full sm:col-span-2 lg:col-span-3">
-              <h3 className="text-xl text-secondary font-semibold">
-                {t("productDetail.productDescription")}:
-              </h3>
-            </div>
-            <p
-              className={`text-secondary text-base ${
-                lineClamp ? "line-clamp-3" : "line-clamp-none"
-              }`}
-            >
-              {product.description}
-            </p>
-            {product.description.length > 250 && (
-              <button
-                onClick={toggleClamp}
-                className="text-secondary font-semibold text-end mt-1 hover:underline"
-              >
-                {lineClamp
-                  ? t("productDetail.readMore")
-                  : t("productDetail.readLess")}
-              </button>
-            )}
-          </div> */}
         </div>
         <Lightbox
           open={isModalOpen}
@@ -563,7 +548,7 @@ const DetailClient = ({ product }: productProps) => {
           animation={{ fade: 0 }}
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
           styles={{
-            container: { backgroundColor: "rgba(0, 0, 0, 0.5)" }, // Arka planı daha şeffaf yap
+            container: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
           }}
         />
       </div>
