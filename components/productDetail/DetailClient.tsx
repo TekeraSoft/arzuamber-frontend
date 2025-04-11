@@ -9,7 +9,7 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { addToCart } from "@/store/cartSlice";
+import { addToCart, addToCartNotification } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
@@ -23,6 +23,7 @@ import PaymentShippingCards from "./utils/PaymentShippingCards";
 import { Skeleton } from "primereact/skeleton";
 import { addToFav } from "@/store/favoritesSlice";
 import { useSession } from "next-auth/react";
+import { addFavoritesDispatch } from "@/store/userSlice";
 
 const responsive = {
   superLargeDesktop: {
@@ -115,12 +116,7 @@ const DetailClient = ({ product }: productProps) => {
       dispatch(setFavWarningModalStatus(true));
       return;
     }
-    dispatch(
-      addToFav({
-        productId: product.id,
-        userId: session.user.id,
-      })
-    );
+    dispatch(addFavoritesDispatch(session.user.id, product.id));
   };
 
   return (
@@ -407,7 +403,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -491,7 +487,17 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      })
+                      }),
+                    );
+                    dispatch(
+                      addToCartNotification({
+                        productName: product.name,
+                        count: stateProduct.quantity,
+                        stockCode: stockSizeState?.stockCode,
+                        userName: session?.user.name
+                          ? session?.user?.name
+                          : "Guest",
+                      }),
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
@@ -507,10 +513,10 @@ const DetailClient = ({ product }: productProps) => {
 
               <button
                 onClick={handleAddToFav}
-                className="w-full md:w-3/12 text-white flex justify-center items-center gap-2 y h-10 md:h-12 rounded-lg bg-fourth hover:scale-105 hover:opacity-85 transition duration-300"
+                className="w-full md:w-4/12 text-white flex justify-center items-center gap-2 y h-10 md:h-12 rounded-lg bg-red-400 hover:scale-105 hover:opacity-85 transition duration-300"
               >
                 <FaHeart className="text-white" />
-                <span className="text-sm font-medium">Favorilere Ekle</span>
+                <span className={"text-sm font-bold"}>Favorilere Ekle</span>
               </button>
             </div>
 

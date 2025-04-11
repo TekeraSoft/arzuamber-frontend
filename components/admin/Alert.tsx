@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiFillBell } from "react-icons/ai";
 import { BiMessage } from "react-icons/bi";
 import {
+  deactivateNotificationsDispatch,
   getNotificationsDispatch,
   setNewNotificationToReturnWebsocket,
 } from "@/store/adminSlice";
@@ -79,6 +80,7 @@ function Alert() {
           size={32}
           onClick={() => {
             setOpenAlertBox(!openAlertBox);
+            dispatch(deactivateNotificationsDispatch());
           }}
         />
         <span
@@ -86,7 +88,7 @@ function Alert() {
             "w-4 h-4 right-0 top-0 bg-red-600 text-white text-xs flex items-center justify-center rounded-full absolute"
           }
         >
-          {notifications?.length}
+          {notifications?.filter((n) => n.isActive).length}
         </span>
       </span>
       <ul
@@ -100,10 +102,10 @@ function Alert() {
             }
           >
             <span className={"flex flex-row items-center gap-x-4"}>
-              <BiMessage size={32} /> <p>{item.head}</p>
+              <BiMessage size={32} /> <p>{item?.head}</p>
             </span>
             <p className={"text-end"}>
-              {format(item.createdAt, "dd.MM.yyyy | HH:mm:ss", { locale: tr })}
+              {format(item?.createdAt, "dd.MM.yyyy | HH:mm:ss", { locale: tr })}
             </p>
           </li>
         ))}

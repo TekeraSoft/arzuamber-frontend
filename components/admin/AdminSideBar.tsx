@@ -157,7 +157,7 @@ const SideBar = () => {
             <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
               <div className="flex items-center gap-3">
                 <FaUsers size={20} />
-                <Link href={"/admin"}>Visitors</Link>
+                <Link href={"/admin/visitors"}>Visitors</Link>
               </div>
             </div>
           </li>

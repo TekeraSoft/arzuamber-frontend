@@ -3,7 +3,7 @@ import {
   getGuardRequest,
   patchRequest,
   postGuardRequest,
-} from "./../services/requestservice";
+} from "@/services/requestservice";
 import { toast } from "react-toastify";
 
 // Başlangıç state
@@ -96,7 +96,7 @@ export const editUserDetailsDispatch =
     dispatch(loading(true));
     await patchRequest(
       { controller: "user", action: "edit-user-details" },
-      values
+      values,
     )
       .then((res) => {
         dispatch(loading(false));
@@ -106,6 +106,28 @@ export const editUserDetailsDispatch =
       .catch((err) => {
         dispatch(loading(false));
         toast.error(err.response.data);
+      });
+  };
+
+export const addFavoritesDispatch =
+  (userId: string, productId: string) => async (dispatch) => {
+    dispatch(loading(true));
+    getGuardRequest({
+      controller: "user",
+      action: "add-favorite-product",
+      params: { userId: userId, productId: productId },
+    })
+      .then((res) => {
+        dispatch(loading(false));
+        if (!res.data.success) {
+          toast.error(res.data?.message);
+        } else {
+          toast.success(res.data?.message);
+        }
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        console.log(err);
       });
   };
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { postGuardRequest } from "@/services/requestservice";
 
 // Ürün Tipi
 export interface CartItem {
@@ -17,7 +18,7 @@ const getInitialState = () => {
     return {
       cartProducts: [],
       total: 0,
-      loading: false
+      loading: false,
     };
   }
 
@@ -43,27 +44,30 @@ export const cartSlice = createSlice({
   reducers: {
     // Sepete ürün ekleme işlemi
     addToCart: (state, action) => {
-      state.loading = true
+      state.loading = true;
       const { size, color, id, quantity } = action.payload;
       const existingProduct = state.cartProducts.find(
-        (p) => p.id === id && p.color === color && p.size === size
+        (p) => p.id === id && p.color === color && p.size === size,
       );
       if (existingProduct) {
-        existingProduct.quantity = quantity
+        existingProduct.quantity = quantity;
         state.total = state.cartProducts.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
+          (acc, item) => acc + item.price * item.quantity,
+          0,
         );
       } else {
         state.cartProducts.push(action.payload);
         state.total = state.cartProducts.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
+          (acc, item) => acc + item.price * item.quantity,
+          0,
         );
       }
       localStorage.setItem(
         "cart",
-        JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
+        JSON.stringify({
+          cartProducts: state.cartProducts,
+          total: state.total,
+        }),
       );
       state.loading = false;
     },
@@ -74,16 +78,21 @@ export const cartSlice = createSlice({
       state.cartProducts = state.cartProducts.filter(
         (item) =>
           !(
-            item.id === action.payload.id && item.color === action.payload.color && item.size === action.payload.size
-          )
+            item.id === action.payload.id &&
+            item.color === action.payload.color &&
+            item.size === action.payload.size
+          ),
       );
       state.total = state.cartProducts.reduce(
         (acc, item) => acc + item.price * item.quantity,
-        0
+        0,
       );
       localStorage.setItem(
         "cart",
-        JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
+        JSON.stringify({
+          cartProducts: state.cartProducts,
+          total: state.total,
+        }),
       );
       state.loading = false;
     },
@@ -93,14 +102,15 @@ export const cartSlice = createSlice({
       state.total = 0;
       localStorage.removeItem("cart");
       state.loading = false;
-    }
+    },
   },
 });
 
+export const addToCartNotification = (value: object) => async (dispatch) => {
+  postGuardRequest({ controller: "product", action: "add-to-cart" }, value);
+};
+
 // Reducer'ları dışa aktarma
-export const {
-  addToCart,
-  removeFromCart,
-  clearCart} = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

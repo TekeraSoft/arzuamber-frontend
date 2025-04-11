@@ -19,6 +19,7 @@ const initialState: AdminProps = {
   categories: [],
   sliders: [],
   page: {},
+  notificationPage: {},
   blogPage: {},
   colors: [],
   orders: [],
@@ -117,6 +118,7 @@ export const adminSlice = createSlice({
     },
     getNotifications: (state, action) => {
       state.notifications = action.payload._embedded.notifications;
+      state.notificationPage = action.payload.page;
     },
     setNewNotificationToReturnWebsocket: (state, action) => {
       state.notifications = [action.payload, ...state.notifications];
@@ -126,6 +128,11 @@ export const adminSlice = createSlice({
     },
     clearStateAdminSearchProducts: (state) => {
       state.searchAdminProducts = [];
+    },
+    deactivateNotifications: (state, action) => {
+      state.notifications = state.notifications.forEach((n) => {
+        n.isActive = false;
+      });
     },
     loading: (state, action) => {
       state.loading = action.payload;
@@ -669,6 +676,10 @@ export const searchAdminProductDispatch =
       });
   };
 
+export const deactivateNotificationsDispatch = () => async (dispatch) => {
+  patchRequest({ controller: "admin", action: "deactivate-notifications" });
+};
+
 export const {
   loading,
   deleteProduct,
@@ -694,5 +705,6 @@ export const {
   setNewNotificationToReturnWebsocket,
   setAdminSearchProducts,
   clearStateAdminSearchProducts,
+  deactivateNotifications,
 } = adminSlice.actions;
 export default adminSlice.reducer;
