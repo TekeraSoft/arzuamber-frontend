@@ -1,4 +1,3 @@
-import { favProduct } from "@/constans/Favorites";
 import {
   deleteGuardRequest,
   getGuardRequest,
@@ -44,36 +43,42 @@ export const addToFav = (value: object) => async (dispatch) => {
     });
 };
 
-export const deleteToFav = (id: string) => async (dispatch) => {
-  dispatch(loading(true));
-  deleteGuardRequest({
-    controller: "admin",
-    action: "delete-fav",
-    params: { id: id },
-  })
-    .then((res) => {
-      toast.success(res.data.message);
-      dispatch(deleteFavorite(id));
-      dispatch(loading(false));
+export const deleteToFav =
+  (productId: string, userId: string) => async (dispatch) => {
+    dispatch(loading(true));
+    deleteGuardRequest({
+      controller: "user",
+      action: "remove-favorite",
+      params: { productId: productId, userId: userId },
     })
-    .catch((err) => {
-      toast.error(err.response.data.message);
-    })
-    .finally(() => {
-      dispatch(loading(false));
-    });
-};
+      .then((res) => {
+        toast.success(res.data?.message);
+        dispatch(deleteFavorite(productId));
+        dispatch(loading(false));
+      })
+      .catch((err) => {
+        toast.error(err.response.data?.message);
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
+  };
 
-export const getAllFavorites = () => async (dispatch) => {
+export const getAllFavorites = (userId: string) => async (dispatch) => {
   dispatch(loading(true));
-  getGuardRequest({ controller: "favorites", action: "get-all-favorites" })
+  getGuardRequest({
+    controller: "user",
+    action: "get-favorites-for-user",
+    params: { userId: userId },
+  })
     .then((res) => {
       dispatch(getAllFavoritesDispatch(res.data));
       dispatch(loading(false));
     })
     .catch((err) => {
       dispatch(loading(false));
-      toast.error(err.response.data);
+      toast.error(err.response?.data);
+      console.log(err);
     })
     .finally(() => {
       dispatch(loading(false));

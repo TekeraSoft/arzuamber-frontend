@@ -11,6 +11,7 @@ import { AppDispatch } from "@/store/store";
 import { useSession } from "next-auth/react";
 import { addToFav } from "@/store/favoritesSlice";
 import { setFavWarningModalStatus } from "@/store/modalsSlice";
+import { addFavoritesDispatch } from "@/store/userSlice";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -28,13 +29,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
       dispatch(setFavWarningModalStatus(true));
       return;
     }
-
-    dispatch(
-      addToFav({
-        productId: product.id,
-        userId: session.user.id,
-      })
-    );
+    dispatch(addFavoritesDispatch(session.user.id, product.id));
   };
 
   return (

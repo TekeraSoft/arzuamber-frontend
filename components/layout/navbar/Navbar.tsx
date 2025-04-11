@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
@@ -8,6 +8,7 @@ import TopBar from "./TopBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openCartModal,
+  setFavWarningModalStatus,
   setLoginModal,
   setRegisterModal,
 } from "@/store/modalsSlice";
@@ -27,6 +28,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import Timer from "./Timer";
+import { getAllFavorites } from "@/store/favoritesSlice";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -43,7 +45,13 @@ function Navbar() {
   const { data: session } = useSession();
 
   const { cartProducts } = useSelector((state: RootState) => state.cart);
-  const { favsProducts } = useSelector((state: RootState) => state.favs);
+  const { favorites } = useSelector((state: RootState) => state.favs);
+
+  useEffect(() => {
+    if (session?.user) {
+      dispatch(getAllFavorites(session?.user.id));
+    }
+  }, [dispatch, session?.user, session?.user?.id]);
 
   // locale lang changes
   const supportedLocales = ["tr", "en"];
@@ -63,6 +71,14 @@ function Navbar() {
 
   const openCart = () => {
     dispatch(openCartModal());
+  };
+
+  const handleFavClick = () => {
+    if (!session?.user) {
+      dispatch(setFavWarningModalStatus(true));
+    } else {
+      router.push("/profile/favorites");
+    }
   };
 
   return (
@@ -129,6 +145,16 @@ function Navbar() {
               <BsCart2 size={24} className="cursor-pointer text-secondary" />
               <span className="absolute  -top-1 left-3  bg-red-600  font-bold rounded-full h-3.5 w-3.5 flex items-center justify-center text-[10px]">
                 {cartProducts.length}
+              </span>
+            </button>
+
+            <button
+              onClick={handleFavClick}
+              className="flex justify-center items-center relative"
+            >
+              <FaHeart size={24} className="cursor-pointer text-secondary" />
+              <span className="absolute  -top-1 left-4  bg-red-600  font-bold rounded-full h-3.5 w-3.5 flex items-center justify-center text-[10px]">
+                {favorites.length}
               </span>
             </button>
 
@@ -309,6 +335,18 @@ function Navbar() {
                 <BsCart2 size={30} className="cursor-pointer text-secondary" />
                 <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartProducts.length}
+                </span>
+              </button>
+            </li>
+
+            <li className="relative">
+              <button
+                onClick={handleFavClick}
+                className="flex justify-center items-center"
+              >
+                <FaHeart size={30} className="cursor-pointer text-secondary" />
+                <span className="absolute -top-2 -right-2 bg-red-600 text-sm font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {favorites.length}
                 </span>
               </button>
             </li>
