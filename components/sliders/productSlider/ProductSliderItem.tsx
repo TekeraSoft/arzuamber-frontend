@@ -9,7 +9,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { useSession } from "next-auth/react";
-import { addToFav } from "@/store/favoritesSlice";
+import { updateFavoritesDispatch } from "@/store/favoritesSlice";
 import { setFavWarningModalStatus } from "@/store/modalsSlice";
 import { addFavoritesDispatch } from "@/store/userSlice";
 
@@ -30,6 +30,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
       return;
     }
     dispatch(addFavoritesDispatch(session.user.id, product.id));
+    dispatch(updateFavoritesDispatch(product));
   };
 
   return (

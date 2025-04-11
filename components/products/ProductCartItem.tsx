@@ -5,13 +5,13 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Product } from "@/types";
 import { useTranslations } from "next-intl";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { setFavWarningModalStatus } from "@/store/modalsSlice";
-import { addToFav } from "@/store/favoritesSlice";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { addFavoritesDispatch } from "@/store/userSlice";
+import { updateFavoritesDispatch } from "@/store/favoritesSlice";
 
 interface ProductsSliderItemProps {
   product: Product;
@@ -30,6 +30,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
       return;
     }
     dispatch(addFavoritesDispatch(session.user.id, product.id));
+    dispatch(updateFavoritesDispatch(product));
   };
 
   return (

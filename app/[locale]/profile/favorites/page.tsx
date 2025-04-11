@@ -26,7 +26,7 @@ function FavoritesPage() {
   return (
     <div className="flex flex-col items-center justify-start w-full ">
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 w-full max-w-6xl">
           {[...Array(8)].map((_, idx) => (
             <div key={idx} className="p-4 border rounded-lg shadow-md">
               <Skeleton width="100%" height="12rem" className="mb-2" />
@@ -59,14 +59,14 @@ function FavoritesPage() {
             <FaHeart className="text-red-500" />
             Favori Ürünlerim
           </h1>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 w-full max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-3  gap-2 md:gap-6 w-full  max-w-6xl">
             {favorites.map((product, index) => (
               <div
                 key={index}
-                className="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col h-full"
+                className="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col  h-full"
               >
                 {/* Resim kısmı */}
-                <div className="relative w-full h-52 md:h-72 flex-shrink ">
+                <div className="relative w-full h-72 md:h-96 flex-shrink ">
                   <Image
                     src={
                       product.colorSize?.[0]?.images?.[1]
