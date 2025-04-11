@@ -8,17 +8,19 @@ import Image from "next/image";
 import { FaHeart, FaRegHeart, FaHeartBroken } from "react-icons/fa";
 import { Skeleton } from "primereact/skeleton";
 import { deleteToFav, getAllFavorites } from "@/store/favoritesSlice";
+import { useSession } from "next-auth/react";
 
 function FavoritesPage() {
   const dispatch = useDispatch<AppDispatch>();
+  const { data: session } = useSession();
   const { favorites, loading } = useSelector((state: RootState) => state.favs);
 
   useEffect(() => {
-    dispatch(getAllFavorites());
-  }, [dispatch]);
+    dispatch(getAllFavorites(session?.user.id));
+  }, [dispatch, session?.user?.id]);
 
-  const handleDeleteFavorite = (productId) => {
-    dispatch(deleteToFav(productId));
+  const handleDeleteFavorite = (productId, userId) => {
+    dispatch(deleteToFav(productId, userId));
   };
 
   return (
@@ -57,7 +59,7 @@ function FavoritesPage() {
             <FaHeart className="text-red-500" />
             Favori Ürünlerim
           </h1>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 w-full max-w-6xl">
             {favorites.map((product, index) => (
               <div
                 key={index}
@@ -146,7 +148,9 @@ function FavoritesPage() {
                     </Link>
 
                     <button
-                      onClick={() => handleDeleteFavorite(product)}
+                      onClick={() =>
+                        handleDeleteFavorite(product.id, session?.user?.id)
+                      }
                       className="flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:text-red-700 transition-all text-[11px] md:text-sm font-medium rounded-md px-2 md:px-4  py-1 md:py-1.5 shadow-sm"
                       aria-label="Favori"
                     >
