@@ -242,16 +242,17 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             <span className="p-input-icon-right w-full">
               {loading ? (
                 <SpinnerIcon />
-              ) : (
+              ) : searchProducts.length > 0 ? (
                 <MdCancel
                   onClick={() => {
                     dispatch(clearState());
                     setSearchTerm("");
-                    setSearchOpen(!SearchOpen);
                   }}
                   size={18}
                   className={"cursor-pointer"}
                 />
+              ) : (
+                <BiSearch size={18} />
               )}
               <InputText
                 onFocus={() => setIsFocused(true)}

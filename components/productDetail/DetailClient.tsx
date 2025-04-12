@@ -21,7 +21,7 @@ import Tabs from "./utils/ProductTabs/Tabs";
 import ShareButtons from "./utils/ShareButtons";
 import PaymentShippingCards from "./utils/PaymentShippingCards";
 import { Skeleton } from "primereact/skeleton";
-import { addToFav, updateFavoritesDispatch } from "@/store/favoritesSlice";
+import { updateFavoritesDispatch } from "@/store/favoritesSlice";
 import { useSession } from "next-auth/react";
 import { addFavoritesDispatch } from "@/store/userSlice";
 
@@ -121,7 +121,7 @@ const DetailClient = ({ product }: productProps) => {
   };
 
   return (
-    <div className=" md:container md:mx-auto flex flex-col gap-3 mt-0 md:mt-6 ">
+    <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
         name={product.name}
         description={product.description}
