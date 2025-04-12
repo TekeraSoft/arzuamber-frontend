@@ -21,7 +21,7 @@ import Tabs from "./utils/ProductTabs/Tabs";
 import ShareButtons from "./utils/ShareButtons";
 import PaymentShippingCards from "./utils/PaymentShippingCards";
 import { Skeleton } from "primereact/skeleton";
-import { addToFav, updateFavoritesDispatch } from "@/store/favoritesSlice";
+import { updateFavoritesDispatch } from "@/store/favoritesSlice";
 import { useSession } from "next-auth/react";
 import { addFavoritesDispatch } from "@/store/userSlice";
 
@@ -404,7 +404,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -488,7 +488,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      })
+                      }),
                     );
                     dispatch(
                       addToCartNotification({
@@ -498,7 +498,7 @@ const DetailClient = ({ product }: productProps) => {
                         userName: session?.user.name
                           ? session?.user?.name
                           : "Guest",
-                      })
+                      }),
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
