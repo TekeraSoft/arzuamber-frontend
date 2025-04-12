@@ -18,11 +18,11 @@ function Category() {
   }, [dispatch]);
 
   const { categories, loading } = useSelector(
-    (state: RootState) => state.category
+    (state: RootState) => state.category,
   );
 
   return (
-    <div className=" flex justify-center items-center  w-full mt-10 md:mt-12 lg:mt-0   my-2 ">
+    <div className=" flex justify-center items-center  w-full mt-0 md:mt-2">
       {loading ? (
         <Loading />
       ) : (

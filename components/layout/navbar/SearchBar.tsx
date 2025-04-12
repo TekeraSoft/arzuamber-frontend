@@ -1,8 +1,7 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { BiSearch } from "react-icons/bi";
-// import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,16 +17,14 @@ import { InputText } from "primereact/inputtext";
 import { SpinnerIcon } from "primereact/icons/spinner";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { MdCancel } from "react-icons/md";
-import textClip from "@/components/utils/TextClip";
 
 function SearchBar({ SearchOpen, setSearchOpen }) {
   const t = useTranslations();
   const router = useRouter();
-  const locale = useLocale();
   const dispatch = useDispatch<AppDispatch>();
   const [searchTerm, setSearchTerm] = useState("");
   const { searchProducts, filterStatus, loading } = useSelector(
-    (state: RootState) => state.search
+    (state: RootState) => state.search,
   );
   const [isMobile, setIsMobile] = useState(false);
   const searchResultsRef = useRef(null);
@@ -123,8 +120,8 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             )}
             <InputText
               onFocus={() => setIsFocused(true)}
+              value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              onBlur={() => setIsFocused(false)} // bu satırı ekle!
               className={"w-full rounded !shadow-none !outline-none !h-8"}
               placeholder={t("SearchBar.placeHolder")}
             />
@@ -132,7 +129,6 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
         </div>
         {isFocused && searchProducts.length > 0 && (
           <div
-            ref={searchResultsRef}
             className={
               "bg-white border max-h-[345px] w-full flex flex-col gap-y-3 overflow-y-auto shadow-md rounded-lg top-12 p-3 absolute z-40 animate__animated animate__fadeIn"
             }
@@ -140,6 +136,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             {searchProducts.map((item, index) => (
               <button
                 key={index}
+                type={"button"}
                 onClick={() => {
                   router.push(`/product/${item.slug}`);
                   setIsFocused(false);
@@ -245,7 +242,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
             <span className="p-input-icon-right w-full">
               {loading ? (
                 <SpinnerIcon />
-              ) : searchProducts.length > 0 ? (
+              ) : (
                 <MdCancel
                   onClick={() => {
                     dispatch(clearState());
@@ -255,12 +252,10 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                   size={18}
                   className={"cursor-pointer"}
                 />
-              ) : (
-                <BiSearch size={18} />
               )}
               <InputText
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)} // bu satırı ekle!
+                value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={
                   "w-full rounded !shadow-none !outline-none !hover:shadow-none !hover:outline-none !h-8 shadow-secondary "
@@ -277,6 +272,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
               {searchProducts.map((item, index) => (
                 <button
                   key={index}
+                  type={"button"}
                   onClick={() => {
                     router.push(`/product/${item.slug}`);
                     setIsFocused(false);
@@ -341,8 +337,10 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
                 </button>
               ))}
             </div>
-          ) : isFocused && searchProducts.length === 0 ? (
-            <div className="bg-white border border-slate-300 max-h-[345px] w-full   flex flex-col items-center justify-center gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-10 animate__animated animate__fadeIn">
+          ) : isFocused &&
+            searchTerm.length !== 0 &&
+            searchProducts.length === 0 ? (
+            <div className="bg-white border border-slate-300 max-h-[345px] w-full flex flex-col items-center justify-center gap-y-3 overflow-y-auto shadow-md rounded-lg top-10 p-3 absolute z-10 animate__animated animate__fadeIn">
               <div className="flex items-center justify-center gap-2">
                 <BiSearch size={20} className="text-gray-400" />
                 <p className="text-gray-500 text-sm">

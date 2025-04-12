@@ -121,7 +121,7 @@ const DetailClient = ({ product }: productProps) => {
   };
 
   return (
-    <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
+    <div className=" md:container md:mx-auto flex flex-col gap-3 mt-0 md:mt-6 ">
       {/* <NextSeoHead
         name={product.name}
         description={product.description}
@@ -404,7 +404,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -488,7 +488,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      })
+                      }),
                     );
                     dispatch(
                       addToCartNotification({
@@ -498,7 +498,7 @@ const DetailClient = ({ product }: productProps) => {
                         userName: session?.user.name
                           ? session?.user?.name
                           : "Guest",
-                      })
+                      }),
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
