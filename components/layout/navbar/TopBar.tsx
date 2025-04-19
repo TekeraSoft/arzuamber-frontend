@@ -33,7 +33,7 @@ function TopBar() {
         >
           <GoDotFill size={14} className=" hidden md:block" />
           <BiLogoWhatsapp size={14} className="  block  md:hidden" />
-          <span className="flex gap-1 text-[9px] md:text-xs whitespace-nowrap">
+          <span className="flex gap-1 text-[8px] sm:text-[9px] md:text-xs whitespace-nowrap">
             +90 (534) 260 8385 -
             <span className=" hidden md:grid">Destek Hattı</span> (10:00 -
             18:00)
@@ -43,7 +43,7 @@ function TopBar() {
         <div className="flex items-center justify-end gap-2 w-full text-[9px] md:text-xs">
           <Link
             href="/help"
-            className=" cursor-pointer hover:underline flex items-center gap-1"
+            className="hidden cursor-pointer hover:underline sm:flex items-center gap-1"
           >
             Yardım
             <FaHandsHelping size={14} />

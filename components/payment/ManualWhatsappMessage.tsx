@@ -10,15 +10,15 @@ function ManualWhatsappMessage() {
 
   return (
     <div className="flex justify-center items-center ">
-      <div className="text-center  rounded-lg max-w-md w-full">
+      <div className="flex justify-center items-center text-center  rounded-lg w-full md:max-w-md">
         <a
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-success shadow-md text-xs md:text-sm flex justify-center items-center gap-2 bg-green-500 text-white w-full   px-3 py-2 rounded-lg hover:bg-green-600 transition duration-300"
+          className="btn btn-success text-xs md:text-sm flex justify-center items-center gap-1 bg-green-500 text-white w-11/12   px-3 py-2 rounded-lg hover:bg-green-600 transition duration-300"
         >
-          <FaWhatsapp size={24} />
-          Siparişinizle ilgili hemen iletişime geçebilirsiniz.
+          <FaWhatsapp className="text-xl " />
+          <p> Siparişinizle ilgili iletişime geçebilirsiniz.</p>
         </a>
       </div>
     </div>

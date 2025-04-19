@@ -68,7 +68,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               >
                 <SnackbarContent
-                  message="Share Link Copied ✓ "
+                  message="Paylaşım linki kopyalandı. "
                   sx={{
                     backgroundColor: "#8174A0",
                     color: "white",
