@@ -3,7 +3,7 @@ import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import { Product } from "@/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
@@ -120,6 +120,10 @@ const DetailClient = ({ product }: productProps) => {
     dispatch(updateFavoritesDispatch(product));
   };
 
+  const carouselRef = useRef<any>(null);
+
+  console.log(carouselRef);
+
   return (
     <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
@@ -131,12 +135,17 @@ const DetailClient = ({ product }: productProps) => {
       <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
         {/* Image Section with Carousel */}
 
-        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-3/6 md:h-full">
+        <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
           <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center w-full h-full"
+                onClick={() => {
+                  setPhotoIndex(index);
+
+                  carouselRef.current?.goToSlide(index);
+                }}
+                className="flex justify-center items-center w-full h-full "
               >
                 {loading ? (
                   // Skeleton resim yüklenene kadar gösterilecek
@@ -162,12 +171,15 @@ const DetailClient = ({ product }: productProps) => {
             responsive={responsive}
             infinite
             autoPlay
+            ref={carouselRef}
             // slidesPerView={1}
             autoPlaySpeed={3000}
             transitionDuration={500}
             customLeftArrow={<CustomLeftArrow />}
             customRightArrow={<CustomRightArrow />}
             className="w-full rounded-lg h-full"
+            swipeable={true}
+            draggable={true}
           >
             {stockSizeState?.images?.length === 0 || loading ? (
               <div className="flex justify-center items-center w-full h-full rounded-lg mb-5">
@@ -404,7 +416,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  ),
+                  )
                 )}
               </div>
             </div>
@@ -488,7 +500,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      }),
+                      })
                     );
                     dispatch(
                       addToCartNotification({
@@ -498,13 +510,12 @@ const DetailClient = ({ product }: productProps) => {
                         userName: session?.user.name
                           ? session?.user?.name
                           : "Guest",
-                      }),
+                      })
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
                   }
                 }}
-                //w-10/12
                 className={
                   "!bg-secondary h-12 w-full md:w-9/12  !border-none !outline-0 flex justify-center rounded-lg text-xl text-white font-semibold  hover:opacity-85 hover:scale-105  !transition-all !duration-300 "
                 }
@@ -555,7 +566,7 @@ const DetailClient = ({ product }: productProps) => {
           animation={{ fade: 0 }}
           controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
           styles={{
-            container: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+            container: { backgroundColor: "rgba(0, 0, 0, 0.6)" },
           }}
         />
       </div>

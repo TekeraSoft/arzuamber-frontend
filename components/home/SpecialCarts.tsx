@@ -11,7 +11,7 @@ function SpecialCarts() {
   const cardData = [
     {
       id: 1,
-      icon: <FaShippingFast className="text-3xl text-green-600" />,
+      icon: <FaShippingFast className="sm:text-3xl text-green-600" />,
       title: "Kargo Ücretsiz",
       description:
         "500 ₺ ve üzerine ücretsiz kargo ile siparişinizi teslim alın.",
@@ -19,7 +19,7 @@ function SpecialCarts() {
     },
     {
       id: 3,
-      icon: <FaGift className="text-3xl text-red-600" />,
+      icon: <FaGift className="sm:text-3xl text-red-600" />,
       title: "Özel İndirimler",
       description:
         "Bayramlar, sevgililer günü ve daha fazlasında kaçırılmayacak fırsatlar seni bekliyor!",
@@ -27,28 +27,28 @@ function SpecialCarts() {
     },
     {
       id: 3,
-      icon: <FaCreditCard className="text-3xl text-blue-600" />,
+      icon: <FaCreditCard className="sm:text-3xl text-blue-600" />,
       title: "İyzico ile Ödeme",
       description: "Kolay ve güvenli ödeme ile alışverişinizi tamamlayın.",
       color: "text-blue-600",
     },
     {
       id: 4,
-      icon: <FaMoneyBillAlt className="text-3xl text-yellow-600" />,
+      icon: <FaMoneyBillAlt className="sm:text-3xl text-yellow-600" />,
       title: "Kapıda Ödeme",
       description: "Ürünü teslim alırken ödeme yapabilirsiniz.",
       color: "text-yellow-600",
     },
     {
       id: 5,
-      icon: <FaExchangeAlt className="text-3xl text-purple-600" />,
+      icon: <FaExchangeAlt className="sm:text-3xl text-purple-600" />,
       title: "Kolay İade",
       description: "15 gün içinde koşulsuz iade garantisi!",
       color: "text-purple-600",
     },
     {
       id: 6,
-      icon: <FaMoneyBillAlt className="text-3xl text-gray-600" />,
+      icon: <FaMoneyBillAlt className="sm:text-3xl text-gray-600" />,
       title: "Fiyatlarımıza KDV Dahildir",
       description: "Tüm fiyatlarımıza KDV dahildir, ekstra ücret yok!",
       color: "text-gray-600",
@@ -68,7 +68,7 @@ function SpecialCarts() {
               {card.icon}
 
               {/* Başlık */}
-              <h3 className="text-[11px] md:text-sm font-semibold text-center w-full truncate">
+              <h3 className="text-[8px] sm:text-[11px] md:text-sm font-semibold text-center w-full truncate">
                 {card.title}
               </h3>
             </div>

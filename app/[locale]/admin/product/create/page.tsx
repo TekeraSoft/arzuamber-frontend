@@ -21,12 +21,13 @@ import {
 } from "@/store/adminSlice";
 import Resizer from "react-image-file-resizer";
 import { useParams } from "next/navigation";
+import TextEditor from "@/components/admin/Product/TextEditor/TextEditor";
 
 export default function ProductCreatePage() {
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
   const { categories, loading, colors } = useSelector(
-    (state: RootState) => state.admin,
+    (state: RootState) => state.admin
   );
   const [subCategoriesState, setSubCategoriesState] = useState([]);
   const formik = useFormik({
@@ -50,7 +51,7 @@ export default function ProductCreatePage() {
       // ✅ JSON verisini FormData'ya ekle
       formData.append(
         "data",
-        new Blob([JSON.stringify(values)], { type: "application/json" }),
+        new Blob([JSON.stringify(values)], { type: "application/json" })
       );
 
       // ✅ Küçültülmüş resimleri doğrudan FormData'ya ekle
@@ -60,7 +61,7 @@ export default function ProductCreatePage() {
             const fileName = `${colorItem.color}_${index}_${image.name}`;
             formData.append(
               "images",
-              new File([image], fileName, { type: image.type }),
+              new File([image], fileName, { type: image.type })
             );
           }
         }
@@ -97,7 +98,7 @@ export default function ProductCreatePage() {
             (resizedFile) => {
               resolve(new File([resizedFile], file.name, { type: file.type }));
             },
-            "file", // ✅ Çıktıyı doğrudan File olarak al
+            "file" // ✅ Çıktıyı doğrudan File olarak al
           );
         });
       };
@@ -150,11 +151,13 @@ export default function ProductCreatePage() {
                 type={"button"}
                 onClick={() => {
                   const newColorSizeState = formik.values.colorSize.filter(
-                    (_, i) => i !== index,
+                    (_, i) => i !== index
                   );
                   formik.setFieldValue("colorSize", newColorSizeState);
                 }}
-                className={`${index === 0 ? "hidden" : "block"} absolute right-2 top-2 text-red-600`}
+                className={`${
+                  index === 0 ? "hidden" : "block"
+                } absolute right-2 top-2 text-red-600`}
               >
                 <MdCancel size={20} />
               </button>
@@ -218,7 +221,7 @@ export default function ProductCreatePage() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               `colorSize[${index}].sizeStock[${sizeStockIndex}].size`,
-                              e.value,
+                              e.value
                             )
                           }
                         />
@@ -230,7 +233,7 @@ export default function ProductCreatePage() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               `colorSize[${index}].sizeStock[${sizeStockIndex}].stock`,
-                              e.value,
+                              e.value
                             )
                           }
                           value={
@@ -255,7 +258,7 @@ export default function ProductCreatePage() {
                                     size: "",
                                     stock: 0,
                                   },
-                                ],
+                                ]
                               );
                             }}
                             className={
@@ -270,11 +273,11 @@ export default function ProductCreatePage() {
                               const newState = formik.values.colorSize[
                                 index
                               ].sizeStock.filter(
-                                (_, i) => i !== sizeStockIndex,
+                                (_, i) => i !== sizeStockIndex
                               );
                               formik.setFieldValue(
                                 `colorSize[${index}].sizeStock`,
-                                newState,
+                                newState
                               );
                             }}
                             className={"bg-red-600 rounded-full p-1 text-white"}
@@ -284,7 +287,7 @@ export default function ProductCreatePage() {
                         </div>
                       </div>
                     </div>
-                  ),
+                  )
                 )}
               </div>
             </div>
@@ -393,6 +396,8 @@ export default function ProductCreatePage() {
         </div>
       </div>
       <div className="w-full">
+        <TextEditor />
+
         <textarea
           placeholder={"Description"}
           className={"w-full p-2 border-2 rounded"}
