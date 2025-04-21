@@ -122,7 +122,7 @@ const DetailClient = ({ product }: productProps) => {
 
   const carouselRef = useRef<any>(null);
 
-  console.log(carouselRef);
+  console.log(product.description);
 
   return (
     <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">

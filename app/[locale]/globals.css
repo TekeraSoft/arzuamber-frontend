@@ -58,3 +58,28 @@ body {
          lg:w-[1250px] 
          xl:w-[1290px];
 }
+
+/* for the editor content */
+@layer components {
+  /* heading style  */
+  .editor-content h1 {
+    @apply text-2xl font-bold;
+  }
+
+  .editor-content h2 {
+    @apply text-xl font-bold;
+  }
+
+  .editor-content h3 {
+    @apply text-lg font-bold;
+  }
+
+  /* code style */
+  .editor-content pre {
+    @apply p-2 bg-foreground text-background rounded-md;
+  }
+
+  .custom-highlight {
+    @apply bg-yellow-400 text-black px-1 rounded-sm;
+  }
+}

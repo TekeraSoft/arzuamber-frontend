@@ -7,9 +7,9 @@ import Heading from "@tiptap/extension-heading";
 import Image from "@tiptap/extension-image";
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
-import ImageResize from "tiptap-extension-image-resize";
 import TextEditorToolBar from "./TextEditorToolBar";
 import Highlight from "@tiptap/extension-highlight";
+import ImageResize from "tiptap-extension-resize-image";
 
 function TextEditor({ content, onChange }) {
   const editor = useEditor({
@@ -25,19 +25,42 @@ function TextEditor({ content, onChange }) {
         HTMLAttributes: { class: "list-decimal ml-3" },
       }),
       BulletList.configure({
-        HTMLAttributes: { class: "list-disc ml-3" },
+        HTMLAttributes: { class: "list-disc ml-10" },
       }),
-      Highlight,
+      Highlight.configure({
+        HTMLAttributes: {
+          class: "highlighted-text",
+        },
+      }),
+      ImageResize.configure({
+        // ayar yapılabilir
+        resizeIcon: true,
+        resizeHandleStyle: {
+          width: "8px",
+          height: "8px",
+          backgroundColor: "blue",
+        },
+      }),
       Image,
-      ImageResize,
     ],
+    content,
+    onUpdate: ({ editor }) => {
+      console.log(editor);
+      onChange(editor.getHTML());
+    },
+    editorProps: {
+      attributes: {
+        class:
+          "editor-content min-h-[156px] border  rounded-md bg-slate-50 py-2 px-3",
+      },
+    },
   });
 
   return (
-    <div>
-      <TextEditorToolBar />
-      <EditorContent />
-    </div>
+    <>
+      <TextEditorToolBar editor={editor} />
+      <EditorContent editor={editor} />
+    </>
   );
 }
 

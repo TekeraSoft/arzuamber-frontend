@@ -24,13 +24,14 @@ function ProductDescriptions({ description }: { description: string }) {
   return (
     <div className="bg-white rounded-lg flex flex-col justify-start items-end gap-2 p-4 border">
       <div
-        className={`text-secondary text-sm md:text-base mb-3 w-full prose max-w-none ${
+        className={`prose prose-sm md:prose-base text-secondary max-w-none ${
           lineClamp ? "line-clamp-3 overflow-hidden" : ""
         }`}
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(description),
         }}
       />
+
       {description.length > 250 && (
         <button
           onClick={toggleClamp}

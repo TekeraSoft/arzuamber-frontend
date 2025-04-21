@@ -33,6 +33,8 @@ export default {
 
         mywhite: "#FFFFFF",
         myblack: "#000000",
+        background: "#ffffff",
+        foreground: "#1f2937", // örnek: Tailwind gray-800
       },
       container: {
         center: true, // Ortada hizalamak için
@@ -46,5 +48,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 } satisfies Config;

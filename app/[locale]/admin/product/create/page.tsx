@@ -396,18 +396,21 @@ export default function ProductCreatePage() {
         </div>
       </div>
       <div className="w-full">
-        <TextEditor />
+        <TextEditor
+          content={formik.values.description}
+          onChange={(value) => formik.setFieldValue("description", value)}
+        />
 
-        <textarea
+        {/* <textarea
           placeholder={"Description"}
           className={"w-full p-2 border-2 rounded"}
           rows={6}
           value={formik.values.description}
           onChange={formik.handleChange}
           id="description"
-        />
+        /> */}
       </div>
-      <div className="flex w-100 justify-end">
+      <div className="flex w-100 justify-end mt-5">
         <Button
           type="button"
           onClick={formik.handleSubmit}
