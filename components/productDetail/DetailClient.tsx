@@ -13,7 +13,6 @@ import { addToCart, addToCartNotification } from "@/store/cartSlice";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { CustomLeftArrow, CustomRightArrow } from "./utils/CustomArrows";
-// import NextSeoHead from "../utils/NextSeoHead";
 import { openCartModal, setFavWarningModalStatus } from "@/store/modalsSlice";
 import { Button } from "primereact/button";
 import OrderButtons from "./utils/OrderButtons/OrderButtons";

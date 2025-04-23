@@ -75,14 +75,6 @@ const SideBar = () => {
     },
   ];
 
-  if (session?.user.role.includes("SUPER_ADMIN")) {
-    adminPanel.push({
-      name: "User Management",
-      icon: BiUser,
-      options: [{ name: "Manage Users", url: "/admin/user-management" }],
-    });
-  }
-
   const toggleMenu = (menuName: string) => {
     setOpenMenu((prevMenu) => (prevMenu === menuName ? null : menuName));
   };
@@ -153,6 +145,15 @@ const SideBar = () => {
               )}
             </li>
           ))}
+
+          <li>
+            <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
+              <div className="flex items-center gap-3">
+                <FaUsers size={20} />
+                <Link href={"/admin/user-management"}>User Management</Link>
+              </div>
+            </div>
+          </li>
           <li>
             <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
               <div className="flex items-center gap-3">
