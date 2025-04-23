@@ -84,7 +84,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
@@ -97,7 +97,7 @@ const SideBar = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed lg:sticky top-0 left-0 bg-secondary md:w-52 text-mywhite  h-full p-4 z-50 transition-transform 
+        } fixed overflow-y-auto lg:sticky top-0 left-0 bg-secondary md:w-52 text-mywhite  h-full p-4 z-50 transition-transform 
         duration-300 ease-in-out lg:translate-x-0 md:border-r lg:border-none  lg:w-72`}
       >
         <Heading text="Admin Panel" color="white" hr />

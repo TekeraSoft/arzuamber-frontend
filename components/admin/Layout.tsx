@@ -18,10 +18,12 @@ function Layout({ children }) {
 
       <div className={"flex flex-col w-full"}>
         <Toolbar
-          className={"sticky w-full top-0 z-50 !rounded-none"}
+          className={"fixed flex w-full top-0 z-50 !rounded-none"}
           style={{ paddingRight: 35 }}
           start={() => (
-            <span className={"text-base font-mono line-clamp-2"}>
+            <span
+              className={"w-full text-sm md:text-base font-mono line-clamp-2"}
+            >
               {path
                 .replace(/^\/admin\//, "")
                 .split("/")
@@ -29,7 +31,7 @@ function Layout({ children }) {
             </span>
           )}
           center={() => (
-            <div className="flex justify-center w-full">
+            <div className=" hidden  md:flex justify-center w-full">
               <div className="text-sm text-red-600 font-semibold">
                 {locale === "tr"
                   ? "Şu an Türkçe içerik giriyorsunuz"
@@ -38,8 +40,10 @@ function Layout({ children }) {
             </div>
           )}
           end={() => (
-            <span className={"flex flex-row items-center gap-x-4"}>
-              <span className={"flex flex-row items-center gap-x-2"}>
+            <span className={"flex flex-row items-center gap-x-4 w-full"}>
+              <span
+                className={" md:text-sm flex flex-row items-center gap-x-2"}
+              >
                 <Alert />
                 <Link
                   href={path}
@@ -65,17 +69,16 @@ function Layout({ children }) {
                   EN
                 </Link>
               </span>
-              <FaUserShield size={28} color={"gray"} />
+              <FaUserShield className="text-lg md:text-4xl" color={"gray"} />
               <BiLogOut
-                className={"cursor-pointer"}
                 onClick={() => signOut()}
-                size={32}
+                className="text-lg md:text-4xl cursor-pointer"
                 color={"red"}
               />
             </span>
           )}
         />
-        <div className={"px-8 py-4"}>{children}</div>
+        <div className={"px-2 md:px-8 py-4 mt-16"}>{children}</div>
       </div>
     </div>
   );

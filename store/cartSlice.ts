@@ -17,6 +17,7 @@ const getInitialState = () => {
     // Eğer sunucu tarafında çalışıyorsa, sadece varsayılan initial state dönüyoruz
     return {
       cartProducts: [],
+      orderSummaryProducts: [],
       total: 0,
       loading: false,
     };
@@ -33,6 +34,7 @@ const getInitialState = () => {
   return {
     cartProducts: [],
     total: 0,
+    orderSummaryProducts: [],
   };
 };
 
@@ -47,19 +49,19 @@ export const cartSlice = createSlice({
       state.loading = true;
       const { size, color, id, quantity } = action.payload;
       const existingProduct = state.cartProducts.find(
-        (p) => p.id === id && p.color === color && p.size === size,
+        (p) => p.id === id && p.color === color && p.size === size
       );
       if (existingProduct) {
         existingProduct.quantity = quantity;
         state.total = state.cartProducts.reduce(
           (acc, item) => acc + item.price * item.quantity,
-          0,
+          0
         );
       } else {
         state.cartProducts.push(action.payload);
         state.total = state.cartProducts.reduce(
           (acc, item) => acc + item.price * item.quantity,
-          0,
+          0
         );
       }
       localStorage.setItem(
@@ -67,7 +69,7 @@ export const cartSlice = createSlice({
         JSON.stringify({
           cartProducts: state.cartProducts,
           total: state.total,
-        }),
+        })
       );
       state.loading = false;
     },
@@ -81,18 +83,18 @@ export const cartSlice = createSlice({
             item.id === action.payload.id &&
             item.color === action.payload.color &&
             item.size === action.payload.size
-          ),
+          )
       );
       state.total = state.cartProducts.reduce(
         (acc, item) => acc + item.price * item.quantity,
-        0,
+        0
       );
       localStorage.setItem(
         "cart",
         JSON.stringify({
           cartProducts: state.cartProducts,
           total: state.total,
-        }),
+        })
       );
       state.loading = false;
     },
@@ -101,16 +103,30 @@ export const cartSlice = createSlice({
       state.cartProducts = [];
       state.total = 0;
       localStorage.removeItem("cart");
-      state.loading = false;
+    },
+    // setOrderSummaryProducts: (state, action) => {
+    //   state.orderSummaryProducts = action.payload;
+    //   localStorage.setItem(
+    //     "orderSummaryProducts",
+    //     JSON.stringify(state.orderSummaryProducts)
+    //   );
+    // },
+    clearOrderSummaryProduct: () => {
+      localStorage.removeItem("orderSummaryProducts");
     },
   },
 });
 
-export const addToCartNotification = (value: object) => async (dispatch) => {
+export const addToCartNotification = (value: object) => async () => {
   postGuardRequest({ controller: "product", action: "add-to-cart" }, value);
 };
 
 // Reducer'ları dışa aktarma
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  clearOrderSummaryProduct,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

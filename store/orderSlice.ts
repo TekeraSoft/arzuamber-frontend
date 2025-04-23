@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postGuardRequest } from "@/services/requestservice";
 import { toast } from "react-toastify";
-import { router } from "next/client";
 
 const orderSlice = createSlice({
   name: "order",
@@ -19,7 +18,7 @@ export const createPayAtDoor = (value: object, router) => async (dispatch) => {
   dispatch(loading(true));
   postGuardRequest(
     { controller: "order", action: "create-pay-at-door-order" },
-    value,
+    value
   )
     .then((res) => {
       dispatch(loading(false));

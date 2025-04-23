@@ -76,8 +76,8 @@ function Alert() {
     <span className={`flex relative justify-center`}>
       <span className={`flex relative justify-center items-center`}>
         <AiFillBell
-          className={"text-gray-500 cursor-pointer "}
-          size={32}
+          className={"text-gray-500 cursor-pointer text-2xl "}
+          c
           onClick={() => {
             setOpenAlertBox(!openAlertBox);
             dispatch(deactivateNotificationsDispatch());
@@ -85,14 +85,16 @@ function Alert() {
         />
         <span
           className={
-            "w-4 h-4 right-0 top-0 bg-red-600 text-white text-xs flex items-center justify-center rounded-full absolute"
+            "w-3 h-3 md:w-4 md:h-4 right-0 top-0 bg-red-600 text-white text-[11px] md:text-xs flex items-center justify-center rounded-full absolute"
           }
         >
           {notifications?.filter((n) => n.isActive).length}
         </span>
       </span>
       <ul
-        className={`${openAlertBox ? "flex" : "hidden"} shadow flex flex-col overflow-y-auto absolute bg-white text-xs w-72 h-64 mt-12 border`}
+        className={`${
+          openAlertBox ? "flex" : "hidden"
+        } shadow flex flex-col overflow-y-auto absolute bg-white text-xs w-72 h-64 mt-12 border`}
       >
         {notifications?.map((item, index) => (
           <li

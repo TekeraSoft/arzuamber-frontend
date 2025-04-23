@@ -20,15 +20,10 @@ import { FaUserShield } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import { BiSearch } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa";
-import {
-  FaHome,
-  FaBoxOpen,
-  FaBlog,
-  FaInfoCircle,
-  FaEnvelope,
-} from "react-icons/fa";
+
 import Timer from "./Timer";
 import { getAllFavorites } from "@/store/favoritesSlice";
+import NavbarMobile from "./NavbarMobile";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -60,14 +55,6 @@ function Navbar() {
     router.push(pathname, { locale: lang });
     setIsLangDropdownOpen(false);
   };
-
-  const navLinks = [
-    { name: t("navLinks.home"), url: "/", icon: <FaHome /> },
-    { name: t("navLinks.products"), url: "/products", icon: <FaBoxOpen /> },
-    { name: t("navLinks.blogs"), url: "/blogs", icon: <FaBlog /> },
-    { name: t("navLinks.about"), url: "/about", icon: <FaInfoCircle /> },
-    { name: t("navLinks.contact"), url: "/contact", icon: <FaEnvelope /> },
-  ];
 
   const openCart = () => {
     dispatch(openCartModal());
@@ -463,46 +450,12 @@ function Navbar() {
         {/* Mobile Menu */}
       </nav>
 
-      <div className="flex flex-col justify-center items-center w-full border-t">
-        <div
-          className="bg-black bg-opacity-40 w-full"
-          onClick={() => setOpenMenu(false)}
-        >
-          <div
-            className={` lg:hidden bg-mywhite  flex flex-col items-start justify-start border-r  ${
-              openMenu
-                ? " relative w-1/2 max-w-72 transform transition-all duration-700 min-h-screen translate-x-0"
-                : "max-h-0 overflow-hidden -translate-x-full "
-            }`}
-          >
-            <ul
-              className={` text-sm  w-full flex flex-col justify-center items-start gap-1   px-2 py-2    `}
-            >
-              {navLinks.map((link) => (
-                <Link
-                  key={link.url}
-                  href={link.url}
-                  className="block text-center w-full"
-                >
-                  <li
-                    onClick={() => setOpenMenu(false)}
-                    className="flex items-center gap-2 text-primary hover:bg-secondary hover:text-mywhite transition-all duration-300 justify-start p-2 w-full rounded-lg"
-                  >
-                    {link.icon}
-                    {link.name}
-                  </li>
-                </Link>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {!openMenu && SearchOpen && (
-          <div className="w-full flex lg:hidden ">
-            <SearchBar SearchOpen={SearchOpen} setSearchOpen={setSearchOpen} />
-          </div>
-        )}
-      </div>
+      <NavbarMobile
+        setOpenMenu={setOpenMenu}
+        openMenu={openMenu}
+        SearchOpen={SearchOpen}
+        setSearchOpen={setSearchOpen}
+      />
     </header>
   );
 }

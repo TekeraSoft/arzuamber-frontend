@@ -25,7 +25,7 @@ function AdminPage() {
 
   const imageUri = process.env.NEXT_PUBLIC_RESOURCE_API || "";
   const { orders, page, loading } = useSelector(
-    (state: RootState) => state.admin,
+    (state: RootState) => state.admin
   );
   const [pageable, setPageable] = useState({ currentPage: 0, size: 15 });
   const [expandedRows, setExpandedRows] = useState(null);
@@ -74,7 +74,10 @@ function AdminPage() {
     return (
       <DataTable
         size={"small"}
-        tableStyle={{ minWidth: "50rem", fontSize: "12px" }}
+        tableStyle={{
+          minWidth: "50rem",
+          fontSize: "12px",
+        }}
         value={data.basketItems}
       >
         <Column
@@ -102,11 +105,12 @@ function AdminPage() {
   };
 
   return (
-    <div className={"w-full"}>
+    <div className="w-full">
       <DataTable
-        size={"small"}
-        tableStyle={{ minWidth: "50rem", fontSize: "13px" }}
         value={orders}
+        responsiveLayout="scroll"
+        size="small"
+        tableStyle={{ fontSize: "13px" }}
         paginator
         rows={pageable.size}
         first={pageable.currentPage}
@@ -115,81 +119,80 @@ function AdminPage() {
         rowExpansionTemplate={rowExpansionTemplate}
         expandedRows={expandedRows}
         onRowToggle={(e) => setExpandedRows(e.data)}
-        rowClassName={(data) =>
-          isToday(parseISO(data.createdAt)) ? "!bg-green-100" : ""
-        }
+        rowClassName={(data) => {
+          const base = "text-sm";
+          const highlight = isToday(parseISO(data.createdAt))
+            ? "bg-green-100"
+            : "";
+          return `${base} ${highlight}`;
+        }}
+        tableClassName="border border-gray-200 w-full"
       >
-        <Column expander={allowExpansion} style={{ width: "5rem" }} />
+        <Column expander={allowExpansion} className="bg-violet-400/15 " />
         <Column
-          header={"Buyer Name"}
           body={(data) => (
-            <span>
-              {data.buyer.name} {data.buyer.surname}
-            </span>
-          )}
-        />
-        <Column field={"buyer.gsmNumber"} header={"Gsm Number"} />
-        <Column field={"buyer.email"} header={"E-mail"} />
-        <Column
-          header={"Price"}
-          body={(data) => (
-            <span className={"font-extrabold"}>
-              {data.totalPrice.toLocaleString("tr-TR", {
-                style: "currency",
-                currency: "TRY",
-              })}
-            </span>
-          )}
-        />
-        <Column
-          header={"Created At"}
-          body={(data) => (
-            <span>
-              {format(data.createdAt, "dd.MM.yyyy | HH:mm:ss", { locale: tr })}
-            </span>
-          )}
-        />
-        <Column
-          header={"Shipping Address"}
-          style={{ width: "12rem" }}
-          body={(data) => (
-            <span className={"text-[12px]"}>
-              {data.shippingAddress.address} - {data.shippingAddress.street} -{" "}
-              {data.shippingAddress.state} / {data.shippingAddress.city}
-            </span>
-          )}
-        />
+            <div className="flex flex-col gap-2  p-3  md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:items-center flex-wrap">
+              <div>
+                <strong>Buyer Name:</strong> {data.buyer.name}{" "}
+                {data.buyer.surname}
+              </div>
+              <div>
+                <strong>GSM:</strong> {data.buyer.gsmNumber}
+              </div>
+              <div>
+                <strong>Email:</strong> {data.buyer.email}
+              </div>
+              <div>
+                <strong>Price:</strong>{" "}
+                <span className="font-bold">
+                  {data.totalPrice.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                  })}
+                </span>
+              </div>
+              <div>
+                <strong>Created At:</strong>{" "}
+                {format(data.createdAt, "dd.MM.yyyy | HH:mm:ss", {
+                  locale: tr,
+                })}
+              </div>
+              <div>
+                <strong>Address:</strong>{" "}
+                <span className="text-[12px] block">
+                  {data.shippingAddress.address} - {data.shippingAddress.street}{" "}
+                  - {data.shippingAddress.state} / {data.shippingAddress.city}
+                </span>
+              </div>
+              <div>
+                <strong>Status:</strong>{" "}
+                <Dropdown
+                  value={data.status}
+                  className="text-xs mt-1"
+                  options={statusOptions}
+                  optionLabel="label"
+                  optionValue="value"
+                  onChange={(e) =>
+                    dispatch(changeOrderStatusDispatch(data.id, e.target.value))
+                  }
+                />
+              </div>
+              <div className="bg-violet-400/70 p-2 rounded-lg max-w-96 flex items-center space-x-3 w-f ">
+                <strong className="text-white font-semibold">Actions:</strong>
 
-        <Column
-          header={"Payment Status"}
-          body={(row) => (
-            <Dropdown
-              value={row.status}
-              className={"text-xs"}
-              options={statusOptions}
-              optionLabel="label" // Dropdown'da görünen değer
-              optionValue="value" // Dropdown'da kaydedilen değer
-              onChange={(e) => {
-                dispatch(changeOrderStatusDispatch(row.id, e.target.value));
-              }}
-            />
-          )}
-        />
-        <Column
-          header={"Actions"}
-          body={(data) => (
-            <MdDelete
-              className={"text-red-600 cursor-pointer"}
-              size={24}
-              onClick={() => {
-                const isConfirmed = confirm(
-                  "Are you sure you want to delete this order?",
-                );
-                if (isConfirmed) {
-                  dispatch(deleteOrderDispatch(data.id));
-                }
-              }}
-            />
+                <MdDelete
+                  className=" text-3xl border  rounded-md p-0.5 text-white hover:text-red-500 cursor-pointer transition-colors duration-300 hover:border-red-500"
+                  onClick={() => {
+                    const isConfirmed = confirm(
+                      "Are you sure you want to delete this order?"
+                    );
+                    if (isConfirmed) {
+                      dispatch(deleteOrderDispatch(data.id));
+                    }
+                  }}
+                />
+              </div>
+            </div>
           )}
         />
       </DataTable>

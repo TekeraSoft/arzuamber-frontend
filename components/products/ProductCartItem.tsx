@@ -36,7 +36,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
   return (
     <div
       className=" flex flex-col justify-between space-y-2 w-full   transition duration-300  relative h-[450px]
-    md:min-h-[575px] pb-0.5 md:border-none shadow-md  bg-slate-50 rounded-lg"
+    md:min-h-[600px] pb-0.5 md:border-none shadow-md  bg-slate-50 rounded-lg"
     >
       {/* Görsel Alanı */}
       <Link
@@ -116,8 +116,8 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
         </div>
 
         {/* Ürün Detayları */}
-        <div className=" flex flex-col space-y-1  w-full mt-2 min-h-20">
-          <h2 className="font-medium text-sm lg:text-base  text-secondary   ">
+        <div className=" flex flex-col space-y-1  w-full mt-2 min-h-16">
+          <h2 className="font-medium text-xs lg:text-base  text-secondary   ">
             {product.name}
           </h2>
 
@@ -153,7 +153,7 @@ function ProductCartItem({ product }: ProductsSliderItemProps) {
               className="flex items-center justify-center "
               href={`/product/${product.slug}`}
             >
-              <p className="text-mywhite  bg-secondary px-2 py-0.5 md:px-4  md:py-1 rounded text-sm transition-all hover:scale-105 duration-300">
+              <p className="text-mywhite ml-1 bg-secondary px-2 py-0.5 md:px-4  md:py-1 rounded text-sm transition-all hover:scale-105 duration-300 my-2">
                 {t("productDetail.detail")}
               </p>
             </Link>

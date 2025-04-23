@@ -81,14 +81,14 @@ function Timer() {
             >
               <FaExclamationCircle size={16} />
             </motion.span>
-            <span className="text-[10px] md:text-xs">
+            <span className="text-[8px] xs:text-[10px] md:text-xs">
               Mevcut kampanya sona erdi. Yeni fırsatlar için bizi takip edin!
             </span>
           </p>
 
           {/* Yeni Kampanyalar İçin Takip Mesajı */}
           <div className="flex items-center justify-center gap-2 bg-mywhite w-full md:w-64 rounded-md py-0.5">
-            <span className="text-[11px] md:text-sm text-black font-semibold">
+            <span className="text-[9px] xs:text-[11px] md:text-sm text-black font-semibold">
               Yeni Kampanyalar için takipte kalın !
             </span>
             <motion.span
