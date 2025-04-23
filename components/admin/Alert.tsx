@@ -77,7 +77,6 @@ function Alert() {
       <span className={`flex relative justify-center items-center`}>
         <AiFillBell
           className={"text-gray-500 cursor-pointer text-2xl "}
-          c
           onClick={() => {
             setOpenAlertBox(!openAlertBox);
             dispatch(deactivateNotificationsDispatch());

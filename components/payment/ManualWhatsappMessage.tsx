@@ -4,7 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 function ManualWhatsappMessage() {
   const phone = "905342608385";
   const message = encodeURIComponent(
-    "Merhaba, bir siparişim var. Yardımcı olabilir misiniz?"
+    "Merhaba, bir siparişim var. Yardımcı olabilir misiniz?",
   );
   const whatsappLink = `https://wa.me/${phone}?text=${message}`;
 
@@ -18,7 +18,7 @@ function ManualWhatsappMessage() {
           className="btn btn-success text-xs md:text-sm flex justify-center items-center gap-1 bg-green-500 text-white w-11/12   px-3 py-2 rounded-lg hover:bg-green-600 transition duration-300"
         >
           <FaWhatsapp className="text-xl " />
-          <p> Siparişinizle ilgili iletişime geçebilirsiniz.</p>
+          <p> Siparişiniz ile ilgili iletişime geçebilirsiniz.</p>
         </a>
       </div>
     </div>
