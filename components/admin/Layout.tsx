@@ -18,7 +18,7 @@ function Layout({ children }) {
 
       <div className={"flex flex-col w-full"}>
         <Toolbar
-          className={"fixed flex w-full top-0 z-50 !rounded-none"}
+          className={" sticky flex w-full top-0 z-50 !rounded-none"}
           style={{ paddingRight: 35 }}
           start={() => (
             <span
