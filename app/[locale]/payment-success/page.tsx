@@ -36,53 +36,51 @@ const SuccessPage = () => {
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      setOrderSummaryProducts(cartProducts);
+      //setOrderSummaryProducts(cartProducts);
       dispatch(clearCart());
     }
   }, [cartProducts, dispatch]);
 
-  useEffect(() => {
-    localStorage.setItem(
-      "orderSummaryProducts",
-      JSON.stringify(orderSummaryProducts)
-    );
-  }, [orderSummaryProducts]);
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "orderSummaryProducts",
+  //     JSON.stringify(orderSummaryProducts),
+  //   );
+  // }, [orderSummaryProducts]);
 
   return (
     <div className=" mx-auto md:container w-full h-full mb-12 md:mb-20  mt-8 md:mt-5">
-      <div className="w-full  flex justify-center items-center bg-gray-50 rounded-lg">
+      <div className="w-full h-[500px] flex justify-center items-center bg-gray-50 rounded-lg">
         <div className="flex flex-col-reverse md:flex-row justify-center items-center w-full h-full  py-5 ">
-          {orderSummaryProducts?.length > 0 && (
-            <div className="border-r w-full flex flex-col justify-center items-center gap-2 mt-4 md:mt-0">
-              <h2 className="text-2xl md:text-3xl text-gray-800 font-semibold text-center flex justify-center items-center gap-2">
-                Sipariş Özeti
-                <RiFilePaper2Line />
-              </h2>
+          {/*{orderSummaryProducts?.length > 0 && (*/}
+          {/*  <div className="border-r w-full flex flex-col justify-center items-center gap-2 mt-4 md:mt-0">*/}
+          {/*    <h2 className="text-2xl md:text-3xl text-gray-800 font-semibold text-center flex justify-center items-center gap-2">*/}
+          {/*      Sipariş Özeti*/}
+          {/*      <RiFilePaper2Line />*/}
+          {/*    </h2>*/}
 
-              <OrderSummaryCustomerInfo />
+          {/*    /!*<OrderSummaryCustomerInfo />*!/*/}
 
-              <div className="w-full items-center grid md:grid-cols-2 gap-2 px-2">
-                {orderSummaryProducts.map((product, index) => (
-                  <div
-                    key={index}
-                    className={
-                      orderSummaryProducts.length === 1 ? "col-span-2" : ""
-                    }
-                  >
-                    <PaymentSummaryItem
-                      summaryNumber={index + 1}
-                      product={product}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
+          {/*    <div className="w-full items-center grid md:grid-cols-2 gap-2 px-2">*/}
+          {/*      {orderSummaryProducts.map((product, index) => (*/}
+          {/*        <div*/}
+          {/*          key={index}*/}
+          {/*          className={*/}
+          {/*            orderSummaryProducts.length === 1 ? "col-span-2" : ""*/}
+          {/*          }*/}
+          {/*        >*/}
+          {/*          <PaymentSummaryItem*/}
+          {/*            summaryNumber={index + 1}*/}
+          {/*            product={product}*/}
+          {/*          />*/}
+          {/*        </div>*/}
+          {/*      ))}*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*)}*/}
+          {/*${orderSummaryProducts.length > 0 ? " w-full" : "w-full md:w-3/4"}*/}
           <div
-            className={`${
-              orderSummaryProducts.length > 0 ? " w-full" : "w-full md:w-3/4"
-            } flex flex-col items-center gap-1 px-4 md:px-0 `}
+            className={`flex flex-col items-center gap-1 px-4 md:px-0 max-w-6xl`}
           >
             <CiCircleCheck className="h-24 w-24  text-green-500" />
             <h1 className=" text-xl md:text-3xl font-bold text-gray-800 text-center">

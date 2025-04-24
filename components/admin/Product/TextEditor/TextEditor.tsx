@@ -10,6 +10,7 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import TextEditorToolBar from "./TextEditorToolBar";
 import Highlight from "@tiptap/extension-highlight";
 import ImageResize from "tiptap-extension-resize-image";
+import { useEffect } from "react";
 
 function TextEditor({ content, onChange }) {
   const editor = useEditor({
@@ -55,6 +56,12 @@ function TextEditor({ content, onChange }) {
       },
     },
   });
+
+  useEffect(() => {
+    if (editor && content !== editor.getHTML()) {
+      editor.commands.setContent(content);
+    }
+  }, [content, editor]);
 
   return (
     <>

@@ -121,8 +121,6 @@ const DetailClient = ({ product }: productProps) => {
 
   const carouselRef = useRef<any>(null);
 
-  console.log(product.description);
-
   return (
     <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
@@ -415,7 +413,7 @@ const DetailClient = ({ product }: productProps) => {
                     >
                       {item.size}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -499,7 +497,7 @@ const DetailClient = ({ product }: productProps) => {
                           product.discountPrice !== 0 && product.discountPrice
                             ? product.discountPrice
                             : product.price,
-                      })
+                      }),
                     );
                     dispatch(
                       addToCartNotification({
@@ -509,7 +507,7 @@ const DetailClient = ({ product }: productProps) => {
                         userName: session?.user.name
                           ? session?.user?.name
                           : "Guest",
-                      })
+                      }),
                     );
                     toast.success(t("productDetail.productAddedCartSuccess"));
                     openCart();
