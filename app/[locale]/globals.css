@@ -83,3 +83,13 @@ body {
     @apply bg-yellow-400 text-black px-1 rounded-sm;
   }
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* isteğe bağlı */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE ve Edge */
+  scrollbar-width: none; /* Firefox */
+}

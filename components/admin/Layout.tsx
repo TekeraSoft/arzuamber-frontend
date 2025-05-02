@@ -13,10 +13,10 @@ function Layout({ children }) {
   const locale = useLocale();
   const path = usePathname();
   return (
-    <div className={"flex flex-row bg-white"}>
+    <div className={"flex flex-row bg-white  overflow-y-hidden "}>
       <SideBar />
 
-      <div className={"flex flex-col w-full"}>
+      <div className={"flex flex-col w-full "}>
         <Toolbar
           className={" sticky flex w-full top-0 z-50 !rounded-none"}
           style={{ paddingRight: 35 }}
@@ -78,7 +78,7 @@ function Layout({ children }) {
             </span>
           )}
         />
-        <div className={"px-2 md:px-8 py-4 mt-16"}>{children}</div>
+        <div className={"px-2 md:px-8 py-4 mt-16 "}>{children}</div>
       </div>
     </div>
   );

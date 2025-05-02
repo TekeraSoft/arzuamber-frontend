@@ -122,8 +122,6 @@ const DetailClient = ({ product }: productProps) => {
 
   const carouselRef = useRef<any>(null);
 
-  console.log(product.description);
-
   return (
     <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
       {/* <NextSeoHead
@@ -140,11 +138,6 @@ const DetailClient = ({ product }: productProps) => {
             {stockSizeState?.images?.map((img, index) => (
               <div
                 key={index}
-                onClick={() => {
-                  setPhotoIndex(index);
-
-                  carouselRef.current?.goToSlide(index);
-                }}
                 className="flex justify-center items-center w-full h-full "
               >
                 {loading ? (
@@ -155,7 +148,8 @@ const DetailClient = ({ product }: productProps) => {
                   <Image
                     className="w-full h-full object-cover rounded-lg cursor-pointer"
                     onClick={() => {
-                      // Resme tıklama fonksiyonu
+                      setPhotoIndex(index);
+                      setIsModalOpen(true);
                     }}
                     src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${img}`}
                     alt={product.name}

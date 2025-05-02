@@ -17,6 +17,7 @@ import { BiSolidDiscount, BiUser } from "react-icons/bi";
 import { TbSettingsCog } from "react-icons/tb";
 import { RiMailSendLine } from "react-icons/ri";
 import { useSession } from "next-auth/react";
+import { FcBarChart } from "react-icons/fc";
 
 const SideBar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -30,7 +31,19 @@ const SideBar = () => {
       icon: IoMdHome,
       options: [{ name: "Go to Home", url: "/" }],
     },
-
+    {
+      name: "Dashboards",
+      // iconProps: { className: "", size: 20 },
+      icon: FcBarChart,
+      options: [
+        { name: "Order dashboard", url: "/admin/dashboards/order-dashboard" },
+        {
+          name: "Product dashboard",
+          url: "/admin/dashboards/product-dashboard",
+        },
+        { name: "User dashboard", url: "/admin/dashboards/user-dashboard" },
+      ],
+    },
     {
       name: "Products",
       icon: AiFillProduct,
@@ -71,7 +84,13 @@ const SideBar = () => {
     {
       name: "Forms",
       icon: RiMailSendLine,
-      options: [{ name: "Customer Messages", url: "/admin/contact-messages" }],
+
+      options: [
+        {
+          name: "Customer Messages",
+          url: "/admin/contact-messages",
+        },
+      ],
     },
   ];
 
@@ -92,7 +111,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
@@ -105,8 +124,8 @@ const SideBar = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed overflow-y-auto lg:sticky top-0 left-0 bg-secondary md:w-52 text-mywhite  h-full p-4 z-50 transition-transform 
-        duration-300 ease-in-out lg:translate-x-0 md:border-r lg:border-none  lg:w-72`}
+        } fixed lg:sticky top-0 left-0 bg-secondary min-w-52 min-h-screen h-full overflow-y-auto md:w-52 text-mywhite p-4 z-50 transition-transform  scrollbar-hide 
+  duration-300 ease-in-out lg:translate-x-0 md:border-r lg:border-none lg:w-72`}
       >
         <Heading text="Admin Panel" color="white" hr />
 
@@ -115,7 +134,7 @@ const SideBar = () => {
             <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
               <div className="flex items-center gap-3">
                 <AiFillDashboard size={20} />
-                <Link href={"/admin"}>Dashboard/Orders</Link>
+                <Link href={"/admin"}>Orders</Link>
               </div>
             </div>
           </li>
@@ -126,7 +145,7 @@ const SideBar = () => {
                 onClick={() => toggleMenu(menu.name)}
               >
                 <div className="flex items-center gap-3">
-                  <menu.icon size={20} />
+                  <menu.icon {...(menu.iconProps || { size: 20 })} />
                   <span>{menu.name}</span>
                 </div>
                 <span>
