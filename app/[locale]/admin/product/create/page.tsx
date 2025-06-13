@@ -71,7 +71,6 @@ export default function ProductCreatePage() {
   });
 
   useEffect(() => {
-    dispatch(getProductDispatch(params.id));
     dispatch(getCategoriesDispatch());
     dispatch(getAllColorsDispatch());
   }, [params, dispatch]);

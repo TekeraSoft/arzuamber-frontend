@@ -34,7 +34,7 @@ export const adminSlice = createSlice({
   initialState,
   reducers: {
     getProducts: (state, action) => {
-      state.products = action.payload._embedded.productDtoes;
+      state.products = action.payload._embedded?.productDtoes;
       state.page = action.payload.page;
     },
     getProduct: (state, action) => {
@@ -270,11 +270,11 @@ export const getProductDispatch = (id: string) => async (dispatch) => {
     params: { id: id },
   })
     .then((res) => {
-      dispatch(getProduct(res.data));
+      dispatch(getProduct(res?.data));
       dispatch(loading(false));
     })
     .catch((err) => {
-      toast.error(err.response.data);
+      toast.error(err.response?.data);
     })
     .finally(() => {
       dispatch(loading(false));
