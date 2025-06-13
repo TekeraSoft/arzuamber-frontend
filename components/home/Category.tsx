@@ -58,6 +58,31 @@ function Category() {
             </div>
           </Link>
 
+          <Link
+              href={"/df"}
+              className="flex flex-col items-center justify-center  cursor-pointer"
+          >
+            {/* Kategori Resmi ve İsim */}
+            <div className="flex flex-col items-center">
+              {/* Kategori Resmi */}
+              <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-green-400 transition-all duration-300 ease-in-out transform hover:scale-105">
+                <Image
+                    src={`/images/logo/df-img.gif`}
+                    alt={"brandDescription"}
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+
+              {/* Kategori İsmi */}
+              <h3 className="text-center text-xs md:text-sm">
+                Dijital Giyim
+              </h3>
+            </div>
+          </Link>
+
           {categories.map((category, index) => (
             <Link
               href={`/category/${category.name}`}
@@ -65,7 +90,7 @@ function Category() {
                 dispatch(setShortCategory(category.name));
               }}
               key={index}
-              className="flex flex-col items-center justify-center  cursor-pointer"
+              className="flex flex-col items-center justify-center cursor-pointer"
             >
               {/* Kategori Resmi ve İsim */}
               <div className="flex flex-col items-center">

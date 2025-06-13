@@ -35,7 +35,7 @@ export default async function middleware(req) {
     const baseUrl = new URL("/", req.url);
     return NextResponse.redirect(baseUrl);
   }
-
+  res.headers.set("x-pathname", req.nextUrl.pathname)
   return res;
 }
 

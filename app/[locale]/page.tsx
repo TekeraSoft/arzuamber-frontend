@@ -14,6 +14,8 @@ import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import Map from "@/components/utils/Map";
 import SpecialCarts from "@/components/home/SpecialCarts";
+import Image from "next/image";
+import {Link} from "@/i18n/routing";
 
 export default function Home() {
   const t = useTranslations();
@@ -37,6 +39,23 @@ export default function Home() {
       <SpecialCarts />
 
       <BackGroundImageContainer>
+
+        <HomeContainer>
+          <div className={'flex md:flex-row flex-col items-center gap-x-12 justify-center my-12'}>
+            <Image src={'/images/logo/df-img.gif'}
+                   className={'rounded-full w-72 h-72'}
+                   width={300} height={300} alt={'df-img.gif'} />
+            <div className={'flex flex-col justify-center items-center gap-y-4'}>
+              <h2 className={'md:text-4xl text-2xl mt-4 font-bold'}>Dijital Giyim'i keşfedin</h2>
+              <Link
+                  href={'/df'}
+                  className={'p-3 flex items-center justify-center border rounded-lg hover:bg-secondary border-secondary hover:text-white transition-all'}>
+                Ürünleri Görüntüle
+              </Link>
+            </div>
+          </div>
+        </HomeContainer>
+
         <HomeContainer>
           <Heading
             text={t("HomePage.sliderFeaturedTitle")}

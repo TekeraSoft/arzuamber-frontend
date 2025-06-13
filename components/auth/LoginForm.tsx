@@ -68,7 +68,7 @@ function LoginForm() {
   };
 
   // Butonun devre dışı kalma durumunu kontrol et
-  const isButtonDisabled = recaptcha == null ? true : false;
+  const isButtonDisabled = recaptcha == null ? false : false;
 
   return (
     <div>

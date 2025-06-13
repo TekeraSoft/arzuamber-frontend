@@ -16,6 +16,10 @@ const nextConfig = {
         hostname: "arzuamber.com",
         pathname: "/minio/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
     ],
     // remotePatterns: [
     //   {
