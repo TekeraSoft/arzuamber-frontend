@@ -14,6 +14,7 @@ import { Category } from "@/types";
 import Resizer from 'react-image-file-resizer'
 import { TiMinus, TiPlus } from "react-icons/ti";
 import {FiUpload} from "react-icons/fi";
+import { v4 as uuidv4 } from 'uuid'
 
 function AdminCreateCategory() {
   const locale = useLocale();
@@ -41,7 +42,7 @@ function AdminCreateCategory() {
   const handleAddMainCategory = () => {
     if (categoryInput.name.trim() !== "") {
       const newCategory = {
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         name: categoryInput.name,
         subCategories: [],
       };

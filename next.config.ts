@@ -20,6 +20,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
       },
+      {
+        protocol: "http",
+        hostname: "78.135.83.4",
+      },
     ],
     // remotePatterns: [
     //   {
