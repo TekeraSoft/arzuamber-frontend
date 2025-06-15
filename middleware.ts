@@ -16,14 +16,23 @@ export default async function middleware(req) {
     req.cookies.set("Authorization", `Bearer ${token}`);
   }
 
-  // Mevcut locale
-  const locale = req.nextUrl.locale;
+  let locale = req.cookies.get("NEXT_LOCALE")?.value;
 
-  // ✅ NEXT_LOCALE cookie yoksa ayarla
-  if (!req.cookies.get("NEXT_LOCALE")) {
-    res.cookies.set("NEXT_LOCALE", 'tr', {
+  // ✅ Eğer çerez yoksa elle ekle
+  if (!locale) {
+    locale = routing.defaultLocale;
+
+    // ✅ Çerezi yanıt ile birlikte gönder
+    res.cookies.set("NEXT_LOCALE", locale, {
       path: "/",
     });
+
+    // ✅ pathname başı locale içermiyorsa yönlendir
+    if (!req.nextUrl.pathname.startsWith(`/${locale}`)) {
+      const url = req.nextUrl.clone();
+      url.pathname = `/${locale}${url.pathname}`;
+      return NextResponse.redirect(url);
+    }
   }
 
   const decodedToken = token ? jwtDecode(token) : undefined;
