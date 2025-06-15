@@ -15,7 +15,16 @@ export default async function middleware(req) {
   if (token) {
     req.cookies.set("Authorization", `Bearer ${token}`);
   }
-  const locale = req.cookies.get("NEXT_LOCALE")?.value;
+
+  // Mevcut locale
+  const locale = req.nextUrl.locale;
+
+  // ✅ NEXT_LOCALE cookie yoksa ayarla
+  if (!req.cookies.get("NEXT_LOCALE")) {
+    res.cookies.set("NEXT_LOCALE", 'tr', {
+      path: "/",
+    });
+  }
 
   const decodedToken = token ? jwtDecode(token) : undefined;
 
