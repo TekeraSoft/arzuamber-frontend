@@ -57,6 +57,7 @@ const AdminBlogCreate = () => {
       { label: "Sokak Modası", value: "Sokak Modası" },
       { label: "Klasik Tarz", value: "Klasik Tarz" },
       { label: "Spor Şıklık", value: "Spor Şıklık" },
+      { label: "Kombinler", value: "Özel Kombinler" },
     ],
     en: [
       { label: "Fashion", value: "Fashion" },
@@ -69,6 +70,7 @@ const AdminBlogCreate = () => {
       { label: "Street Style", value: "street-style" },
       { label: "Classic Style", value: "Classic Style" },
       { label: "Sporty Chic", value: "Sporty Chic" },
+      { label: "Combines", value: "Combines" },
     ],
   };
 
