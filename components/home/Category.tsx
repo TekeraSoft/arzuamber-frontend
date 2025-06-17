@@ -58,7 +58,7 @@ function Category() {
             </div>
           </Link>
 
-          <Link
+          {/*<Link
               href={"/df"}
               className="flex flex-col items-center justify-center  cursor-pointer"
           >
@@ -77,7 +77,7 @@ function Category() {
                 Dijital Giyim
               </h3>
             </div>
-          </Link>
+          </Link>*/}
 
           {categories.map((category, index) => (
             <Link

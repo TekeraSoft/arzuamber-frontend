@@ -30,7 +30,7 @@ function ShareButtons({
   const t = useTranslations();
 
   // Locale'e göre URL'yi düzenleme
-  const editedShareUrl = `https://www.arzuamber.com/${locale}/` + shareUrl;
+  const editedShareUrl = `https://arzuamber.com/${locale}/` + shareUrl;
 
   // Kopyalama işlemi için fonksiyon
   const handleCopy = () => {

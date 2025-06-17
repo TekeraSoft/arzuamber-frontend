@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DetailClient from "@/components/productDetail/DetailClient";
 import {useParams} from "next/navigation";
 import {Skeleton} from "primereact/skeleton";
@@ -10,22 +10,27 @@ import {CustomLeftArrow, CustomRightArrow} from "@/components/productDetail/util
 function Page() {
     const params = useParams()
 
-    const [product,setProduct] = useState({})
+    const [product,setProduct] = useState()
+    const [photoIndex,setPhotoIndex] = useState()
 
     const fetchProductData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_DF_URI}/${params.slug}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_DETAIL_URI}/${params.slug}`)
         const json = await response.json()
-        setProduct(json.content)
+        setProduct(json)
     }
+
+    useEffect(() => {
+        fetchProductData()
+    }, []);
 
     console.log(product)
 
     return (
         <div className={'container'}>
            <div className={'flex flex-row items-center justify-between'}>
-               {/*<div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
+             {/* <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
                    <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
-                       {stockSize?.images?.map((img, index) => (
+                       {product.variations?.images?.map((img, index) => (
                            <div
                                key={index}
                                onClick={() => {
@@ -95,10 +100,10 @@ function Page() {
                            ))
                        )}
                    </Carousel>
-               </div>*/}
+               </div>
                <div className={'flex-1'}>
                    Right-Content
-               </div>
+               </div>*/}
            </div>
         </div>
     );

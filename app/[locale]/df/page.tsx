@@ -10,7 +10,7 @@ function Page() {
     const [page,setPage] = useState({})
 
     const fetchProductData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_DF_URI}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_URI}`)
         const json = await response.json()
         setProducts(json.content)
     }
@@ -25,7 +25,7 @@ function Page() {
                 products.map((item,index)=> (
                     <div key={index} className={'flex flex-col rounded bg-white'}>
                     <Link href={`/df/${item.slug}`} key={index} className={'bg-white'}>
-                        <img className={'rounded'}
+                        <img className={'rounded h-80 w-full object-cover'}
                              src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.variations[0].images[0]}`}
                              alt={item.variations[0].images[0]}/>
                     </Link>
@@ -36,9 +36,9 @@ function Page() {
                                     item.variations.flatMap((variant,varIndex)=> (
                                         <Image
                                             key={varIndex}
-                                            src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_FOLDER_URI}${variant.images[0]}`}
+                                            src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${variant.images[0]}`}
                                             className={'rounded'}
-                                            alt={variant.images[0]}
+                                            alt={`${variant.images[varIndex]}`}
                                             width={30}
                                             height={30}/>
                                     ))
@@ -50,7 +50,8 @@ function Page() {
                                     currency: "TRY",
                                 })}</h3>
                                 <Link href={`/df/${item.slug}`}
-                                      className={'p-2 border px-4 text-sm hover:scale-105 transition-transform duration-100 rounded-lg'}>
+                                      className={'p-2 border px-4 text-sm hover:scale-105 transition-transform ' +
+                                          'duration-100 rounded-lg'}>
                                     İncele
                                 </Link>
                             </div>

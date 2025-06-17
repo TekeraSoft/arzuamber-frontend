@@ -21,8 +21,8 @@ const nextConfig = {
         hostname: "localhost",
       },
       {
-        protocol: "http",
-        hostname: "78.135.83.4",
+        protocol: "https",
+        hostname: "api.tekera21.com",
       },
     ],
     // remotePatterns: [
