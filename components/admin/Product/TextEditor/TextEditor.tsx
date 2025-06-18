@@ -71,8 +71,6 @@ function TextEditor({ content, onChange }) {
     }
   }, [content, editor]);
 
-  console.log(content)
-
   return (
     <>
       <TextEditorToolBar editor={editor} />
