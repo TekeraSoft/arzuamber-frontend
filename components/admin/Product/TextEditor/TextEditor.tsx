@@ -10,6 +10,7 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import TextEditorToolBar from "./TextEditorToolBar";
 import Highlight from "@tiptap/extension-highlight";
 import ImageResize from "tiptap-extension-resize-image";
+import Link from "@tiptap/extension-link";
 import { useEffect } from "react";
 
 function TextEditor({ content, onChange }) {
@@ -42,11 +43,18 @@ function TextEditor({ content, onChange }) {
           backgroundColor: "blue",
         },
       }),
+      Link.configure({ // 🔗 Link extension'ı burada aktif hale getirildi
+        openOnClick: true,
+        autolink: true,
+        linkOnPaste: true,
+        HTMLAttributes: {
+          class: "text-blue-600 underline",
+        },
+      }),
       Image,
     ],
     content,
     onUpdate: ({ editor }) => {
-      console.log(editor);
       onChange(editor.getHTML());
     },
     editorProps: {
@@ -62,6 +70,8 @@ function TextEditor({ content, onChange }) {
       editor.commands.setContent(content);
     }
   }, [content, editor]);
+
+  console.log(content)
 
   return (
     <>

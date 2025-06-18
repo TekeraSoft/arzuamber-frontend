@@ -92,9 +92,7 @@ function BlogClient({ blog }: { blog: BlogProps }) {
 
           <hr className=" my-2 bg-secondary" />
           {/* Description */}
-          <p className="text-gray-700 leading-relaxed text-sm md:text-md">
-            {blog.content}
-          </p>
+          <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
         </div>
       </div>
     </PageContainer>

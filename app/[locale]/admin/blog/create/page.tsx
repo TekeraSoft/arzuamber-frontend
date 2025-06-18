@@ -12,6 +12,7 @@ import { useLocale } from "next-intl";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { createBlogDispatch } from "@/store/adminSlice";
+import TextEditor from "@/components/admin/Product/TextEditor/TextEditor";
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Blog name required."),
@@ -39,6 +40,7 @@ const AdminBlogCreate = () => {
         "image",
         new File([image], image.name, { type: image.type })
       );
+      console.log(formData.get("values"))
       dispatch(createBlogDispatch(formData, resetForm,setImage));
     },
   });
@@ -120,12 +122,9 @@ const AdminBlogCreate = () => {
 
           <div className="grid gap-1">
             <label className="block text-sm font-medium">Açıklama</label>
-            <InputTextarea
-              name="content"
-              value={formik.values.content}
-              onChange={formik.handleChange}
-              className="w-full"
-              rows={4}
+            <TextEditor
+                content={formik.values.content}
+                onChange={(value) => formik.setFieldValue("content", value)}
             />
 
             {formik.errors.content && (
