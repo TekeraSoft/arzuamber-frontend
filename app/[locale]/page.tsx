@@ -40,7 +40,7 @@ export default function Home() {
 
       <BackGroundImageContainer>
 
-{/*        <HomeContainer>
+        <HomeContainer>
           <div className={'flex md:flex-row flex-col items-center gap-x-12 justify-center my-12'}>
             <Image src={'/images/logo/df-img.gif'}
                    className={'rounded-full w-72 h-72'}
@@ -54,7 +54,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </HomeContainer>*/}
+        </HomeContainer>
 
         <HomeContainer>
           <Heading
