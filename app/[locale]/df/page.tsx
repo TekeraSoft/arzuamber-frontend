@@ -45,7 +45,7 @@ function Page() {
                                 }
                             </div>
                             <div className={'flex flex-row w-full justify-between items-center'}>
-                                <h3 className={'font-semibold'}>{item.variations[0].price.toLocaleString("tr-TR", {
+                                <h3 className={'font-semibold'}>{item.variations[0]?.price?.toLocaleString("tr-TR", {
                                     style: "currency",
                                     currency: "TRY",
                                 })}</h3>

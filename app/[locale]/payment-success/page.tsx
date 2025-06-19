@@ -19,6 +19,7 @@ const SuccessPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const session = useSession();
   const t = useTranslations();
+  const [targetPic,setTargetPic] = useState()
 
   const { cartProducts } = useSelector((state: RootState) => state.cart);
 
@@ -47,6 +48,8 @@ const SuccessPage = () => {
   //     JSON.stringify(orderSummaryProducts),
   //   );
   // }, [orderSummaryProducts]);
+
+  console.log(cartProducts)
 
   return (
     <div className=" mx-auto md:container w-full h-full mb-12 md:mb-20  mt-8 md:mt-5">
@@ -91,7 +94,6 @@ const SuccessPage = () => {
               <p>{t("paymentSuccess.cargoMessage")}</p>
               <FaTruckFast className="text-xl md:text-2xl text-gray-600" />
             </div>
-
             {session?.status === "unauthenticated" && (
               <div className="text-red-600 text-center text-sm md:text-base underline">
                 *Sipariş Durumunuzun takibi için üye olun.*

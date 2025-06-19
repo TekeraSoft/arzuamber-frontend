@@ -102,14 +102,28 @@ function CartSidebar() {
                           className="flex flex-row justify-between items-center border-b border-gray-200 py-4 gap-4"
                         >
                           <div className="flex justify-center sm:justify-start">
-                            <Image
-                              src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${cart.image}`}
-                              alt={cart.image}
-                              width={80}
-                              height={80}
-                              priority
-                              className="rounded-md object-cover h-12 w-12"
-                            />
+                            {
+                              cart.category1 === 'digital-fashion' ? (
+                                  <Image
+                                      src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${cart.image}`}
+                                      alt={cart.image}
+                                      width={80}
+                                      height={80}
+                                      priority
+                                      className="rounded-md object-cover h-12 w-12"
+                                  />
+                              ): (
+                                  <Image
+                                      src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${cart.image}`}
+                                      alt={cart.image}
+                                      width={80}
+                                      height={80}
+                                      priority
+                                      className="rounded-md object-cover h-12 w-12"
+                                  />
+                              )
+                            }
+
                           </div>
 
                           <div className="w-full sm:w-3/4 flex flex-row justify-around items-center sm:items-start gap-2 sm:gap-5">

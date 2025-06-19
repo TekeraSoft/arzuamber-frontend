@@ -18,6 +18,8 @@ import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import {useTranslations} from "next-intl";
 import {useDispatch} from "react-redux";
+import {openCartModal} from "@/store/modalsSlice";
+import {useSession} from "next-auth/react";
 
 const responsive = {
     superLargeDesktop: {
@@ -40,6 +42,7 @@ const responsive = {
 
 function Page() {
     const params = useParams()
+    const { data: session } = useSession();
     const dispatch = useDispatch()
     const t = useTranslations();
     const [product,setProduct] = useState()
@@ -61,7 +64,7 @@ function Page() {
         quantity: number;
     }>({
         size: "",
-        color: variationState?.attributes?.find(a => a.key === 'color')?.value,
+        color: variationState?.attributes[0]?.stockAttribute?.find(a => a.key === 'color')?.value,
         totalStock: "",
         stockSizeId: "",
         price: "",
@@ -96,11 +99,15 @@ function Page() {
         setIsModalOpen(!isModalOpen);
     };
 
+    const openCart = () => {
+        dispatch(openCartModal());
+    };
+
     const updateIndex = ({ index: current }: { index: number }) => {
         setPhotoIndex(current);
     };
 
-    console.log(product)
+    console.log(stateProduct)
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -195,7 +202,7 @@ function Page() {
                             Renk
                         </h4>
                         <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
-              {variationState?.attributes?.find(a => a === 'color')?.value}
+              {variationState?.attributes[0]?.stockAttribute.find(a => a === 'color')?.value}
             </span>
                     </div>
 
@@ -207,7 +214,7 @@ function Page() {
                                     setVariationState(item);
                                     setStateProduct({
                                         modelCode: "",
-                                        color: item?.attributes.find(a => a.key === "color")?.value,
+                                        color: item?.attributes[index].stockAttribute.find(a => a.key === "color")?.value,
                                         stock: 0,
                                         variationId: "",
                                         price: 0,
@@ -216,7 +223,7 @@ function Page() {
                                 }}
                                 key={index}
                                 className={`${
-                                    variationState?.attributes.find(a => a.key === "color")?.value === item.attributes.find(a => a.key === "color")?.value
+                                    variationState?.attributes[index].stockAttribute.find(a => a.key === "color")?.value === item.attributes[index].stockAttribute.find(a => a.key === "color")?.value
                                         ? "border-2 border-secondary  rounded"
                                         : " border border-secondary "
                                 } flex flex-col items-center  justify-center p-0.5  w-16 `}
@@ -245,29 +252,29 @@ function Page() {
 
                     <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2 py-2 md:py-1  ">
             <span className={"flex  gap-x-4 "}>
-              {variationState?.discountPrice !== 0 && variationState?.discountPrice !== null &&
-                  variationState?.discountPrice !== variationState?.price && variationState?.discountPrice !== null && (
+              {variationState?.attributes[0].discountPrice !== 0 &&
+              variationState?.attributes[0].discountPrice !== variationState?.stockAttribute?.price && variationState?.attributes[0].discountPrice !== null && (
                       <p
                           className={
                               "  md:text-xl text-red-600 line-through font-semibold"
                           }
                       >
-                          {variationState?.price?.toLocaleString("tr-TR", {
+                          {variationState?.attributes[0].price?.toLocaleString("tr-TR", {
                               style: "currency",
                               currency: "TRY",
                           })}{" "}
                       </p>
                   )}
-                {variationState?.discountPrice !== 0 && variationState?.discountPrice !== null ? (
+                {variationState?.attributes[0].discountPrice !== 0 ? (
                     <p className={"  md:text-xl font-semibold text-green-600"}>
-                        {variationState?.discountPrice?.toLocaleString("tr-TR", {
+                        {variationState?.attributes[0].discountPrice?.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}
                     </p>
                 ) : (
                     <p className={"md:text-xl font-semibold text-secondaryDark"}>
-                        {variationState?.price?.toLocaleString("tr-TR", {
+                        {variationState?.attributes[0].price?.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}{" "}
@@ -301,7 +308,7 @@ function Page() {
                                 {t("productDetail.color")}
                             </h4>
                             <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
-                {variationState?.attributes?.find(a => a.key === "color")?.value}
+                {stateProduct.color}
               </span>
                         </div>
 
@@ -312,7 +319,7 @@ function Page() {
                                         setVariationState(item);
                                         setStateProduct({
                                             modelCode: "",
-                                            color: item?.attributes.find(a => a.key === "color"),
+                                            color: item?.attributes[index].stockAttribute.find(a => a.key === "color").value,
                                             stock: 0,
                                             variationId: "",
                                             price: 0,
@@ -321,7 +328,7 @@ function Page() {
                                     }}
                                     key={index}
                                     className={`  ${
-                                        variationState?.attributes?.find(a => a.key === 'color') === item?.attributes.find(a => a.key === 'color')
+                                        variationState?.attributes[index]?.stockAttribute.find(a => a.key === 'color') === item?.attributes[index]?.stockAttribute.find(a => a.key === 'color')
                                             ? "border-2 border-secondary  rounded"
                                             : " border border-secondary "
                                     } flex flex-col items-center  justify-center p-0.5  w-16 `}
@@ -343,7 +350,7 @@ function Page() {
                             <h4 className={"text-lg text-secondaryDark font-semibold"}>
                                 {t("productDetail.size")}:
                             </h4>
-                            {/*<div className={"flex flex-row flex-wrap gap-x-4 "}>
+                            <div className={"flex flex-row flex-wrap gap-x-4 "}>
                                 {variationState?.attributes.map((item, index) =>
                                     item.stock === 0 ? (
                                         <button
@@ -362,23 +369,23 @@ function Page() {
                                                     ...stateProduct,
                                                     stockSizeId: item.id,
                                                     totalStock: item.stock,
-                                                    size: item?.attributes[index].find(a => a.key === 'size'),
+                                                    size: item.stockAttribute?.find(a => a.key === 'size').value,
                                                     quantity: 1,
                                                 });
                                                 setErrorState({ ...errorState, sizeError: false });
                                             }}
                                             key={index}
                                             className={`${
-                                                stateProduct.size === item?.attributes[index].find(a => a.key === 'size')
+                                                stateProduct.size === item?.stockAttribute.find(a => a.key === 'size').value
                                                     ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
                                                     : "bg-mywhite text-secondary border border-secondary"
                                             }  rounded-md min-w-6 h-7  px-2`}
                                         >
-                                            {item.size}
+                                            {item.stockAttribute.find(s => s.key === "size").value}
                                         </button>
                                     )
                                 )}
-                            </div>*/}
+                            </div>
                         </div>
                         <small
                             className={`${
@@ -431,7 +438,7 @@ function Page() {
                     </div>
 
                     <div className="flex flex-col justify-start items-start gap-2 ">
-                       {/* <div className="w-full flex  flex-col md:flex-row justify-start items-center gap-2 md:gap-5">
+                        <div className="w-full flex  flex-col md:flex-row justify-start items-center gap-2 md:gap-5">
                             <Button
                                 loading={loading}
                                 onClick={() => {
@@ -439,29 +446,47 @@ function Page() {
                                         setErrorState({ ...errorState, sizeError: true });
                                         toast.error(t("productDetail.sizeError"));
                                     } else {
+                                        /*console.log(
+                                            {
+                                                id: product.id,
+                                                name: product.name,
+                                                category1: "digital-fashion",
+                                                category2: "Digital Fashion",
+                                                color: stateProduct.color,
+                                                image: variationState?.images[0],
+                                                size: stateProduct.size,
+                                                stockSizeId: variationState?.id,
+                                                stockCode: variationState?.modelCode,
+                                                quantity: stateProduct.quantity,
+                                                price:
+                                                    variationState.attributes[0].discountPrice !== 0 && variationState.attributes[0].discountPrice
+                                                        ? variationState.attributes[0].discountPrice
+                                                        : variationState.attributes[0].price,
+                                            }
+                                        )*/
                                         dispatch(
                                             addToCart({
                                                 id: product.id,
                                                 name: product.name,
-                                                category1: product.category,
-                                                category2: product.subCategory,
+                                                category1: "digital-fashion",
+                                                category2: "Digital Fashion",
                                                 color: stateProduct.color,
                                                 image: variationState?.images[0],
                                                 size: stateProduct.size,
-                                                stockSizeId: stateProduct?.stockSizeId,
-                                                stockCode: stockSizeState?.stockCode,
+                                                stockSizeId: variationState?.id,
+                                                stockCode: variationState?.modelCode,
                                                 quantity: stateProduct.quantity,
                                                 price:
-                                                    product.discountPrice !== 0 && product.discountPrice
-                                                        ? product.discountPrice
-                                                        : product.price,
+                                                    variationState.attributes[0].discountPrice !== 0 && variationState.attributes[0].discountPrice
+                                                        ? variationState.attributes[0].discountPrice
+                                                        : variationState.attributes[0].price,
                                             }),
                                         );
                                         dispatch(
                                             addToCartNotification({
                                                 productName: product.name,
                                                 count: stateProduct.quantity,
-                                                stockCode: stockSizeState?.stockCode,
+                                                stockCode: variationState?.modelCode,
                                                 userName: session?.user.name
                                                     ? session?.user?.name
                                                     : "Guest",
@@ -478,31 +503,31 @@ function Page() {
                                 {t("productDetail.productAddCart")}
                             </Button>
 
-                            <button
+                            {/*<button
                                 onClick={handleAddToFav}
                                 className="w-full md:w-4/12 text-white flex justify-center items-center gap-2 y h-10 md:h-12 rounded-lg bg-red-400 hover:scale-105 hover:opacity-85 transition duration-300"
                             >
                                 <FaHeart className="text-white" />
                                 <span className={"text-sm font-bold"}>Favorilere Ekle</span>
-                            </button>
-                        </div>*/}
+                            </button>*/}
+                        </div>
 
-                        {/*<OrderButtons
-                            productName={product.name}
-                            productLink={product.slug}
-                            productColor={stateProduct.color}
-                            productSize={stateProduct.size}
-                        />*/}
+                        <OrderButtons
+                            productName={product?.name}
+                            productLink={product?.slug}
+                            productColor={stateProduct?.color}
+                            productSize={stateProduct?.size}
+                        />
                     </div>
 
-                    {/*<div className="w-full flex  justify-center items-center">
+                    <div className="w-full flex  justify-center items-center">
                         <ShareButtons
-                            shareUrl={`product/` + product.slug}
-                            title={product.name}
-                            imageUrl={product.colorSize[0].images[0]}
-                            description={product.description}
+                            shareUrl={`product/` + product?.slug}
+                            title={product?.name}
+                            imageUrl={product?.variations[0].images[0]}
+                            description={product?.description}
                         />
-                    </div>*/}
+                    </div>
                 </div>
                 <Lightbox
                     open={isModalOpen}

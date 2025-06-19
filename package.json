@@ -55,6 +55,7 @@
     "react-image-lightbox": "^5.1.4",
     "react-multi-carousel": "^2.8.5",
     "react-paginate": "^8.2.0",
+    "react-qr-code": "^2.0.16",
     "react-quill": "^2.0.0",
     "react-redux": "^9.2.0",
     "react-share": "^5.2.2",

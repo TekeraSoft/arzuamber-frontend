@@ -2,7 +2,7 @@
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
@@ -10,16 +10,38 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import PaymentForm from "@/components/payment/PaymentForm";
 import { filterData } from "@/data/filterData";
+import QRCode from "react-qr-code";
 
 const PaymentPage = () => {
   // const t = useTranslations();
   const navigation = useRouter();
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const t = useTranslations();
+  const [targetPicture,setTargetPicture] = useState();
+  const [loading,setLoading] = useState(false)
+
+    const findDfPro = cartProducts.find(p => p.category1 === 'digital-fashion');
+
+    const fetchTargetPic = async () => {
+      if(findDfPro) {
+        setLoading(true)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_GET_TARGET_PIC}?productId=${findDfPro?.id}`)
+        const json = await response.json()
+        setTargetPicture(json)
+        setLoading(false)
+      }
+    }
+
+  const qrValue = targetPicture?.id
+      ? `${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${targetPicture?.id}`
+      : null;
 
   useEffect(() => {
     if (cartProducts.length === 0) navigation.back();
+    fetchTargetPic()
   }, [cartProducts, navigation]);
+
+    console.log(targetPicture)
 
   return (
     <div className="lg:mx-32 mx-4 rounded-lg  my-5">
@@ -40,12 +62,23 @@ const PaymentPage = () => {
             >
               {/* Ürün Görseli */}
               <div className="relative h-20 w-16">
-                <Image
-                  fill
-                  className="rounded-md object-cover"
-                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
-                  alt={item.name}
-                />
+                {
+                  item.category1 === 'digital-fashion' ? (
+                      <Image
+                          fill
+                          className="rounded-md object-cover"
+                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.image}`}
+                          alt={item.name}
+                      />
+                  ): (
+                      <Image
+                          fill
+                          className="rounded-md object-cover"
+                          src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
+                          alt={item.name}
+                      />
+                  )
+                }
                 <span className="bg-secondary text-white w-5 h-5 rounded-full absolute -top-2 -right-2 flex items-center justify-center text-xs font-semibold">
                   {item.quantity}
                 </span>
@@ -122,6 +155,17 @@ const PaymentPage = () => {
               </p>
             </div>
           </div>
+            {qrValue && (
+                <div className={'flex flex-col gap-y-4 items-center justify-center pb-4'}>
+                <QRCode
+                    size={256}
+                    style={{ height: "auto", maxWidth: "120px", width: "100%" }}
+                    value={qrValue}
+                    viewBox={`0 0 256 256`}
+                />
+              <button className={''}>Ürün videosunu oynat !</button>
+                </div>
+            )}
         </div>
       </div>
     </div>
