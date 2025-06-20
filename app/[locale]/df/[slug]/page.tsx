@@ -46,7 +46,7 @@ function Page() {
     const dispatch = useDispatch()
     const t = useTranslations();
     const [product,setProduct] = useState()
-    const [photoIndex,setPhotoIndex] = useState()
+    const [photoIndex,setPhotoIndex] = useState(1)
     const [loading,setLoading] = useState(false)
     const [variationState,setVariationState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,26 +126,22 @@ function Page() {
                                key={index}
                                onClick={() => {
                                    setPhotoIndex(index);
-
                                    carouselRef.current?.goToSlide(index);
                                }}
-                               className="flex justify-center items-center w-full h-full "
+                               className="flex justify-center w-full h-full "
                            >
                                {loading ? (
                                    // Skeleton resim yüklenene kadar gösterilecek
                                    <Skeleton className="w-full min-h-28 " />
                                ) : (
                                    // Gerçek resim yüklendiğinde gösterilecek
-                                   <Image
-                                       className="w-full h-full object-cover rounded-lg cursor-pointer"
+                                   <img
+                                       className="w-full h-44 object-cover rounded-lg cursor-pointer"
                                        onClick={() => {
                                            // Resme tıklama fonksiyonu
                                        }}
                                        src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
                                        alt={`${img}`}
-                                       width={300}
-                                       height={500}
-                                       priority
                                    />
                                )}
                            </div>
@@ -169,19 +165,16 @@ function Page() {
                               variationState.images.map((img, index) => (
                                   <div
                                       key={index}
-                                      className="flex justify-center items-center w-full h-full rounded-lg mb-5"
+                                      className="flex w-full h-full rounded-lg mb-5"
                                   >
-                                      <Image
-                                          className="cursor-zoom-in w-full h-full object-cover rounded-lg"
+                                      <img
+                                          className="cursor-zoom-in w-full md:h-[650px] h-[400px] object-cover rounded-lg"
                                           onClick={() => {
                                               setPhotoIndex(index);
                                               setIsModalOpen(true);
                                           }}
                                           src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
                                           alt={`${img}`}
-                                          width={1000}
-                                          height={1000}
-                                          priority
                                       />
                                   </div>
                               ))

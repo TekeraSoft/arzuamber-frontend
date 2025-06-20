@@ -154,7 +154,7 @@ function CartSidebar() {
                                   size: cart.size,
                                 })
                               }
-                              className="bg-fourth text-white p-1 rounded-lg flex justify-center items-center hover:scale-105 transition duration-300"
+                              className="bg-red-500 text-white p-1 rounded-lg flex justify-center items-center hover:scale-105 transition duration-300"
                             >
                               <IoClose size={20} />
                             </button>
