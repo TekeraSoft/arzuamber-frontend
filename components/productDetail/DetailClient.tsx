@@ -129,7 +129,7 @@ const DetailClient = ({ product }: productProps) => {
         image={product.colorSize[0].images[0]}
       /> */}
 
-      <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
+      <div className=" container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
         {/* Image Section with Carousel */}
 
         <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
