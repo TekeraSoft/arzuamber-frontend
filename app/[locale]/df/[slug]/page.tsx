@@ -1,6 +1,5 @@
 "use client"
 import React, {useEffect, useRef, useState} from 'react';
-import DetailClient from "@/components/productDetail/DetailClient";
 import {useParams} from "next/navigation";
 import {Skeleton} from "primereact/skeleton";
 import Image from "next/image";
@@ -107,7 +106,7 @@ function Page() {
         setPhotoIndex(current);
     };
 
-    console.log(stateProduct)
+    console.log(variationState)
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -301,10 +300,9 @@ function Page() {
                                 {t("productDetail.color")}
                             </h4>
                             <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
-                {stateProduct.color}
+                {stateProduct?.color}
               </span>
                         </div>
-
                         <div className={"flex flex-row flex-wrap gap-4 w-full"}>
                             {product?.variations.map((item, index) => (
                                 <button
