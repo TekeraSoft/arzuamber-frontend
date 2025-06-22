@@ -19,6 +19,7 @@ import {useTranslations} from "next-intl";
 import {useDispatch} from "react-redux";
 import {openCartModal} from "@/store/modalsSlice";
 import {useSession} from "next-auth/react";
+import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
 
 const responsive = {
     superLargeDesktop: {
@@ -63,14 +64,12 @@ function Page() {
         quantity: number;
     }>({
         size: "",
-        color: variationState?.attributes[0]?.stockAttribute?.find(a => a.key === 'color')?.value,
+        color: variationState?.color,
         totalStock: "",
         stockSizeId: "",
         price: "",
         quantity: 1,
     });
-
-    const carouselRef = useRef<any>(null);
 
     const fetchProductData = async () => {
         setLoading(true)
@@ -90,10 +89,6 @@ function Page() {
         }
     }, [product]);
 
-    if(loading) {
-        return <Loading />
-    }
-
     const toggleOpen = () => {
         setIsModalOpen(!isModalOpen);
     };
@@ -106,7 +101,12 @@ function Page() {
         setPhotoIndex(current);
     };
 
-    console.log(variationState)
+    const carouselRef = useRef<any>(null);
+
+
+       if(loading) {
+        return <Loading />
+    }
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -119,7 +119,7 @@ function Page() {
             <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
               <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
-                   <div className="hidden  w-full md:w-1/6 xs:grid grid-cols-6  md:flex  flex-col max-h-34  gap-1 ">
+                   <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
                        {variationState?.images?.map((img, index) => (
                            <div
                                key={index}
@@ -127,7 +127,7 @@ function Page() {
                                    setPhotoIndex(index);
                                    carouselRef.current?.goToSlide(index);
                                }}
-                               className="flex justify-center w-full h-full "
+                               className="w-full h-full "
                            >
                                {loading ? (
                                    // Skeleton resim yüklenene kadar gösterilecek
@@ -135,7 +135,7 @@ function Page() {
                                ) : (
                                    // Gerçek resim yüklendiğinde gösterilecek
                                    <img
-                                       className="w-full h-44 object-cover rounded-lg cursor-pointer"
+                                       className="w-full h-auto object-cover rounded-lg cursor-pointer"
                                        onClick={() => {
                                            // Resme tıklama fonksiyonu
                                        }}
@@ -167,7 +167,7 @@ function Page() {
                                       className="flex w-full h-full rounded-lg mb-5"
                                   >
                                       <img
-                                          className="cursor-zoom-in w-full md:h-[650px] h-[400px] object-cover rounded-lg"
+                                          className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
                                           onClick={() => {
                                               setPhotoIndex(index);
                                               setIsModalOpen(true);
@@ -194,7 +194,7 @@ function Page() {
                             Renk
                         </h4>
                         <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
-              {variationState?.attributes[0]?.stockAttribute.find(a => a === 'color')?.value}
+              {variationState?.color}
             </span>
                     </div>
 
@@ -206,7 +206,7 @@ function Page() {
                                     setVariationState(item);
                                     setStateProduct({
                                         modelCode: "",
-                                        color: item?.attributes[index].stockAttribute.find(a => a.key === "color")?.value,
+                                        color: item?.color,
                                         stock: 0,
                                         variationId: "",
                                         price: 0,
@@ -215,7 +215,7 @@ function Page() {
                                 }}
                                 key={index}
                                 className={`${
-                                    variationState?.attributes[index].stockAttribute.find(a => a.key === "color")?.value === item.attributes[index].stockAttribute.find(a => a.key === "color")?.value
+                                    variationState?.color === item?.color
                                         ? "border-2 border-secondary  rounded"
                                         : " border border-secondary "
                                 } flex flex-col items-center  justify-center p-0.5  w-16 `}
@@ -300,40 +300,40 @@ function Page() {
                                 {t("productDetail.color")}
                             </h4>
                             <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
-                {stateProduct?.color}
+                {variationState?.color}
               </span>
                         </div>
-                        <div className={"flex flex-row flex-wrap gap-4 w-full"}>
-                            {product?.variations.map((item, index) => (
-                                <button
-                                    onClick={() => {
-                                        setVariationState(item);
-                                        setStateProduct({
-                                            modelCode: "",
-                                            color: item?.attributes[index].stockAttribute.find(a => a.key === "color").value,
-                                            stock: 0,
-                                            variationId: "",
-                                            price: 0,
-                                            quantity: 1,
-                                        });
-                                    }}
-                                    key={index}
-                                    className={`  ${
-                                        variationState?.attributes[index]?.stockAttribute.find(a => a.key === 'color') === item?.attributes[index]?.stockAttribute.find(a => a.key === 'color')
-                                            ? "border-2 border-secondary  rounded"
-                                            : " border border-secondary "
-                                    } flex flex-col items-center  justify-center p-0.5  w-16 `}
-                                >
-                                    <Image
-                                        src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.images[0]}`}
-                                        width={56}
-                                        height={15}
-                                        alt={item.images[0]}
-                                        className="border border-gray-400  "
-                                    />
-                                </button>
-                            ))}
-                        </div>
+                        <div className="flex flex-row flex-wrap gap-4 w-full">
+                             {product?.variations.map((item, index) => (
+                                 <button
+                                   onClick={() => {
+                                     setVariationState(item);
+                                     setStateProduct({
+                                       modelCode: "",
+                                       color: item?.color || "",
+                                       stock: 0,
+                                       variationId: "",
+                                       price: 0,
+                                       quantity: 1,
+                                     });
+                                   }}
+                                   key={`${index}-${index}`}
+                                   className={`${
+                                     variationState?.color === item?.color
+                                       ? "border-2 border-secondary rounded"
+                                       : "border border-secondary"
+                                   } flex flex-col items-center justify-center p-0.5 w-16`}
+                                 >
+                                   <Image
+                                     src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.images[0]}`}
+                                     width={56}
+                                     height={56}
+                                     alt="product variation image"
+                                     className="border border-gray-400"
+                                   />
+                                 </button>
+                             ))}
+                </div>
                     </div>
 
                     <div className={"flex flex-col "}>
@@ -342,40 +342,45 @@ function Page() {
                                 {t("productDetail.size")}:
                             </h4>
                             <div className={"flex flex-row flex-wrap gap-x-4 "}>
-                                {variationState?.attributes.map((item, index) =>
-                                    item.stock === 0 ? (
-                                        <button
-                                            key={index}
-                                            className={
-                                                "bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 min-w-6 h-7  px-2"
-                                            }
-                                            disabled={item.stock === 0}
-                                        >
-                                            {item?.key === 'size'}
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => {
-                                                setStateProduct({
-                                                    ...stateProduct,
-                                                    stockSizeId: item.id,
-                                                    totalStock: item.stock,
-                                                    size: item.stockAttribute?.find(a => a.key === 'size').value,
-                                                    quantity: 1,
-                                                });
-                                                setErrorState({ ...errorState, sizeError: false });
-                                            }}
-                                            key={index}
-                                            className={`${
-                                                stateProduct.size === item?.stockAttribute.find(a => a.key === 'size').value
-                                                    ? "bg-secondary text-mywhite  border-none outline-double outline-secondary"
-                                                    : "bg-mywhite text-secondary border border-secondary"
-                                            }  rounded-md min-w-6 h-7  px-2`}
-                                        >
-                                            {item.stockAttribute.find(s => s.key === "size").value}
-                                        </button>
-                                    )
-                                )}
+                               {variationState?.attributes
+                                     .filter((item, index, self) =>
+                                       self.findIndex(
+                                         a => a.attributeDetails.find(attr => attr.key === "size")?.value ===
+                                              item.attributeDetails.find(attr => attr.key === "size")?.value
+                                       ) === index
+                                     )
+                                     .map((item, index) =>
+                                       item.stock === 0 ? (
+                                         <button
+                                           key={index}
+                                           className="bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 min-w-6 h-7 px-2"
+                                           disabled
+                                         >
+                                           {item.attributeDetails.find(s => s.key === "size")?.value}
+                                         </button>
+                                       ) : (
+                                         <button
+                                           onClick={() => {
+                                             setStateProduct({
+                                               ...stateProduct,
+                                               stockSizeId: item.id,
+                                               totalStock: item.stock,
+                                               size: item.attributeDetails?.find(a => a.key === "size")?.value,
+                                               quantity: 1,
+                                             });
+                                             setErrorState({ ...errorState, sizeError: false });
+                                           }}
+                                           key={index}
+                                           className={`${
+                                             stateProduct.size === item.attributeDetails?.find(a => a.key === "size")?.value
+                                               ? "bg-secondary text-mywhite border-none outline-double outline-secondary"
+                                               : "bg-mywhite text-secondary border border-secondary"
+                                           } rounded-md min-w-6 h-7 px-2`}
+                                         >
+                                           {item.attributeDetails.find(s => s.key === "size")?.value}
+                                         </button>
+                                       )
+                                     )}
                             </div>
                         </div>
                         <small
@@ -437,24 +442,6 @@ function Page() {
                                         setErrorState({ ...errorState, sizeError: true });
                                         toast.error(t("productDetail.sizeError"));
                                     } else {
-                                        /*console.log(
-                                            {
-                                                id: product.id,
-                                                name: product.name,
-                                                category1: "digital-fashion",
-                                                category2: "Digital Fashion",
-                                                color: stateProduct.color,
-                                                image: variationState?.images[0],
-                                                size: stateProduct.size,
-                                                stockSizeId: variationState?.id,
-                                                stockCode: variationState?.modelCode,
-                                                quantity: stateProduct.quantity,
-                                                price:
-                                                    variationState.attributes[0].discountPrice !== 0 && variationState.attributes[0].discountPrice
-                                                        ? variationState.attributes[0].discountPrice
-                                                        : variationState.attributes[0].price,
-                                            }
-                                        )*/
                                         dispatch(
                                             addToCart({
                                                 id: product.id,
@@ -541,6 +528,13 @@ function Page() {
                     }}
                 />
            </div>
+            {
+        <Tabs
+          description={product?.description}
+          productId={product?.id}
+          //productComments={product?.comments}
+        />
+      }
         </div>
     );
 }
