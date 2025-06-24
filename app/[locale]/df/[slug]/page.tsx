@@ -50,6 +50,7 @@ function Page() {
     const [loading,setLoading] = useState(false)
     const [variationState,setVariationState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [findPrice, setFindPrice] = useState({price:0,discountPrice:0})
     const [errorState, setErrorState] = useState({
         sizeError: false,
         colorError: false,
@@ -86,6 +87,8 @@ function Page() {
     useEffect(() => {
         if (product?.variations?.length > 0) {
             setVariationState(product.variations[0]);
+            setFindPrice({price: product?.variations[0].attributes[0].price,
+                discountPrice:product?.variations[0]?.attributes[0]?.discountPrice })
         }
     }, [product]);
 
@@ -161,7 +164,7 @@ function Page() {
                           draggable={true}
                       >
                           {
-                              variationState.images.map((img, index) => (
+                              variationState?.images?.map((img, index) => (
                                   <div
                                       key={index}
                                       className="flex w-full h-full rounded-lg mb-5"
@@ -244,29 +247,29 @@ function Page() {
 
                     <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2 py-2 md:py-1  ">
             <span className={"flex  gap-x-4 "}>
-              {variationState?.attributes[0].discountPrice !== 0 &&
-              variationState?.attributes[0].discountPrice !== variationState?.stockAttribute?.price && variationState?.attributes[0].discountPrice !== null && (
+              {findPrice.discountPrice !== 0 &&
+              findPrice.discountPrice !== findPrice.price && findPrice.discountPrice !== null && (
                       <p
                           className={
                               "  md:text-xl text-red-600 line-through font-semibold"
                           }
                       >
-                          {variationState?.attributes[0].price?.toLocaleString("tr-TR", {
+                          {findPrice.price.toLocaleString("tr-TR", {
                               style: "currency",
                               currency: "TRY",
                           })}{" "}
                       </p>
                   )}
-                {variationState?.attributes[0].discountPrice !== 0 ? (
+                {findPrice.discountPrice !== 0 ? (
                     <p className={"  md:text-xl font-semibold text-green-600"}>
-                        {variationState?.attributes[0].discountPrice?.toLocaleString("tr-TR", {
+                        {findPrice.discountPrice.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}
                     </p>
                 ) : (
                     <p className={"md:text-xl font-semibold text-secondaryDark"}>
-                        {variationState?.attributes[0].price?.toLocaleString("tr-TR", {
+                        {findPrice.price.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}{" "}
@@ -368,6 +371,7 @@ function Page() {
                                                size: item.attributeDetails?.find(a => a.key === "size")?.value,
                                                quantity: 1,
                                              });
+                                             setFindPrice({price: item.price,discountPrice:item.discountPrice})
                                              setErrorState({ ...errorState, sizeError: false });
                                            }}
                                            key={index}
@@ -455,9 +459,9 @@ function Page() {
                                                 stockCode: variationState?.modelCode,
                                                 quantity: stateProduct.quantity,
                                                 price:
-                                                    variationState.attributes[0].discountPrice !== 0 && variationState.attributes[0].discountPrice
-                                                        ? variationState.attributes[0].discountPrice
-                                                        : variationState.attributes[0].price,
+                                                    findPrice.discountPrice !== 0 && findPrice.discountPrice
+                                                        ? findPrice.discountPrice
+                                                        : findPrice.price,
                                             }),
                                         );
                                         dispatch(

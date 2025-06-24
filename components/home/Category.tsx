@@ -73,7 +73,7 @@ function Category() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
-              <h3 className="text-center text-xs md:text-sm">
+              <h3 className="text-center w-16 md:w-20 text-xs md:text-sm">
                 Dijital Giyim
               </h3>
             </div>
