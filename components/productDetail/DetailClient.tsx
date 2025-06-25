@@ -139,7 +139,6 @@ const DetailClient = ({ product }: productProps) => {
                 key={index}
                 onClick={() => {
                   setPhotoIndex(index);
-
                   carouselRef.current?.goToSlide(index);
                 }}
                 className="flex justify-center items-center w-full h-full "

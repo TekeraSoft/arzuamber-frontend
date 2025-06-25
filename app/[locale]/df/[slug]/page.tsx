@@ -46,7 +46,7 @@ function Page() {
     const dispatch = useDispatch()
     const t = useTranslations();
     const [product,setProduct] = useState()
-    const [photoIndex,setPhotoIndex] = useState(1)
+    const [photoIndex,setPhotoIndex] = useState(0)
     const [loading,setLoading] = useState(false)
     const [variationState,setVariationState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -173,7 +173,7 @@ function Page() {
                                           className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
                                           onClick={() => {
                                               setPhotoIndex(index);
-                                              setIsModalOpen(true);
+                                              setIsModalOpen(true)
                                           }}
                                           src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
                                           alt={`${img}`}
@@ -511,6 +511,7 @@ function Page() {
                         />
                     </div>
                 </div>
+                {variationState?.images?.length > 0 && (
                 <Lightbox
                     open={isModalOpen}
                     plugins={[Zoom]}
@@ -530,7 +531,7 @@ function Page() {
                     styles={{
                         container: { backgroundColor: "rgba(0, 0, 0, 0.6)" },
                     }}
-                />
+                />)}
            </div>
             {
         <Tabs
