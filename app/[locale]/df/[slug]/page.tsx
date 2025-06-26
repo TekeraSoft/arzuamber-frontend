@@ -157,7 +157,7 @@ function Page() {
        if(loading) {
         return <Loading />
     }
-    console.log(qrValue)
+
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
             {/* <NextSeoHead
