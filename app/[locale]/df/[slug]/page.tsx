@@ -1,4 +1,5 @@
 "use client"
+import "yet-another-react-lightbox/styles.css";
 import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "next/navigation";
 import {Skeleton} from "primereact/skeleton";
@@ -122,65 +123,54 @@ function Page() {
             <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
               <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
-                   <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
-                       {variationState?.images?.map((img, index) => (
-                           <div
-                               key={index}
-                               onClick={() => {
-                                   setPhotoIndex(index);
-                                   carouselRef.current?.goToSlide(index);
-                               }}
-                               className="w-full h-full "
-                           >
-                               {loading ? (
-                                   // Skeleton resim yüklenene kadar gösterilecek
-                                   <Skeleton className="w-full min-h-28 " />
-                               ) : (
-                                   // Gerçek resim yüklendiğinde gösterilecek
-                                   <img
-                                       className="w-full h-auto object-cover rounded-lg cursor-pointer"
-                                       onClick={() => {
-                                           // Resme tıklama fonksiyonu
-                                       }}
-                                       src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                       alt={`${img}`}
-                                   />
-                               )}
-                           </div>
-                       ))}
-                   </div>
+                  <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
+                      {variationState?.images?.map((img, index) => (
+                          <div
+                              key={index}
+                              onClick={() => {
+                                  setPhotoIndex(index); // bu index, Carousel'e gidecek
+                                  carouselRef.current?.goToSlide(index); // burası çalışmalı
+                              }}
+                              className="w-full h-full cursor-pointer"
+                          >
+                              <img
+                                  className="w-full h-auto object-cover rounded-lg"
+                                  src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                  alt={`${img}`}
+                              />
+                          </div>
+                      ))}
+                  </div>
                   {variationState?.images?.length > 0 && (
                       <Carousel
-                          responsive={responsive}
-                          infinite
-                          autoPlay
                           ref={carouselRef}
-                          autoPlaySpeed={3000}
+                          responsive={responsive}
+                          infinite={false}
+                          autoPlay={false}
+                          arrows={true}
+                          swipeable={true}
+                          draggable={true}
                           transitionDuration={500}
                           customLeftArrow={<CustomLeftArrow />}
                           customRightArrow={<CustomRightArrow />}
                           className="w-full rounded-lg h-full"
-                          swipeable={true}
-                          draggable={true}
                       >
-                          {
-                              variationState?.images?.map((img, index) => (
-                                  <div
-                                      key={index}
-                                      className="flex w-full h-full rounded-lg mb-5"
-                                  >
-                                      <img
-                                          className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
-                                          onClick={() => {
-                                              setPhotoIndex(index);
-                                              setIsModalOpen(true)
-                                          }}
-                                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                          alt={`${img}`}
-                                      />
-                                  </div>
-                              ))
-                          }
+                          {variationState?.images?.map((img, index) => (
+                              <div
+                                  key={index}
+                                  className="flex w-full h-full rounded-lg mb-5"
+                              >
+                                  <img
+                                      className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
+                                      onClick={() => {
+                                          setPhotoIndex(index);
+                                          setIsModalOpen(true);
+                                      }}
+                                      src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                      alt={`${img}`}
+                                  />
+                              </div>
+                          ))}
                       </Carousel>
                   )}
                </div>
@@ -511,7 +501,6 @@ function Page() {
                         />
                     </div>
                 </div>
-                {variationState?.images?.length > 0 && (
                 <Lightbox
                     open={isModalOpen}
                     plugins={[Zoom]}
@@ -531,7 +520,7 @@ function Page() {
                     styles={{
                         container: { backgroundColor: "rgba(0, 0, 0, 0.6)" },
                     }}
-                />)}
+                />
            </div>
             {
         <Tabs
