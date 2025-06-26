@@ -2,13 +2,12 @@
 import "yet-another-react-lightbox/styles.css";
 import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "next/navigation";
-import {Skeleton} from "primereact/skeleton";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import {CustomLeftArrow, CustomRightArrow} from "@/components/productDetail/utils/CustomArrows";
 import Loading from "@/components/utils/Loading";
 import PaymentShippingCards from "@/components/productDetail/utils/PaymentShippingCards";
-import {FaHeart, FaMinus, FaPlus} from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa";
 import {Button} from "primereact/button";
 import {toast} from "react-toastify";
 import {addToCart, addToCartNotification} from "@/store/cartSlice";
@@ -21,6 +20,7 @@ import {useDispatch} from "react-redux";
 import {openCartModal} from "@/store/modalsSlice";
 import {useSession} from "next-auth/react";
 import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
+import QRCode from "react-qr-code";
 
 const responsive = {
     superLargeDesktop: {
@@ -52,6 +52,8 @@ function Page() {
     const [variationState,setVariationState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [findPrice, setFindPrice] = useState({price:0,discountPrice:0})
+    const [targetPicture,setTargetPicture] = useState();
+    const [qrValue, setQrValue] = useState()
     const [errorState, setErrorState] = useState({
         sizeError: false,
         colorError: false,
@@ -73,23 +75,67 @@ function Page() {
         quantity: 1,
     });
 
-    const fetchProductData = async () => {
-        setLoading(true)
-        const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_DETAIL_URI}/${params.slug}`)
-        const json = await response.json()
-        setProduct(json)
-        setLoading(false)
-    }
+    useEffect(() => {
+        const fetchProductData = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_DETAIL_URI}/${params.slug}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const json = await response.json();
+                setProduct(json);
+            } catch (error) {
+                console.error("Failed to fetch product data:", error);
+                toast.error("Ürün bilgileri yüklenirken bir hata oluştu.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProductData();
+    }, [params.slug]);
 
     useEffect(() => {
-        fetchProductData()
-    }, []);
+        const fetchTargetPic = async () => {
+            if (product?.id) { // Only fetch if product.id exists
+                try {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_GET_TARGET_PIC}?productId=${product.id}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const json = await response.json();
+                    console.log(json)
+                    setTargetPicture(json);
+                    setQrValue(`${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${json.id}`)
+                } catch (error) {
+                    console.error("Failed to fetch target picture:", error);
+                    // Optionally show a toast here if this is critical
+                }
+            }
+        };
+
+        fetchTargetPic();
+    }, [product?.id]);
 
     useEffect(() => {
         if (product?.variations?.length > 0) {
-            setVariationState(product.variations[0]);
-            setFindPrice({price: product?.variations[0].attributes[0].price,
-                discountPrice:product?.variations[0]?.attributes[0]?.discountPrice })
+            const initialVariation = product.variations[0];
+            setVariationState(initialVariation);
+            // Ensure attributes exist before trying to access them
+            if (initialVariation.attributes && initialVariation.attributes.length > 0) {
+                setFindPrice({
+                    price: initialVariation.attributes[0].price,
+                    discountPrice: initialVariation.attributes[0].discountPrice
+                });
+                setStateProduct(prevState => ({
+                    ...prevState,
+                    color: initialVariation.color || "",
+                    price: initialVariation.attributes[0].price, // Set initial price
+                    totalStock: initialVariation.attributes[0].stock, // Set initial stock
+                    stockSizeId: initialVariation.attributes[0].id // Set initial stockSizeId
+                }));
+            }
         }
     }, [product]);
 
@@ -111,7 +157,7 @@ function Page() {
        if(loading) {
         return <Loading />
     }
-
+    console.log(qrValue)
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
             {/* <NextSeoHead
@@ -120,7 +166,8 @@ function Page() {
         image={product.colorSize[0].images[0]}
       /> */}
 
-            <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start md:items-center lg:items-start  md:rounded-lg w-full h-full ">
+            <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start
+                md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
               <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
                   <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
@@ -153,24 +200,37 @@ function Page() {
                           transitionDuration={500}
                           customLeftArrow={<CustomLeftArrow />}
                           customRightArrow={<CustomRightArrow />}
-                          className="w-full rounded-lg h-full"
+                          className="w-full rounded-lg h-full relative"
                       >
-                          {variationState?.images?.map((img, index) => (
-                              <div
-                                  key={index}
-                                  className="flex w-full h-full rounded-lg mb-5"
-                              >
-                                  <img
-                                      className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
-                                      onClick={() => {
-                                          setPhotoIndex(index);
-                                          setIsModalOpen(true);
-                                      }}
-                                      src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                      alt={`${img}`}
-                                  />
-                              </div>
-                          ))}
+                         <>
+                             {variationState?.images?.map((img, index) => (
+                                 <div
+                                     key={index}
+                                     className="flex w-full h-full rounded-lg mb-5"
+                                 >
+                                     <img
+                                         className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
+                                         onClick={() => {
+                                             setPhotoIndex(index);
+                                             setIsModalOpen(true);
+                                         }}
+                                         src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                         alt={`${img}`}
+                                     />
+                                 </div>
+                             ))}
+                             {qrValue && (
+                                 <div className={'flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-4 right-4'}>
+                                     <QRCode
+                                         size={256}
+                                         style={{ height: "auto", maxWidth: "120px", width: "100%" }}
+                                         value={qrValue}
+                                         viewBox={`0 0 256 256`}
+                                     />
+                                     <button className={''}>Ürün videosunu oynat !</button>
+                                 </div>
+                             )}
+                         </>
                       </Carousel>
                   )}
                </div>

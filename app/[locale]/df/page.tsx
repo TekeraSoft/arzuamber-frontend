@@ -35,14 +35,14 @@ function Page() {
             {
                 products?.content?.map((item,index)=> (
                     <div key={index} className={'flex flex-col rounded bg-white mt-4'}>
-                    <Link href={`/df/${item.slug}`} key={index} className={'bg-white'}>
+                    <Link href={`/df/${item?.slug}`} key={index} className={'bg-white'}>
                         <img className={'rounded h-80 w-full object-cover'}
                              src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.variations[0].images[0]}`}
                              alt={item.variations[0].images[0]}/>
                     </Link>
-                        <div className={'my-2 p-2 flex flex-col gap-y-2'}>
+                        <div className={'my-2 p-2 flex flex-col relative gap-y-2'}>
                             <h3 className={'text-lg font-semibold'}>{item.name}</h3>
-                            <div className={'flex flex-row gap-x-2 items-center justify-start'}>
+                            <div className={'flex flex-row gap-x-2 flex-wrap gap-y-2 items-center justify-start'}>
                                 {
                                     item.variations.flatMap((variant,varIndex)=> (
                                         <Image
@@ -56,11 +56,11 @@ function Page() {
                                 }
                             </div>
                             <div className={'flex flex-row w-full justify-between items-center'}>
-                                <h3 className={'font-semibold'}>{item.variations[0]?.attributes[0].price?.toLocaleString("tr-TR", {
+                                <h3 className={'font-semibold'}>{item.variations[0]?.attributes[0]?.price?.toLocaleString("tr-TR", {
                                     style: "currency",
                                     currency: "TRY",
                                 })}</h3>
-                                <Link href={`/df/${item.slug}`}
+                                <Link href={`/df/${item?.slug}`}
                                       className={'p-2 border px-4 text-sm hover:scale-105 transition-transform ' +
                                           'duration-100 rounded-lg'}>
                                     İncele
