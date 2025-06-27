@@ -21,6 +21,7 @@ import {openCartModal} from "@/store/modalsSlice";
 import {useSession} from "next-auth/react";
 import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
 import QRCode from "react-qr-code";
+import {Skeleton} from "primereact/skeleton";
 
 const responsive = {
     superLargeDesktop: {
@@ -160,16 +161,11 @@ function Page() {
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
-            {/* <NextSeoHead
-        name={product.name}
-        description={product.description}
-        image={product.colorSize[0].images[0]}
-      /> */}
 
-            <div className="  container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start
+            <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start
                 md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
-              <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full">
+              <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
                   <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
                       {variationState?.images?.map((img, index) => (
                           <div
@@ -178,7 +174,7 @@ function Page() {
                                   setPhotoIndex(index); // bu index, Carousel'e gidecek
                                   carouselRef.current?.goToSlide(index); // burası çalışmalı
                               }}
-                              className="w-full h-full cursor-pointer"
+                              className="w-full h-auto cursor-pointer"
                           >
                               <img
                                   className="w-full h-auto object-cover rounded-lg"
@@ -190,50 +186,70 @@ function Page() {
                   </div>
                   {variationState?.images?.length > 0 && (
                       <Carousel
-                          ref={carouselRef}
                           responsive={responsive}
-                          infinite={false}
-                          autoPlay={false}
-                          arrows={true}
-                          swipeable={true}
-                          draggable={true}
+                          infinite
+                          autoPlay
+                          ref={carouselRef}
+                          // slidesPerView={1}
+                          autoPlaySpeed={3000}
                           transitionDuration={500}
                           customLeftArrow={<CustomLeftArrow />}
                           customRightArrow={<CustomRightArrow />}
-                          className="w-full rounded-lg h-full relative"
+                          className="w-full rounded-lg h-full"
+                          swipeable={true}
+                          draggable={true}
                       >
-                         <>
-                             {variationState?.images?.map((img, index) => (
-                                 <div
-                                     key={index}
-                                     className="flex w-full h-full rounded-lg mb-5"
-                                 >
-                                     <img
-                                         className="cursor-zoom-in w-full md:h-[720px] h-[400px] object-cover rounded-lg"
-                                         onClick={() => {
-                                             setPhotoIndex(index);
-                                             setIsModalOpen(true);
-                                         }}
-                                         src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                         alt={`${img}`}
-                                     />
-                                 </div>
-                             ))}
-                             {qrValue && (
-                                 <div className={'flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-4 right-4'}>
-                                     <QRCode
-                                         size={256}
-                                         style={{ height: "auto", maxWidth: "120px", width: "100%" }}
-                                         value={qrValue}
-                                         viewBox={`0 0 256 256`}
-                                     />
-                                     <button className={''}>Ürün videosunu oynat !</button>
-                                 </div>
-                             )}
-                         </>
+                          {variationState?.images?.length === 0 || loading ? (
+                              <div className="flex justify-center items-center w-full h-full rounded-lg">
+                                  <Skeleton className="w-full min-h-[750px]" />
+                              </div>
+                          ) : (
+                              variationState?.images?.map((img, index) => (
+                                  <div
+                                      key={index}
+                                      className="flex justify-center items-center w-full h-full rounded-lg"
+                                  >
+                                      <Image
+                                          className="cursor-zoom-in w-full h-full object-cover rounded-lg"
+                                          onClick={() => {
+                                              setPhotoIndex(index);
+                                              setIsModalOpen(true);
+                                          }}
+                                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                          alt={product.name}
+                                          width={1000}
+                                          height={1000}
+                                          priority
+                                      />
+
+                                  </div>
+                              ))
+                          )}
                       </Carousel>
                   )}
+                  {qrValue && (
+                      <div className={'hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-0'}>
+                          <QRCode
+                              size={256}
+                              style={{ height: "auto", maxWidth: "120px", width: "100%" }}
+                              value={qrValue}
+                              viewBox={`0 0 256 256`}
+                          />
+                          <button className={''}>Ürün videosunu oynat !</button>
+                      </div>
+                  )}
                </div>
+                {qrValue && (
+                    <div className={'md:hidden flex flex-col z-30 gap-y-4 w-full items-center justify-center mt-4 pb-4'}>
+                        <QRCode
+                            size={150}
+                            style={{ height: "auto", maxWidth: "120px", width: "100%" }}
+                            value={qrValue}
+                            viewBox={`0 0 256 256`}
+                        />
+                        <button className={''}>Ürün videosunu oynat !</button>
+                    </div>
+                )}
                 <h3 className=" md:hidden my-1 text-start text-2xl font-semibold text-secondaryDark  overflow-hidden text-ellipsis  w-full ">
                     {product?.name}
                 </h3>
@@ -394,7 +410,7 @@ function Page() {
                             <h4 className={"text-lg text-secondaryDark font-semibold"}>
                                 {t("productDetail.size")}:
                             </h4>
-                            <div className={"flex flex-row flex-wrap gap-x-4 "}>
+                            <div className={"flex flex-row flex-wrap gap-4 "}>
                                {variationState?.attributes
                                      .filter((item, index, self) =>
                                        self.findIndex(
