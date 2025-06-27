@@ -84,7 +84,7 @@ function SearchBar({ SearchOpen, setSearchOpen }) {
   const pathName = usePathname();
 
   useEffect(() => {
-    if (pathName.startsWith("/category/") || pathName === "/products") {
+    if (pathName.startsWith("/category/") || pathName === "/products" || pathName === "/df") {
       setIsVisible(false);
     } else {
       setIsVisible(true);

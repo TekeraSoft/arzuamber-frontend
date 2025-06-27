@@ -25,13 +25,13 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
   const path = usePathname();
 
   return (
-    <div className={`flex flex-col overflow-hidden `}>
+    <div className={`flex flex-col`}>
       <PrimeReactProvider>
         <GradientColorContainer>
           {path.startsWith("/admin") ? null : <Navbar />}
           <ToastContainer position={"bottom-center"} autoClose={3000} />
           <main
-            className={` overflow-hidden  ${
+            className={` ${
               path.startsWith("/admin") ? "" : "flex-grow mt-36 md:mt-40"
             }`}
           >

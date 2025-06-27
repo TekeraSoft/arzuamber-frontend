@@ -79,7 +79,6 @@ function Filter({
       selectedFilters.sizes ||
       selectedFilters.colors ||
       selectedFilters.categories ||
-      // selectedFilters.subCategories ||
       selectedFilters.lengths ||
       selectedFilters.sortDirection;
 
