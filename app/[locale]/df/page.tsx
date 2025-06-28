@@ -80,77 +80,75 @@ function Page() {
         });
     };
 
-    if(loading) {
-        return <Loading />
-    }
-
     return (
         <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
             <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
                 <DfFilter gender={genderState} size={sizeState} color={colorState} setGender={setGenderState} setSize={setSizeState} setColor={setColorState} />
 
-                <div className="w-full my-5 h-full">
-                            <>
-                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 items-start">
-                                    {
-                                        products?.content?.map((item,index)=> (
-                                            <div key={index} className={'flex flex-col rounded-lg bg-white mt-4'}>
-                                                <Link href={`/df/${item?.slug}`} key={index} className={'bg-white rounded-lg'}>
-                                                    <img className={'rounded-lg h-80 w-full object-cover'}
-                                                         src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.variations[0].images[0]}`}
-                                                         alt={item.variations[0].images[0]}/>
-                                                </Link>
-                                                <div className={'my-2 p-2 flex flex-col relative gap-y-2'}>
-                                                    <h3 className={'text-lg font-semibold'}>{item.name}</h3>
-                                                    <div className="flex gap-2 flex-wrap mt-1">
-                                                        {item?.variations?.map((variation) => {
-                                                            const colorHex = colors.find(
-                                                                (col) => col.name === variation.color
-                                                            )?.hex;
-                                                            return (
+                {loading ? <Loading /> : (
+                    <div className="w-full my-5 h-full">
+                        <>
+                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 items-start">
+                                {
+                                    products?.content?.map((item,index)=> (
+                                        <div key={index} className={'flex flex-col rounded-lg bg-white mt-4'}>
+                                            <Link href={`/df/${item?.slug}`} key={index} className={'bg-white rounded-lg'}>
+                                                <img className={'rounded-lg h-80 w-full object-cover'}
+                                                     src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${item.variations[0].images[0]}`}
+                                                     alt={item.variations[0].images[0]}/>
+                                            </Link>
+                                            <div className={'my-2 p-2 flex flex-col relative gap-y-2'}>
+                                                <h3 className={'text-lg font-semibold'}>{item.name}</h3>
+                                                <div className="flex gap-2 flex-wrap mt-1">
+                                                    {item?.variations?.map((variation) => {
+                                                        const colorHex = colors.find(
+                                                            (col) => col.name === variation.color
+                                                        )?.hex;
+                                                        return (
+                                                            <div
+                                                                key={variation.id}
+                                                                className="relative inline-block"
+                                                            >
                                                                 <div
-                                                                    key={variation.id}
-                                                                    className="relative inline-block"
-                                                                >
-                                                                    <div
-                                                                        className={`${variation.color === 'Beyaz' && 'border'} w-2.5 h-2.5 rounded-full outline-1 cursor-pointer peer`}
-                                                                        style={{ backgroundColor: colorHex }}
-                                                                    ></div>
+                                                                    className={`${variation.color === 'Beyaz' && 'border'} w-2.5 h-2.5 rounded-full outline-1 cursor-pointer peer`}
+                                                                    style={{ backgroundColor: colorHex }}
+                                                                ></div>
 
-                                                                    <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 pointer-events-none peer-hover:opacity-100 transition-opacity whitespace-nowrap select-none z-10">
+                                                                <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 pointer-events-none peer-hover:opacity-100 transition-opacity whitespace-nowrap select-none z-10">
                               {variation.color}
                             </span>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                    <div className={'flex flex-row w-full justify-between items-center'}>
-                                                        <h3 className={'font-semibold'}>{item.variations[0]?.attributes[0]?.price?.toLocaleString("tr-TR", {
-                                                            style: "currency",
-                                                            currency: "TRY",
-                                                        })}</h3>
-                                                        <Link href={`/df/${item?.slug}`}
-                                                              className={'p-2 border px-4 text-sm hover:scale-105 transition-transform ' +
-                                                                  'duration-100 rounded-lg'}>
-                                                            İncele
-                                                        </Link>
-                                                    </div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                                <div className={'flex flex-row w-full justify-between items-center'}>
+                                                    <h3 className={'font-semibold'}>{item.variations[0]?.attributes[0]?.price?.toLocaleString("tr-TR", {
+                                                        style: "currency",
+                                                        currency: "TRY",
+                                                    })}</h3>
+                                                    <Link href={`/df/${item?.slug}`}
+                                                          className={'p-2 border px-4 text-sm hover:scale-105 transition-transform ' +
+                                                              'duration-100 rounded-lg'}>
+                                                        İncele
+                                                    </Link>
                                                 </div>
                                             </div>
-                                        ))
-                                    }
-                                </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
 
-                                <Paginator
-                                    className={"my-4 "}
-                                    first={pageable.currentPage * pageable.size}
-                                    rows={pageable.size}
-                                    totalRecords={products?.page?.totalElements}
-                                    rowsPerPageOptions={[9, 20, 30]}
-                                    onPageChange={onPageChange}
-                                />
-                            </>
-                </div>
+                            <Paginator
+                                className={"my-4 "}
+                                first={pageable.currentPage * pageable.size}
+                                rows={pageable.size}
+                                totalRecords={products?.page?.totalElements}
+                                rowsPerPageOptions={[9, 20, 30]}
+                                onPageChange={onPageChange}
+                            />
+                        </>
+                    </div>
+                )}
             </div>
         </main>
     );
