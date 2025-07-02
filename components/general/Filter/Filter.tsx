@@ -122,7 +122,6 @@ function Filter({
     selectedFilters.colors,
     selectedFilters.categories,
     selectedFilters.lengths,
-    // selectedFilters.subCategories,
     dispatch,
     currnetPage,
     pageSize,
