@@ -8,6 +8,7 @@ import SelectSizeModal from "./SelectSizeModal";
 import { useParams } from "next/navigation";
 
 interface OrderButtonsProps {
+  pathName: string;
   productName: string;
   productLink: string;
   productColor: string;
@@ -15,6 +16,7 @@ interface OrderButtonsProps {
 }
 
 const OrderButtons = ({
+    pathName,
   productName,
   productLink,
   productSize,
@@ -26,8 +28,7 @@ const OrderButtons = ({
   // Modal açma/kapatma için state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const editedShareUrl =
-    `https://www.arzuamber.com/${local}/product/` + productLink;
+  const editedShareUrl = pathName?.startsWith("/df") ? `https://www.arzuamber.com/${local}${pathName}` : `https://www.arzuamber.com/${local}/product/` + productLink;
 
   const handleWhatsAppOrder = () => {
     if (!productSize) {

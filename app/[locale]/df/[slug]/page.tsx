@@ -22,6 +22,8 @@ import {useSession} from "next-auth/react";
 import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
 import QRCode from "react-qr-code";
 import {Skeleton} from "primereact/skeleton";
+import DfSharedButton from "@/components/productDetail/utils/DfSharedButton";
+import {usePathname} from "@/i18n/routing";
 
 const responsive = {
     superLargeDesktop: {
@@ -45,6 +47,7 @@ const responsive = {
 function Page() {
     const params = useParams()
     const { data: session } = useSession();
+    const pathName = usePathname();
     const dispatch = useDispatch()
     const t = useTranslations();
     const [product,setProduct] = useState()
@@ -158,6 +161,8 @@ function Page() {
        if(loading) {
         return <Loading />
     }
+
+       console.log(pathName)
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -561,6 +566,7 @@ function Page() {
                         </div>
 
                         <OrderButtons
+                            pathName={pathName}
                             productName={product?.name}
                             productLink={product?.slug}
                             productColor={stateProduct?.color}
@@ -569,8 +575,8 @@ function Page() {
                     </div>
 
                     <div className="w-full flex  justify-center items-center">
-                        <ShareButtons
-                            shareUrl={`product/` + product?.slug}
+                        <DfSharedButton
+                            shareUrl={product?.slug}
                             title={product?.name}
                             imageUrl={product?.variations[0].images[0]}
                             description={product?.description}
