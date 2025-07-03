@@ -5,6 +5,7 @@ import { useLocale } from "next-intl";
 import { FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 import { useState } from "react";
 import SelectSizeModal from "./SelectSizeModal";
+import { useParams } from "next/navigation";
 
 interface OrderButtonsProps {
   productName: string;
@@ -20,6 +21,7 @@ const OrderButtons = ({
   productColor,
 }: OrderButtonsProps) => {
   const local = useLocale();
+
 
   // Modal açma/kapatma için state
   const [isModalOpen, setIsModalOpen] = useState(false);

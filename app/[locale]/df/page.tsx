@@ -83,7 +83,7 @@ function Page() {
     return (
         <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
             <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
-                <DfFilter gender={genderState} size={sizeState} color={colorState} setGender={setGenderState} setSize={setSizeState} setColor={setColorState} />
+                <DfFilter tags={genderState} size={sizeState} color={colorState} setGender={setGenderState} setSize={setSizeState} setColor={setColorState} />
 
                 {loading ? <Loading /> : (
                     <div className="w-full my-5 h-full">
@@ -101,7 +101,7 @@ function Page() {
                                                 <h3 className={'text-lg font-semibold'}>{item.name}</h3>
                                                 <div className="flex gap-2 flex-wrap mt-1">
                                                     {item?.variations?.map((variation) => {
-                                                        const colorHex = colors.find(
+                                                        const colorHex = colors?.find(
                                                             (col) => col.name === variation.color
                                                         )?.hex;
                                                         return (

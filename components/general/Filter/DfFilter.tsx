@@ -3,11 +3,11 @@ import {FaMinus, FaPlus, FaTimes} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslations} from "next-intl";
 import {AppDispatch, RootState} from "@/store/store";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {setFilterStatus} from "@/store/searchSlice";
 
-function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
-    gender: string;
+function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
+    tags: string[];
     size: string;
     color: string;
     setGender: (value: string | null) => void; // Update prop types for clarity
@@ -81,13 +81,13 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                         <input
                                             type="checkbox"
                                             className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                                            checked={gender === g}
+                                            checked={tags?.find(t => t === g) === g}
                                             value={g} // Use 'g' as value, not 'gender'
-                                            onChange={() => setGender(gender === g ? null : g)} // **TOGGLE LOGIC HERE**
+                                            onChange={() => setGender(tags?.find(t => t === g) === g ? null : g)} // **TOGGLE LOGIC HERE**
                                         />
                                         <label
                                             className={`font-medium transition-all duration-300 text-sm ${
-                                                gender === g
+                                                tags?.find(t => t === g) === g
                                                     ? "text-primary font-bold"
                                                     : "text-gray-500 font-thin"
                                             }`}
@@ -230,13 +230,13 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                 <input
                                     type="checkbox"
                                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                                    checked={gender === g}
+                                    checked={tags?.find(t => t === g) === g}
                                     value={g} // Use 'g' as value, not 'gender'
-                                    onChange={() => setGender(gender === g ? null : g)} // **TOGGLE LOGIC HERE**
+                                    onChange={() => setGender(tags?.find(t => t === g) === g ? null : g)} // **TOGGLE LOGIC HERE**
                                 />
                                 <label
                                     className={`font-medium transition-all duration-300 text-sm ${
-                                        gender === g
+                                        tags?.find(t => t === g) === g
                                             ? "text-primary font-bold"
                                             : "text-gray-500 font-thin"
                                     }`}

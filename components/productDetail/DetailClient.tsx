@@ -23,6 +23,7 @@ import { Skeleton } from "primereact/skeleton";
 import { updateFavoritesDispatch } from "@/store/favoritesSlice";
 import { useSession } from "next-auth/react";
 import { addFavoritesDispatch } from "@/store/userSlice";
+import {useRouter} from "@/i18n/routing";
 
 const responsive = {
   superLargeDesktop: {
