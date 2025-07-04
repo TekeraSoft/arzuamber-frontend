@@ -15,12 +15,10 @@ function Page() {
     const [sizeState, setSizeState] = useState(null)
     const [colorState, setColorState] = useState(null)
 
-
     useEffect(() => {
         const fetchProductData = async () => {
             setLoading(true);
 
-            // Determine the base API URL
             let baseUrl = "";
             const activeFilters = genderState || sizeState || colorState;
 
@@ -30,13 +28,12 @@ function Page() {
                 baseUrl = process.env.NEXT_PUBLIC_TEKERA_API_URI as string;
             }
 
-            // Create an array to hold query parameters
             const params = [];
 
-            // Add filters only if they are active
             if (genderState) {
-                params.push(`gender=${genderState}`);
+                params.push(`tags=${genderState}`);
             }
+
             if (sizeState) {
                 params.push(`size=${sizeState}`);
             }
@@ -56,6 +53,7 @@ function Page() {
 
             try {
                 const response = await fetch(apiUrl);
+                console.log(apiUrl)
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
@@ -70,7 +68,7 @@ function Page() {
         };
 
         fetchProductData();
-    }, [pageable, genderState, sizeState, colorState]);
+    }, [pageable, sizeState, colorState, genderState]);
     const onPageChange = (event) => {
         setPageable({ size: event.rows, currentPage: event.page });
 
@@ -80,10 +78,12 @@ function Page() {
         });
     };
 
+
     return (
         <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
             <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
-                <DfFilter tags={genderState} size={sizeState} color={colorState} setGender={setGenderState} setSize={setSizeState} setColor={setColorState} />
+                <DfFilter gender={genderState} size={sizeState} color={colorState} setGender={setGenderState}
+                          setSize={setSizeState} setColor={setColorState} />
 
                 {loading ? <Loading /> : (
                     <div className="w-full my-5 h-full">
@@ -115,8 +115,8 @@ function Page() {
                                                                 ></div>
 
                                                                 <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 pointer-events-none peer-hover:opacity-100 transition-opacity whitespace-nowrap select-none z-10">
-                              {variation.color}
-                            </span>
+                                                                    {variation.color}
+                                                                 </span>
                                                             </div>
                                                         );
                                                     })}

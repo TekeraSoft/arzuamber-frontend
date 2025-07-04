@@ -6,8 +6,8 @@ import {AppDispatch, RootState} from "@/store/store";
 import {useState} from "react";
 import {setFilterStatus} from "@/store/searchSlice";
 
-function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
-    tags: string[];
+function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
+    gender: string;
     size: string;
     color: string;
     setGender: (value: string | null) => void; // Update prop types for clarity
@@ -81,13 +81,13 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                                         <input
                                             type="checkbox"
                                             className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                                            checked={tags?.find(t => t === g) === g}
+                                            checked={gender === g}
                                             value={g} // Use 'g' as value, not 'gender'
-                                            onChange={() => setGender(tags?.find(t => t === g) === g ? null : g)} // **TOGGLE LOGIC HERE**
+                                            onChange={(e) => setGender(gender === g ? null : g)}
                                         />
                                         <label
                                             className={`font-medium transition-all duration-300 text-sm ${
-                                                tags?.find(t => t === g) === g
+                                                gender === g
                                                     ? "text-primary font-bold"
                                                     : "text-gray-500 font-thin"
                                             }`}
@@ -126,7 +126,8 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                                     <li key={index} className="flex flex-row gap-x-3">
                                         <input
                                             type="checkbox"
-                                            className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                                            className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400
+                                             rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                                             checked={size === s}
                                             value={s} // Use 's' as value, not 'size'
                                             onChange={() => setSize(size === s ? null : s)} // **TOGGLE LOGIC HERE**
@@ -150,7 +151,8 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                         <div className={"flex flex-col"}>
                             <div
                                 className={
-                                    "flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
+                                    "flex flex-row items-center justify-between cursor-pointer mb-2 transition-all " +
+                                    "duration-300 text-secondaryDark hover:text-primary"
                                 }
                                 onClick={() =>
                                     setOpenState({ ...openState, color: !openState.color })
@@ -175,7 +177,8 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                                     >
                                         <input
                                             type="checkbox"
-                                            className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                                            className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400
+                                            rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                                             checked={color === c.name}
                                             value={c.name}
                                             onChange={() => setColor(color === c.name ? null : c.name)} // **TOGGLE LOGIC HERE**
@@ -229,14 +232,15 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                             <li key={index} className="flex flex-row gap-x-3">
                                 <input
                                     type="checkbox"
-                                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                                    checked={tags?.find(t => t === g) === g}
-                                    value={g} // Use 'g' as value, not 'gender'
-                                    onChange={() => setGender(tags?.find(t => t === g) === g ? null : g)} // **TOGGLE LOGIC HERE**
+                                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md
+                                    checked:bg-primary checked:border-secondary transition-all duration-300"
+                                    checked={gender === g}
+                                    value={g}
+                                    onChange={(e) => setGender(gender === g ? null : g)} // **TOGGLE LOGIC HERE**
                                 />
                                 <label
                                     className={`font-medium transition-all duration-300 text-sm ${
-                                        tags?.find(t => t === g) === g
+                                        gender === g
                                             ? "text-primary font-bold"
                                             : "text-gray-500 font-thin"
                                     }`}
@@ -253,7 +257,8 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                 <div className={"flex flex-col"}>
                     <div
                         className={
-                            "flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 text-secondaryDark hover:text-primary"
+                            "flex flex-row items-center justify-between cursor-pointer mb-2 transition-all duration-300 " +
+                            "text-secondaryDark hover:text-primary"
                         }
                         onClick={() =>
                             setOpenState({ ...openState, size: !openState.size })
@@ -275,7 +280,8 @@ function DfFilter({ tags,size,color,setGender, setSize, setColor }: {
                             <li key={index} className="flex flex-row gap-x-3">
                                 <input
                                     type="checkbox"
-                                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
+                                    className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md
+                                    checked:bg-primary checked:border-secondary transition-all duration-300"
                                     checked={size === s}
                                     value={s} // Use 's' as value, not 'size'
                                     onChange={() => setSize(size === s ? null : s)} // **TOGGLE LOGIC HERE**
