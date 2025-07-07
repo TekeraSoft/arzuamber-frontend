@@ -188,12 +188,30 @@ function Page() {
                               />
                           </div>
                       ))}
+                      {
+                          product?.videoUrl && (
+                              <video
+                                  onClick={() => {
+                                      setPhotoIndex(variationState?.images?.length+1)
+                                      carouselRef.current?.goToSlide(variationState?.images?.length+1)
+                                  }}
+                                  className="w-full h-auto object-cover rounded-lg"
+                                  controls       // kullanıcıya play/pause verecek
+                                  preload="metadata"
+                              >
+                                  <source
+                                      src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${product?.videoUrl}`}
+                                      type="video/mp4"
+                                  />
+                                  Tarayıcınız video etiketini desteklemiyor.
+                              </video>
+                          )
+                      }
                   </div>
                   {variationState?.images?.length > 0 && (
                       <Carousel
                           responsive={responsive}
                           infinite
-                          autoPlay
                           ref={carouselRef}
                           // slidesPerView={1}
                           autoPlaySpeed={3000}
@@ -230,6 +248,21 @@ function Page() {
                                   </div>
                               ))
                           )}
+                          {
+                              product?.videoUrl && (
+                                  <video
+                                      className="w-full h-full object-cover rounded-lg"
+                                      controls       // kullanıcıya play/pause verecek
+                                      preload="metadata"
+                                  >
+                                      <source
+                                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${product?.videoUrl}`}
+                                          type="video/mp4"
+                                      />
+                                      Tarayıcınız video etiketini desteklemiyor.
+                                  </video>
+                              )
+                          }
                       </Carousel>
                   )}
                   {qrValue && (
