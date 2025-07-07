@@ -162,8 +162,6 @@ function Page() {
         return <Loading />
     }
 
-       console.log(pathName)
-
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
 
