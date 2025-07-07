@@ -6,7 +6,6 @@ import {Paginator} from "primereact/paginator";
 import {colors} from "@/data/filterData";
 import Loading from "@/components/utils/Loading";
 import DfFilter from "@/components/general/Filter/DfFilter";
-import {setShortCategory} from "@/store/categorySlice";
 import Image from "next/image";
 
 function Page() {
