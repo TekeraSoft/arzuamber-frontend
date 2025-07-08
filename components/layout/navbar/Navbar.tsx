@@ -70,7 +70,7 @@ function Navbar() {
 
   return (
     <header className="text-mywhite z-50 fixed w-full  ">
-      <Timer />
+{/*      <Timer />*/}
       <TopBar />
 
       {/* Navbar */}

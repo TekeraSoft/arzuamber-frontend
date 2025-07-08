@@ -18,7 +18,6 @@ function Page() {
     const [colorState, setColorState] = useState(null)
     const [themeState, setThemeState] = useState(null)
 
-
     useEffect(() => {
         const fetchProductData = async () => {
             setLoading(true);
@@ -57,7 +56,7 @@ function Page() {
             if (params.length > 0) {
                 apiUrl += `?${params.join('&')}`;
             }
-        console.log(apiUrl)
+
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
@@ -110,15 +109,15 @@ function Page() {
 
 
     return (
-        <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
-            <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
+        <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden ">
+            <div className="flex w-full h-full gap-2 items-start justify-center SliderContainer">
                 <DfFilter gender={genderState} size={sizeState} color={colorState} setGender={setGenderState}
                           setSize={setSizeState} setColor={setColorState} />
 
                 {loading ? <Loading /> : (
-                    <div className="w-full my-5 h-full">
+                    <div className="w-full h-full">
                         <div
-                            className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 mb-2 "
+                            className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 mb-2 mt-8 md:mt-0"
                             style={{
                                 scrollbarWidth: "none", // Firefox'ta kaydırma çubuğunu gizler
                                 msOverflowStyle: "none", // Internet Explorer ve Edge tarayıcıları için

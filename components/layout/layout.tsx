@@ -32,7 +32,7 @@ function LayoutProvider({ children }: RoutesLayoutProps) {
           <ToastContainer position={"bottom-center"} autoClose={3000} />
           <main
             className={` ${
-              path.startsWith("/admin") ? "" : "flex-grow mt-36 md:mt-40"
+              path.startsWith("/admin") ? "" : "flex-grow mt-32 md:mt-32"
             }`}
           >
             <CartSidebar />

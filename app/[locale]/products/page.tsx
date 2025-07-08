@@ -39,11 +39,11 @@ function Products() {
   const { categories } = useSelector((state: RootState) => state.category);
 
   return (
-    <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden md:mt-6 lg:mt-2 ">
+    <main className=" flex flex-col justify-center items-center  w-full   overflow-hidden ">
       <div className="flex w-full h-full gap-2 items-start justify-center mt-4 md:mt-0 SliderContainer">
         <Filter currnetPage={pageable.currentPage} pageSize={pageable.size} />
 
-        <div className="w-full my-5 h-full">
+        <div className="w-full h-full">
           <div
             className="  flex items-center justify-between overflow-x-auto  space-x-4 p-0.5 md:py-0.5 mb-2 "
             style={{
