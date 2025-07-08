@@ -24,7 +24,7 @@ function Page() {
             setLoading(true);
 
             let baseUrl = "";
-            const activeFilters = genderState || sizeState || colorState;
+            const activeFilters = genderState || sizeState || colorState || themeState;
 
             if (activeFilters) {
                 baseUrl = process.env.NEXT_PUBLIC_TEKERA_API_FILTER_PRODUCT as string;

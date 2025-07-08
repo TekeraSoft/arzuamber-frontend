@@ -12,7 +12,6 @@ import {Button} from "primereact/button";
 import {toast} from "react-toastify";
 import {addToCart, addToCartNotification} from "@/store/cartSlice";
 import OrderButtons from "@/components/productDetail/utils/OrderButtons/OrderButtons";
-import ShareButtons from "@/components/productDetail/utils/ShareButtons";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import {useTranslations} from "next-intl";
@@ -24,6 +23,7 @@ import QRCode from "react-qr-code";
 import {Skeleton} from "primereact/skeleton";
 import DfSharedButton from "@/components/productDetail/utils/DfSharedButton";
 import {usePathname} from "@/i18n/routing";
+import {IoMdClose} from "react-icons/io";
 
 const responsive = {
     superLargeDesktop: {
@@ -57,6 +57,7 @@ function Page() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [findPrice, setFindPrice] = useState({price:0,discountPrice:0})
     const [targetPicture,setTargetPicture] = useState();
+    const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false);
     const [qrValue, setQrValue] = useState()
     const [errorState, setErrorState] = useState({
         sizeError: false,
@@ -118,7 +119,6 @@ function Page() {
                 }
             }
         };
-
         fetchTargetPic();
     }, [product?.id]);
 
@@ -154,9 +154,11 @@ function Page() {
     const updateIndex = ({ index: current }: { index: number }) => {
         setPhotoIndex(current);
     };
-
     const carouselRef = useRef<any>(null);
 
+    const handleCloseModal = () => {
+        setVideoModalOpen(!videoModalOpen)
+    }
 
        if(loading) {
         return <Loading />
@@ -168,7 +170,7 @@ function Page() {
             <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start
                 md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
-              <div className=" flex flex-col-reverse md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
+              <div className=" flex flex-col-reverse mt-8 md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
                   <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
                       {variationState?.images?.map((img, index) => (
                           <div
@@ -186,21 +188,6 @@ function Page() {
                               />
                           </div>
                       ))}
-                      {
-                          product?.videoUrl && (
-                              <video
-                                  className="w-full h-auto object-cover rounded-lg"
-                                  controls       // kullanıcıya play/pause verecek
-                                  preload="metadata"
-                              >
-                                  <source
-                                      src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${product?.videoUrl}`}
-                                      type="video/mp4"
-                                  />
-                                  Tarayıcınız video etiketini desteklemiyor.
-                              </video>
-                          )
-                      }
                   </div>
                   {variationState?.images?.length > 0 && (
                       <Carousel
@@ -226,24 +213,33 @@ function Page() {
                                       key={index}
                                       className="flex justify-center items-center w-full h-full rounded-lg"
                                   >
-                                      <Image
-                                          className="cursor-zoom-in w-full h-full object-cover rounded-lg"
+                                      <img
+                                          className="cursor-zoom-in w-full md:h-[700px] h-[400px] object-cover rounded-lg"
                                           onClick={() => {
                                               setPhotoIndex(index);
                                               setIsModalOpen(true);
                                           }}
                                           src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
                                           alt={product.name}
-                                          width={1000}
-                                          height={1000}
-                                          priority
                                       />
 
                                   </div>
                               ))
                           )}
-                          {
-                              product?.videoUrl && (
+                      </Carousel>
+                  )}
+                  {/* Video Modal */}
+
+                  {
+                      videoModalOpen && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]">
+                      <div className="bg-white px-6 py-10 rounded-md w-full max-w-lg relative">
+                          {/* Close Button - Right Top Corner */}
+                          <button
+                              onClick={handleCloseModal}
+                              className="absolute top-2 right-2 text-2xl bg-red-500 text-white rounded-md">
+                              <IoMdClose />
+                          </button>
                                   <video
                                       className="w-full h-full object-cover rounded-lg"
                                       controls       // kullanıcıya play/pause verecek
@@ -255,21 +251,29 @@ function Page() {
                                       />
                                       Tarayıcınız video etiketini desteklemiyor.
                                   </video>
-                              )
-                          }
-                      </Carousel>
-                  )}
+
+                      </div>
+                  </div>
+                      )
+                  }
                   {qrValue && (
-                      <div className={'hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-0'}>
+                      <div className={'hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-4'}>
                           <QRCode
                               size={256}
-                              style={{ height: "auto", maxWidth: "120px", width: "100%" }}
+                              style={{ height: "auto", maxWidth: "90px", width: "100%" }}
                               value={qrValue}
                               viewBox={`0 0 256 256`}
                           />
-                          <button className={''}>Ürün videosunu oynat !</button>
+                          <button className={''}>Ar Deneyimini Başlat!</button>
                       </div>
                   )}
+                  {
+                      product?.videoUrl && (
+                          <button onClick={handleCloseModal} className={'absolute left-24 bottom-4 bg-secondary text-white p-2 rounded-lg'}>
+                              Videoyu Oynat
+                          </button>
+                      )
+                  }
                </div>
                 {qrValue && (
                     <div className={'md:hidden flex flex-col z-30 gap-y-4 w-full items-center justify-center mt-4 pb-4'}>
@@ -400,7 +404,8 @@ function Page() {
                             <h4 className="text-lg text-secondaryDark font-semibold my-1 after:content-[':']">
                                 {t("productDetail.color")}
                             </h4>
-                            <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2  py-0.5 rounded-lg font-normal text-sm">
+                            <span className="w-full first-letter:uppercase text-center text-white bg-secondary px-2
+                            py-0.5 rounded-lg font-normal text-sm">
                 {variationState?.color}
               </span>
                         </div>
@@ -454,7 +459,8 @@ function Page() {
                                        item.stock === 0 ? (
                                          <button
                                            key={index}
-                                           className="bg-mywhite cursor-not-allowed text-red-600 border border-secondary line-through rounded-lg opacity-45 min-w-6 h-7 px-2"
+                                           className="bg-mywhite cursor-not-allowed text-red-600 border
+                                           border-secondary line-through rounded-lg opacity-45 min-w-6 h-7 px-2"
                                            disabled
                                          >
                                            {item.attributeDetails.find(s => s.key === "size")?.value}
