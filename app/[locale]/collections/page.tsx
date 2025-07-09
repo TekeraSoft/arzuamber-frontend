@@ -6,6 +6,7 @@ import {colors} from "@/data/filterData";
 import {Paginator} from "primereact/paginator";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
+import excerpt from '@stefanprobst/remark-excerpt';
 
 function Page(props) {
 
@@ -59,8 +60,13 @@ function Page(props) {
                                          alt={item.image}/>
                                 </Link>
                                 <div className={'my-2 p-2 flex flex-col relative gap-y-2'}>
-                                    <h3 className={'text-md font-semibold'}>{item.collectionName}</h3>
-                                    <ReactMarkdown children={`${item.description.slice(0,40)}...`} remarkPlugins={[remarkGfm]} />
+                                    <h3 className={'text-lg text-gray-500 font-extrabold'}>{item.collectionName}</h3>
+                                    <ReactMarkdown remarkPlugins={[
+                                        remarkGfm,
+                                        [excerpt, {maxLength: 50}]   // güvenli truncation
+                                    ]}>
+                                        {item.description}
+                                    </ReactMarkdown>
                                 </div>
                             </div>
                         ))

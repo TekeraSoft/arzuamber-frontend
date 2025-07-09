@@ -17,15 +17,13 @@ function Category() {
     dispatch(getCategoriesDispatch());
   }, [dispatch]);
 
-  const { categories, loading } = useSelector(
+  const { categories } = useSelector(
     (state: RootState) => state.category,
   );
 
   return (
     <div className=" flex justify-center items-center  w-full md:mt-12 lg:mt-0 mb-2 ">
-      {loading ? (
-        <Loading />
-      ) : (
+
         <div
           className="flex items-center justify-between overflow-x-auto space-x-4 p-0.5 md:py-0.5  SliderContainer w-full md:px-3"
           style={{
@@ -129,7 +127,6 @@ function Category() {
             </Link>
           ))}
         </div>
-      )}
     </div>
   );
 }

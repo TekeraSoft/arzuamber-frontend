@@ -20,6 +20,12 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.excerpt {               /* hepsi aynı font */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;   /* 14 px */
+    line-height: 1.4;
+}
+
 /* for Firefox number inputs button */
 input[type="number"] {
   -moz-appearance: textfield;
