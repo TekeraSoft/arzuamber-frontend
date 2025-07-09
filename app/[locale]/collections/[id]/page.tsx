@@ -42,13 +42,79 @@ function Page() {
 
 
     return (
-        <div className={'container bg-white rounded-lg p-4 md:p-6 mb-4'}>
+        <div className={'container bg-white rounded-lg p-4 md:p-6 mb-4 md:mt-0 -mt-4'}>
+           <div className={'flex flex-row gap-x-4 w-full justify-center mb-4'}>
+               <Link
+                   href={"/products"}
+                   className="flex flex-col items-center justify-center  cursor-pointer"
+               >
+                   {/* Kategori Resmi ve İsim */}
+                   <div className="flex flex-col items-center">
+                       {/* Kategori Resmi */}
+                       <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-green-400 transition-all duration-300 ease-in-out transform hover:scale-105">
+                           <Image
+                               src={`/images/Brand/all-product-cat-image.jpg`}
+                               alt={"brandDescription"}
+                               fill
+                               priority
+                               className="object-cover"
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                           />
+                       </div>
+
+                       {/* Kategori İsmi */}
+                       <h3 className="text-center text-xs md:text-sm max-w-[5rem] truncate">
+                           Tüm Ürünler
+                       </h3>
+                   </div>
+               </Link>
+               <Link
+                   href={"/collections"}
+                   className="flex flex-col items-center justify-center  cursor-pointer"
+               >
+                   <div className="flex flex-col items-center">
+                       <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-green-400 transition-all duration-300 ease-in-out transform hover:scale-105">
+                           <Image
+                               src={`/images/logo/collection-img.webp`}
+                               alt={"brandDescription"}
+                               fill
+                               priority
+                               className="object-cover"
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                           />
+                       </div>
+                       <h3 className="text-center w-16 md:w-20 text-xs md:text-sm">
+                           Koleksiyonlar
+                       </h3>
+                   </div>
+               </Link>
+               <Link
+                   href={"/df"}
+                   className="flex flex-col items-center justify-center  cursor-pointer"
+               >
+                   <div className="flex flex-col items-center">
+                       <div className="relative w-12 h-12 md:w-16 md:h-16 mb-2 overflow-hidden rounded-full border-2 border-secondary shadow-lg hover:border-green-400 transition-all duration-300 ease-in-out transform hover:scale-105">
+                           <Image
+                               src={`/images/logo/df-img.gif`}
+                               alt={"brandDescription"}
+                               fill
+                               priority
+                               className="object-cover"
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                           />
+                       </div>
+                       <h3 className="text-center w-16 md:w-20 text-xs md:text-sm">
+                           Dijital Giyim
+                       </h3>
+                   </div>
+               </Link>
+           </div>
             <div className={'flex items-center justify-center'}>
                 <img src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${collection?.image}`} alt={collection?.image}
                      className={'w-full blur-sm md:h-80 h-36 brightness-75 object-cover rounded-lg'} />
                 <h3 className={'text-center absolute text-white md:w-[80rem] w-[20rem] font-bold text-2xl md:text-5xl md:mt-0 mt-4'}>{collection?.collectionName}</h3>
             </div>
-        <div className={'grid grid-cols-2 md:grid-cols-4 flex-wrap gap-4 my-6 mb-12'}>
+        <div className={'grid grid-cols-2 md:grid-cols-4 flex-wrap gap-4 my-3 mb-12'}>
             {
                 collection?.products?.map((item,index) => (
                     <div key={index} className={'flex flex-col rounded-lg bg-white mt-4 border shadow-lg'}>

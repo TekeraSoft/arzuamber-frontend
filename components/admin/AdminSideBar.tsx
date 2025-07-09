@@ -13,7 +13,7 @@ import {
 import { IoMdHome } from "react-icons/io";
 import { MdCategory } from "react-icons/md";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
-import { BiSolidDiscount, BiUser } from "react-icons/bi";
+import { BiSolidDiscount, BiCollection } from "react-icons/bi";
 import { TbSettingsCog } from "react-icons/tb";
 import { RiMailSendLine } from "react-icons/ri";
 import { useSession } from "next-auth/react";
@@ -145,7 +145,14 @@ const SideBar = () => {
               )}
             </li>
           ))}
-
+          <li>
+            <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
+              <div className="flex items-center gap-3">
+                <BiCollection size={20} />
+                <Link href={"/admin/collections"}>Collections</Link>
+              </div>
+            </div>
+          </li>
           <li>
             <div className="flex items-center justify-between cursor-pointer p-3 rounded-md hover:bg-third border-">
               <div className="flex items-center gap-3">
