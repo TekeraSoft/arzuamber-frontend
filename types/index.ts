@@ -85,23 +85,57 @@ export type Product = {
   id: string;
   name: string;
   slug: string;
-  populate: boolean;
-  category: string;
-  newSeason: boolean;
-  purchasePrice: number;
-  subCategory: string;
+  code: string;
+  videoUrl: string;
+  brandName: string;
+  category: Category;
+  company: Company;
   description: string;
-  price: number;
-  length: string;
-  discountPrice: number;
-  colorSize: ColorSize[];
+  variations: Variant[]
+  subCategories: SubCategory[]
+  currencyType: string;
+  tags: string[];
+  rate: number;
+  comments: string[];
+  isActive: boolean;
 };
+
+export type SubCategory = {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+}
+
+export type Variant = {
+  id: string;
+  modelName: string;
+  modelCode: string;
+  color: string;
+  attributes: Attribute[];
+  images: string[];
+}
+
+export type Attribute = {
+  attributeDetails: [{key: string, value: string}];
+  stock: number;
+  price: number;
+  discountPrice: number;
+  sku: string;
+  barcode: string;
+}
+
+export type Company = {
+  id: string;
+  name: string;
+  logo: string;
+  rate: number;
+}
 
 export type Category = {
   id: string;
   name: string;
-  subCategories: string[];
-  lang: string;
+  slug: string;
   image: string;
 };
 

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "@/types";
 import {
   deleteGuardRequest,
-  getGuardRequest,
+  getGuardRequest, getTekeraGuardRequest,
   patchRequest,
   postGuardRequest,
 } from "@/services/requestservice";
@@ -27,6 +27,7 @@ export interface CartState {
   populateProducts: Product[];
   filterProducts: Product[];
   product: Product | null;
+  targetPicture: object;
   page: object;
   loading: boolean;
   colors: [];
@@ -39,6 +40,7 @@ const initialState: CartState = {
   newSeasonProducts: [],
   populateProducts: [],
   filterProducts: [],
+  targetPicture: {},
   page: {},
   product: null,
   loading: false,
@@ -66,6 +68,9 @@ export const productSlice = createSlice({
     },
     getProduct: (state, action) => {
       state.product = action.payload;
+    },
+    getTargetPicture: (state, action) => {
+      state.targetPicture = action.payload;
     },
     getFilterProducts: (state, action) => {
       state.filterProducts = action.payload._embedded?.productDtoes;
@@ -132,15 +137,15 @@ export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
 };
 
 export const getNewSeasonProductsDispatch =
-  (page: number, size: number) => async (dispatch) => {
+  (page: number, size: number, tag: string) => async (dispatch) => {
     dispatch(loading(true));
-    getGuardRequest({
+    getTekeraGuardRequest({
       controller: "product",
-      action: "get-all-new-season",
-      params: { page: page, size: size },
+      action: "findCompanyPopularOrNewSeasonProducts",
+      params: { page: page, size: size, companyId: process.env.NEXT_PUBLIC_COMPANY_ID, tag: tag }
     })
       .then((res) => {
-        dispatch(getNewSeasonProducts(res.data));
+        dispatch(getNewSeasonProducts(res?.data));
         dispatch(loading(false));
       })
       .finally(() => {
@@ -148,7 +153,23 @@ export const getNewSeasonProductsDispatch =
       });
   };
 
-export const getPopulateProductsDispatch =
+export const getPopularProductsDispatch =
+    (page: number, size: number, tag: string) => async (dispatch) => {
+      dispatch(loading(true));
+      getTekeraGuardRequest({
+        controller: "product",
+        action: "findCompanyPopularOrNewSeasonProducts",
+        params: { page: page, size: size, companyId: process.env.NEXT_PUBLIC_COMPANY_ID, tag: tag }})
+          .then((res) => {
+            dispatch(getPopulateProducts(res.data));
+            dispatch(loading(false));
+          })
+          .finally(() => {
+            dispatch(loading(false));
+          });
+    };
+
+/*export const getPopulateProductsDispatch =
   (page: number, size: number) => async (dispatch) => {
     dispatch(loading(true));
     getGuardRequest({
@@ -163,7 +184,7 @@ export const getPopulateProductsDispatch =
       .finally(() => {
         dispatch(loading(false));
       });
-  };
+  };*/
 
 export const getAllProductsDispatch =
   (page: number, size: number) => async (dispatch) => {
@@ -184,18 +205,34 @@ export const getAllProductsDispatch =
 
 export const getProductBySlugDispatch = (slug: string) => async (dispatch) => {
   dispatch(loading(true));
-  getGuardRequest({
+  getTekeraGuardRequest({
     controller: "product",
-    action: "get-product",
-    params: { slug: slug },
+    action: "findCompanyReturnProductDetail",
+    params: { slug: slug, companyId: process.env.NEXT_PUBLIC_COMPANY_ID  },
   })
     .then((res) => {
-      dispatch(getProduct(res.data));
+      dispatch(getProduct(res?.data));
       dispatch(loading(false));
     })
     .finally(() => {
       dispatch(loading(false));
     });
+};
+
+export const getTargetPictureDispatch = (id: string) => async (dispatch) => {
+  dispatch(loading(true));
+  getTekeraGuardRequest({
+    controller: "digital-fashion",
+    action: "getTargetImageByProductId",
+    params: { productId: id  },
+  })
+      .then((res) => {
+        dispatch(getTargetPicture(res?.data));
+        dispatch(loading(false));
+      })
+      .finally(() => {
+        dispatch(loading(false));
+      });
 };
 
 export const filterProductDispatch = (params: object) => async (dispatch) => {
@@ -265,6 +302,7 @@ export const {
   getProducts,
   getNewSeasonProducts,
   getProduct,
+    getTargetPicture,
   getFilterProducts,
   getColors,
   getPopulateProducts,

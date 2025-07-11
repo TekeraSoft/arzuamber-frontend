@@ -39,7 +39,7 @@ function ProductSlider() {
   );
 
   useEffect(() => {
-    dispatch(getNewSeasonProductsDispatch(0, 10));
+    dispatch(getNewSeasonProductsDispatch(0, 10, "Season"));
   }, [dispatch]);
 
   function CustomLeftArrow({ onClick }: ArrowProps) {
@@ -67,30 +67,32 @@ function ProductSlider() {
   return (
     <div className="homepage-slider-div w-full h-full  z-5 ">
       {loading ? (
-        <Loading />
+          <Loading />
+      ) : Array.isArray(newSeasonProducts?.content) && newSeasonProducts.content.length > 0 ? (
+          <Carousel
+              responsive={responsive}
+              swipeable={true}
+              draggable={true}
+              showDots={false}
+              arrows={true}
+              ssr={true}
+              infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={3000}
+              keyBoardControl={true}
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
+              customTransition="all .7s"
+              transitionDuration={1000}
+              containerClass="carousel-container"
+              itemClass="flex justify-center items-center py-5 px-0.5 md:px-0"
+          >
+            {newSeasonProducts.content.map((product: Product) => (
+                <ProductsSliderItem product={product} key={product.id} />
+            ))}
+          </Carousel>
       ) : (
-        <Carousel
-          responsive={responsive}
-          swipeable={true}
-          draggable={true}
-          showDots={false}
-          arrows={true}
-          ssr={true}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={3000}
-          keyBoardControl={true}
-          customLeftArrow={<CustomLeftArrow />}
-          customRightArrow={<CustomRightArrow />}
-          customTransition="all .7s"
-          transitionDuration={1000}
-          containerClass="w-full h-full"
-          itemClass="flex justify-center items-center py-2 gap-3 px-0.5 md:px-0"
-        >
-          {newSeasonProducts?.map((product: Product) => (
-            <ProductsSliderItem product={product} key={product.id} />
-          ))}
-        </Carousel>
+          <div className="text-center text-sm text-gray-500 py-10">Ürün bulunamadı.</div>
       )}
     </div>
   );

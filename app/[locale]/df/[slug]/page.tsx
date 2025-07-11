@@ -15,7 +15,7 @@ import OrderButtons from "@/components/productDetail/utils/OrderButtons/OrderBut
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import {useTranslations} from "next-intl";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {openCartModal} from "@/store/modalsSlice";
 import {useSession} from "next-auth/react";
 import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
@@ -24,6 +24,9 @@ import {Skeleton} from "primereact/skeleton";
 import DfSharedButton from "@/components/productDetail/utils/DfSharedButton";
 import {usePathname} from "@/i18n/routing";
 import {IoMdClose} from "react-icons/io";
+import {getProduct, getProductBySlugDispatch, getTargetPicture, getTargetPictureDispatch} from "@/store/productSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {Product} from "@/types";
 
 const responsive = {
     superLargeDesktop: {
@@ -45,20 +48,19 @@ const responsive = {
 };
 
 function Page() {
-    const params = useParams()
+    const params = useParams<any>()
     const { data: session } = useSession();
     const pathName = usePathname();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const t = useTranslations();
-    const [product,setProduct] = useState()
+    const {product, targetPicture}: {product: Product, targetPicture:any} = useSelector((state:RootState) => state.products);
     const [photoIndex,setPhotoIndex] = useState(0)
     const [loading,setLoading] = useState(false)
     const [variationState,setVariationState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [findPrice, setFindPrice] = useState({price:0,discountPrice:0})
-    const [targetPicture,setTargetPicture] = useState();
     const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false);
-    const [qrValue, setQrValue] = useState()
+    const [qrValue, setQrValue] = useState<string>(null)
     const [errorState, setErrorState] = useState({
         sizeError: false,
         colorError: false,
@@ -81,65 +83,25 @@ function Page() {
     });
 
     useEffect(() => {
-        const fetchProductData = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_DETAIL_URI}/${params.slug}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const json = await response.json();
-                setProduct(json);
-            } catch (error) {
-                console.error("Failed to fetch product data:", error);
-                toast.error("Ürün bilgileri yüklenirken bir hata oluştu.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProductData();
+        dispatch(getProductBySlugDispatch(params?.slug))
+        if(product?.subCategories[0]?.name === "Digital Fashion") {
+            dispatch(getTargetPictureDispatch(product?.id))
+        }
+        return () => {
+            dispatch(getTargetPicture(null))
+            dispatch(getProduct(null))
+        }
     }, [params.slug]);
 
     useEffect(() => {
-        const fetchTargetPic = async () => {
-            if (product?.id) { // Only fetch if product.id exists
-                try {
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_GET_TARGET_PIC}?productId=${product.id}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const json = await response.json();
-                    console.log(json)
-                    setTargetPicture(json);
-                    setQrValue(`${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${json.id}`)
-                } catch (error) {
-                    console.error("Failed to fetch target picture:", error);
-                    // Optionally show a toast here if this is critical
-                }
-            }
-        };
-        fetchTargetPic();
-    }, [product?.id]);
+        if(product?.subCategories[0]?.name === "Digital Fashion") {
+            setQrValue(`${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${targetPicture?.id}`)
+        }
+    }, [targetPicture]);
 
     useEffect(() => {
-        if (product?.variations?.length > 0) {
-            const initialVariation = product.variations[0];
-            setVariationState(initialVariation);
-            // Ensure attributes exist before trying to access them
-            if (initialVariation.attributes && initialVariation.attributes.length > 0) {
-                setFindPrice({
-                    price: initialVariation.attributes[0].price,
-                    discountPrice: initialVariation.attributes[0].discountPrice
-                });
-                setStateProduct(prevState => ({
-                    ...prevState,
-                    color: initialVariation.color || "",
-                    price: initialVariation.attributes[0].price, // Set initial price
-                    totalStock: initialVariation.attributes[0].stock, // Set initial stock
-                    stockSizeId: initialVariation.attributes[0].id // Set initial stockSizeId
-                }));
-            }
+        if(product) {
+            setVariationState(product.variations[0])
         }
     }, [product]);
 
@@ -163,6 +125,7 @@ function Page() {
        if(loading) {
         return <Loading />
     }
+
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -256,7 +219,7 @@ function Page() {
                   </div>
                       )
                   }
-                  {qrValue && (
+                  {qrValue && product?.subCategories[0]?.name === "Digital Fashion" && (
                       <div className={'hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-4'}>
                           <QRCode
                               size={256}
@@ -275,7 +238,7 @@ function Page() {
                       )
                   }
                </div>
-                {qrValue && (
+                {qrValue && product?.subCategories[0]?.name === "Digital Fashion" && (
                     <div className={'md:hidden flex flex-col z-30 gap-y-4 w-full items-center justify-center mt-4 pb-4'}>
                         <QRCode
                             size={150}

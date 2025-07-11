@@ -95,9 +95,7 @@ function HomeSlider() {
 
   return (
     <div className="homepage-slider-div relative w-full   h-full flex justify-center items-center   ">
-      {loading ? (
-        <Loading />
-      ) : (
+      {
         <Carousel
           responsive={responsive}
           swipeable={true}
@@ -127,7 +125,7 @@ function HomeSlider() {
             <HomeSliderItem image={image} key={index} />
           ))}
         </Carousel>
-      )}
+      }
     </div>
   );
 }

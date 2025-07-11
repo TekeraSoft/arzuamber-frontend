@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ProductsSliderItem from "./ProductSliderItem";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import { getPopulateProductsDispatch } from "@/store/productSlice";
+import {getPopularProductsDispatch} from "@/store/productSlice";
 import { Product } from "@/types";
 
 function PopulateProductSlider() {
@@ -39,7 +39,7 @@ function PopulateProductSlider() {
   );
 
   useEffect(() => {
-    dispatch(getPopulateProductsDispatch(0, 10));
+    dispatch(getPopularProductsDispatch(0, 10,"Popular"));
   }, [dispatch]);
 
   function CustomLeftArrow({ onClick }: ArrowProps) {
@@ -68,29 +68,31 @@ function PopulateProductSlider() {
     <div className="homepage-slider-div relative z-5 ">
       {loading ? (
         <Loading />
+      ) : Array.isArray(populateProducts?.content) && populateProducts.content.length > 0 ? (
+          <Carousel
+              responsive={responsive}
+              swipeable={true}
+              draggable={true}
+              showDots={false}
+              arrows={true}
+              ssr={true}
+              infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={3000}
+              keyBoardControl={true}
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
+              customTransition="all .7s"
+              transitionDuration={1000}
+              containerClass="carousel-container"
+              itemClass="flex justify-center items-center py-5 px-0.5 md:px-0"
+          >
+            {populateProducts.content.map((product: Product) => (
+                <ProductsSliderItem product={product} key={product.id} />
+            ))}
+          </Carousel>
       ) : (
-        <Carousel
-          responsive={responsive}
-          swipeable={true}
-          draggable={true}
-          showDots={false}
-          arrows={true}
-          ssr={true}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={3000}
-          keyBoardControl={true}
-          customLeftArrow={<CustomLeftArrow />}
-          customRightArrow={<CustomRightArrow />}
-          customTransition="all .7s"
-          transitionDuration={1000}
-          containerClass="carousel-container"
-          itemClass="flex justify-center items-center py-5 px-0.5 md:px-0"
-        >
-          {populateProducts?.map((product: Product) => (
-            <ProductsSliderItem product={product} key={product.id} />
-          ))}
-        </Carousel>
+          <div className="text-center text-sm text-gray-500 py-10">Ürün bulunamadı.</div>
       )}
     </div>
   );

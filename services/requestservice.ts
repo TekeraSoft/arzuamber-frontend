@@ -12,6 +12,22 @@ axios.interceptors.response.use(
     }
   },
 );
+
+export const getTekeraGuardRequest = async (
+    requestParameter = RequestParameter,
+    id?: string,
+) => {
+  const lang = getCookie("NEXT_LOCALE");
+  const url = `${process.env.NEXT_PUBLIC_TEKERA_API_URI}/${
+      requestParameter.controller
+  }${requestParameter.action ? `/${requestParameter.action}` : ""}${
+      id ? `/${id}` : ""
+  }`;
+  return await axios.get(url, {
+    params: { ...requestParameter.params },
+  });
+};
+
 export const getGuardRequest = async (
   requestParameter = RequestParameter,
   id?: string,

@@ -33,6 +33,45 @@ export const dfFilter = {
   ],
 }
 
+export const categories = [
+  {
+    name: "Etek",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/14be421d-8bb8-443f-b5ba-8dd2c356137b.jpg`
+  },
+  {
+    name: "Takım",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/470d8ae3-ed4e-4335-851d-42ec92cbb0ef.jpg`
+  },
+  {
+    name: "Bluz",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/0454fb41-0db0-481a-bcaf-1cbcc1384692.jpg`
+  },
+  {
+    name: "Abiye",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/1ec4943e-cfd1-4e7d-a1a9-a5861de89128.jpg`
+  },
+  {
+    name: "T-shirt",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/a8a4de81-8744-4764-b7c8-f307695be028.jpg`
+  },
+  {
+    name: "Atlet",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/0a8ccaf1-ad72-4264-bca6-99e63a3f75c4.jpg`
+  },
+  {
+    name: "Yelek",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/8882d386-2429-45e1-920e-afae795a410f.jpg`
+  },
+  {
+    name: "Gömlek",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/d2a7c3d4-938c-4bd0-85f0-8383c4c2a733.jpg`
+  },
+  {
+    name: "Sweatshirt",
+    image: `${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/products/arzuamber_moda/c7a39d55-52a7-42c7-a3ff-0f74f2d7727d.jpg`
+  },
+]
+
 export const colors = [
   { name: "Beyaz", hex: "#FFFFFF" },
   { name: "Siyah", hex: "#000000" },
