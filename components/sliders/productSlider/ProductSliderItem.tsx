@@ -90,7 +90,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
       <div className=" flex flex-col  space-y-1 px-2 w-full pb-2">
         {/* Renk Seçenekleri */}
-        <div className="flex flex-row gap-x-3 w-full">
+        <div className="flex flex-row flex-wrap gap-x-3 w-full">
           {product.variations.map((color, index) => (
             <Image
               key={index}

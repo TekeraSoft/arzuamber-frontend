@@ -7,39 +7,30 @@ import Loading from "@/components/utils/Loading";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import {getFashionCollectionDispatch, setCollection} from "@/store/fashionCollectionSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {useDispatch, useSelector} from "react-redux";
 
 
 function Page() {
 
     const param = useParams();
-    const [collection,setCollection] = useState()
-    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch<AppDispatch>();
+    const {collection, loading}  = useSelector((state:RootState) => state.fashionCollection);
 
     useEffect(() => {
-        const fetchCollections = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_COLLECTION}/getFashionCollection?id=${param.id}`);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-                }
-                const json = await response.json();
-                setCollection(json);
-            } catch (error) {
-                setCollection({ content: [], page: { totalElements: 0 } }); // Reset products on error
-            } finally {
-                setLoading(false);
-            }
-        };
+        dispatch(getFashionCollectionDispatch(param?.id))
 
-        fetchCollections();
+        return () => {
+            dispatch(setCollection(null))
+        }
     }, [param.id]);
 
     if(loading) {
         <Loading />
     }
 
+    console.log(collection)
 
     return (
         <div className={'container bg-white rounded-lg p-4 md:p-6 mb-4 md:mt-0 -mt-4'}>
@@ -164,7 +155,7 @@ function Page() {
                                 })()}
                             </div>
                             <div className={'flex flex-row w-full justify-between items-center'}>
-                                <h3 className={'font-semibold'}>{item.variations[0]?.attributes[0]?.price?.toLocaleString("tr-TR", {
+                                <h3 className={'font-semibold'}>{item?.price?.toLocaleString("tr-TR", {
                                     style: "currency",
                                     currency: "TRY",
                                 })}</h3>

@@ -1,5 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {deleteGuardRequest, getGuardRequest, postGuardRequest, putGuardRequest} from "@/services/requestservice";
+import {
+    deleteGuardRequest,
+    getGuardRequest,
+    getTekeraGuardRequest,
+    postGuardRequest,
+    putGuardRequest
+} from "@/services/requestservice";
 import {toast} from "react-toastify";
 
 export const fashionCollectionSlice = createSlice({
@@ -24,7 +30,9 @@ export const fashionCollectionSlice = createSlice({
 
 export const getAllFashionCollectionDispatch = (page: number, size: number) => async (dispatch) => {
     dispatch(loading(true));
-    getGuardRequest({controller: 'super-admin', action: 'getAllFashionCollection', params: { page, size }}).then(res => {
+    getTekeraGuardRequest({controller: 'fashion-collection', action: 'getFashionCollectionsByCompany',
+        params: { page, size, companyId: process.env.NEXT_PUBLIC_COMPANY_ID }})
+        .then(res => {
         dispatch(setCollections(res?.data));
         dispatch(loading(false));
     }).catch(e => {
@@ -35,8 +43,11 @@ export const getAllFashionCollectionDispatch = (page: number, size: number) => a
 
 export const getFashionCollectionDispatch = (id: string) => async (dispatch) => {
     dispatch(loading(true))
-    getGuardRequest({controller: 'super-admin', action: 'getFashionCollection', params: { id:id }}).then(res => {
+    getTekeraGuardRequest({controller: 'fashion-collection', action: 'getFashionCollection', params: { id:id }}).then(res => {
         dispatch(setCollection(res?.data));
+        dispatch(loading(false));
+    }).catch(e => {
+        toast.error(e?.response?.data);
     })
 }
 
@@ -81,3 +92,4 @@ export const deleteFashionCollectionDispatch = (id: string) => async (dispatch) 
 
 
 export const {setCollections,setCollection, loading} = fashionCollectionSlice.actions
+export default fashionCollectionSlice.reducer;

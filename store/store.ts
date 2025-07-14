@@ -13,6 +13,7 @@ import userReducer from "@/store/userSlice";
 import searchSlice from "@/store/searchSlice";
 import orderSlice from "@/store/orderSlice";
 import superAdminSlice from "@/store/superAdminSlice";
+import fashionCollectionSlice from "@/store/fashionCollectionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     modals: modalsSlice,
     search: searchSlice,
     order: orderSlice,
+    fashionCollection: fashionCollectionSlice
   },
 });
 

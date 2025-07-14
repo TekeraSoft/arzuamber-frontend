@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Category from "@/components/home/Category";
 import {Link} from "@/i18n/routing";
 import {colors} from "@/data/filterData";
@@ -7,33 +7,18 @@ import {Paginator} from "primereact/paginator";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
 import excerpt from '@stefanprobst/remark-excerpt';
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {getAllFashionCollectionDispatch} from "@/store/fashionCollectionSlice";
 
 function Page(props) {
-
-    const [pageable, setPageable] = React.useState({currentPage:0,size:20});
-    const [collections, setCollections] =  React.useState([]);
-    const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const {collections} = useSelector((state:RootState) => state.fashionCollection);
+    const [pageable, setPageable] = useState({currentPage: 0, size: 20});
 
     useEffect(() => {
-        const fetchCollections = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_TEKERA_API_COLLECTION}/getAllFashionCollection`);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-                }
-                const json = await response.json();
-                setCollections(json);
-            } catch (error) {
-                setCollections({ content: [], page: { totalElements: 0 } }); // Reset products on error
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCollections();
-    }, []);
+        dispatch(getAllFashionCollectionDispatch(pageable.currentPage, pageable.size))
+    }, [dispatch,pageable]);
 
     const onPageChange = (event) => {
         setPageable({ size: event.rows, currentPage: event.page });
@@ -73,14 +58,14 @@ function Page(props) {
                     }
                 </div>
 
-                <Paginator
-                    className={"my-4 "}
-                    first={pageable.currentPage * pageable.size}
-                    rows={pageable.size}
-                    totalRecords={collections?.page?.totalElements}
-                    rowsPerPageOptions={[9, 20, 30]}
-                    onPageChange={onPageChange}
-                />
+            <Paginator
+                className={"my-4 "}
+                first={pageable.currentPage * pageable.size}
+                rows={pageable.size}
+                totalRecords={collections?.page?.totalElements}
+                rowsPerPageOptions={[9, 20, 30]}
+                onPageChange={onPageChange}
+            />
         </div>
         </div>
     );
