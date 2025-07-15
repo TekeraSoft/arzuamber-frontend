@@ -100,6 +100,27 @@ export type Product = {
   isActive: boolean;
 };
 
+export type ProductUi = {
+  brandName: string;
+  currencyType: string;
+  discountPrice: number;
+  id: string;
+  name: string;
+  price: number;
+  rate: number;
+  slug: string;
+  tags: string[];
+  variations: VariationUi[];
+}
+
+export type VariationUi = {
+  color: string;
+  id: string;
+  images: string[];
+  modelCode: string;
+  modelName: string;
+}
+
 export type SubCategory = {
   id: string;
   name: string;

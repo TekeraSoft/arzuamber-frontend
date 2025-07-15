@@ -1,36 +1,22 @@
 "use client";
 
-import { AppDispatch, RootState } from "@/store/store";
 import React, { useEffect } from "react";
 import Loading from "../utils/Loading";
-import { getCategoriesDispatch } from "@/store/categorySlice";
-import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import {categories} from "@/data/filterData";
 
 export default function CategoryBrand() {
-  const dispatch = useDispatch<AppDispatch>();
   const t = useTranslations();
 
-  useEffect(() => {
-    dispatch(getCategoriesDispatch());
-  }, [dispatch]);
-
-  const { categories, loading } = useSelector(
-    (state: RootState) => state.category
-  );
 
   return (
     <div className="  flex flex-col justify-center items-center w-full  mt-8 px-4">
       <h2 className="text-2xl md:text-4xl font-semibold text-center mb-5 uppercase tracking-widest">
         {t("Filter.categories")}
       </h2>
-
-      {loading ? (
-        <Loading />
-      ) : (
         <div className="HomeSliderContainer grid grid-cols-2 gap-6">
           {categories.map((category, index) => (
             <motion.div
@@ -43,7 +29,7 @@ export default function CategoryBrand() {
               <Link href={`/category/${category.name}`} className="block">
                 {/* Kategori Görseli */}
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${category.image}`}
+                  src={category.image}
                   alt={category.name}
                   width={600}
                   height={400}
@@ -58,7 +44,6 @@ export default function CategoryBrand() {
             </motion.div>
           ))}
         </div>
-      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { Product } from "@/types";
+import {ProductUi} from "@/types";
 import { useTranslations } from "next-intl";
 import { FaRegHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ import { setFavWarningModalStatus } from "@/store/modalsSlice";
 import { addFavoritesDispatch } from "@/store/userSlice";
 
 interface ProductsSliderItemProps {
-  product: Product;
+  product: ProductUi;
 }
 
 function ProductsSliderItem({ product }: ProductsSliderItemProps) {
@@ -33,6 +33,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
     dispatch(updateFavoritesDispatch(product));
   };
 
+  console.log(product)
 
   return (
     <div className="flex justify-center items-start flex-col space-y-2 rounded-lg transition duration-500 pb-0.5 w-44 xs:w-[220px] md:w-[290px] h-[400px] md:h-[500px]  relative bg-slate-50 shadow-md">
@@ -64,11 +65,11 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
           />
         )}
         <div className="absolute right-3 top-5 md:top-2 lg:top-3 flex flex-col justify-center items-end gap-1 z-30">
-          {product?.variations[0]?.attributes[0].discountPrice > 0 && product?.variations[0]?.attributes[0].price > 0 && (
+          {product?.discountPrice > 0 && (
             <div className="  w-10 h-4 md:w-16 md:h-6  flex justify-center items-center bg-red-600 text-mywhite rounded  text-[7px] md:text-[10px] md:text-xs shadow-md ">
               %
               {Math.round(
-                ((product?.variations[0]?.attributes[0]?.price - product?.variations[0]?.attributes[0]?.discountPrice) / product?.variations[0]?.attributes[0]?.price) * 100
+                ((product?.price - product?.discountPrice) / product?.price) * 100
               )}
             </div>
           )}
@@ -112,17 +113,17 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
 
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex justify-center items-center gap-2">
-              {product?.variations[0]?.attributes[0]?.discountPrice > 0 &&
-              product?.variations[0]?.attributes[0]?.discountPrice !== product?.variations[0]?.attributes[0]?.price ? (
+              {product?.discountPrice > 0 &&
+              product?.discountPrice !== product?.price ? (
                 <>
                   <span className="text-red-700 text-[9px] xs:text-xs md:text-sm line-through">
-                    {product?.variations[0]?.attributes[0]?.price.toLocaleString("tr-TR", {
+                    {product?.price.toLocaleString("tr-TR", {
                       style: "currency",
                       currency: "TRY",
                     })}
                   </span>
                   <p className="text-[9px] xs:text-xs text-secondary md:text-base font-extrabold">
-                    {product?.variations[0]?.attributes[0]?.discountPrice.toLocaleString("tr-TR", {
+                    {product?.discountPrice.toLocaleString("tr-TR", {
                       style: "currency",
                       currency: "TRY",
                     })}
@@ -130,7 +131,7 @@ function ProductsSliderItem({ product }: ProductsSliderItemProps) {
                 </>
               ) : (
                 <p className="text-[9px] xs:text-xs text-secondary md:text-base font-extrabold">
-                  {product?.variations[0]?.attributes[0]?.price.toLocaleString("tr-TR", {
+                  {product?.price.toLocaleString("tr-TR", {
                     style: "currency",
                     currency: "TRY",
                   })}

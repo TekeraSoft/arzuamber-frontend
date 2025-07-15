@@ -1,10 +1,12 @@
 "use client"
-import "yet-another-react-lightbox/styles.css";
 import React, {useEffect, useRef, useState} from 'react';
+import "yet-another-react-lightbox/styles.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 import {useParams} from "next/navigation";
 import Image from "next/image";
-import Carousel from "react-multi-carousel";
-import {CustomLeftArrow, CustomRightArrow} from "@/components/productDetail/utils/CustomArrows";
 import Loading from "@/components/utils/Loading";
 import PaymentShippingCards from "@/components/productDetail/utils/PaymentShippingCards";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -20,7 +22,6 @@ import {openCartModal} from "@/store/modalsSlice";
 import {useSession} from "next-auth/react";
 import Tabs from '@/components/productDetail/utils/ProductTabs/Tabs';
 import QRCode from "react-qr-code";
-import {Skeleton} from "primereact/skeleton";
 import DfSharedButton from "@/components/productDetail/utils/DfSharedButton";
 import {usePathname} from "@/i18n/routing";
 import {IoMdClose} from "react-icons/io";
@@ -57,6 +58,7 @@ function Page() {
     const [photoIndex,setPhotoIndex] = useState(0)
     const [loading,setLoading] = useState(false)
     const [variationState,setVariationState] = useState(null)
+    const [attributeState,setAttributeState] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [findPrice, setFindPrice] = useState({price:0,discountPrice:0})
     const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false);
@@ -83,25 +85,32 @@ function Page() {
     });
 
     useEffect(() => {
-        dispatch(getProductBySlugDispatch(params?.slug))
-        if(product?.subCategories[0]?.name === "Digital Fashion") {
-            dispatch(getTargetPictureDispatch(product?.id))
-        }
+        dispatch(getProductBySlugDispatch(params?.slug));
         return () => {
-            dispatch(getTargetPicture(null))
-            dispatch(getProduct(null))
-        }
+            dispatch(getTargetPicture(null));
+            dispatch(getProduct(null));
+        };
     }, [params.slug]);
 
     useEffect(() => {
-        if(product?.subCategories[0]?.name === "Digital Fashion") {
-            setQrValue(`${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${targetPicture?.id}`)
+        if (product?.subCategories?.[0]?.name === "Digital Fashion" && product?.id) {
+            dispatch(getTargetPictureDispatch(product.id));
         }
-    }, [targetPicture]);
+    }, [product]);
 
     useEffect(() => {
-        if(product) {
-            setVariationState(product.variations[0])
+        if (
+            product?.subCategories?.[0]?.name === "Digital Fashion" &&
+            targetPicture?.id
+        ) {
+            setQrValue(`${process.env.NEXT_PUBLIC_AR_BASE_URL}?id=${targetPicture.id}`);
+        }
+    }, [product, targetPicture]);
+
+    useEffect(() => {
+        if (product) {
+            setVariationState(product.variations[0]);
+            setAttributeState(product.variations[0].attributes[0]);
         }
     }, [product]);
 
@@ -126,6 +135,13 @@ function Page() {
         return <Loading />
     }
 
+    const swiperRef = useRef(null);
+
+    const goToSlide = (index: number) => {
+        if (swiperRef.current) {
+            swiperRef.current.slideTo(index);
+        }
+    };
 
     return (
         <div className=" md:container md:mx-auto flex flex-col gap-3 mt-10 md:mt-12 lg:mt-5  ">
@@ -133,111 +149,98 @@ function Page() {
             <div className="container mx-auto flex flex-col lg:flex-row md:gap-x-2 justify-center items-start
                 md:items-center lg:items-start  md:rounded-lg w-full h-full ">
                 {/* Image Section with Carousel */}
-              <div className=" flex flex-col-reverse mt-8 md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
-                  <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
-                      {variationState?.images?.map((img, index) => (
-                          <div
-                              key={index}
-                              onClick={() => {
-                                  setPhotoIndex(index); // bu index, Carousel'e gidecek
-                                  carouselRef.current?.goToSlide(index); // burası çalışmalı
-                              }}
-                              className="w-full h-auto cursor-pointer"
-                          >
-                              <img
-                                  className="w-full h-auto object-cover rounded-lg"
-                                  src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                  alt={`${img}`}
-                              />
-                          </div>
-                      ))}
-                  </div>
-                  {variationState?.images?.length > 0 && (
-                      <Carousel
-                          responsive={responsive}
-                          infinite
-                          ref={carouselRef}
-                          // slidesPerView={1}
-                          autoPlaySpeed={3000}
-                          transitionDuration={500}
-                          customLeftArrow={<CustomLeftArrow />}
-                          customRightArrow={<CustomRightArrow />}
-                          className="w-full rounded-lg h-full"
-                          swipeable={true}
-                          draggable={true}
-                      >
-                          {variationState?.images?.length === 0 || loading ? (
-                              <div className="flex justify-center items-center w-full h-full rounded-lg">
-                                  <Skeleton className="w-full min-h-[750px]" />
-                              </div>
-                          ) : (
-                              variationState?.images?.map((img, index) => (
-                                  <div
-                                      key={index}
-                                      className="flex justify-center items-center w-full h-full rounded-lg"
-                                  >
-                                      <img
-                                          className="cursor-zoom-in w-full md:h-[700px] h-[400px] object-cover rounded-lg"
-                                          onClick={() => {
-                                              setPhotoIndex(index);
-                                              setIsModalOpen(true);
-                                          }}
-                                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
-                                          alt={product.name}
-                                      />
+                <div className="flex flex-col-reverse mt-8 md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
+                    {/* Thumbnails */}
+                    <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
+                        {variationState?.images?.map((img, index) => (
+                            <div
+                                key={index}
+                                onClick={() => goToSlide(index)}
+                                className="w-full h-auto cursor-pointer"
+                            >
+                                <img
+                                    className="w-full h-auto object-cover rounded-lg"
+                                    src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                    alt={`thumb-${img}`}
+                                />
+                            </div>
+                        ))}
+                    </div>
 
-                                  </div>
-                              ))
-                          )}
-                      </Carousel>
-                  )}
-                  {/* Video Modal */}
+                    {/* Swiper */}
+                    {variationState && (
+                        <Swiper
+                            modules={[Navigation]}
+                            onSwiper={(swiper) => (swiperRef.current = swiper)}
+                            navigation
+                            className="w-full rounded-lg h-full"
+                            spaceBetween={10}
+                            slidesPerView={1}
+                        >
+                            {variationState?.images?.map((img, index) => (
+                                <SwiperSlide key={index}>
+                                    <div className="flex justify-center items-center w-full h-full rounded-lg">
+                                        <img
+                                            className="cursor-zoom-in w-full md:h-[700px] h-[400px] object-cover rounded-lg"
+                                            onClick={() => {
+                                                setPhotoIndex(index);
+                                                setIsModalOpen(true);
+                                            }}
+                                            src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}${img}`}
+                                            alt={product?.name}
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    )}
 
-                  {
-                      videoModalOpen && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]">
-                      <div className="bg-white px-6 py-10 rounded-md w-full max-w-lg relative">
-                          {/* Close Button - Right Top Corner */}
-                          <button
-                              onClick={handleCloseModal}
-                              className="absolute top-2 right-2 text-2xl bg-red-500 text-white rounded-md">
-                              <IoMdClose />
-                          </button>
-                                  <video
-                                      className="w-full h-full object-cover rounded-lg"
-                                      controls       // kullanıcıya play/pause verecek
-                                      preload="metadata"
-                                  >
-                                      <source
-                                          src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${product?.videoUrl}`}
-                                          type="video/mp4"
-                                      />
-                                      Tarayıcınız video etiketini desteklemiyor.
-                                  </video>
+                    {/* Video Modal */}
+                    {videoModalOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]">
+                            <div className="bg-white px-6 py-10 rounded-md w-full max-w-lg relative">
+                                <button
+                                    onClick={handleCloseModal}
+                                    className="absolute top-2 right-2 text-2xl bg-red-500 text-white rounded-md"
+                                >
+                                    <IoMdClose />
+                                </button>
+                                <video
+                                    className="w-full h-full object-cover rounded-lg"
+                                    controls
+                                    preload="metadata"
+                                >
+                                    <source
+                                        src={`${process.env.NEXT_PUBLIC_DF_RESOURCE_URI}/${product?.videoUrl}`}
+                                        type="video/mp4"
+                                    />
+                                    Tarayıcınız video etiketini desteklemiyor.
+                                </video>
+                            </div>
+                        </div>
+                    )}
 
-                      </div>
-                  </div>
-                      )
-                  }
-                  {qrValue && product?.subCategories[0]?.name === "Digital Fashion" && (
-                      <div className={'hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-4'}>
-                          <QRCode
-                              size={256}
-                              style={{ height: "auto", maxWidth: "90px", width: "100%" }}
-                              value={qrValue}
-                              viewBox={`0 0 256 256`}
-                          />
-                          <button className={''}>Ar Deneyimini Başlat!</button>
-                      </div>
-                  )}
-                  {
-                      product?.videoUrl && (
-                          <button onClick={handleCloseModal} className={'absolute left-24 bottom-4 bg-secondary text-white p-2 rounded-lg'}>
-                              Videoyu Oynat
-                          </button>
-                      )
-                  }
-               </div>
+                    {/* QR */}
+                    {qrValue && product?.subCategories[0]?.name === "Digital Fashion" && (
+                        <div className="hidden md:flex flex-col z-30 gap-y-4 items-center justify-center pb-4 absolute bottom-0 right-4">
+                            <QRCode
+                                size={256}
+                                style={{ height: "auto", maxWidth: "90px", width: "100%" }}
+                                value={qrValue}
+                                viewBox={`0 0 256 256`}
+                            />
+                            <button className="">Ar Deneyimini Başlat!</button>
+                        </div>
+                    )}
+                    {product?.videoUrl && (
+                            <button
+                                onClick={handleCloseModal}
+                                className="absolute z-50 bottom-1 left-28 md:left-24 bg-secondary text-white p-2 rounded-lg"
+                            >
+                                Videoyu Oynat
+                            </button>
+                    )}
+                </div>
                 {qrValue && product?.subCategories[0]?.name === "Digital Fashion" && (
                     <div className={'md:hidden flex flex-col z-30 gap-y-4 w-full items-center justify-center mt-4 pb-4'}>
                         <QRCode
@@ -312,8 +315,8 @@ function Page() {
 
                     <div className="w-full flex bg-white  items-center justify-between gap-x-1 rounded-lg px-2 py-2 md:py-1  ">
             <span className={"flex  gap-x-4 "}>
-              {findPrice.discountPrice !== 0 &&
-              findPrice.discountPrice !== findPrice.price && findPrice.discountPrice !== null && (
+              {attributeState?.discountPrice !== 0 &&
+                  attributeState?.discountPrice !== attributeState?.price && attributeState?.discountPrice !== null && (
                       <p
                           className={
                               "  md:text-xl text-red-600 line-through font-semibold"
@@ -325,16 +328,16 @@ function Page() {
                           })}{" "}
                       </p>
                   )}
-                {findPrice.discountPrice !== 0 ? (
+                {attributeState?.discountPrice !== 0 ? (
                     <p className={"  md:text-xl font-semibold text-green-600"}>
-                        {findPrice.discountPrice.toLocaleString("tr-TR", {
+                        {attributeState?.discountPrice.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}
                     </p>
                 ) : (
                     <p className={"md:text-xl font-semibold text-secondaryDark"}>
-                        {findPrice.price.toLocaleString("tr-TR", {
+                        {attributeState?.price.toLocaleString("tr-TR", {
                             style: "currency",
                             currency: "TRY",
                         })}{" "}
@@ -348,14 +351,6 @@ function Page() {
 
                     <div className="grid lg:grid-cols-3 gap-2">
                         <PaymentShippingCards />
-                    </div>
-
-                    <div className="w-full flex flex-col justify-center items-start gap-3">
-                       {/* <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div className="text-sm font-semibold text-mywhite bg-secondary text-center rounded-lg py-2 px-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                                {t("productDetail.productCategory")}: {product.category}
-                            </div>
-                        </div>*/}
                     </div>
 
                     <div
@@ -438,7 +433,7 @@ function Page() {
                                                size: item.attributeDetails?.find(a => a.key === "size")?.value,
                                                quantity: 1,
                                              });
-                                             setFindPrice({price: item.price,discountPrice:item.discountPrice})
+                                             setAttributeState(item)
                                              setErrorState({ ...errorState, sizeError: false });
                                            }}
                                            key={index}

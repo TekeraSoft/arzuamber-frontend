@@ -65,6 +65,7 @@
     "remark-gfm": "^4.0.1",
     "sitemap": "^8.0.0",
     "sockjs-client": "^1.6.1",
+    "swiper": "^11.2.10",
     "tailwind-merge": "^3.2.0",
     "tiptap-extension-image-resize": "^0.1.6",
     "tiptap-extension-resize-image": "^1.2.1",

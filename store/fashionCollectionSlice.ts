@@ -51,45 +51,6 @@ export const getFashionCollectionDispatch = (id: string) => async (dispatch) => 
     })
 }
 
-export const createFashionCollectionDispatch = (body: any) => async (dispatch) => {
-    dispatch(loading(true))
-    postGuardRequest({controller:'super-admin',action:'createFashionCollection'},body).then(res => {
-        dispatch(loading(false))
-        toast.success(res?.data?.message);
-    }).catch(err => {
-        dispatch(loading(false));
-        toast.error(err?.response?.data);
-    }).finally(() => {
-        dispatch(loading(false));
-    })
-}
-
-export const updateFashionCollectionDispatch = (body: any) => async (dispatch) => {
-    dispatch(loading(true))
-    putGuardRequest({controller: 'super-admin', action:'updateFashionCollection'}, body).then(res => {
-        dispatch(loading(false))
-        toast.success(res?.data?.message);
-    }).catch(err => {
-        dispatch(loading(false));
-        toast.error(err?.response?.data);
-    }).finally(() => {
-        dispatch(loading(false));
-    })
-}
-
-export const deleteFashionCollectionDispatch = (id: string) => async (dispatch) => {
-    dispatch(loading(true))
-    deleteGuardRequest({controller:'super-admin',action:'deleteFashionCollection'}).then(res => {
-        dispatch(loading(false))
-        toast.success(res?.data?.message);
-    }).catch(err => {
-        dispatch(loading(false));
-        toast.error(err?.response?.data);
-    }).finally(() => {
-        dispatch(loading(false));
-    })
-}
-
 
 export const {setCollections,setCollection, loading} = fashionCollectionSlice.actions
 export default fashionCollectionSlice.reducer;

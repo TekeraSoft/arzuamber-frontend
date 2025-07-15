@@ -92,7 +92,7 @@ function PopulateProductSlider() {
             ))}
           </Carousel>
       ) : (
-          <div className="text-center text-sm text-gray-500 py-10">Ürün bulunamadı.</div>
+          <div className="text-center text-xl text-red-500 py-10">Ürün bulunamadı.</div>
       )}
     </div>
   );

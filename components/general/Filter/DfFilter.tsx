@@ -5,24 +5,25 @@ import {useTranslations} from "next-intl";
 import {AppDispatch, RootState} from "@/store/store";
 import {useState} from "react";
 import {setFilterStatus} from "@/store/searchSlice";
+import { useRouter, useSearchParams } from 'next/navigation';
 
-function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
-    gender: string;
-    size: string;
-    color: string;
-    setGender: (value: string | null) => void; // Update prop types for clarity
-    setSize: (value: string | null) => void;   // Allow null
-    setColor: (value: string | null) => void;  // Allow null
+function DfFilter({ updateQueryParams }: {
+    updateQueryParams: (key: string,value: string) => void;
 }) {
     const dispatch = useDispatch<AppDispatch>()
     const t = useTranslations();
     const { filterStatus } = useSelector((state: RootState) => state.search);
+    const searchParams = useSearchParams();
 
     const [openState, setOpenState] = useState({
         gender: true,
         size: true,
         color: false,
     });
+
+    const gender = searchParams.get("gender");
+    const clothSize = searchParams.get("clothSize");
+    const color = searchParams.get("color");
 
     return (
         <div className="relative lg:w-1/4 z-40">
@@ -83,7 +84,9 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                             className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                                             checked={gender === g}
                                             value={g} // Use 'g' as value, not 'gender'
-                                            onChange={(e) => setGender(gender === g ? null : g)}
+                                            onChange={(e) => gender ?
+                                                updateQueryParams("gender",null):
+                                                updateQueryParams("gender",g)}
                                         />
                                         <label
                                             className={`font-medium transition-all duration-300 text-sm ${
@@ -128,13 +131,15 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                             type="checkbox"
                                             className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400
                                              rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
-                                            checked={size === s}
+                                            checked={clothSize === s}
                                             value={s} // Use 's' as value, not 'size'
-                                            onChange={() => setSize(size === s ? null : s)} // **TOGGLE LOGIC HERE**
+                                            onChange={() => { clothSize ?
+                                                updateQueryParams("clothSize",null):
+                                                updateQueryParams("clothSize",s)}}
                                         />
                                         <label
                                             className={`font-medium transition-all duration-300 text-sm ${
-                                                size === s
+                                                clothSize === s
                                                     ? "text-primary font-bold"
                                                     : "text-gray-500 font-thin"
                                             }`}
@@ -181,7 +186,9 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                             rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                                             checked={color === c.name}
                                             value={c.name}
-                                            onChange={() => setColor(color === c.name ? null : c.name)} // **TOGGLE LOGIC HERE**
+                                            onChange={() => { color ?
+                                                updateQueryParams("color",null):
+                                                updateQueryParams("color",c.name)}}
                                         />
                                         <label
                                             className={`font-medium transition-all duration-300 text-base ${
@@ -236,7 +243,9 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                     checked:bg-primary checked:border-secondary transition-all duration-300"
                                     checked={gender === g}
                                     value={g}
-                                    onChange={(e) => setGender(gender === g ? null : g)} // **TOGGLE LOGIC HERE**
+                                    onChange={(e) => gender ?
+                                        updateQueryParams("gender",null):
+                                        updateQueryParams("gender",g)}
                                 />
                                 <label
                                     className={`font-medium transition-all duration-300 text-sm ${
@@ -282,13 +291,15 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                     type="checkbox"
                                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md
                                     checked:bg-primary checked:border-secondary transition-all duration-300"
-                                    checked={size === s}
+                                    checked={clothSize === s}
                                     value={s} // Use 's' as value, not 'size'
-                                    onChange={() => setSize(size === s ? null : s)} // **TOGGLE LOGIC HERE**
+                                    onChange={() => { clothSize ?
+                                        updateQueryParams("clothSize",null):
+                                        updateQueryParams("clothSize",s)}}
                                 />
                                 <label
                                     className={`font-medium transition-all duration-300 text-sm ${
-                                        size === s
+                                        clothSize === s
                                             ? "text-primary font-bold"
                                             : "text-gray-500 font-thin"
                                     }`}
@@ -333,7 +344,9 @@ function DfFilter({ gender,size,color,setGender, setSize, setColor }: {
                                     className="appearance-none w-5 h-5 border-2 cursor-pointer border-gray-400 rounded-md checked:bg-primary checked:border-secondary transition-all duration-300"
                                     checked={color === c.name}
                                     value={c.name}
-                                    onChange={() => setColor(color === c.name ? null : c.name)} // **TOGGLE LOGIC HERE**
+                                    onChange={() => { color ?
+                                        updateQueryParams("color",null) :
+                                        updateQueryParams("color",c.name)}}
                                 />
                                 <label
                                     className={`font-medium transition-all duration-300 text-base ${

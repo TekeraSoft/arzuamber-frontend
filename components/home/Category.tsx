@@ -92,7 +92,7 @@ function Category() {
 
           {categories.map((category, index) => (
             <Link
-              href={`/category/${category.name}`}
+              href={`/products?subcategory=${category.name}`}
               key={index}
               className="flex flex-col items-center justify-center cursor-pointer"
             >

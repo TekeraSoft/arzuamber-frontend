@@ -117,24 +117,6 @@ export const createCommentDispatch =
       });
   };
 
-export const getProductCommentsDispatch = (id: string) => async (dispatch) => {
-  dispatch(loading(true));
-  getGuardRequest({
-    controller: "product",
-    action: "get-product-comment",
-    params: { id },
-  })
-    .then((res) => {
-      dispatch(getProductComments(res.data));
-      dispatch(loading(false));
-    })
-    .catch((err) => {
-      dispatch(loading(false));
-    })
-    .finally(() => {
-      dispatch(loading(false));
-    });
-};
 
 export const getNewSeasonProductsDispatch =
   (page: number, size: number, tag: string) => async (dispatch) => {
@@ -169,27 +151,10 @@ export const getPopularProductsDispatch =
           });
     };
 
-/*export const getPopulateProductsDispatch =
-  (page: number, size: number) => async (dispatch) => {
-    dispatch(loading(true));
-    getGuardRequest({
-      controller: "product",
-      action: "get-all-populate",
-      params: { page: page, size: size },
-    })
-      .then((res) => {
-        dispatch(getPopulateProducts(res.data));
-        dispatch(loading(false));
-      })
-      .finally(() => {
-        dispatch(loading(false));
-      });
-  };*/
-
 export const getAllProductsDispatch =
   (page: number, size: number) => async (dispatch) => {
     dispatch(loading(true));
-    getGuardRequest({
+    getTekeraGuardRequest({
       controller: "product",
       action: "products",
       params: { page: page, size: size },
