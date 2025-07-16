@@ -151,7 +151,7 @@ function Page() {
                 {/* Image Section with Carousel */}
                 <div className="flex flex-col-reverse mt-8 md:flex-row gap-2 w-full md:w-4/6 lg:w-3/6 md:h-full relative">
                     {/* Thumbnails */}
-                    <div className="hidden md:flex flex-col items-start space-y-2 w-full md:w-1/6">
+                    <div className="hidden md:flex flex-col custom-scrollbar overflow-y-auto h-[700px] items-start space-y-2 w-full md:w-1/6">
                         {variationState?.images?.map((img, index) => (
                             <div
                                 key={index}
