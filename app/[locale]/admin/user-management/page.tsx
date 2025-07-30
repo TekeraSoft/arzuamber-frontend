@@ -47,7 +47,7 @@ function Page() {
       rowsPerPageOptions={[15, 30, 50, 70]}
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       currentPageReportTemplate="{first} to {last} of {totalRecords}"
-      totalRecords={page.totalElements}
+      totalRecords={page?.totalElements}
       onPage={onPageChange}
       loading={loading}
     >
